@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CBIS.iml" filepath="$PROJECT_DIR$/CBIS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cbis-model/cbis-model.iml" filepath="$PROJECT_DIR$/cbis-model/cbis-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cbis-persist/cbis-persist.iml" filepath="$PROJECT_DIR$/cbis-persist/cbis-persist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cbis-service/cbis-service.iml" filepath="$PROJECT_DIR$/cbis-service/cbis-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cbis-sql/cbis-sql.iml" filepath="$PROJECT_DIR$/cbis-sql/cbis-sql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cbis-webapp/cbis-webapp.iml" filepath="$PROJECT_DIR$/cbis-webapp/cbis-webapp.iml" />
+    </modules>
+  </component>
+</project>
