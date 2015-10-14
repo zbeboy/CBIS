@@ -215,7 +215,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>ForDownload</finalName>
+        <finalName>CBIS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

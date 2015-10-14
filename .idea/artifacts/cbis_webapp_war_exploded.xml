@@ -10,10 +10,10 @@
           <element id="archive" name="cbis-model-1.0-SNAPSHOT.jar">
             <element id="module-output" name="cbis-model" />
           </element>
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.15" />
           <element id="archive" name="cbis-service-1.0-SNAPSHOT.jar">
             <element id="module-output" name="cbis-service" />
           </element>
-          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.15" />
           <element id="archive" name="cbis-sql-1.0-SNAPSHOT.jar">
             <element id="module-output" name="cbis-sql" />
           </element>
