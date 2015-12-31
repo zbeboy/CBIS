@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="cbis-webapp:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="CBIS.war">
-      <element id="artifact" artifact-name="cbis-webapp:war exploded" />
-    </root>
-  </artifact>
-</component>
