@@ -2,20 +2,15 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-model" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-persist" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-persist/src/main/resources/dataSource-config.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/cbis-persist/src/main/resources/generatorConfig.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/cbis-service" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-sql" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-sql/src" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/cbis-webapp" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cbis-webapp/webapp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/Base64Util.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/MD5Util.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j.properties" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/admin/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/error.html" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/login.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/student/home.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/teacher/home.html" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

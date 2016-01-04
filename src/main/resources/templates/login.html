@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en-gb" dir="ltr" class="uk-height-1-1" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>Login</title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
-	href="../../css/bootstrap.min.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>系统登录</title>
+  <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+  <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}" />
+  <!--[if lte IE 9]>
+  <script src="js/respond.min.js" th:src="@{/js/respond.min.js}" ></script>
+  <script src="js/html5.min.js" th:src="@{/js/html5.min.js}" ></script>
+  <![endif]-->
+  <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}" ></script>
+  <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}" ></script>
 </head>
-<body onload="document.f.username.focus();">
-	<div class="container">
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="http://www.thymeleaf.org"> Thymeleaf -
-					Plain </a>
-				<ul class="nav">
-					<li><a th:href="@{/}" href="home.html"> Home </a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="content">
-			<p th:if="${param.logout}" class="alert">You have been logged out</p>
-			<p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
-			<h2>Login with Username and Password</h2>
-			<form name="form" th:action="@{/login}" action="/login" method="POST">
-				<fieldset>
-					<input type="text" name="username" value="" placeholder="Username" />
-					<input type="password" name="password" placeholder="Password" />
-				</fieldset>
-				<input type="submit" id="login" value="Login"
-					class="btn btn-primary" />
-			</form>
-		</div>
-	</div>
+
+<body class="uk-height-1-1">
+
+<div class="uk-vertical-align uk-text-center uk-height-1-1">
+  <div class="uk-vertical-align-middle" style="width: 250px;">
+    <h4>请先登录！</h4>
+    <form class="uk-panel uk-panel-box uk-form">
+      <div class="uk-form-row">
+        <input class="uk-width-1-1 uk-form-large" type="text" placeholder="用户名" />
+      </div>
+      <div class="uk-form-row">
+        <input class="uk-width-1-1 uk-form-large" type="text" placeholder="密码" />
+      </div>
+      <div class="uk-form-row">
+        <a class="uk-width-1-1 uk-button uk-button-primary uk-button-large" href="#">登录</a>
+      </div>
+      <div class="uk-form-row uk-text-small">
+        <label class="uk-float-left">
+          <input type="checkbox" /> 记住我</label>
+        <a class="uk-float-right uk-link uk-link-muted" href="#">忘记密码?</a></div>
+    </form>
+  </div>
+</div>
+
 </body>
+
 </html>
