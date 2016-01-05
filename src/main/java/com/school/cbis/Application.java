@@ -28,28 +28,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
-import java.util.Map;
 
 @EnableAutoConfiguration
 @ComponentScan
-@Controller
 public class Application extends WebMvcConfigurerAdapter {
-
-    @RequestMapping("/")
-    public String home(Map<String, Object> model) {
-        return "/sadmin/index";
-    }
-
-    @RequestMapping("/foo")
-    public String foo() {
-        throw new RuntimeException("Expected exception in controller");
-    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -61,7 +47,19 @@ public class Application extends WebMvcConfigurerAdapter {
         return new ApplicationSecurity();
     }
 
+    @Bean
+    public static Md5PasswordEncoder md5(){
+        Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+        md5.setEncodeHashAsBase64(false);
+        return md5;
+    }
 
+    @Bean
+    public static JdbcTokenRepositoryImpl jdbcTokenRepository(DataSource dataSource){
+        JdbcTokenRepositoryImpl j = new JdbcTokenRepositoryImpl();
+        j.setDataSource(dataSource);
+        return j;
+    }
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).run(args);
@@ -75,24 +73,21 @@ public class Application extends WebMvcConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            JdbcTokenRepositoryImpl j = new JdbcTokenRepositoryImpl();
-            j.setDataSource(dataSource);
-            http.authorizeRequests().antMatchers("/css/**","/js/**","/fonts/**","/images/**","/files/**").permitAll()
-                    .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true)
+            http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/files/**").permitAll()
+                    .and().formLogin().loginPage("/login").defaultSuccessUrl("/backstage", true)
                     .failureUrl("/login?error").permitAll().and().sessionManagement().invalidSessionUrl("/login")
-                    .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(j)
+                    .and().logout().logoutSuccessUrl("/").permitAll().invalidateHttpSession(true)
+                    .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(jdbcTokenRepository(dataSource))
                     .and().authorizeRequests().antMatchers("/sadmin/**").hasRole("SUPER")
-                    .and().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN","SUPER")
-                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA","ADMIN","SUPER")
-                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU","TEA","ADMIN","SUPER")
-                    .and().authorizeRequests().antMatchers("/user/**").permitAll();
+                    .and().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER")
+                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "ADMIN", "SUPER")
+                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "SUPER")
+                    .and().authorizeRequests().antMatchers("/user/**", "/").permitAll();
         }
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            Md5PasswordEncoder md5 = new Md5PasswordEncoder();
-            md5.setEncodeHashAsBase64(false);
-            auth.jdbcAuthentication().dataSource(this.dataSource).passwordEncoder(md5).and().eraseCredentials(false);
+            auth.jdbcAuthentication().dataSource(this.dataSource).passwordEncoder(md5()).and().eraseCredentials(false);
         }
     }
 

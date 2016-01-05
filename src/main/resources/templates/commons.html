@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title>commons</title>
+</head>
+<body>
+<!-- user logo -->
+<div class="myheader" th:fragment="logo">
+    <img src="images/logo.png" th:src="@{/images/logo.png}" alt="Placeholder"/>
+</div>
+
+<!-- user nav -->
+<nav th:fragment="nav" class="uk-navbar uk-margin-large-bottom"
+     data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+    <a class="uk-navbar-brand" href="index.html">信息工程系管理平台</a>
+    <div class="uk-navbar-flip">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#loginmodal" data-uk-modal="" sec:authorize="isAnonymous()">进入后台管理</a>
+                <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="logout" >
+                    <input type="submit" th:hidden="hidden" />
+                </form>
+                <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

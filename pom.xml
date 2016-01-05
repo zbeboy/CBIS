@@ -139,8 +139,8 @@
                             <inputSchema>cbis</inputSchema>
                         </database>
                         <target>
-                            <packageName>domain</packageName>
-                            <directory>${basedir}/src/main/java/com/school/cbis</directory>
+                            <packageName>com.school.cbis.domain</packageName>
+                            <directory>${basedir}/src/main/java</directory>
                         </target>
                     </generator>
                 </configuration>
