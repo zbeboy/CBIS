@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileInfo extends TableImpl<PlaceFileInfoRecord> {
 
-	private static final long serialVersionUID = 172840900;
+	private static final long serialVersionUID = 955723927;
 
 	/**
 	 * The reference instance of <code>cbis.place_file_info</code>
@@ -80,6 +80,16 @@ public class PlaceFileInfo extends TableImpl<PlaceFileInfoRecord> {
 	 * The column <code>cbis.place_file_info.place_file_info_date</code>.
 	 */
 	public final TableField<PlaceFileInfoRecord, Timestamp> PLACE_FILE_INFO_DATE = createField("place_file_info_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+	/**
+	 * The column <code>cbis.place_file_info.file_user</code>.
+	 */
+	public final TableField<PlaceFileInfoRecord, String> FILE_USER = createField("file_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.place_file_info.file_type</code>.
+	 */
+	public final TableField<PlaceFileInfoRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
 
 	/**
 	 * Create a <code>cbis.place_file_info</code> table reference
@@ -132,7 +142,7 @@ public class PlaceFileInfo extends TableImpl<PlaceFileInfoRecord> {
 	 */
 	@Override
 	public List<ForeignKey<PlaceFileInfoRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<PlaceFileInfoRecord, ?>>asList(Keys.PLACE_FILE_INFO_IBFK_1);
+		return Arrays.<ForeignKey<PlaceFileInfoRecord, ?>>asList(Keys.PLACE_FILE_INFO_IBFK_1, Keys.PLACE_FILE_INFO_IBFK_2);
 	}
 
 	/**

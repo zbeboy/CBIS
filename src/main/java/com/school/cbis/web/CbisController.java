@@ -15,13 +15,21 @@ import javax.annotation.Resource;
 public class CbisController {
 
     @Resource
-    private UsersService usersService;
+    private UsersService usersService;// 用户表
 
+    /**
+     * 主页
+     * @return
+     */
     @RequestMapping("/")
     public String root() {
         return "/user/index";
     }
 
+    /**
+     * 后台管理
+     * @return
+     */
     @RequestMapping("/backstage")
     public String backstage() {
         //是否已登录
@@ -30,6 +38,6 @@ public class CbisController {
         if(StringUtils.isEmpty(usersService.getUserName())){
             return "/login";
         }
-        return "/sadmin/backstagemanagement";
+        return "/student/backstagemanagement";
     }
 }

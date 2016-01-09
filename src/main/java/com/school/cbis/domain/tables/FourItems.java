@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItems extends TableImpl<FourItemsRecord> {
 
-	private static final long serialVersionUID = -1117091123;
+	private static final long serialVersionUID = -2072162431;
 
 	/**
 	 * The reference instance of <code>cbis.four_items</code>
@@ -92,6 +92,16 @@ public class FourItems extends TableImpl<FourItemsRecord> {
 	public final TableField<FourItemsRecord, Timestamp> FOUR_ITEMS_FILE_DATE = createField("four_items_file_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
+	 * The column <code>cbis.four_items.file_user</code>.
+	 */
+	public final TableField<FourItemsRecord, String> FILE_USER = createField("file_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.four_items.file_type</code>.
+	 */
+	public final TableField<FourItemsRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+
+	/**
 	 * Create a <code>cbis.four_items</code> table reference
 	 */
 	public FourItems() {
@@ -142,7 +152,7 @@ public class FourItems extends TableImpl<FourItemsRecord> {
 	 */
 	@Override
 	public List<ForeignKey<FourItemsRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<FourItemsRecord, ?>>asList(Keys.FOUR_ITEMS_IBFK_1, Keys.FOUR_ITEMS_IBFK_2);
+		return Arrays.<ForeignKey<FourItemsRecord, ?>>asList(Keys.FOUR_ITEMS_IBFK_1, Keys.FOUR_ITEMS_IBFK_2, Keys.FOUR_ITEMS_IBFK_3);
 	}
 
 	/**

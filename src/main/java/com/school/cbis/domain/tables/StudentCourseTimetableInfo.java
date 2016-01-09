@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StudentCourseTimetableInfo extends TableImpl<StudentCourseTimetableInfoRecord> {
 
-	private static final long serialVersionUID = -1404492523;
+	private static final long serialVersionUID = 2106499402;
 
 	/**
 	 * The reference instance of <code>cbis.student_course_timetable_info</code>
@@ -113,6 +113,16 @@ public class StudentCourseTimetableInfo extends TableImpl<StudentCourseTimetable
 	public final TableField<StudentCourseTimetableInfoRecord, Date> TERM_END_TIME = createField("term_end_time", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
+	 * The column <code>cbis.student_course_timetable_info.file_user</code>.
+	 */
+	public final TableField<StudentCourseTimetableInfoRecord, String> FILE_USER = createField("file_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.student_course_timetable_info.file_type</code>.
+	 */
+	public final TableField<StudentCourseTimetableInfoRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+
+	/**
 	 * Create a <code>cbis.student_course_timetable_info</code> table reference
 	 */
 	public StudentCourseTimetableInfo() {
@@ -163,7 +173,7 @@ public class StudentCourseTimetableInfo extends TableImpl<StudentCourseTimetable
 	 */
 	@Override
 	public List<ForeignKey<StudentCourseTimetableInfoRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<StudentCourseTimetableInfoRecord, ?>>asList(Keys.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1, Keys.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2);
+		return Arrays.<ForeignKey<StudentCourseTimetableInfoRecord, ?>>asList(Keys.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1, Keys.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2, Keys.STUDENT_COURSE_TIMETABLE_INFO_IBFK_3);
 	}
 
 	/**

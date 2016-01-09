@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNotice extends TableImpl<TieNoticeRecord> {
 
-	private static final long serialVersionUID = -715019981;
+	private static final long serialVersionUID = -1465519595;
 
 	/**
 	 * The reference instance of <code>cbis.tie_notice</code>
@@ -61,9 +61,9 @@ public class TieNotice extends TableImpl<TieNoticeRecord> {
 	public final TableField<TieNoticeRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.tie_notice.tie_notice</code>.
+	 * The column <code>cbis.tie_notice.tie_notice_article_info_id</code>.
 	 */
-	public final TableField<TieNoticeRecord, String> TIE_NOTICE_ = createField("tie_notice", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TieNoticeRecord, Integer> TIE_NOTICE_ARTICLE_INFO_ID = createField("tie_notice_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.tie_notice</code> table reference
@@ -116,7 +116,7 @@ public class TieNotice extends TableImpl<TieNoticeRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TieNoticeRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TieNoticeRecord, ?>>asList(Keys.TIE_NOTICE_IBFK_1);
+		return Arrays.<ForeignKey<TieNoticeRecord, ?>>asList(Keys.TIE_NOTICE_IBFK_1, Keys.TIE_NOTICE_IBFK_2);
 	}
 
 	/**

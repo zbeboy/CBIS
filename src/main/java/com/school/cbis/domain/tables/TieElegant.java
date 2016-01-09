@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieElegant extends TableImpl<TieElegantRecord> {
 
-	private static final long serialVersionUID = -1232292785;
+	private static final long serialVersionUID = 677858371;
 
 	/**
 	 * The reference instance of <code>cbis.tie_elegant</code>
@@ -61,9 +61,9 @@ public class TieElegant extends TableImpl<TieElegantRecord> {
 	public final TableField<TieElegantRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.tie_elegant.tie_elegant</code>.
+	 * The column <code>cbis.tie_elegant.tie_elegant_article_info_id</code>.
 	 */
-	public final TableField<TieElegantRecord, String> TIE_ELEGANT_ = createField("tie_elegant", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TieElegantRecord, Integer> TIE_ELEGANT_ARTICLE_INFO_ID = createField("tie_elegant_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.tie_elegant</code> table reference
@@ -116,7 +116,7 @@ public class TieElegant extends TableImpl<TieElegantRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TieElegantRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TieElegantRecord, ?>>asList(Keys.TIE_ELEGANT_IBFK_1);
+		return Arrays.<ForeignKey<TieElegantRecord, ?>>asList(Keys.TIE_ELEGANT_IBFK_1, Keys.TIE_ELEGANT_IBFK_2);
 	}
 
 	/**

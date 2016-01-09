@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BringIn extends TableImpl<BringInRecord> {
 
-	private static final long serialVersionUID = 840202084;
+	private static final long serialVersionUID = 1121642227;
 
 	/**
 	 * The reference instance of <code>cbis.bring_in</code>
@@ -55,14 +56,19 @@ public class BringIn extends TableImpl<BringInRecord> {
 	public final TableField<BringInRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.bring_in.release_article</code>.
+	 * The column <code>cbis.bring_in.release_article_article_info_id</code>.
 	 */
-	public final TableField<BringInRecord, String> RELEASE_ARTICLE = createField("release_article", org.jooq.impl.SQLDataType.VARCHAR.length(5000).nullable(false), this, "");
+	public final TableField<BringInRecord, Integer> RELEASE_ARTICLE_ARTICLE_INFO_ID = createField("release_article_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.bring_in.HR_email</code>.
 	 */
 	public final TableField<BringInRecord, String> HR_EMAIL = createField("HR_email", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+
+	/**
+	 * The column <code>cbis.bring_in.tie_id</code>.
+	 */
+	public final TableField<BringInRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.bring_in</code> table reference
@@ -108,6 +114,14 @@ public class BringIn extends TableImpl<BringInRecord> {
 	@Override
 	public List<UniqueKey<BringInRecord>> getKeys() {
 		return Arrays.<UniqueKey<BringInRecord>>asList(Keys.KEY_BRING_IN_PRIMARY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<BringInRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<BringInRecord, ?>>asList(Keys.BRING_IN_IBFK_1, Keys.BRING_IN_IBFK_2);
 	}
 
 	/**

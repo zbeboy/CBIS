@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Major extends TableImpl<MajorRecord> {
 
-	private static final long serialVersionUID = -911680107;
+	private static final long serialVersionUID = -1170536711;
 
 	/**
 	 * The reference instance of <code>cbis.major</code>
@@ -66,24 +66,24 @@ public class Major extends TableImpl<MajorRecord> {
 	public final TableField<MajorRecord, String> MAJOR_NAME = createField("major_name", org.jooq.impl.SQLDataType.VARCHAR.length(150).nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.major.major_introduce</code>.
+	 * The column <code>cbis.major.major_introduce_article_info_id</code>.
 	 */
-	public final TableField<MajorRecord, String> MAJOR_INTRODUCE = createField("major_introduce", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<MajorRecord, Integer> MAJOR_INTRODUCE_ARTICLE_INFO_ID = createField("major_introduce_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.major.major_training_goal</code>.
+	 * The column <code>cbis.major.major_training_goal_article_info_id</code>.
 	 */
-	public final TableField<MajorRecord, String> MAJOR_TRAINING_GOAL = createField("major_training_goal", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<MajorRecord, Integer> MAJOR_TRAINING_GOAL_ARTICLE_INFO_ID = createField("major_training_goal_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.major.major_trait</code>.
+	 * The column <code>cbis.major.major_trait_article_info_id</code>.
 	 */
-	public final TableField<MajorRecord, String> MAJOR_TRAIT = createField("major_trait", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<MajorRecord, Integer> MAJOR_TRAIT_ARTICLE_INFO_ID = createField("major_trait_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.major.major_foregoer</code>.
+	 * The column <code>cbis.major.major_foregoer_article_info_id</code>.
 	 */
-	public final TableField<MajorRecord, String> MAJOR_FOREGOER = createField("major_foregoer", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<MajorRecord, Integer> MAJOR_FOREGOER_ARTICLE_INFO_ID = createField("major_foregoer_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.major</code> table reference
@@ -136,7 +136,7 @@ public class Major extends TableImpl<MajorRecord> {
 	 */
 	@Override
 	public List<ForeignKey<MajorRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<MajorRecord, ?>>asList(Keys.MAJOR_IBFK_1);
+		return Arrays.<ForeignKey<MajorRecord, ?>>asList(Keys.MAJOR_IBFK_1, Keys.MAJOR_IBFK_2, Keys.MAJOR_IBFK_3, Keys.MAJOR_IBFK_4, Keys.MAJOR_IBFK_5);
 	}
 
 	/**

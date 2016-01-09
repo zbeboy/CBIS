@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tie extends TableImpl<TieRecord> {
 
-	private static final long serialVersionUID = -857521347;
+	private static final long serialVersionUID = 1896940136;
 
 	/**
 	 * The reference instance of <code>cbis.tie</code>
@@ -76,19 +76,19 @@ public class Tie extends TableImpl<TieRecord> {
 	public final TableField<TieRecord, String> TIE_PRINCIPAL = createField("tie_principal", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
 	/**
-	 * The column <code>cbis.tie.tie_introduce</code>.
+	 * The column <code>cbis.tie.tie_introduce_article_info_id</code>.
 	 */
-	public final TableField<TieRecord, String> TIE_INTRODUCE = createField("tie_introduce", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TieRecord, Integer> TIE_INTRODUCE_ARTICLE_INFO_ID = createField("tie_introduce_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.tie.tie_training_goal</code>.
+	 * The column <code>cbis.tie.tie_training_goal_article_info_id</code>.
 	 */
-	public final TableField<TieRecord, String> TIE_TRAINING_GOAL = createField("tie_training_goal", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TieRecord, Integer> TIE_TRAINING_GOAL_ARTICLE_INFO_ID = createField("tie_training_goal_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.tie.tie_trait</code>.
+	 * The column <code>cbis.tie.tie_trait_article_info_id</code>.
 	 */
-	public final TableField<TieRecord, String> TIE_TRAIT = createField("tie_trait", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TieRecord, Integer> TIE_TRAIT_ARTICLE_INFO_ID = createField("tie_trait_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.tie.yard_id</code>.
@@ -146,7 +146,7 @@ public class Tie extends TableImpl<TieRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TieRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TieRecord, ?>>asList(Keys.TIE_IBFK_1);
+		return Arrays.<ForeignKey<TieRecord, ?>>asList(Keys.TIE_IBFK_2, Keys.TIE_IBFK_3, Keys.TIE_IBFK_4, Keys.TIE_IBFK_1);
 	}
 
 	/**

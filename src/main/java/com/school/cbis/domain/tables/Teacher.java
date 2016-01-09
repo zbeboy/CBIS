@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teacher extends TableImpl<TeacherRecord> {
 
-	private static final long serialVersionUID = -1056285299;
+	private static final long serialVersionUID = 54490799;
 
 	/**
 	 * The reference instance of <code>cbis.teacher</code>
@@ -97,9 +97,9 @@ public class Teacher extends TableImpl<TeacherRecord> {
 	public final TableField<TeacherRecord, String> TEACHER_SEX = createField("teacher_sex", org.jooq.impl.SQLDataType.VARCHAR.length(2), this, "");
 
 	/**
-	 * The column <code>cbis.teacher.teacher_introduce</code>.
+	 * The column <code>cbis.teacher.teacher_introduce_article_info_id</code>.
 	 */
-	public final TableField<TeacherRecord, String> TEACHER_INTRODUCE = createField("teacher_introduce", org.jooq.impl.SQLDataType.CLOB, this, "");
+	public final TableField<TeacherRecord, Integer> TEACHER_INTRODUCE_ARTICLE_INFO_ID = createField("teacher_introduce_article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.teacher.teacher_identity_card</code>.
@@ -162,7 +162,7 @@ public class Teacher extends TableImpl<TeacherRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TeacherRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TeacherRecord, ?>>asList(Keys.TEACHER_IBFK_1);
+		return Arrays.<ForeignKey<TeacherRecord, ?>>asList(Keys.TEACHER_IBFK_1, Keys.TEACHER_IBFK_2);
 	}
 
 	/**

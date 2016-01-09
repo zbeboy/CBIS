@@ -1,7 +1,14 @@
+create table user_type(
+  id int not null primary key auto_increment,
+  name varchar(50) not null
+);
+
 create table users(
   username varchar(64) not null primary key,
   password varchar(500) not null,
-  enabled boolean not null
+  enabled boolean not null,
+  user_type_id int not null,
+  foreign key(user_type_id) references user_type(id)
 );
 
 create table authorities(
@@ -17,6 +24,32 @@ create table persistent_logins(
   last_used timestamp not null
 );
 
+create table article_type(
+  id int not null primary key auto_increment,
+  name varchar(100) not null
+);
+
+create table article_info(
+  id int not null primary key auto_increment,
+  big_title varchar(50),
+  article_writer varchar(64) not null,
+  date datetime,
+  article_type_id int not null,
+  article_content varchar(2000),
+  article_photo_url varchar(500),
+  foreign key(article_writer) references users(username),
+  foreign key(article_type_id) references article_type(id)
+);
+
+create table article_sub(
+  id int not null primary key auto_increment,
+  sub_title varchar(50),
+  sub_content varchar(1000),
+  sub_photo_url varchar(500),
+  article_info_id int not null,
+  foreign key(article_info_id) references article_info(id)
+);
+
 create table yard(
   id int not null primary key auto_increment,
   yard_name varchar(30) not null,
@@ -29,22 +62,29 @@ create table tie(
   tie_address varchar(200) ,
   tie_phone varchar(20),
   tie_principal varchar(20),
-  tie_introduce text,
-  tie_training_goal text,
-  tie_trait text,
+  tie_introduce_article_info_id int not null,
+  tie_training_goal_article_info_id int not null,
+  tie_trait_article_info_id int not null,
   yard_id int not null,
-  foreign key(yard_id) references yard(id)
+  foreign key(yard_id) references yard(id),
+  foreign key(tie_introduce_article_info_id) references article_info(id),
+  foreign key(tie_training_goal_article_info_id) references article_info(id),
+  foreign key(tie_trait_article_info_id) references article_info(id)
 );
 
 create table major(
   id int not null primary key auto_increment,
   tie_id int not null,
   major_name varchar(150) not null,
-  major_introduce text,
-  major_training_goal text,
-  major_trait text,
-  major_foregoer varchar(20),
-  foreign key(tie_id) references tie(id)
+  major_introduce_article_info_id int not null,
+  major_training_goal_article_info_id int not null,
+  major_trait_article_info_id int not null,
+  major_foregoer_article_info_id int not null,
+  foreign key(tie_id) references tie(id),
+  foreign key(major_introduce_article_info_id) references article_info(id),
+  foreign key(major_training_goal_article_info_id) references article_info(id),
+  foreign key(major_trait_article_info_id) references article_info(id),
+  foreign key(major_foregoer_article_info_id) references article_info(id)
 );
 
 create table grade(
@@ -68,8 +108,9 @@ create table student(
   student_sex varchar(2),
   student_identity_card varchar(20),
   student_address varchar(200),
-  student_introduce text,
-  foreign key(grade_id) references grade(id)
+  student_introduce_article_info_id int not null,
+  foreign key(grade_id) references grade(id),
+  foreign key(student_introduce_article_info_id) references article_info(id)
 );
 
 create table teacher(
@@ -82,24 +123,27 @@ create table teacher(
   teacher_birthday date,
   teacher_head_photo varchar(800),
   teacher_sex varchar(2),
-  teacher_introduce text,
+  teacher_introduce_article_info_id int not null,
   teacher_identity_card varchar(20),
   teacher_address varchar(200),
-  foreign key(tie_id) references tie(id)
+  foreign key(tie_id) references tie(id),
+  foreign key(teacher_introduce_article_info_id) references article_info(id)
 );
 
 create table tie_elegant(
   id int not null primary key auto_increment,
   tie_id int not null,
-  tie_elegant text,
-  foreign key(tie_id) references tie(id)
+  tie_elegant_article_info_id int not null,
+  foreign key(tie_id) references tie(id),
+  foreign key(tie_elegant_article_info_id) references article_info(id)
 );
 
 create table tie_notice(
   id int not null primary key auto_increment,
   tie_id int not null,
-  tie_notice text,
-  foreign key(tie_id) references tie(id)
+  tie_notice_article_info_id int not null,
+  foreign key(tie_id) references tie(id),
+  foreign key(tie_notice_article_info_id) references article_info(id)
 );
 
 create table tie_notice_affix(
@@ -109,19 +153,10 @@ create table tie_notice_affix(
   tie_notice_file_name varchar(30) not null,
   tie_notice_file_date datetime,
   tie_notice_id int not null,
-  foreign key(tie_notice_id) references tie_notice(id)
-);
-
-create table major_exam_trends(
-  id int not null primary key auto_increment,
-  major_id int not null,
-  exam_title varchar(100) not null,
-  exam_start_time datetime,
-  exam_end_time datetime,
-  exam_place varchar(200),
-  exam_cotent varchar(600),
-  exam_announcements varchar(500),
-  foreign key(major_id) references major(id)
+  file_user varchar(64) not null,
+  file_type varchar(15) not null,
+  foreign key(tie_notice_id) references tie_notice(id),
+  foreign key(file_user) references users(username)
 );
 
 create table system_inform(
@@ -132,8 +167,11 @@ create table system_inform(
 
 create table bring_in(
   id int not null primary key auto_increment,
-  release_article varchar(5000) not null,
-  HR_email varchar(100)
+  release_article_article_info_id int not null,
+  HR_email varchar(100),
+  tie_id int not null,
+  foreign key(release_article_article_info_id) references article_info(id),
+  foreign key(tie_id) references tie(id)
 );
 
 create table teach_type(
@@ -153,8 +191,11 @@ create table teach_task_info(
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key(tie_id) references tie(id),
-  foreign key(teach_type_id) references teach_type(id)
+  foreign key(teach_type_id) references teach_type(id),
+  foreign key(file_user) references users(username)
 );
 
 create table teach_task_title(
@@ -207,8 +248,11 @@ create table four_items(
   four_items_file_size varchar(50),
   four_items_file_name varchar(30) not null,
   four_items_file_date datetime,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key(teach_task_info_id) references teach_task_info(id),
-  foreign key(four_items_type_id) references four_items_type(id)
+  foreign key(four_items_type_id) references four_items_type(id),
+  foreign key(file_user) references users(username)
 );
 
 create table place_file_info(
@@ -218,7 +262,10 @@ create table place_file_info(
   place_file_info_size varchar(50),
   place_file_info_name varchar(30) not null,
   place_file_info_date datetime,
-  foreign key (teach_task_info_id) references teach_task_info(id)
+  file_user varchar(64) not null,
+  file_type varchar(15),
+  foreign key (teach_task_info_id) references teach_task_info(id),
+  foreign key(file_user) references users(username)
 );
 
 create table place_file_title(
@@ -270,8 +317,11 @@ create table teach_course_info(
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key (tie_id) references tie(id),
-  foreign key (teach_type_id) references teach_type(id)
+  foreign key (teach_type_id) references teach_type(id),
+  foreign key (file_user) references users(username)
 );
 
 create table student_course_timetable_info(
@@ -287,8 +337,11 @@ create table student_course_timetable_info(
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key(grade_id) references grade(id),
-  foreign key(teach_type_id) references teach_type(id)
+  foreign key(teach_type_id) references teach_type(id),
+  foreign key(file_user) references users(username)
 );
 
 create table teacher_course_timetable_info(
@@ -303,8 +356,11 @@ create table teacher_course_timetable_info(
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not  null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key(tie_id) references tie(id),
-  foreign key(teach_type_id) references teach_type(id)
+  foreign key(teach_type_id) references teach_type(id),
+  foreign key(file_user) references users(username)
 );
 
 create table classroom_course_timetable_info(
@@ -320,12 +376,34 @@ create table classroom_course_timetable_info(
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
   foreign key(tie_id) references tie(id),
-  foreign key(teach_type_id) references teach_type(id)
+  foreign key(teach_type_id) references teach_type(id),
+  foreign key(file_user) references users(username)
 );
 
-insert into users values('superadmin','e10adc3949ba59abbe56e057f20f883e',true);
+insert into user_type(name) values('学生');
+insert into user_type(name) values('教师');
+
+insert into users values('superadmin','e10adc3949ba59abbe56e057f20f883e',true,2);
 insert into authorities values('superadmin','ROLE_SUPER');
+
+insert into article_type(id,name) values(1,'init');
+insert into article_type(name) values('系简介');
+insert into article_type(name) values('系培养目标');
+insert into article_type(name) values('系特色');
+insert into article_type(name) values('专业简介');
+insert into article_type(name) values('专业培养目标');
+insert into article_type(name) values('专业特色');
+insert into article_type(name) values('专业带头人');
+insert into article_type(name) values('学生简介');
+insert into article_type(name) values('教师简介');
+insert into article_type(name) values('系风采');
+insert into article_type(name) values('系公告');
+insert into article_type(name) values('招聘模板');
+
+insert into article_info(id,article_writer,article_type_id) values(1,'superadmin',1);
 
 insert into teach_type(name) values('理论');
 insert into teach_type(name) values('实践');

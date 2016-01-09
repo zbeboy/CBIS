@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+<head>
+    <meta charset="UTF-8" />
+    <title>个人业务</title>
+</head>
+<body>
+
+<!-- 左侧导航-->
+<div class="uk-width-medium-1-4" th:fragment="leftnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">个人业务</h3>
+                <ul class="uk-nav uk-nav-side">
+                    <li><a href="#">修改资料</a></li>
+                    <li id="navrevisepassword"><a href="#" th:href="@{/student/revisepassword}">修改密码</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>个人业务
+        </button>
+    </div>
+    <div id="my-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas">
+                <li class="uk-nav-header">个人业务</li>
+                <li><a href="#">修改资料</a></li>
+                <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/revisepassword}">修改密码</a></li>
+                <li>
+                    <a href="#">退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,354 +1,275 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta name="generator"
-    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="renderer" content="webkit" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title th:text="#{home_title}">信息工程系</title>
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>信息工程系</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
-    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}" />
-    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}" />
-	<link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}" />
-    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}" ></script>
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
-        <script src="js/respond.min.js" th:src="@{/js/respond.min.js}" ></script>
-        <script src="js/html5.min.js" th:src="@{/js/html5.min.js}" ></script>
-        <![endif]-->
-    <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}" ></script>
-    <script src="js/components/slideshow.js" th:src="@{/js/components/slideshow.js}" ></script>
-    <script src="js/components/slideshow-fx.js" th:src="@{/js/components/slideshow-fx.js}" ></script>
-    <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}" ></script>
-	<script src="js/pace.min.js" th:src="@{/js/pace.min.js}" ></script>
-    <script src="js/totop.js" th:src="@{/js/totop.js}" ></script>
+    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
+    <script src="js/components/slideshow.js" th:src="@{/js/components/slideshow.js}"></script>
+    <script src="js/components/slideshow-fx.js" th:src="@{/js/components/slideshow-fx.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
     <script>
-        $(function(){   
-        scrolltotop.offset(100,120);
-        scrolltotop.init(); 
-        });     
-        
-</script>
-  </head>
-  <body>
-    <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-      <div class="myheader" th:include="commons::logo">
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
 
-      </div>
-      <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
-      data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div th:include="commons::logo" class="myheader">
 
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
 
-      </nav>
-      <div class="uk-grid" data-uk-grid-margin="">
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-2">
-          <div class="uk-slidenav-position" data-uk-slideshow="{autoplay:true,kenburns:true}">
-          <ul class="uk-slideshow uk-overlay-active">
-            <li>
-              <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt="" />
-              <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                <h3>信息工程系统</h3>
-                <p>
-                  <a href="#">迎新活动1</a>
-                </p>
-              </div>
-            </li>
-            <li>
-              <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt="" />
-              <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                <h3>信息工程系统</h3>
-                <p>迎新活动2</p>
-              </div>
-            </li>
-            <li>
-              <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt="" />
-              <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                <h3>信息工程系统</h3>
-                <p>迎新活动3</p>
-              </div>
-            </li>
-            <li>
-              <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt="" />
-              <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                <h3>信息工程系统</h3>
-                <p>迎新活动4</p>
-              </div>
-            </li>
-          </ul>
-          <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"
-          style="color: rgba(255,255,255,0.4)"></a> 
-          <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"
-          style="color: rgba(255,255,255,0.4)"></a></div>
+            <div class="uk-slidenav-position" data-uk-slideshow="{autoplay:true,kenburns:true}">
+                <ul class="uk-slideshow uk-overlay-active">
+                    <li>
+                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
+                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                            <h3>信息工程系统</h3>
+                            <p>
+                                <a href="#">迎新活动1</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
+                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                            <h3>信息工程系统</h3>
+                            <p>迎新活动2</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
+                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                            <h3>信息工程系统</h3>
+                            <p>迎新活动3</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
+                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
+                            <h3>信息工程系统</h3>
+                            <p>迎新活动4</p>
+                        </div>
+                    </li>
+                </ul>
+                <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous"
+                   data-uk-slideshow-item="previous"
+                   style="color: rgba(255,255,255,0.4)"></a>
+                <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"
+                   style="color: rgba(255,255,255,0.4)"></a></div>
         </div>
-		<div class="uk-width-medium-1-2">
-			<article class="uk-article">
-				<h1 class="uk-article-title">信息工程系</h1>
-				<p class="uk-article-meta">由 曹植 撰写于 2012年12月12日 | 发表在 博客</p>
-				<p class="uk-article-lead">信息工程系简介</p>
-				<p>
-					本专业是一个宽口径专业，覆盖了原电子信息类多数专业及光电信息工程及遥感信息工程等专业内容。信息工程主要实践教学环节包括计算机上机训练、课程设计、信息系统认识....</p>
-				<a class="uk-button uk-button-primary" href="departmentintroduce.html" style="float:right">更多</a>
-			</article>
-		</div>
-      </div>
-      <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-2">
+            <article class="uk-article">
+                <h1 class="uk-article-title">信息工程系</h1>
+                <p class="uk-article-meta">由 曹植 撰写于 2012年12月12日 | 发表在 博客</p>
+                <p class="uk-article-lead">信息工程系简介</p>
+                <p>
+                    本专业是一个宽口径专业，覆盖了原电子信息类多数专业及光电信息工程及遥感信息工程等专业内容。信息工程主要实践教学环节包括计算机上机训练、课程设计、信息系统认识....</p>
+                <a class="uk-button uk-button-primary" href="departmentintroduce.html" style="float:right">更多</a>
+            </article>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-3">
-          <h1>专业</h1>
-          <dl class="uk-description-list-line">
-            <dt>
-              <a href="specialtyintroduce.html">计算机科学与技术</a>
-            </dt>
-            <dd>计算机....</dd>
-            <dt>
-              <a href="#">电子信息工程专业</a>
-            </dt>
-            <dd>电子信息....</dd>
-            <dt>
-              <a href="#">电气工程及其自动化专业</a>
-            </dt>
-            <dd>电气工程....</dd>
-            <dt>
-              <a href="#">测控技术与仪器专业</a>
-            </dt>
-            <dd>测控技术....</dd>
-            <dt>
-              <a href="#">交通运输专业</a>
-            </dt>
-            <dd>交通运输....</dd>
-            <dt>
-              <a href="#">通信工程专业</a>
-            </dt>
-            <dd>通信工程....</dd>
-          </dl>
-		  <a class="uk-button uk-button-primary" href="specialtyintroduce.html" style="float:right">更多</a>
+            <h1>专业</h1>
+            <dl class="uk-description-list-line">
+                <dt>
+                    <a href="specialtyintroduce.html">计算机科学与技术</a>
+                </dt>
+                <dd>计算机....</dd>
+                <dt>
+                    <a href="#">电子信息工程专业</a>
+                </dt>
+                <dd>电子信息....</dd>
+                <dt>
+                    <a href="#">电气工程及其自动化专业</a>
+                </dt>
+                <dd>电气工程....</dd>
+                <dt>
+                    <a href="#">测控技术与仪器专业</a>
+                </dt>
+                <dd>测控技术....</dd>
+                <dt>
+                    <a href="#">交通运输专业</a>
+                </dt>
+                <dd>交通运输....</dd>
+                <dt>
+                    <a href="#">通信工程专业</a>
+                </dt>
+                <dd>通信工程....</dd>
+            </dl>
+            <a class="uk-button uk-button-primary" href="specialtyintroduce.html" style="float:right">更多</a>
         </div>
         <div class="uk-width-medium-2-3">
-			<div class="uk-grid">
-				<div class="uk-width-medium-1-2">
-					<h1>考试动态</h1>
-					<ul class="uk-list uk-list-space">
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于学期考试....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于学期考试....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于学期考试....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于学期考试....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
-						</li>
-					</ul>
-				</div>
-				<div class="uk-width-medium-1-2">
-					<h1>通知公告</h1>
-					<ul class="uk-list uk-list-space">
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于迎新活动....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于迎新活动....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于迎新活动....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于迎新活动....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="uk-grid">
-				<div class="uk-width-medium-1-2">
-					<hr class="uk-grid-divider" />
-					<h1>招生就业</h1>
-					<ul class="uk-list uk-list-space">
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于招生就业....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于招生就业....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于招生就业....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<div class="uk-grid">
-								<div class="uk-width-1-2">
-									<a href="notice.html">关于招生就业....</a>
-								</div>
-								<div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-							</div>
-						</li>
-						<li>
-							<a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
-						</li>
-					</ul>
-				</div>
-				<div class="uk-width-medium-1-2">
-					<hr class="uk-grid-divider" />
-					<h1>教学工作 
-						<small>
-							<a class="uk-button uk-button-primary" href="#" style="float:right">进入</a>
-						</small></h1>
-					<dl class="uk-description-list-line">
-						<dt>
-							<a href="specialtyintroduce.html">系办</a>
-						</dt>
-						<dd>提供系办管理服务....</dd>
-						<dt>
-							<a href="specialtyintroduce.html">教学</a>
-						</dt>
-						<dd>提供教学管理服务....</dd>
-						<dt>
-							<a href="specialtyintroduce.html">学工</a>
-						</dt>
-						<dd>提供学工管理服务....</dd>
-						<dt>
-							<a href="specialtyintroduce.html">评教系统</a>
-						</dt>
-						<dd>提供学工管理服务....</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-      </div>
-	  <h1 class="uk-text-center">教师风采</h1>
-	  <div class="uk-grid" data-uk-grid-margin="">
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="teacherintroduce.html" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="#" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="#" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="#" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="#" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-		<div class="uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-6">
-			<a href="#" class="uk-thumbnail uk-thumbnail-mini">
-				<img class="uk-thumbnail" src="images/placeholder_800x400_1.jpg" alt="" />
-				<div class="uk-thumbnail-caption">老师</div>
-			</a> 
-		</div>
-	  </div>
-      <div id="loginmodal" class="uk-modal">
-        <div class="uk-modal-dialog">
-          <a class="uk-modal-close uk-close"></a>
-          <div class="uk-modal-header">
-            <h2>欢迎登录信息工程系后台管理系统！</h2>
-          </div>
-          <div class="uk-vertical-align uk-text-center uk-height-1-1">
-            <div class="uk-vertical-align-middle" style="width: 250px;">
-              <form class="uk-panel uk-form" name="form" th:action="@{/login}" action="/login" method="POST">
-                <div class="uk-form-row">
-                  <input class="uk-width-1-1 uk-form-large" type="text" name="username" placeholder="用户名" />
+            <div class="uk-grid">
+                <div class="uk-width-medium-1-2">
+                    <h1>考试动态</h1>
+                    <ul class="uk-list uk-list-space">
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于学期考试....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于学期考试....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于学期考试....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于学期考试....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="uk-form-row">
-                  <input class="uk-width-1-1 uk-form-large" type="password" name="password" placeholder="密码" />
+                <div class="uk-width-medium-1-2">
+                    <h1>通知公告</h1>
+                    <ul class="uk-list uk-list-space">
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于迎新活动....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于迎新活动....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于迎新活动....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于迎新活动....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="uk-form-row">
-                  <button type="submit" class="uk-width-1-1 uk-button uk-button-primary uk-button-large">登录</button>
-                </div>
-                <div class="uk-form-row uk-text-small">
-                <label class="uk-float-left">
-                <input type="checkbox" name="remember-me" th:value="true"/> 记住我</label>
-                <a class="uk-float-right uk-link uk-link-muted" href="#">忘记密码?</a></div>
-              </form>
             </div>
-          </div>
+            <div class="uk-grid">
+                <div class="uk-width-medium-1-2">
+                    <hr class="uk-grid-divider"/>
+                    <h1>招生就业</h1>
+                    <ul class="uk-list uk-list-space">
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于招生就业....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于招生就业....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于招生就业....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <a href="notice.html">关于招生就业....</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <hr class="uk-grid-divider" />
+                    <h1>便捷通道</h1>
+                    <ul class="uk-list uk-text-center">
+                        <li class="uk-panel uk-panel-box"><a href="#">软考报名</a></li>
+                        <li class="uk-panel uk-panel-box"><a href="#">教学评教</a></li>
+                        <li class="uk-panel uk-panel-box"><a href="#">自主实习</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-      <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
-      title="返回顶部"></div>
-      <hr class="uk-grid-divider" />
-      <footer>
-        <p class="uk-text-center">Copyright 2015</p>
-      </footer>
     </div>
-  </body>
+    <div id="loginmodal" th:include="commons::loginmodal" class="uk-modal">
+
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+</body>
 </html>

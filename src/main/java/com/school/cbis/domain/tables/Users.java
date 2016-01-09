@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-	private static final long serialVersionUID = 915834280;
+	private static final long serialVersionUID = 1606879994;
 
 	/**
 	 * The reference instance of <code>cbis.users</code>
@@ -62,6 +63,11 @@ public class Users extends TableImpl<UsersRecord> {
 	 * The column <code>cbis.users.enabled</code>.
 	 */
 	public final TableField<UsersRecord, Byte> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.users.user_type_id</code>.
+	 */
+	public final TableField<UsersRecord, Integer> USER_TYPE_ID = createField("user_type_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.users</code> table reference
@@ -99,6 +105,14 @@ public class Users extends TableImpl<UsersRecord> {
 	@Override
 	public List<UniqueKey<UsersRecord>> getKeys() {
 		return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_USERS_PRIMARY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<UsersRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<UsersRecord, ?>>asList(Keys.USERS_IBFK_1);
 	}
 
 	/**

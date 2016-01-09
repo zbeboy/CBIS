@@ -9,7 +9,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/admin/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/error.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/login.html" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/student/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/teacher/home.html" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

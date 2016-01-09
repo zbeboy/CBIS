@@ -4,6 +4,9 @@
 package com.school.cbis.domain;
 
 
+import com.school.cbis.domain.tables.ArticleInfo;
+import com.school.cbis.domain.tables.ArticleSub;
+import com.school.cbis.domain.tables.ArticleType;
 import com.school.cbis.domain.tables.Authorities;
 import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
@@ -11,7 +14,6 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.Major;
-import com.school.cbis.domain.tables.MajorExamTrends;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
@@ -31,6 +33,7 @@ import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieNotice;
 import com.school.cbis.domain.tables.TieNoticeAffix;
+import com.school.cbis.domain.tables.UserType;
 import com.school.cbis.domain.tables.Users;
 import com.school.cbis.domain.tables.Yard;
 
@@ -49,6 +52,21 @@ import javax.annotation.Generated;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+	/**
+	 * The table cbis.article_info
+	 */
+	public static final ArticleInfo ARTICLE_INFO = com.school.cbis.domain.tables.ArticleInfo.ARTICLE_INFO;
+
+	/**
+	 * The table cbis.article_sub
+	 */
+	public static final ArticleSub ARTICLE_SUB = com.school.cbis.domain.tables.ArticleSub.ARTICLE_SUB;
+
+	/**
+	 * The table cbis.article_type
+	 */
+	public static final ArticleType ARTICLE_TYPE = com.school.cbis.domain.tables.ArticleType.ARTICLE_TYPE;
 
 	/**
 	 * The table cbis.authorities
@@ -84,11 +102,6 @@ public class Tables {
 	 * The table cbis.major
 	 */
 	public static final Major MAJOR = com.school.cbis.domain.tables.Major.MAJOR;
-
-	/**
-	 * The table cbis.major_exam_trends
-	 */
-	public static final MajorExamTrends MAJOR_EXAM_TRENDS = com.school.cbis.domain.tables.MajorExamTrends.MAJOR_EXAM_TRENDS;
 
 	/**
 	 * The table cbis.persistent_logins
@@ -189,6 +202,11 @@ public class Tables {
 	 * The table cbis.users
 	 */
 	public static final Users USERS = com.school.cbis.domain.tables.Users.USERS;
+
+	/**
+	 * The table cbis.user_type
+	 */
+	public static final UserType USER_TYPE = com.school.cbis.domain.tables.UserType.USER_TYPE;
 
 	/**
 	 * The table cbis.yard

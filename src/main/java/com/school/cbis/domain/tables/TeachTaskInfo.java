@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 
-	private static final long serialVersionUID = -924075233;
+	private static final long serialVersionUID = -482343164;
 
 	/**
 	 * The reference instance of <code>cbis.teach_task_info</code>
@@ -108,6 +108,16 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	public final TableField<TeachTaskInfoRecord, Date> TERM_END_TIME = createField("term_end_time", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
+	 * The column <code>cbis.teach_task_info.file_user</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, String> FILE_USER = createField("file_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.teach_task_info.file_type</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+
+	/**
 	 * Create a <code>cbis.teach_task_info</code> table reference
 	 */
 	public TeachTaskInfo() {
@@ -158,7 +168,7 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TeachTaskInfoRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TeachTaskInfoRecord, ?>>asList(Keys.TEACH_TASK_INFO_IBFK_1, Keys.TEACH_TASK_INFO_IBFK_2);
+		return Arrays.<ForeignKey<TeachTaskInfoRecord, ?>>asList(Keys.TEACH_TASK_INFO_IBFK_1, Keys.TEACH_TASK_INFO_IBFK_2, Keys.TEACH_TASK_INFO_IBFK_3);
 	}
 
 	/**

@@ -4,6 +4,9 @@
 package com.school.cbis.domain;
 
 
+import com.school.cbis.domain.tables.ArticleInfo;
+import com.school.cbis.domain.tables.ArticleSub;
+import com.school.cbis.domain.tables.ArticleType;
 import com.school.cbis.domain.tables.Authorities;
 import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
@@ -11,7 +14,6 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.Major;
-import com.school.cbis.domain.tables.MajorExamTrends;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
@@ -31,15 +33,18 @@ import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieNotice;
 import com.school.cbis.domain.tables.TieNoticeAffix;
+import com.school.cbis.domain.tables.UserType;
 import com.school.cbis.domain.tables.Users;
 import com.school.cbis.domain.tables.Yard;
+import com.school.cbis.domain.tables.records.ArticleInfoRecord;
+import com.school.cbis.domain.tables.records.ArticleSubRecord;
+import com.school.cbis.domain.tables.records.ArticleTypeRecord;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.domain.tables.records.BringInRecord;
 import com.school.cbis.domain.tables.records.ClassroomCourseTimetableInfoRecord;
 import com.school.cbis.domain.tables.records.FourItemsRecord;
 import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.GradeRecord;
-import com.school.cbis.domain.tables.records.MajorExamTrendsRecord;
 import com.school.cbis.domain.tables.records.MajorRecord;
 import com.school.cbis.domain.tables.records.PersistentLoginsRecord;
 import com.school.cbis.domain.tables.records.PlaceFileContentRecord;
@@ -60,6 +65,7 @@ import com.school.cbis.domain.tables.records.TieElegantRecord;
 import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
 import com.school.cbis.domain.tables.records.TieNoticeRecord;
 import com.school.cbis.domain.tables.records.TieRecord;
+import com.school.cbis.domain.tables.records.UserTypeRecord;
 import com.school.cbis.domain.tables.records.UsersRecord;
 import com.school.cbis.domain.tables.records.YardRecord;
 
@@ -89,13 +95,15 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<ArticleInfoRecord, Integer> IDENTITY_ARTICLE_INFO = Identities0.IDENTITY_ARTICLE_INFO;
+	public static final Identity<ArticleSubRecord, Integer> IDENTITY_ARTICLE_SUB = Identities0.IDENTITY_ARTICLE_SUB;
+	public static final Identity<ArticleTypeRecord, Integer> IDENTITY_ARTICLE_TYPE = Identities0.IDENTITY_ARTICLE_TYPE;
 	public static final Identity<BringInRecord, Integer> IDENTITY_BRING_IN = Identities0.IDENTITY_BRING_IN;
 	public static final Identity<ClassroomCourseTimetableInfoRecord, Integer> IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO;
 	public static final Identity<FourItemsRecord, Integer> IDENTITY_FOUR_ITEMS = Identities0.IDENTITY_FOUR_ITEMS;
 	public static final Identity<FourItemsTypeRecord, Integer> IDENTITY_FOUR_ITEMS_TYPE = Identities0.IDENTITY_FOUR_ITEMS_TYPE;
 	public static final Identity<GradeRecord, Integer> IDENTITY_GRADE = Identities0.IDENTITY_GRADE;
 	public static final Identity<MajorRecord, Integer> IDENTITY_MAJOR = Identities0.IDENTITY_MAJOR;
-	public static final Identity<MajorExamTrendsRecord, Integer> IDENTITY_MAJOR_EXAM_TRENDS = Identities0.IDENTITY_MAJOR_EXAM_TRENDS;
 	public static final Identity<PlaceFileContentRecord, Integer> IDENTITY_PLACE_FILE_CONTENT = Identities0.IDENTITY_PLACE_FILE_CONTENT;
 	public static final Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = Identities0.IDENTITY_PLACE_FILE_INFO;
 	public static final Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = Identities0.IDENTITY_PLACE_FILE_TITLE;
@@ -113,19 +121,22 @@ public class Keys {
 	public static final Identity<TieElegantRecord, Integer> IDENTITY_TIE_ELEGANT = Identities0.IDENTITY_TIE_ELEGANT;
 	public static final Identity<TieNoticeRecord, Integer> IDENTITY_TIE_NOTICE = Identities0.IDENTITY_TIE_NOTICE;
 	public static final Identity<TieNoticeAffixRecord, Integer> IDENTITY_TIE_NOTICE_AFFIX = Identities0.IDENTITY_TIE_NOTICE_AFFIX;
+	public static final Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = Identities0.IDENTITY_USER_TYPE;
 	public static final Identity<YardRecord, Integer> IDENTITY_YARD = Identities0.IDENTITY_YARD;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<ArticleInfoRecord> KEY_ARTICLE_INFO_PRIMARY = UniqueKeys0.KEY_ARTICLE_INFO_PRIMARY;
+	public static final UniqueKey<ArticleSubRecord> KEY_ARTICLE_SUB_PRIMARY = UniqueKeys0.KEY_ARTICLE_SUB_PRIMARY;
+	public static final UniqueKey<ArticleTypeRecord> KEY_ARTICLE_TYPE_PRIMARY = UniqueKeys0.KEY_ARTICLE_TYPE_PRIMARY;
 	public static final UniqueKey<BringInRecord> KEY_BRING_IN_PRIMARY = UniqueKeys0.KEY_BRING_IN_PRIMARY;
 	public static final UniqueKey<ClassroomCourseTimetableInfoRecord> KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY;
 	public static final UniqueKey<FourItemsRecord> KEY_FOUR_ITEMS_PRIMARY = UniqueKeys0.KEY_FOUR_ITEMS_PRIMARY;
 	public static final UniqueKey<FourItemsTypeRecord> KEY_FOUR_ITEMS_TYPE_PRIMARY = UniqueKeys0.KEY_FOUR_ITEMS_TYPE_PRIMARY;
 	public static final UniqueKey<GradeRecord> KEY_GRADE_PRIMARY = UniqueKeys0.KEY_GRADE_PRIMARY;
 	public static final UniqueKey<MajorRecord> KEY_MAJOR_PRIMARY = UniqueKeys0.KEY_MAJOR_PRIMARY;
-	public static final UniqueKey<MajorExamTrendsRecord> KEY_MAJOR_EXAM_TRENDS_PRIMARY = UniqueKeys0.KEY_MAJOR_EXAM_TRENDS_PRIMARY;
 	public static final UniqueKey<PersistentLoginsRecord> KEY_PERSISTENT_LOGINS_PRIMARY = UniqueKeys0.KEY_PERSISTENT_LOGINS_PRIMARY;
 	public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_CONTENT_PRIMARY;
 	public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_INFO_PRIMARY;
@@ -146,52 +157,79 @@ public class Keys {
 	public static final UniqueKey<TieNoticeRecord> KEY_TIE_NOTICE_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_PRIMARY;
 	public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_AFFIX_PRIMARY;
 	public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
+	public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = UniqueKeys0.KEY_USER_TYPE_PRIMARY;
 	public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = UniqueKeys0.KEY_YARD_PRIMARY;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final ForeignKey<ArticleInfoRecord, UsersRecord> ARTICLE_INFO_IBFK_1 = ForeignKeys0.ARTICLE_INFO_IBFK_1;
+	public static final ForeignKey<ArticleInfoRecord, ArticleTypeRecord> ARTICLE_INFO_IBFK_2 = ForeignKeys0.ARTICLE_INFO_IBFK_2;
+	public static final ForeignKey<ArticleSubRecord, ArticleInfoRecord> ARTICLE_SUB_IBFK_1 = ForeignKeys0.ARTICLE_SUB_IBFK_1;
 	public static final ForeignKey<AuthoritiesRecord, UsersRecord> AUTHORITIES_IBFK_1 = ForeignKeys0.AUTHORITIES_IBFK_1;
+	public static final ForeignKey<BringInRecord, ArticleInfoRecord> BRING_IN_IBFK_1 = ForeignKeys0.BRING_IN_IBFK_1;
+	public static final ForeignKey<BringInRecord, TieRecord> BRING_IN_IBFK_2 = ForeignKeys0.BRING_IN_IBFK_2;
 	public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TieRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TeachTypeRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2;
+	public static final ForeignKey<ClassroomCourseTimetableInfoRecord, UsersRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3 = ForeignKeys0.CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3;
 	public static final ForeignKey<FourItemsRecord, TeachTaskInfoRecord> FOUR_ITEMS_IBFK_1 = ForeignKeys0.FOUR_ITEMS_IBFK_1;
 	public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = ForeignKeys0.FOUR_ITEMS_IBFK_2;
+	public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = ForeignKeys0.FOUR_ITEMS_IBFK_3;
 	public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = ForeignKeys0.GRADE_IBFK_1;
 	public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = ForeignKeys0.MAJOR_IBFK_1;
-	public static final ForeignKey<MajorExamTrendsRecord, MajorRecord> MAJOR_EXAM_TRENDS_IBFK_1 = ForeignKeys0.MAJOR_EXAM_TRENDS_IBFK_1;
+	public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_2 = ForeignKeys0.MAJOR_IBFK_2;
+	public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_3 = ForeignKeys0.MAJOR_IBFK_3;
+	public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_4 = ForeignKeys0.MAJOR_IBFK_4;
+	public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_5 = ForeignKeys0.MAJOR_IBFK_5;
 	public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = ForeignKeys0.PLACE_FILE_CONTENT_IBFK_1;
 	public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = ForeignKeys0.PLACE_FILE_INFO_IBFK_1;
+	public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = ForeignKeys0.PLACE_FILE_INFO_IBFK_2;
 	public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = ForeignKeys0.PLACE_FILE_TITLE_IBFK_1;
 	public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = ForeignKeys0.STUDENT_IBFK_1;
+	public static final ForeignKey<StudentRecord, ArticleInfoRecord> STUDENT_IBFK_2 = ForeignKeys0.STUDENT_IBFK_2;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2;
+	public static final ForeignKey<StudentCourseTimetableInfoRecord, UsersRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_3 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_3;
 	public static final ForeignKey<TeacherRecord, TieRecord> TEACHER_IBFK_1 = ForeignKeys0.TEACHER_IBFK_1;
+	public static final ForeignKey<TeacherRecord, ArticleInfoRecord> TEACHER_IBFK_2 = ForeignKeys0.TEACHER_IBFK_2;
 	public static final ForeignKey<TeacherCourseTimetableInfoRecord, TieRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.TEACHER_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<TeacherCourseTimetableInfoRecord, TeachTypeRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.TEACHER_COURSE_TIMETABLE_INFO_IBFK_2;
+	public static final ForeignKey<TeacherCourseTimetableInfoRecord, UsersRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_3 = ForeignKeys0.TEACHER_COURSE_TIMETABLE_INFO_IBFK_3;
 	public static final ForeignKey<TeachCourseInfoRecord, TieRecord> TEACH_COURSE_INFO_IBFK_1 = ForeignKeys0.TEACH_COURSE_INFO_IBFK_1;
 	public static final ForeignKey<TeachCourseInfoRecord, TeachTypeRecord> TEACH_COURSE_INFO_IBFK_2 = ForeignKeys0.TEACH_COURSE_INFO_IBFK_2;
+	public static final ForeignKey<TeachCourseInfoRecord, UsersRecord> TEACH_COURSE_INFO_IBFK_3 = ForeignKeys0.TEACH_COURSE_INFO_IBFK_3;
 	public static final ForeignKey<TeachTaskContentRecord, TeachTaskTitleRecord> TEACH_TASK_CONTENT_IBFK_1 = ForeignKeys0.TEACH_TASK_CONTENT_IBFK_1;
 	public static final ForeignKey<TeachTaskInfoRecord, TieRecord> TEACH_TASK_INFO_IBFK_1 = ForeignKeys0.TEACH_TASK_INFO_IBFK_1;
 	public static final ForeignKey<TeachTaskInfoRecord, TeachTypeRecord> TEACH_TASK_INFO_IBFK_2 = ForeignKeys0.TEACH_TASK_INFO_IBFK_2;
+	public static final ForeignKey<TeachTaskInfoRecord, UsersRecord> TEACH_TASK_INFO_IBFK_3 = ForeignKeys0.TEACH_TASK_INFO_IBFK_3;
 	public static final ForeignKey<TeachTaskTitleRecord, TeachTaskInfoRecord> TEACH_TASK_TITLE_IBFK_1 = ForeignKeys0.TEACH_TASK_TITLE_IBFK_1;
+	public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_2 = ForeignKeys0.TIE_IBFK_2;
+	public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_3 = ForeignKeys0.TIE_IBFK_3;
+	public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_4 = ForeignKeys0.TIE_IBFK_4;
 	public static final ForeignKey<TieRecord, YardRecord> TIE_IBFK_1 = ForeignKeys0.TIE_IBFK_1;
 	public static final ForeignKey<TieElegantRecord, TieRecord> TIE_ELEGANT_IBFK_1 = ForeignKeys0.TIE_ELEGANT_IBFK_1;
+	public static final ForeignKey<TieElegantRecord, ArticleInfoRecord> TIE_ELEGANT_IBFK_2 = ForeignKeys0.TIE_ELEGANT_IBFK_2;
 	public static final ForeignKey<TieNoticeRecord, TieRecord> TIE_NOTICE_IBFK_1 = ForeignKeys0.TIE_NOTICE_IBFK_1;
+	public static final ForeignKey<TieNoticeRecord, ArticleInfoRecord> TIE_NOTICE_IBFK_2 = ForeignKeys0.TIE_NOTICE_IBFK_2;
 	public static final ForeignKey<TieNoticeAffixRecord, TieNoticeRecord> TIE_NOTICE_AFFIX_IBFK_1 = ForeignKeys0.TIE_NOTICE_AFFIX_IBFK_1;
+	public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_2 = ForeignKeys0.TIE_NOTICE_AFFIX_IBFK_2;
+	public static final ForeignKey<UsersRecord, UserTypeRecord> USERS_IBFK_1 = ForeignKeys0.USERS_IBFK_1;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<ArticleInfoRecord, Integer> IDENTITY_ARTICLE_INFO = createIdentity(ArticleInfo.ARTICLE_INFO, ArticleInfo.ARTICLE_INFO.ID);
+		public static Identity<ArticleSubRecord, Integer> IDENTITY_ARTICLE_SUB = createIdentity(ArticleSub.ARTICLE_SUB, ArticleSub.ARTICLE_SUB.ID);
+		public static Identity<ArticleTypeRecord, Integer> IDENTITY_ARTICLE_TYPE = createIdentity(ArticleType.ARTICLE_TYPE, ArticleType.ARTICLE_TYPE.ID);
 		public static Identity<BringInRecord, Integer> IDENTITY_BRING_IN = createIdentity(BringIn.BRING_IN, BringIn.BRING_IN.ID);
 		public static Identity<ClassroomCourseTimetableInfoRecord, Integer> IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO = createIdentity(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.ID);
 		public static Identity<FourItemsRecord, Integer> IDENTITY_FOUR_ITEMS = createIdentity(FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.ID);
 		public static Identity<FourItemsTypeRecord, Integer> IDENTITY_FOUR_ITEMS_TYPE = createIdentity(FourItemsType.FOUR_ITEMS_TYPE, FourItemsType.FOUR_ITEMS_TYPE.ID);
 		public static Identity<GradeRecord, Integer> IDENTITY_GRADE = createIdentity(Grade.GRADE, Grade.GRADE.ID);
 		public static Identity<MajorRecord, Integer> IDENTITY_MAJOR = createIdentity(Major.MAJOR, Major.MAJOR.ID);
-		public static Identity<MajorExamTrendsRecord, Integer> IDENTITY_MAJOR_EXAM_TRENDS = createIdentity(MajorExamTrends.MAJOR_EXAM_TRENDS, MajorExamTrends.MAJOR_EXAM_TRENDS.ID);
 		public static Identity<PlaceFileContentRecord, Integer> IDENTITY_PLACE_FILE_CONTENT = createIdentity(PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.ID);
 		public static Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = createIdentity(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
 		public static Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = createIdentity(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
@@ -209,17 +247,20 @@ public class Keys {
 		public static Identity<TieElegantRecord, Integer> IDENTITY_TIE_ELEGANT = createIdentity(TieElegant.TIE_ELEGANT, TieElegant.TIE_ELEGANT.ID);
 		public static Identity<TieNoticeRecord, Integer> IDENTITY_TIE_NOTICE = createIdentity(TieNotice.TIE_NOTICE, TieNotice.TIE_NOTICE.ID);
 		public static Identity<TieNoticeAffixRecord, Integer> IDENTITY_TIE_NOTICE_AFFIX = createIdentity(TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.ID);
+		public static Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = createIdentity(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static Identity<YardRecord, Integer> IDENTITY_YARD = createIdentity(Yard.YARD, Yard.YARD.ID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<ArticleInfoRecord> KEY_ARTICLE_INFO_PRIMARY = createUniqueKey(ArticleInfo.ARTICLE_INFO, ArticleInfo.ARTICLE_INFO.ID);
+		public static final UniqueKey<ArticleSubRecord> KEY_ARTICLE_SUB_PRIMARY = createUniqueKey(ArticleSub.ARTICLE_SUB, ArticleSub.ARTICLE_SUB.ID);
+		public static final UniqueKey<ArticleTypeRecord> KEY_ARTICLE_TYPE_PRIMARY = createUniqueKey(ArticleType.ARTICLE_TYPE, ArticleType.ARTICLE_TYPE.ID);
 		public static final UniqueKey<BringInRecord> KEY_BRING_IN_PRIMARY = createUniqueKey(BringIn.BRING_IN, BringIn.BRING_IN.ID);
 		public static final UniqueKey<ClassroomCourseTimetableInfoRecord> KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.ID);
 		public static final UniqueKey<FourItemsRecord> KEY_FOUR_ITEMS_PRIMARY = createUniqueKey(FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.ID);
 		public static final UniqueKey<FourItemsTypeRecord> KEY_FOUR_ITEMS_TYPE_PRIMARY = createUniqueKey(FourItemsType.FOUR_ITEMS_TYPE, FourItemsType.FOUR_ITEMS_TYPE.ID);
 		public static final UniqueKey<GradeRecord> KEY_GRADE_PRIMARY = createUniqueKey(Grade.GRADE, Grade.GRADE.ID);
 		public static final UniqueKey<MajorRecord> KEY_MAJOR_PRIMARY = createUniqueKey(Major.MAJOR, Major.MAJOR.ID);
-		public static final UniqueKey<MajorExamTrendsRecord> KEY_MAJOR_EXAM_TRENDS_PRIMARY = createUniqueKey(MajorExamTrends.MAJOR_EXAM_TRENDS, MajorExamTrends.MAJOR_EXAM_TRENDS.ID);
 		public static final UniqueKey<PersistentLoginsRecord> KEY_PERSISTENT_LOGINS_PRIMARY = createUniqueKey(PersistentLogins.PERSISTENT_LOGINS, PersistentLogins.PERSISTENT_LOGINS.SERIES);
 		public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = createUniqueKey(PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.ID);
 		public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = createUniqueKey(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
@@ -240,36 +281,61 @@ public class Keys {
 		public static final UniqueKey<TieNoticeRecord> KEY_TIE_NOTICE_PRIMARY = createUniqueKey(TieNotice.TIE_NOTICE, TieNotice.TIE_NOTICE.ID);
 		public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = createUniqueKey(TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.ID);
 		public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, Users.USERS.USERNAME);
+		public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = createUniqueKey(Yard.YARD, Yard.YARD.ID);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {
+		public static final ForeignKey<ArticleInfoRecord, UsersRecord> ARTICLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, ArticleInfo.ARTICLE_INFO, ArticleInfo.ARTICLE_INFO.ARTICLE_WRITER);
+		public static final ForeignKey<ArticleInfoRecord, ArticleTypeRecord> ARTICLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_TYPE_PRIMARY, ArticleInfo.ARTICLE_INFO, ArticleInfo.ARTICLE_INFO.ARTICLE_TYPE_ID);
+		public static final ForeignKey<ArticleSubRecord, ArticleInfoRecord> ARTICLE_SUB_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, ArticleSub.ARTICLE_SUB, ArticleSub.ARTICLE_SUB.ARTICLE_INFO_ID);
 		public static final ForeignKey<AuthoritiesRecord, UsersRecord> AUTHORITIES_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Authorities.AUTHORITIES, Authorities.AUTHORITIES.USERNAME);
+		public static final ForeignKey<BringInRecord, ArticleInfoRecord> BRING_IN_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, BringIn.BRING_IN, BringIn.BRING_IN.RELEASE_ARTICLE_ARTICLE_INFO_ID);
+		public static final ForeignKey<BringInRecord, TieRecord> BRING_IN_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, BringIn.BRING_IN, BringIn.BRING_IN.TIE_ID);
 		public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TieRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.TIE_ID);
 		public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TeachTypeRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
+		public static final ForeignKey<ClassroomCourseTimetableInfoRecord, UsersRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.FILE_USER);
 		public static final ForeignKey<FourItemsRecord, TeachTaskInfoRecord> FOUR_ITEMS_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.TEACH_TASK_INFO_ID);
 		public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_FOUR_ITEMS_TYPE_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FOUR_ITEMS_TYPE_ID);
+		public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FILE_USER);
 		public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_MAJOR_PRIMARY, Grade.GRADE, Grade.GRADE.MAJOR_ID);
 		public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Major.MAJOR, Major.MAJOR.TIE_ID);
-		public static final ForeignKey<MajorExamTrendsRecord, MajorRecord> MAJOR_EXAM_TRENDS_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_MAJOR_PRIMARY, MajorExamTrends.MAJOR_EXAM_TRENDS, MajorExamTrends.MAJOR_EXAM_TRENDS.MAJOR_ID);
+		public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Major.MAJOR, Major.MAJOR.MAJOR_INTRODUCE_ARTICLE_INFO_ID);
+		public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Major.MAJOR, Major.MAJOR.MAJOR_TRAINING_GOAL_ARTICLE_INFO_ID);
+		public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_4 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Major.MAJOR, Major.MAJOR.MAJOR_TRAIT_ARTICLE_INFO_ID);
+		public static final ForeignKey<MajorRecord, ArticleInfoRecord> MAJOR_IBFK_5 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Major.MAJOR, Major.MAJOR.MAJOR_FOREGOER_ARTICLE_INFO_ID);
 		public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_TITLE_PRIMARY, PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.PLACE_FILE_TITLE_ID);
 		public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.TEACH_TASK_INFO_ID);
+		public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.FILE_USER);
 		public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_INFO_PRIMARY, PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.PLACE_FILE_INFO_ID);
 		public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, Student.STUDENT, Student.STUDENT.GRADE_ID);
+		public static final ForeignKey<StudentRecord, ArticleInfoRecord> STUDENT_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Student.STUDENT, Student.STUDENT.STUDENT_INTRODUCE_ARTICLE_INFO_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
+		public static final ForeignKey<StudentCourseTimetableInfoRecord, UsersRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.FILE_USER);
 		public static final ForeignKey<TeacherRecord, TieRecord> TEACHER_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Teacher.TEACHER, Teacher.TEACHER.TIE_ID);
+		public static final ForeignKey<TeacherRecord, ArticleInfoRecord> TEACHER_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Teacher.TEACHER, Teacher.TEACHER.TEACHER_INTRODUCE_ARTICLE_INFO_ID);
 		public static final ForeignKey<TeacherCourseTimetableInfoRecord, TieRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TIE_ID);
 		public static final ForeignKey<TeacherCourseTimetableInfoRecord, TeachTypeRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
+		public static final ForeignKey<TeacherCourseTimetableInfoRecord, UsersRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.FILE_USER);
 		public static final ForeignKey<TeachCourseInfoRecord, TieRecord> TEACH_COURSE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.TIE_ID);
 		public static final ForeignKey<TeachCourseInfoRecord, TeachTypeRecord> TEACH_COURSE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.TEACH_TYPE_ID);
+		public static final ForeignKey<TeachCourseInfoRecord, UsersRecord> TEACH_COURSE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.FILE_USER);
 		public static final ForeignKey<TeachTaskContentRecord, TeachTaskTitleRecord> TEACH_TASK_CONTENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_TITLE_PRIMARY, TeachTaskContent.TEACH_TASK_CONTENT, TeachTaskContent.TEACH_TASK_CONTENT.TEACH_TASK_TITLE_ID);
 		public static final ForeignKey<TeachTaskInfoRecord, TieRecord> TEACH_TASK_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.TIE_ID);
 		public static final ForeignKey<TeachTaskInfoRecord, TeachTypeRecord> TEACH_TASK_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.TEACH_TYPE_ID);
+		public static final ForeignKey<TeachTaskInfoRecord, UsersRecord> TEACH_TASK_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.FILE_USER);
 		public static final ForeignKey<TeachTaskTitleRecord, TeachTaskInfoRecord> TEACH_TASK_TITLE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, TeachTaskTitle.TEACH_TASK_TITLE, TeachTaskTitle.TEACH_TASK_TITLE.TEACH_TASK_INFO_ID);
+		public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Tie.TIE, Tie.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
+		public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Tie.TIE, Tie.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
+		public static final ForeignKey<TieRecord, ArticleInfoRecord> TIE_IBFK_4 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, Tie.TIE, Tie.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
 		public static final ForeignKey<TieRecord, YardRecord> TIE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_YARD_PRIMARY, Tie.TIE, Tie.TIE.YARD_ID);
 		public static final ForeignKey<TieElegantRecord, TieRecord> TIE_ELEGANT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TieElegant.TIE_ELEGANT, TieElegant.TIE_ELEGANT.TIE_ID);
+		public static final ForeignKey<TieElegantRecord, ArticleInfoRecord> TIE_ELEGANT_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, TieElegant.TIE_ELEGANT, TieElegant.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID);
 		public static final ForeignKey<TieNoticeRecord, TieRecord> TIE_NOTICE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TieNotice.TIE_NOTICE, TieNotice.TIE_NOTICE.TIE_ID);
+		public static final ForeignKey<TieNoticeRecord, ArticleInfoRecord> TIE_NOTICE_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_ARTICLE_INFO_PRIMARY, TieNotice.TIE_NOTICE, TieNotice.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID);
 		public static final ForeignKey<TieNoticeAffixRecord, TieNoticeRecord> TIE_NOTICE_AFFIX_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_NOTICE_PRIMARY, TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.TIE_NOTICE_ID);
+		public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.FILE_USER);
+		public static final ForeignKey<UsersRecord, UserTypeRecord> USERS_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USER_TYPE_PRIMARY, Users.USERS, Users.USERS.USER_TYPE_ID);
 	}
 }

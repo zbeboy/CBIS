@@ -4,6 +4,9 @@
 package com.school.cbis.domain;
 
 
+import com.school.cbis.domain.tables.ArticleInfo;
+import com.school.cbis.domain.tables.ArticleSub;
+import com.school.cbis.domain.tables.ArticleType;
 import com.school.cbis.domain.tables.Authorities;
 import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
@@ -11,7 +14,6 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.Major;
-import com.school.cbis.domain.tables.MajorExamTrends;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
@@ -31,6 +33,7 @@ import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieNotice;
 import com.school.cbis.domain.tables.TieNoticeAffix;
+import com.school.cbis.domain.tables.UserType;
 import com.school.cbis.domain.tables.Users;
 import com.school.cbis.domain.tables.Yard;
 
@@ -57,7 +60,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -46908773;
+	private static final long serialVersionUID = -1666933236;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -80,6 +83,9 @@ public class Cbis extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			ArticleInfo.ARTICLE_INFO,
+			ArticleSub.ARTICLE_SUB,
+			ArticleType.ARTICLE_TYPE,
 			Authorities.AUTHORITIES,
 			BringIn.BRING_IN,
 			ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO,
@@ -87,7 +93,6 @@ public class Cbis extends SchemaImpl {
 			FourItemsType.FOUR_ITEMS_TYPE,
 			Grade.GRADE,
 			Major.MAJOR,
-			MajorExamTrends.MAJOR_EXAM_TRENDS,
 			PersistentLogins.PERSISTENT_LOGINS,
 			PlaceFileContent.PLACE_FILE_CONTENT,
 			PlaceFileInfo.PLACE_FILE_INFO,
@@ -108,6 +113,7 @@ public class Cbis extends SchemaImpl {
 			TieNotice.TIE_NOTICE,
 			TieNoticeAffix.TIE_NOTICE_AFFIX,
 			Users.USERS,
+			UserType.USER_TYPE,
 			Yard.YARD);
 	}
 }
