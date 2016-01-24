@@ -270,6 +270,14 @@
     <footer th:include="commons::footer">
 
     </footer>
+    <script>
+        $('#loginmodal').on({
+
+            'show.uk.modal': function(){
+                $('#username').focus();
+            }
+        });
+    </script>
 </div>
 </body>
 </html>

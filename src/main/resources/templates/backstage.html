@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title>平台管理</title>
+</head>
+<body>
+<div class="uk-width-medium-1-4" th:fragment="leftnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">系管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navtieelegant"><a href="#" th:href="@{/admin/tieelegant}">风采</a></li>
+                    <li id="navintroduce"><a href="#" >简介</a></li>
+                    <li id="navtiehead"><a href="#"  >系主任</a></li>
+                    <li><a href="#">培养目标</a></li>
+                    <li><a href="#">特色</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>系管理</button>
+    </div>
+    <div id="my-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">系管理</li>
+                <li id="offcanvastieelegant" ><a href="#" th:href="@{/admin/tieelegant}">风采</a></li>
+                <li id="offcanvasintroduce"><a href="#" >简介</a></li>
+                <li id="offcanvastiehead"><a href="#" >系主任</a></li>
+                <li><a href="#">培养目标</a></li>
+                <li><a href="#">特色</a></li>
+                <li>
+                    <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="smalllogout" >
+                        <input type="submit" th:hidden="hidden" />
+                    </form>
+                    <a href="javascript:;" onclick="javascript:$('#smalllogout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

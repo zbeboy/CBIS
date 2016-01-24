@@ -41,6 +41,7 @@ function validate(f){
         $('#oldPassword').removeClass('uk-form-danger');
         $('#newPassword').removeClass('uk-form-danger');
         $('#okPassword').addClass('uk-form-danger');
+        return false;
     }
     $('#oldPassword').removeClass('uk-form-danger');
     $('#newPassword').removeClass('uk-form-danger');
@@ -51,16 +52,16 @@ function validate(f){
 
 function validpassword(obj){
     var v = /^[\w]{6,20}$/;
-    var csrf = $($("input[name='_csrf']:hidden")[0]).val();
     if(!v.test($('#oldPassword').val())){
         $('#ajaxerror').text('*密码长度为6~20长度！');
         $('#oldPassword').addClass('uk-form-danger');
         return;
     } else {
+        var modal = UKLoad();
         $.post('/student/validpassword',{
-            oldPassword:$('#oldPassword').val(),
-            _csrf:csrf
+            oldPassword:$('#oldPassword').val()
         },function(data,status){
+            modal.hide();
             if(status){
                 if(data.state){
                     $('#ajaxerror').text('');

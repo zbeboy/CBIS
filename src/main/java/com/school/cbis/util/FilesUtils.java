@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class FilesUtils {
     public static boolean deleteFile(String path) throws IOException {
-        if (!Objects.isNull(path)) {
+        if (Objects.isNull(path)) {
             return false;
         }
         File file = new File(path);

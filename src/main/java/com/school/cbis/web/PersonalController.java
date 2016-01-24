@@ -1,5 +1,6 @@
 package com.school.cbis.web;
 
+import com.school.cbis.domain.tables.records.UsersRecord;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.util.MD5Util;
 import com.school.cbis.vo.AjaxData;
@@ -32,11 +33,7 @@ public class PersonalController {
      */
     @RequestMapping("/student/revisepassword")
     public String revisePassword(ModelMap map) {
-        map.addAttribute("passworderror", false);//校验旧密码
-        map.addAttribute("revisePasswordVo", new RevisePasswordVo());//页面参数
-        map.addAttribute("validationerror", false);//校验页面参数有错
-        map.addAttribute("validationsuccess", false);//校验成功
-        map.addAttribute("msg", "");//错误消息
+        buildMap(map, false, new RevisePasswordVo(), false, false, "");
         return "/student/revisepassword";
     }
 
@@ -52,32 +49,19 @@ public class PersonalController {
             if (!StringUtils.isEmpty(usersService.getPassword())) {//用户登录密码
                 if (MD5Util.md5(oldPassword).equals(usersService.getPassword())) {//校验旧密码
                     if (StringUtils.trimWhitespace(passwordVo.getNewPassword()).equals(StringUtils.trimWhitespace(passwordVo.getOkPassword()))) {//确认密码一致
-                        if (usersService.updatePassword(StringUtils.trimWhitespace(usersService.getUserName()),MD5Util.md5(passwordVo.getOkPassword()))) {//存入数据库
-                            map.addAttribute("passworderror", false);//校验旧密码
-                            map.addAttribute("revisePasswordVo", new RevisePasswordVo());//页面参数
-                            map.addAttribute("validationerror", false);//校验页面参数有错
-                            map.addAttribute("validationsuccess", true);//校验成功
-                            map.addAttribute("msg", "修改成功，请点击退出按钮，重新登录！");//错误消息
+                        UsersRecord usersRecord = usersService.getUsersInfo(usersService.getUserName());
+                        usersRecord.setPassword(MD5Util.md5(passwordVo.getOkPassword()));
+                        usersRecord.setUsername(usersService.getUserName());
+                        if (usersService.updateUsers(usersRecord)) {//存入数据库
+                            buildMap(map, false, new RevisePasswordVo(), false, true, "修改成功，请点击退出按钮，重新登录！");
                         } else {
-                            map.addAttribute("passworderror", false);//校验旧密码
-                            map.addAttribute("revisePasswordVo", new RevisePasswordVo());//页面参数
-                            map.addAttribute("validationerror", true);//校验页面参数有错
-                            map.addAttribute("validationsuccess", false);//校验成功
-                            map.addAttribute("msg", "保存失败！");//错误消息
+                            buildMap(map, false, new RevisePasswordVo(), true, false, "保存失败！");
                         }
                     } else {
-                        map.addAttribute("passworderror", false);//校验旧密码
-                        map.addAttribute("revisePasswordVo", new RevisePasswordVo());//页面参数
-                        map.addAttribute("validationerror", true);//校验页面参数有错
-                        map.addAttribute("validationsuccess", false);//校验成功
-                        map.addAttribute("msg", "密码不一致！");//错误消息
+                        buildMap(map, false, new RevisePasswordVo(), true, false, "密码不一致！");
                     }
                 } else {
-                    map.addAttribute("passworderror", true);//校验旧密码
-                    map.addAttribute("revisePasswordVo", new RevisePasswordVo());//页面参数
-                    map.addAttribute("validationerror", false);//校验页面参数有错
-                    map.addAttribute("validationsuccess", false);//校验成功
-                    map.addAttribute("msg", "");//错误消息
+                    buildMap(map, true, new RevisePasswordVo(), false, false, "");
                 }
             } else {
                 return "/login";
@@ -88,6 +72,7 @@ public class PersonalController {
 
     /**
      * 验证原来的密码是否正确
+     *
      * @param oldPassword
      * @return ajax
      */
@@ -109,5 +94,24 @@ public class PersonalController {
             ajaxData.setMsg("*密码长度为6~20长度！");
         }
         return ajaxData;
+    }
+
+    /**
+     * 组装消息 modelMap
+     *
+     * @param map               ModelMap
+     * @param passwordError     密码错误
+     * @param revisePasswordVo  页面数据对象
+     * @param validationError   校验数据错误
+     * @param validationSuccess 校验数据成功
+     * @param msg               回调消息
+     */
+    private void buildMap(ModelMap map, boolean passwordError, RevisePasswordVo revisePasswordVo,
+                          boolean validationError, boolean validationSuccess, String msg) {
+        map.addAttribute("passworderror", passwordError);//校验旧密码
+        map.addAttribute("revisePasswordVo", revisePasswordVo);//页面参数
+        map.addAttribute("validationerror", validationError);//校验页面参数有错
+        map.addAttribute("validationsuccess", validationSuccess);//校验成功
+        map.addAttribute("msg", msg);//错误消息
     }
 }

@@ -1,0 +1,302 @@
+/**
+ * Created by lenovo on 2016-01-24.
+ */
+//全局变量 添加子标题和文章模板
+var SUB_ARTICLE = "<div class='uk-alert' data-uk-alert=''>" +
+    "<a href='' class='uk-alert-close uk-close'></a>" +
+    "<div class='uk-form-row'>" +
+    "<label class='uk-form-label' for='title'>标题</label>" +
+    "<div class='uk-form-controls'>" +
+    "<input type='text' class='uk-form-width-large mysubtitle' placeholder='标题' />" +
+    "<p class='uk-text-danger titleerror'></p>" +
+    "</div>" +
+    "</div>" +
+    "<div class='uk-form-row'>" +
+    "<textarea cols='120' class='mysubpage' rows='5' placeholder='文章'></textarea>" +
+    "<p class='uk-text-danger summaryerror'></p>" +
+    "</div>" +
+    "</div>";
+//全局变量 保存图片显示模板代码
+var IMG_SHOW = $('#imgShow').html();
+
+//全局变量 保存服务器图片路径
+var imgPath = "";
+
+$(document).ready(function () {
+    //初始化图片路径，显示图片
+    if ($('#imgPath').text() != '') {
+        var str = $('#imgPath').text().substring($('#imgPath').text().lastIndexOf('\\') + 1, $('#imgPath').text().length);
+        $('#articleimg').attr('src', '/files/tieelegant/' + str);
+        $('#articleimg').data('path', $('#imgPath').text());
+    }
+});
+
+//删除子标题
+var idCount = '';//防止多次调用
+function deleteSubPage(obj) {
+    if (idCount === $(obj).next().text()) {
+        return;
+    }
+    idCount = $(obj).next().text();
+    $.post('/admin/deleteTieElegantSub', {
+        'id': $(obj).next().text()
+    }, function (data, status) {
+        if (status) {
+            if (data.state) {
+                UKBlockUI(data.msg, 1000);
+            } else {
+                UKBlockUI(data.msg, 1000);
+            }
+        }
+    });
+}
+
+//删除系风采
+function deleteTieElegant() {
+    UIkit.modal.confirm("你确定要删除该文章吗？", function () {
+        $.post('/admin/deleteTieElegant', {
+            'id': $('#articleInfoId').text()
+        }, function (data, status) {
+            if (status) {
+                if (data.state) {
+                    UKBlockUIWithUrl(data.msg, 1000, "/admin/tieelegant");
+                } else {
+                    UKBlockUI(data.msg, 1000);
+                }
+            }
+        });
+    });
+}
+
+/**
+ * 动态添加子标题文章
+ */
+function addsubarticle() {
+    $('.uk-sortable').append(SUB_ARTICLE);
+}
+
+/**
+ * 文章实体对象
+ * @param title 大标题
+ * @param summary 文章概述
+ * @param picPath 图片服务端路径
+ * @param subTitle 子标题
+ * @param subPage 子内容
+ */
+function articleData(title, summary, picPath, subTitle, subPage, articleType, row) {
+    this.title = title;
+    this.summary = summary;
+    this.picPath = picPath;
+    this.subTitle = subTitle;
+    this.subPage = subPage;
+    this.articleType = articleType;
+    this.row = row;
+}
+
+/**
+ * 保存文章
+ */
+function updateArticle() {
+
+    /*暂时先不替换html中特殊字符*/
+
+    var title = $('#title').val();
+    /*大标题*/
+    var summary = $('#summary').val();
+    /*文章概述*/
+    var picPath = imgPath;
+    /*图片绝对路径*/
+    var subtitle = $('.mysubtitle');
+    /*子标题数据*/
+
+    var subData = new Array();
+
+    subData.push(new articleData(title, summary, picPath, "", "", "系风采", -1));
+    /*可以没有子标题数据，只组装第一条*/
+    for (var i = 0; i < subtitle.length; i++) {
+        if ($($('.mysubtitle')[i]).val().trim().length > 0 || $($('.mysubpage')[i]).val().trim().length > 0) {/*当子标题与内容都为空时，不算入文章*/
+            if ($($('.mysubtitle')[i]).val().trim().length <= 50) {
+                if ($($('.mysubpage')[i]).val().trim().length <= 2000) {
+                    subData.push(new articleData(title, summary, picPath, $($('.mysubtitle')[i]).val(), $($('.mysubpage')[i]).val(), "系风采", i));
+                } else {
+                    $($('.summaryerror')[i]).text("文章简介长度应小于2000个字符！");
+                }
+            } else {
+                $($('.titleerror')[i]).text("标题长度应小于50个字符！");
+            }
+        }
+    }
+
+    /*校验标题*/
+    if ($('#title').val().trim().length <= 0 || $('#title').val().trim().length > 50) {
+        $('#titileError').text('请添加1~50个字符长度的标题！');
+        $('#title').removeClass('uk-form-success').addClass('uk-form-danger');
+        $('#title').focus();
+        return;
+    } else {
+        $('#titileError').text('');
+        $('#title').removeClass('uk-form-danger').addClass('uk-form-success');
+    }
+
+    /*校验文章*/
+    if ($('#summary').val().trim().length < 6 || $('#summary').val().trim().length > 2000) {
+        $('#summaryError').text('请添加6~2000个字符长度的文章简介！');
+        $('#summary').removeClass('uk-form-success').addClass('uk-form-danger');
+        $('#summary').focus();
+        return;
+    } else {
+        $('#summaryError').text('');
+        $('#summary').removeClass('uk-form-danger').addClass('uk-form-success');
+    }
+
+    /*校验是否上传了封面图片 */
+    if (picPath.trim().length <= 0) {
+        UKalert("请先上传一张封面图片！");
+        return;
+    }
+
+    /*发送数据到后台*/
+    sendArtitle(JSON.stringify(subData));
+}
+
+/**
+ * ajax 发送文章
+ * @param subData json 字符串数据
+ */
+function sendArtitle(subData) {
+
+    var modal = UKLoad();
+    /*加载......*/
+
+    $.post('/admin/updateElegant', {
+        'subData': subData,
+        'id': $('#articleInfoId').text()
+    }, function (data, status) {
+
+        modal.hide();
+        /*shut down load.*/
+
+        if (status) {
+            if (data.state) {
+                UKBlockUIWithUrl(data.msg, 2000, "/")//fix here to 系风采展示页面
+            } else {
+                UKBlockUI(data.msg, 2000);
+            }
+        } else {
+
+        }
+    }, 'json');
+}
+
+/**
+ * 校验标题
+ */
+function writerTitle() {
+    if ($('#title').val().trim().length <= 0 || $('#title').val().trim().length > 50) {
+        $('#titileError').text('请添加1~50个字符长度的标题！');
+        $('#title').removeClass('uk-form-success').addClass('uk-form-danger');
+    } else {
+        $('#titileError').text('');
+        $('#title').removeClass('uk-form-danger').addClass('uk-form-success');
+    }
+}
+
+/**
+ * 校验概述
+ */
+function writerSummary() {
+    if ($('#summary').val().trim().length < 6 || $('#summary').val().trim().length > 2000) {
+        $('#summaryError').text('请添加6~2000个字符长度的文章简介！');
+        $('#summary').removeClass('uk-form-success').addClass('uk-form-danger');
+    } else {
+        $('#summaryError').text('');
+        $('#summary').removeClass('uk-form-danger').addClass('uk-form-success');
+    }
+}
+
+/**
+ * 上传图片到服务器端
+ */
+$(function () {
+    var progressbar = $("#progressbar"),
+        bar = progressbar.find('.uk-progress-bar'),
+        settings = {
+
+            action: '/admin/uploadPicture', // upload url
+
+            allow: '*.(jpg|gif|png|JPEG|JPG|GIF|PNG)', // allow only images
+
+            params: {'pathname': 'tieelegant'},//json 数据 该文件服务器端相对 files下路径
+
+            loadstart: function () {
+                bar.css("width", "0%").text("0%");
+                progressbar.removeClass("uk-hidden");
+            },
+
+            progress: function (percent) {
+                percent = Math.ceil(percent);
+                bar.css("width", percent + "%").text(percent + "%");
+            },
+
+            allcomplete: function (response) {
+
+                bar.css("width", "100%").text("100%");
+
+                setTimeout(function () {
+                    progressbar.addClass("uk-hidden");
+                }, 250);
+
+                //隐藏上传组件
+                $('#upload-drop').addClass('uk-hidden');
+                //获取服务器端图片相对路径
+                var str = response.substring(response.lastIndexOf('\\') + 1, response.length);
+
+                //若图片组件已被删除，需要重新添加图片显示组件
+                if ($('#imgShow').html().trim().length <= 0) {
+                    $('#imgShow').append(IMG_SHOW);
+                }
+
+                //显示图片
+                $('#articleimg').attr('src', '/files/tieelegant/' + str);
+                $('#articleimg').data('path', response);
+                $('#articleimg').parent().parent().removeClass('uk-hidden');
+
+                //保存服务器端绝对路径
+                imgPath = response;
+            }
+        };
+
+    var select = UIkit.uploadSelect($("#upload-select"), settings),
+        drop = UIkit.uploadDrop($("#upload-drop"), settings);
+});
+
+/**
+ * 删除图片 包括服务器端图片路径
+ */
+function cleanimg(obj) {
+
+    var modal = UKLoad();
+    /*加载......*/
+    var path = $(obj).next().children().data('path');
+
+    $.post("/admin/deleteTieElegantImg", {
+        'path': path,
+        'id': $('#articleInfoId').text()
+    }, function (data, status) {
+
+        modal.hide();
+        /*shut down load*/
+
+        if (status) {/*网络正常*/
+            if (data.state) {
+                /*删除成功 重新显示上传组件*/
+                $('#upload-drop').removeClass('uk-hidden');
+                $('#articleimg').parent().parent().addClass('uk-hidden');
+            }
+            UKBlockUI(data.msg, 2000);//提示消息
+        } else {
+            UKBlockUI("网络异常，请稍后重试！", 3000);
+        }
+    });
+}
+

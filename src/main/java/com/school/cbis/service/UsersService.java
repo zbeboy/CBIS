@@ -1,5 +1,11 @@
 package com.school.cbis.service;
 
+import com.school.cbis.domain.tables.records.StudentRecord;
+import com.school.cbis.domain.tables.records.TeacherRecord;
+import com.school.cbis.domain.tables.records.UsersRecord;
+import org.jooq.Record;
+import org.jooq.Result;
+
 /**
  * Created by lenovo on 2016-01-05.
  */
@@ -18,10 +24,23 @@ public interface UsersService {
     String getPassword();
 
     /**
+     * 根据用户名获取Users表完整信息
+     * @param username
+     * @return 用户信息
+     */
+    public UsersRecord getUsersInfo(String username);
+
+    /**
      * 根据用户名更新用户密码
      *
      * @return 更新成功消息
      */
-    boolean updatePassword(String username,String newPassword);
+    boolean updateUsers(UsersRecord usersRecord);
 
+    /**
+     * 通过用户名获得用户完整有效信息，包括所在院，系，班级信息
+     * @param username
+     * @return 用户完整有效信息
+     */
+    public Result<Record> getUsersInfoAll(String username);
 }

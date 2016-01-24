@@ -18,7 +18,7 @@
   <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}" ></script>
 </head>
 
-<body class="uk-height-1-1">
+<body class="uk-height-1-1" onload="javascript:$('#username').focus();">
 
 <div class="uk-vertical-align uk-text-center uk-height-1-1">
   <div class="uk-vertical-align-middle" style="width: 250px;">
@@ -26,10 +26,10 @@
     <h4 th:if="${param.logout}" class="uk-text-danger">你已经登出！</h4>
     <form class="uk-panel uk-panel-box uk-form" name="form" th:action="@{/login}" action="/login" method="POST">
       <div class="uk-form-row">
-        <input class="uk-width-1-1 uk-form-large" type="text" name="username" placeholder="用户名" />
+        <input class="uk-width-1-1 uk-form-large" type="text" id="username" name="username" placeholder="用户名" />
       </div>
       <div class="uk-form-row">
-        <input class="uk-width-1-1 uk-form-large" type="password" name="password" placeholder="密码" />
+        <input class="uk-width-1-1 uk-form-large" type="password" id="password" name="password" placeholder="密码" />
       </div>
       <div class="uk-form-row">
         <button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">登录</button>

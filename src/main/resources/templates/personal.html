@@ -30,7 +30,10 @@
                 <li><a href="#">修改资料</a></li>
                 <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/revisepassword}">修改密码</a></li>
                 <li>
-                    <a href="#">退出登录</a>
+                    <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="smalllogout" >
+                        <input type="submit" th:hidden="hidden" />
+                    </form>
+                    <a href="javascript:;" onclick="javascript:$('#smalllogout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>
             </ul>
         </div>

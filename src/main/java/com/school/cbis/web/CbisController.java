@@ -32,9 +32,6 @@ public class CbisController {
      */
     @RequestMapping("/backstage")
     public String backstage() {
-        //是否已登录
-        System.out.println("########################");
-        System.out.println(StringUtils.isEmpty(usersService.getUserName()) );
         if(StringUtils.isEmpty(usersService.getUserName())){
             return "/login";
         }
