@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -31,7 +33,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord> implements Record13<Integer, Integer, String, String, String, Timestamp, String, Integer, Integer, Date, Date, String, String> {
 
-	private static final long serialVersionUID = 1032627957;
+	private static final long serialVersionUID = -293321660;
 
 	/**
 	 * Setter for <code>cbis.teach_task_info.id</code>.
@@ -43,6 +45,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -57,6 +60,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.tie_id</code>.
 	 */
+	@NotNull
 	public Integer getTieId() {
 		return (Integer) getValue(1);
 	}
@@ -71,6 +75,8 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_task_file_url</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getTeachTaskFileUrl() {
 		return (String) getValue(2);
 	}
@@ -85,6 +91,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_task_file_size</code>.
 	 */
+	@Size(max = 50)
 	public String getTeachTaskFileSize() {
 		return (String) getValue(3);
 	}
@@ -99,6 +106,8 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_task_file_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getTeachTaskFileName() {
 		return (String) getValue(4);
 	}
@@ -127,6 +136,8 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_task_term</code>.
 	 */
+	@NotNull
+	@Size(max = 20)
 	public String getTeachTaskTerm() {
 		return (String) getValue(6);
 	}
@@ -155,6 +166,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_type_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTypeId() {
 		return (Integer) getValue(8);
 	}
@@ -169,6 +181,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.term_start_time</code>.
 	 */
+	@NotNull
 	public Date getTermStartTime() {
 		return (Date) getValue(9);
 	}
@@ -183,6 +196,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.term_end_time</code>.
 	 */
+	@NotNull
 	public Date getTermEndTime() {
 		return (Date) getValue(10);
 	}
@@ -197,6 +211,8 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.file_user</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getFileUser() {
 		return (String) getValue(11);
 	}
@@ -211,6 +227,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.file_type</code>.
 	 */
+	@Size(max = 15)
 	public String getFileType() {
 		return (String) getValue(12);
 	}

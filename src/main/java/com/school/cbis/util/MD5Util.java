@@ -3,12 +3,14 @@ package com.school.cbis.util;
 /**
  * Created by lenovo on 2015/8/31.
  */
+
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 import java.security.NoSuchAlgorithmException;
 
 public class MD5Util {
+
     public static String md5(String password) {
         Md5PasswordEncoder md5 = new Md5PasswordEncoder();
         // false 表示：生成32位的Hex版, 这也是encodeHashAsBase64的, Acegi 默认配置; true  表示：生成24位的Base64版
@@ -16,6 +18,7 @@ public class MD5Util {
         String pwd = md5.encodePassword(password, null);
         return pwd;
     }
+
     public static String sha_256(String password) throws NoSuchAlgorithmException {
         ShaPasswordEncoder sha = new ShaPasswordEncoder(256);
         sha.setEncodeHashAsBase64(true);
@@ -32,7 +35,7 @@ public class MD5Util {
     }
 
 
-    public static String md5_SystemWideSaltSource (String password) {
+    public static String md5_SystemWideSaltSource(String password) {
         Md5PasswordEncoder md5 = new Md5PasswordEncoder();
         md5.setEncodeHashAsBase64(false);
 

@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.FourItemsType;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItemsTypeRecord extends UpdatableRecordImpl<FourItemsTypeRecord> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = 531437102;
+	private static final long serialVersionUID = 1599919008;
 
 	/**
 	 * Setter for <code>cbis.four_items_type.id</code>.
@@ -40,6 +42,7 @@ public class FourItemsTypeRecord extends UpdatableRecordImpl<FourItemsTypeRecord
 	/**
 	 * Getter for <code>cbis.four_items_type.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,8 @@ public class FourItemsTypeRecord extends UpdatableRecordImpl<FourItemsTypeRecord
 	/**
 	 * Getter for <code>cbis.four_items_type.name</code>.
 	 */
+	@NotNull
+	@Size(max = 25)
 	public String getName() {
 		return (String) getValue(1);
 	}

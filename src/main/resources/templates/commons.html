@@ -14,7 +14,7 @@
 <nav th:fragment="nav" class="uk-navbar uk-margin-large-bottom"
      data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
 
-    <a class="uk-navbar-brand uk-hidden-small" href="/">信息工程系</a>
+    <a class="uk-navbar-brand uk-hidden-small" href="/" th:href="@{/}" >信息工程系</a>
     <ul class="uk-navbar-nav uk-hidden-small">
         <li class="uk-parent" data-uk-dropdown="" >
             <a>教学工作</a>
@@ -72,13 +72,13 @@
             </li>
             <li>
                 <a href="#loginmodal" data-uk-modal="" sec:authorize="isAnonymous()">进入后台管理</a>
-                <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="logout" >
-                    <input type="submit" th:hidden="hidden" />
-                </form>
                 <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
             </li>
         </ul>
     </div>
+    <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="logout" class="uk-hidden" >
+        <input type="submit" />
+    </form>
     <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
     <div class="uk-navbar-brand uk-navbar-center uk-visible-small">信息工程系</div>
     <div id="offcanvas" class="uk-offcanvas">
@@ -128,10 +128,7 @@
                 </li>
                 <li>
                     <a href="#loginmodal" data-uk-modal="" sec:authorize="isAnonymous()">登录</a>
-                    <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="smalllogout" >
-                        <input type="submit" th:hidden="hidden" />
-                    </form>
-                    <a href="javascript:;" onclick="javascript:$('#smalllogout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>
             </ul>
         </div>
@@ -147,12 +144,12 @@
         </div>
         <div class="uk-vertical-align uk-text-center uk-height-1-1">
             <div class="uk-vertical-align-middle" style="width: 250px;">
-                <form class="uk-panel uk-form" name="form" th:action="@{/login}" action="/login" method="POST">
+                <form class="uk-panel uk-form" name="form" th:action="@{/login}" action="/login" method="POST" data-validator-option="{stopOnError:false, timely:'yellow_right_effect'}" >
                     <div class="uk-form-row">
-                        <input class="uk-width-1-1 uk-form-large" id="username" type="text" name="username" placeholder="用户名" />
+                        <input class="uk-width-1-1 uk-form-large" id="username" type="text" name="username" placeholder="用户名" data-rule="required;" data-msg-required="请填写用户名!"  data-tip="您的编号" />
                     </div>
                     <div class="uk-form-row">
-                        <input class="uk-width-1-1 uk-form-large" id="password" type="password" name="password" placeholder="密码" />
+                        <input class="uk-width-1-1 uk-form-large" id="password" type="password" name="password" placeholder="密码" data-rule="required;" data-msg-required="请填写密码!"  data-tip="密码由6位及以上任意字符组成" />
                     </div>
                     <div class="uk-form-row">
                         <button type="submit" class="uk-width-1-1 uk-button uk-button-primary uk-button-large">登录</button>

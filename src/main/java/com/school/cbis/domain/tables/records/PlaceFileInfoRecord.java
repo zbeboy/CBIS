@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.PlaceFileInfo;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord> implements Record8<Integer, Integer, String, String, String, Timestamp, String, String> {
 
-	private static final long serialVersionUID = -899817284;
+	private static final long serialVersionUID = 1321784845;
 
 	/**
 	 * Setter for <code>cbis.place_file_info.id</code>.
@@ -42,6 +44,7 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,7 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.teach_task_info_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTaskInfoId() {
 		return (Integer) getValue(1);
 	}
@@ -70,6 +74,8 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.place_file_info_url</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getPlaceFileInfoUrl() {
 		return (String) getValue(2);
 	}
@@ -84,6 +90,7 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.place_file_info_size</code>.
 	 */
+	@Size(max = 50)
 	public String getPlaceFileInfoSize() {
 		return (String) getValue(3);
 	}
@@ -98,6 +105,8 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.place_file_info_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getPlaceFileInfoName() {
 		return (String) getValue(4);
 	}
@@ -126,6 +135,8 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.file_user</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getFileUser() {
 		return (String) getValue(6);
 	}
@@ -140,6 +151,7 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.file_type</code>.
 	 */
+	@Size(max = 15)
 	public String getFileType() {
 		return (String) getValue(7);
 	}

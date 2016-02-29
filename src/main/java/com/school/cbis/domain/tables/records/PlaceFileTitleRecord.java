@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.PlaceFileTitle;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleRecord> implements Record14<Integer, String, Integer, Integer, Integer, Integer, String, String, String, String, Byte, Byte, Byte, Integer> {
 
-	private static final long serialVersionUID = 1608487938;
+	private static final long serialVersionUID = -527325419;
 
 	/**
 	 * Setter for <code>cbis.place_file_title.id</code>.
@@ -40,6 +42,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title</code>.
 	 */
+	@Size(max = 150)
 	public String getTitle() {
 		return (String) getValue(1);
 	}
@@ -68,6 +72,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_x</code>.
 	 */
+	@NotNull
 	public Integer getTitleX() {
 		return (Integer) getValue(2);
 	}
@@ -82,6 +87,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_y</code>.
 	 */
+	@NotNull
 	public Integer getTitleY() {
 		return (Integer) getValue(3);
 	}
@@ -124,6 +130,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_font</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFont() {
 		return (String) getValue(6);
 	}
@@ -138,6 +145,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_font_size</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFontSize() {
 		return (String) getValue(7);
 	}
@@ -152,6 +160,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_font_color</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFontColor() {
 		return (String) getValue(8);
 	}
@@ -166,6 +175,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.title_background</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleBackground() {
 		return (String) getValue(9);
 	}
@@ -222,6 +232,7 @@ public class PlaceFileTitleRecord extends UpdatableRecordImpl<PlaceFileTitleReco
 	/**
 	 * Getter for <code>cbis.place_file_title.place_file_info_id</code>.
 	 */
+	@NotNull
 	public Integer getPlaceFileInfoId() {
 		return (Integer) getValue(13);
 	}

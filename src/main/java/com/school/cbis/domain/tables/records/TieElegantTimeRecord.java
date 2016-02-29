@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.TieElegantTime;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieElegantTimeRecord extends UpdatableRecordImpl<TieElegantTimeRecord> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = -1873654500;
+	private static final long serialVersionUID = -1758036166;
 
 	/**
 	 * Setter for <code>cbis.tie_elegant_time.id</code>.
@@ -40,6 +42,7 @@ public class TieElegantTimeRecord extends UpdatableRecordImpl<TieElegantTimeReco
 	/**
 	 * Getter for <code>cbis.tie_elegant_time.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,8 @@ public class TieElegantTimeRecord extends UpdatableRecordImpl<TieElegantTimeReco
 	/**
 	 * Getter for <code>cbis.tie_elegant_time.time</code>.
 	 */
+	@NotNull
+	@Size(max = 10)
 	public String getTime() {
 		return (String) getValue(1);
 	}

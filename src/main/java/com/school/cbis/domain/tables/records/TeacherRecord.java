@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.Teacher;
 import java.sql.Date;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements Record12<Integer, Integer, String, String, String, String, Date, String, String, Integer, String, String> {
 
-	private static final long serialVersionUID = 1831358049;
+	private static final long serialVersionUID = 1345200792;
 
 	/**
 	 * Setter for <code>cbis.teacher.id</code>.
@@ -42,6 +44,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.tie_id</code>.
 	 */
+	@NotNull
 	public Integer getTieId() {
 		return (Integer) getValue(1);
 	}
@@ -70,6 +74,8 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_job_number</code>.
 	 */
+	@NotNull
+	@Size(max = 25)
 	public String getTeacherJobNumber() {
 		return (String) getValue(2);
 	}
@@ -84,6 +90,8 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_name</code>.
 	 */
+	@NotNull
+	@Size(max = 20)
 	public String getTeacherName() {
 		return (String) getValue(3);
 	}
@@ -98,6 +106,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_phone</code>.
 	 */
+	@Size(max = 15)
 	public String getTeacherPhone() {
 		return (String) getValue(4);
 	}
@@ -112,6 +121,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_email</code>.
 	 */
+	@Size(max = 100)
 	public String getTeacherEmail() {
 		return (String) getValue(5);
 	}
@@ -140,6 +150,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_head_photo</code>.
 	 */
+	@Size(max = 800)
 	public String getTeacherHeadPhoto() {
 		return (String) getValue(7);
 	}
@@ -154,6 +165,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_sex</code>.
 	 */
+	@Size(max = 2)
 	public String getTeacherSex() {
 		return (String) getValue(8);
 	}
@@ -182,6 +194,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_identity_card</code>.
 	 */
+	@Size(max = 20)
 	public String getTeacherIdentityCard() {
 		return (String) getValue(10);
 	}
@@ -196,6 +209,7 @@ public class TeacherRecord extends UpdatableRecordImpl<TeacherRecord> implements
 	/**
 	 * Getter for <code>cbis.teacher.teacher_address</code>.
 	 */
+	@Size(max = 200)
 	public String getTeacherAddress() {
 		return (String) getValue(11);
 	}

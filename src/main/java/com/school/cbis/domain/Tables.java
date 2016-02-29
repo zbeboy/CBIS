@@ -18,6 +18,7 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
+import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
 import com.school.cbis.domain.tables.SystemInform;
@@ -123,6 +124,11 @@ public class Tables {
 	 * The table cbis.place_file_title
 	 */
 	public static final PlaceFileTitle PLACE_FILE_TITLE = com.school.cbis.domain.tables.PlaceFileTitle.PLACE_FILE_TITLE;
+
+	/**
+	 * The table cbis.schema_version
+	 */
+	public static final SchemaVersion SCHEMA_VERSION = com.school.cbis.domain.tables.SchemaVersion.SCHEMA_VERSION;
 
 	/**
 	 * The table cbis.student

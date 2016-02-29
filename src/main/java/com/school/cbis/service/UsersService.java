@@ -1,5 +1,6 @@
 package com.school.cbis.service;
 
+import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.domain.tables.records.StudentRecord;
 import com.school.cbis.domain.tables.records.TeacherRecord;
 import com.school.cbis.domain.tables.records.UsersRecord;
@@ -28,19 +29,19 @@ public interface UsersService {
      * @param username
      * @return 用户信息
      */
-    public UsersRecord getUsersInfo(String username);
+    public Users findByUsername(String username);
 
     /**
      * 根据用户名更新用户密码
      *
      * @return 更新成功消息
      */
-    boolean updateUsers(UsersRecord usersRecord);
+    void update(Users users);
 
     /**
      * 通过用户名获得用户完整有效信息，包括所在院，系，班级信息
      * @param username
      * @return 用户完整有效信息
      */
-    public Result<Record> getUsersInfoAll(String username);
+    public Result<Record> findAll(String username);
 }

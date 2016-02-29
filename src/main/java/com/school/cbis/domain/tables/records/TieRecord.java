@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Tie;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9<Integer, String, String, String, Integer, Integer, Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = 2095377844;
+	private static final long serialVersionUID = 1876150787;
 
 	/**
 	 * Setter for <code>cbis.tie.id</code>.
@@ -40,6 +42,7 @@ public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9
 	/**
 	 * Getter for <code>cbis.tie.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,8 @@ public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9
 	/**
 	 * Getter for <code>cbis.tie.tie_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getTieName() {
 		return (String) getValue(1);
 	}
@@ -68,6 +73,7 @@ public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9
 	/**
 	 * Getter for <code>cbis.tie.tie_address</code>.
 	 */
+	@Size(max = 200)
 	public String getTieAddress() {
 		return (String) getValue(2);
 	}
@@ -82,6 +88,7 @@ public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9
 	/**
 	 * Getter for <code>cbis.tie.tie_phone</code>.
 	 */
+	@Size(max = 20)
 	public String getTiePhone() {
 		return (String) getValue(3);
 	}
@@ -152,6 +159,7 @@ public class TieRecord extends UpdatableRecordImpl<TieRecord> implements Record9
 	/**
 	 * Getter for <code>cbis.tie.yard_id</code>.
 	 */
+	@NotNull
 	public Integer getYardId() {
 		return (Integer) getValue(8);
 	}

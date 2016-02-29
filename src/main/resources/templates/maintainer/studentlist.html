@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>学生管理</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
+
+    <!-- nice validator css-->
+    <link rel="stylesheet" href="validator/jquery.validator.css" th:href="@{/validator/jquery.validator.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
+    <script src="js/components/pagination.js" th:src="@{/js/components/pagination.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
+
+    <!-- nice validator js-->
+    <script type="text/javascript" src="validator/jquery.validator.js"
+            th:src="@{/validator/jquery.validator.js }"></script>
+    <script type="text/javascript" src="validator/local/zh-CN.js" th:src="@{/validator/local/zh-CN.js}"></script>
+
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#navstudentmanager').addClass('uk-active');
+            $('#offcanvasstudentmanager').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>平台管理</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::usersnav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <form class="uk-form">
+                <fieldset data-uk-margin="">
+                    <legend>学生管理</legend>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-3 uk-text-left">
+                            <button class="uk-button uk-button-success uk-margin-small-top" type="button">添加用户</button>
+                        </div>
+                        <div class="uk-width-2-3 uk-text-right">
+                            <input type="text" placeholder="姓名" class="uk-margin-small-top"/>
+                            <input type="text" placeholder="学号" class="uk-margin-small-top"/>
+                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <br/>
+            <ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-3">
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">张三</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span>正常</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">王麻子</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span>正常</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">李四</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span class="uk-text-danger">注销</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">京东</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span>正常</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">林海</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span>正常</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
+                        <h3 class="uk-panel-title">帝王</h3>
+                        <ul class="uk-list uk-list-space">
+                            <li>学号:<span>2012118505129</span></li>
+                            <li>班级:<span>计科1211</span></li>
+                            <li>状态:<span>正常</span></li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-button-primary uk-float-right" type="button">编辑</button>
+                                <button class="uk-button uk-float-left" type="button">重置</button>
+                            </li>
+                            <li class="uk-clearfix">
+                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <button class="uk-button uk-button-danger uk-float-left" type="button">状态</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="uk-pagination" data-uk-pagination="{items:100, itemsOnPage:10}"></ul>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+
+<script th:src="@{/js/cbis/js/studentlist.js}"
+        src="js/cbis/js/studentlist.js"></script>
+</body>
+</html>

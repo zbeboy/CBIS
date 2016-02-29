@@ -12,11 +12,12 @@
             <div class="uk-panel uk-panel-box">
                 <h3 class="uk-panel-title">系管理</h3>
                 <ul class="uk-nav uk-nav-side" data-uk-nav="">
-                    <li id="navtieelegant"><a href="#" th:href="@{/admin/tieelegant}">风采</a></li>
-                    <li id="navintroduce"><a href="#" >简介</a></li>
-                    <li id="navtiehead"><a href="#"  >系主任</a></li>
-                    <li><a href="#">培养目标</a></li>
-                    <li><a href="#">特色</a></li>
+                    <li id="navtiemanager"><a href="#" th:href="@{/maintainer/tieManager}">系管理</a> </li>
+                    <li id="navtieelegant"><a href="#" th:href="@{/maintainer/tieElegant}">风采</a></li>
+                    <li id="navintroduce"><a href="#" th:href="@{/maintainer/tieintroduce}" >简介</a></li>
+                    <li id="navtiehead"><a href="#" th:href="@{/maintainer/tiehead}" >系主任</a></li>
+                    <li id="navtietraingoal"><a href="#" th:href="@{/maintainer/tietraingoal}">培养目标</a></li>
+                    <li id="navtieitem"><a href="#" th:href="@{/maintainer/tieitem}">特色</a></li>
                 </ul>
             </div>
         </div>
@@ -28,16 +29,108 @@
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
                 <li class="uk-nav-header">系管理</li>
-                <li id="offcanvastieelegant" ><a href="#" th:href="@{/admin/tieelegant}">风采</a></li>
-                <li id="offcanvasintroduce"><a href="#" >简介</a></li>
-                <li id="offcanvastiehead"><a href="#" >系主任</a></li>
-                <li><a href="#">培养目标</a></li>
-                <li><a href="#">特色</a></li>
+                <li id="offcanvastiemanager"><a href="#" th:href="@{/maintainer/tieManager}">系管理</a> </li>
+                <li id="offcanvastieelegant" ><a href="#" th:href="@{/maintainer/tieElegant}">风采</a></li>
+                <li id="offcanvasintroduce"><a href="#" th:href="@{/maintainer/tieintroduce}" >简介</a></li>
+                <li id="offcanvastiehead"><a href="#" th:href="@{/maintainer/tiehead}" >系主任</a></li>
+                <li id="offcanvastietraingoal"><a href="#" th:href="@{/maintainer/tietraingoal}">培养目标</a></li>
+                <li id="offcanvastieitem"><a href="#" th:href="@{/maintainer/tieitem}">特色</a></li>
                 <li>
-                    <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()" id="smalllogout" >
-                        <input type="submit" th:hidden="hidden" />
-                    </form>
-                    <a href="javascript:;" onclick="javascript:$('#smalllogout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 专业管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="majornav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">专业管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navmajormanager"><a href="#" th:href="@{/maintainer/majormanager}">专业管理</a> </li>
+                    <li id="navmajorintroduce"><a href="#" th:href="@{/maintainer/majorintroduce}" >简介</a></li>
+                    <li id="navmajorhead"><a href="#" th:href="@{/maintainer/majorhead}" >专业带头人</a></li>
+                    <li id="navmajortraingoal"><a href="#" th:href="@{/maintainer/majortraininggoal}">培养目标</a></li>
+                    <li id="navmajortrait"><a href="#" th:href="@{/maintainer/majortrait}">特色</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#major-id'}"><i class="uk-icon-reorder"></i>专业管理</button>
+    </div>
+    <div id="major-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">专业管理</li>
+                <li id="offcanvasmajormanager"><a href="#" th:href="@{/maintainer/majormanager}">专业管理</a> </li>
+                <li id="offcanvasmajorintroduce"><a href="#" th:href="@{/maintainer/majorintroduce}" >简介</a></li>
+                <li id="offcanvasmajorhead"><a href="#" th:href="@{/maintainer/majorhead}" >专业带头人</a></li>
+                <li id="offcanvasmajortraingoal"><a href="#" th:href="@{/maintainer/majortraininggoal}">培养目标</a></li>
+                <li id="offcanvasmajortrait"><a href="#" th:href="@{/maintainer/majortrait}">特色</a></li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 班级管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="gradenav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">班级管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navgrademanager"><a href="#" th:href="@{/maintainer/grademanager}">班级管理</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#grade-id'}"><i class="uk-icon-reorder"></i>班级管理</button>
+    </div>
+    <div id="grade-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">班级管理</li>
+                <li id="offcanvasgrademanager"><a href="#" th:href="@{/maintainer/majormanager}">班级管理</a> </li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 用户管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="usersnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">用户管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navstudentmanager"><a href="#" th:href="@{/maintainer/studentmanager}">学生管理</a> </li>
+                    <li id="navteachermanager"><a href="#" th:href="@{/maintainer/teachermanager}">教师管理</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#users-id'}"><i class="uk-icon-reorder"></i>用户管理</button>
+    </div>
+    <div id="users-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">用户管理</li>
+                <li id="offcanvasstudentmanager"><a href="#" th:href="@{/maintainer/studentmanager}">学生管理</a> </li>
+                <li id="offcanvasteachermanager"><a href="#" th:href="@{/maintainer/teachermanager}">教师管理</a> </li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>
             </ul>
         </div>

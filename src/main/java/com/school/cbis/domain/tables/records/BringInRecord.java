@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.BringIn;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BringInRecord extends UpdatableRecordImpl<BringInRecord> implements Record4<Integer, Integer, String, Integer> {
 
-	private static final long serialVersionUID = 1902135961;
+	private static final long serialVersionUID = -200561289;
 
 	/**
 	 * Setter for <code>cbis.bring_in.id</code>.
@@ -40,6 +42,7 @@ public class BringInRecord extends UpdatableRecordImpl<BringInRecord> implements
 	/**
 	 * Getter for <code>cbis.bring_in.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -68,6 +71,7 @@ public class BringInRecord extends UpdatableRecordImpl<BringInRecord> implements
 	/**
 	 * Getter for <code>cbis.bring_in.HR_email</code>.
 	 */
+	@Size(max = 100)
 	public String getHrEmail() {
 		return (String) getValue(2);
 	}
@@ -82,6 +86,7 @@ public class BringInRecord extends UpdatableRecordImpl<BringInRecord> implements
 	/**
 	 * Getter for <code>cbis.bring_in.tie_id</code>.
 	 */
+	@NotNull
 	public Integer getTieId() {
 		return (Integer) getValue(3);
 	}

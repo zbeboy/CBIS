@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.ArticleInfo;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> implements Record7<Integer, String, String, Timestamp, Integer, String, String> {
 
-	private static final long serialVersionUID = -1445858257;
+	private static final long serialVersionUID = 2000764223;
 
 	/**
 	 * Setter for <code>cbis.article_info.id</code>.
@@ -42,6 +44,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.big_title</code>.
 	 */
+	@Size(max = 50)
 	public String getBigTitle() {
 		return (String) getValue(1);
 	}
@@ -70,6 +74,8 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.article_writer</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getArticleWriter() {
 		return (String) getValue(2);
 	}
@@ -98,6 +104,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.article_type_id</code>.
 	 */
+	@NotNull
 	public Integer getArticleTypeId() {
 		return (Integer) getValue(4);
 	}
@@ -112,6 +119,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.article_content</code>.
 	 */
+	@Size(max = 2000)
 	public String getArticleContent() {
 		return (String) getValue(5);
 	}
@@ -126,6 +134,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.article_photo_url</code>.
 	 */
+	@Size(max = 500)
 	public String getArticlePhotoUrl() {
 		return (String) getValue(6);
 	}

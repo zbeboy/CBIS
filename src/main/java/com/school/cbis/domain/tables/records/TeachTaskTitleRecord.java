@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.TeachTaskTitle;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleRecord> implements Record14<Integer, String, Integer, Integer, Integer, Integer, String, String, String, String, Byte, Byte, Byte, Integer> {
 
-	private static final long serialVersionUID = -1677031825;
+	private static final long serialVersionUID = -2035022048;
 
 	/**
 	 * Setter for <code>cbis.teach_task_title.id</code>.
@@ -40,6 +42,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title</code>.
 	 */
+	@Size(max = 150)
 	public String getTitle() {
 		return (String) getValue(1);
 	}
@@ -68,6 +72,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_x</code>.
 	 */
+	@NotNull
 	public Integer getTitleX() {
 		return (Integer) getValue(2);
 	}
@@ -82,6 +87,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_y</code>.
 	 */
+	@NotNull
 	public Integer getTitleY() {
 		return (Integer) getValue(3);
 	}
@@ -124,6 +130,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_font</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFont() {
 		return (String) getValue(6);
 	}
@@ -138,6 +145,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_font_size</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFontSize() {
 		return (String) getValue(7);
 	}
@@ -152,6 +160,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_font_color</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleFontColor() {
 		return (String) getValue(8);
 	}
@@ -166,6 +175,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.title_background</code>.
 	 */
+	@Size(max = 25)
 	public String getTitleBackground() {
 		return (String) getValue(9);
 	}
@@ -222,6 +232,7 @@ public class TeachTaskTitleRecord extends UpdatableRecordImpl<TeachTaskTitleReco
 	/**
 	 * Getter for <code>cbis.teach_task_title.teach_task_info_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTaskInfoId() {
 		return (Integer) getValue(13);
 	}

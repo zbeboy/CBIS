@@ -18,6 +18,7 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
+import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
 import com.school.cbis.domain.tables.SystemInform;
@@ -61,7 +62,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = 1070811215;
+	private static final long serialVersionUID = 1902622799;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -98,6 +99,7 @@ public class Cbis extends SchemaImpl {
 			PlaceFileContent.PLACE_FILE_CONTENT,
 			PlaceFileInfo.PLACE_FILE_INFO,
 			PlaceFileTitle.PLACE_FILE_TITLE,
+			SchemaVersion.SCHEMA_VERSION,
 			Student.STUDENT,
 			StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO,
 			SystemInform.SYSTEM_INFORM,

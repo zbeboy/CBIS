@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Authorities;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record2;
@@ -27,7 +29,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthoritiesRecord extends TableRecordImpl<AuthoritiesRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = 955998600;
+	private static final long serialVersionUID = 1487965528;
 
 	/**
 	 * Setter for <code>cbis.authorities.username</code>.
@@ -39,6 +41,8 @@ public class AuthoritiesRecord extends TableRecordImpl<AuthoritiesRecord> implem
 	/**
 	 * Getter for <code>cbis.authorities.username</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getUsername() {
 		return (String) getValue(0);
 	}
@@ -53,6 +57,8 @@ public class AuthoritiesRecord extends TableRecordImpl<AuthoritiesRecord> implem
 	/**
 	 * Getter for <code>cbis.authorities.authority</code>.
 	 */
+	@NotNull
+	@Size(max = 50)
 	public String getAuthority() {
 		return (String) getValue(1);
 	}

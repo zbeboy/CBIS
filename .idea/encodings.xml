@@ -6,11 +6,9 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/MD5Util.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j.properties" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/angular.min.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/angular.min.js.map" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/administrator/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/error.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/login.html" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/sadmin/home.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/teacher/home.html" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Grade extends TableImpl<GradeRecord> {
 
-	private static final long serialVersionUID = 683873270;
+	private static final long serialVersionUID = -37675155;
 
 	/**
 	 * The reference instance of <code>cbis.grade</code>
@@ -71,9 +71,9 @@ public class Grade extends TableImpl<GradeRecord> {
 	public final TableField<GradeRecord, String> GRADE_NAME = createField("grade_name", org.jooq.impl.SQLDataType.VARCHAR.length(70).nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.grade.grade_teacher</code>.
+	 * The column <code>cbis.grade.grade_head</code>.
 	 */
-	public final TableField<GradeRecord, String> GRADE_TEACHER = createField("grade_teacher", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<GradeRecord, String> GRADE_HEAD = createField("grade_head", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.grade</code> table reference
@@ -126,7 +126,7 @@ public class Grade extends TableImpl<GradeRecord> {
 	 */
 	@Override
 	public List<ForeignKey<GradeRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<GradeRecord, ?>>asList(Keys.GRADE_IBFK_1);
+		return Arrays.<ForeignKey<GradeRecord, ?>>asList(Keys.GRADE_IBFK_1, Keys.GRADE_IBFK_2);
 	}
 
 	/**

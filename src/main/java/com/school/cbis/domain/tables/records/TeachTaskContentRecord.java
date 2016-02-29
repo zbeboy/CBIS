@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.TeachTaskContent;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContentRecord> implements Record14<Integer, Integer, String, Integer, Integer, Integer, Integer, String, String, String, String, Byte, Byte, Byte> {
 
-	private static final long serialVersionUID = -1115767918;
+	private static final long serialVersionUID = 2099700941;
 
 	/**
 	 * Setter for <code>cbis.teach_task_content.id</code>.
@@ -40,6 +42,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.teach_task_title_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTaskTitleId() {
 		return (Integer) getValue(1);
 	}
@@ -68,6 +72,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content</code>.
 	 */
+	@Size(max = 600)
 	public String getContent() {
 		return (String) getValue(2);
 	}
@@ -82,6 +87,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_x</code>.
 	 */
+	@NotNull
 	public Integer getContentX() {
 		return (Integer) getValue(3);
 	}
@@ -96,6 +102,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_y</code>.
 	 */
+	@NotNull
 	public Integer getContentY() {
 		return (Integer) getValue(4);
 	}
@@ -138,6 +145,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_font</code>.
 	 */
+	@Size(max = 25)
 	public String getContentFont() {
 		return (String) getValue(7);
 	}
@@ -152,6 +160,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_font_size</code>.
 	 */
+	@Size(max = 25)
 	public String getContentFontSize() {
 		return (String) getValue(8);
 	}
@@ -166,6 +175,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_font_color</code>.
 	 */
+	@Size(max = 25)
 	public String getContentFontColor() {
 		return (String) getValue(9);
 	}
@@ -180,6 +190,7 @@ public class TeachTaskContentRecord extends UpdatableRecordImpl<TeachTaskContent
 	/**
 	 * Getter for <code>cbis.teach_task_content.content_font_background</code>.
 	 */
+	@Size(max = 25)
 	public String getContentFontBackground() {
 		return (String) getValue(10);
 	}

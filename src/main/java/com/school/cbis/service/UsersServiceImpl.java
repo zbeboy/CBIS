@@ -2,12 +2,11 @@ package com.school.cbis.service;
 
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.records.StudentRecord;
-import com.school.cbis.domain.tables.records.TeacherRecord;
-import com.school.cbis.domain.tables.records.UsersRecord;
+import com.school.cbis.domain.tables.daos.UsersDao;
+import com.school.cbis.domain.tables.pojos.Users;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
-import org.jooq.Record1;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,9 +30,12 @@ public class UsersServiceImpl implements UsersService {
     @Resource
     private Wordbook wordbook;
 
+    private UsersDao usersDao;
+
     @Autowired
-    public UsersServiceImpl(DSLContext dslContext) {
+    public UsersServiceImpl(DSLContext dslContext, Configuration configuration) {
         this.create = dslContext;
+        this.usersDao = new UsersDao(configuration);
     }
 
     @Override
@@ -57,30 +59,22 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UsersRecord getUsersInfo(String username) {
-        UsersRecord usersRecord = create.selectFrom(Tables.USERS).where(Tables.USERS.USERNAME.equal(username)).fetchAny();
-        return usersRecord;
+    public Users findByUsername(String username) {
+        Users users = usersDao.fetchOneByUsername(username);
+        return users;
     }
 
     @Override
-    public boolean updateUsers(UsersRecord usersRecord) {
-        int count = create.update(Tables.USERS)
-                .set(Tables.USERS.PASSWORD, usersRecord.getPassword())
-                .set(Tables.USERS.ENABLED, usersRecord.getEnabled())
-                .set(Tables.USERS.USER_TYPE_ID, usersRecord.getUserTypeId())
-                .where(Tables.USERS.USERNAME.equal(usersRecord.getUsername())).execute();
-        if (count > 0) {
-            return true;
-        }
-        return false;
+    public void update(Users users) {
+        usersDao.update(users);
     }
 
     @Override
-    public Result<Record> getUsersInfoAll(String username) {
+    public Result<Record> findAll(String username) {
         //获取用户类型
-        UsersRecord usersRecord = create.selectFrom(Tables.USERS).where(Tables.USERS.USERNAME.equal(username)).fetchAny();
+        Users users = findByUsername(username);
 
-        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == usersRecord.getUserTypeId()) {//教师类型
+        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
             Result<Record> records = create.select()
                     .from(Tables.TEACHER)
                     .join(Tables.TIE)
@@ -90,7 +84,7 @@ public class UsersServiceImpl implements UsersService {
                     .where(Tables.TEACHER.TEACHER_JOB_NUMBER.equal(username))
                     .fetch();
             return records;
-        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == usersRecord.getUserTypeId()) {//学生类型
+        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
             Result<Record> records = create.select()
                     .from(Tables.STUDENT)
                     .join(Tables.GRADE)

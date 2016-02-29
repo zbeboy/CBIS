@@ -1,12 +1,15 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.records.TieRecord;
+import com.school.cbis.domain.tables.daos.TieDao;
+import com.school.cbis.domain.tables.pojos.Tie;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-17.
@@ -17,33 +20,28 @@ public class TieServiceImpl implements TieService {
 
     private final DSLContext create;
 
+    private TieDao tieDao;
+
     @Autowired
-    public TieServiceImpl(DSLContext dslContext) {
+    public TieServiceImpl(DSLContext dslContext, Configuration configuration) {
         this.create = dslContext;
+        this.tieDao = new TieDao(configuration);
     }
 
     @Override
-    public boolean updateTie(TieRecord tieRecord) {
-        int count = create.update(Tables.TIE)
-                .set(Tables.TIE.TIE_NAME, tieRecord.getTieName())
-                .set(Tables.TIE.TIE_ADDRESS, tieRecord.getTieAddress())
-                .set(Tables.TIE.TIE_PHONE, tieRecord.getTiePhone())
-                .set(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID, tieRecord.getTiePrincipalArticleInfoId())
-                .set(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID, tieRecord.getTieIntroduceArticleInfoId())
-                .set(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID, tieRecord.getTieTrainingGoalArticleInfoId())
-                .set(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID, tieRecord.getTieTraitArticleInfoId())
-                .set(Tables.TIE.YARD_ID, tieRecord.getYardId())
-                .where(Tables.TIE.ID.equal(tieRecord.getId()))
-                .execute();
-        if (count > 0) {
-            return true;
-        }
-        return false;
+    public void update(Tie tie) {
+        tieDao.update(tie);
     }
 
     @Override
-    public TieRecord getTieInfo(int id) {
-        TieRecord tieRecord = create.selectFrom(Tables.TIE).where(Tables.TIE.ID.equal(id)).fetchAny();
-        return tieRecord;
+    public Tie findById(int id) {
+        Tie tie = tieDao.findById(id);
+        return tie;
+    }
+
+    @Override
+    public List<Tie> findByTieName(String tieName) {
+        List<Tie> ties = tieDao.fetchByTieName(tieName);
+        return ties;
     }
 }

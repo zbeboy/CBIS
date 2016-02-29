@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.FourItems;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implements Record10<Integer, Integer, Integer, Integer, String, String, String, Timestamp, String, String> {
 
-	private static final long serialVersionUID = 237069136;
+	private static final long serialVersionUID = 1733364429;
 
 	/**
 	 * Setter for <code>cbis.four_items.id</code>.
@@ -42,6 +44,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.teach_task_info_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTaskInfoId() {
 		return (Integer) getValue(1);
 	}
@@ -70,6 +74,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.content_y</code>.
 	 */
+	@NotNull
 	public Integer getContentY() {
 		return (Integer) getValue(2);
 	}
@@ -84,6 +89,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.four_items_type_id</code>.
 	 */
+	@NotNull
 	public Integer getFourItemsTypeId() {
 		return (Integer) getValue(3);
 	}
@@ -98,6 +104,8 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.four_items_file_url</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getFourItemsFileUrl() {
 		return (String) getValue(4);
 	}
@@ -112,6 +120,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.four_items_file_size</code>.
 	 */
+	@Size(max = 50)
 	public String getFourItemsFileSize() {
 		return (String) getValue(5);
 	}
@@ -126,6 +135,8 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.four_items_file_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getFourItemsFileName() {
 		return (String) getValue(6);
 	}
@@ -154,6 +165,8 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.file_user</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getFileUser() {
 		return (String) getValue(8);
 	}
@@ -168,6 +181,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.file_type</code>.
 	 */
+	@Size(max = 15)
 	public String getFileType() {
 		return (String) getValue(9);
 	}

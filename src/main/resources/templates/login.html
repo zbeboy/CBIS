@@ -6,16 +6,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="renderer" content="webkit" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>系统登录</title>
+  <title th:text="#{web_title}">系统登录</title>
   <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
   <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}" />
+
+  <!-- nice validator css -->
+  <link rel="stylesheet" href="js/validator/jquery.validator.css" th:href="@{/js/validator/jquery.validator.css}" />
+
   <!--[if lte IE 9]>
-  <script src="js/respond.min.js" th:src="@{/js/respond.min.js}" ></script>
-  <script src="js/html5.min.js" th:src="@{/js/html5.min.js}" ></script>
+  <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+  <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
   <![endif]-->
-  <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}" ></script>
+  <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
   <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}" ></script>
+
+  <!-- nice validator js -->
+  <script type="text/javascript" src="js/validator/jquery.validator.js" th:src="@{/js/validator/jquery.validator.js}" ></script>
+  <script type="text/javascript" src="js/validator/local/zh_CN.js" th:src="@{/js/validator/local/zh-CN.js}" ></script>
 </head>
 
 <body class="uk-height-1-1" onload="javascript:$('#username').focus();">
@@ -24,12 +32,12 @@
   <div class="uk-vertical-align-middle" style="width: 250px;">
     <h4 th:if="${param.error}" class="uk-text-danger">用户名或密码错误！</h4>
     <h4 th:if="${param.logout}" class="uk-text-danger">你已经登出！</h4>
-    <form class="uk-panel uk-panel-box uk-form" name="form" th:action="@{/login}" action="/login" method="POST">
+    <form class="uk-panel uk-panel-box uk-form" name="form" th:action="@{/login}" action="/login" method="POST" data-validator-option="{theme:'yellow_right_effect',stopOnError:false}">
       <div class="uk-form-row">
-        <input class="uk-width-1-1 uk-form-large" type="text" id="username" name="username" placeholder="用户名" />
+        <input class="uk-width-1-1 uk-form-large" type="text" id="username" name="username" placeholder="用户名" data-rule="required;" data-msg-required="请填写用户名!"  data-tip="您的编号" />
       </div>
       <div class="uk-form-row">
-        <input class="uk-width-1-1 uk-form-large" type="password" id="password" name="password" placeholder="密码" />
+        <input class="uk-width-1-1 uk-form-large" type="password" id="password" name="password" placeholder="密码" data-rule="required;" data-msg-required="请填写密码!"  data-tip="密码由6位及以上任意字符组成" />
       </div>
       <div class="uk-form-row">
         <button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">登录</button>

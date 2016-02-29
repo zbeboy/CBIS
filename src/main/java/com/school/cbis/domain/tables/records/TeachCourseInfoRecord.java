@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -31,7 +33,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRecord> implements Record14<Integer, Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String> {
 
-	private static final long serialVersionUID = 758418292;
+	private static final long serialVersionUID = 1995059002;
 
 	/**
 	 * Setter for <code>cbis.teach_course_info.id</code>.
@@ -43,6 +45,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -57,6 +60,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.tie_id</code>.
 	 */
+	@NotNull
 	public Integer getTieId() {
 		return (Integer) getValue(1);
 	}
@@ -71,6 +75,8 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_course_info_term</code>.
 	 */
+	@NotNull
+	@Size(max = 20)
 	public String getTeachCourseInfoTerm() {
 		return (String) getValue(2);
 	}
@@ -85,6 +91,8 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_course_info_file_url</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getTeachCourseInfoFileUrl() {
 		return (String) getValue(3);
 	}
@@ -99,6 +107,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_course_info_file_pdf</code>.
 	 */
+	@Size(max = 500)
 	public String getTeachCourseInfoFilePdf() {
 		return (String) getValue(4);
 	}
@@ -113,6 +122,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_course_info_file_size</code>.
 	 */
+	@Size(max = 50)
 	public String getTeachCourseInfoFileSize() {
 		return (String) getValue(5);
 	}
@@ -127,6 +137,8 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_course_info_file_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getTeachCourseInfoFileName() {
 		return (String) getValue(6);
 	}
@@ -169,6 +181,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.teach_type_id</code>.
 	 */
+	@NotNull
 	public Integer getTeachTypeId() {
 		return (Integer) getValue(9);
 	}
@@ -183,6 +196,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.term_start_time</code>.
 	 */
+	@NotNull
 	public Date getTermStartTime() {
 		return (Date) getValue(10);
 	}
@@ -197,6 +211,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.term_end_time</code>.
 	 */
+	@NotNull
 	public Date getTermEndTime() {
 		return (Date) getValue(11);
 	}
@@ -211,6 +226,8 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.file_user</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getFileUser() {
 		return (String) getValue(12);
 	}
@@ -225,6 +242,7 @@ public class TeachCourseInfoRecord extends UpdatableRecordImpl<TeachCourseInfoRe
 	/**
 	 * Getter for <code>cbis.teach_course_info.file_type</code>.
 	 */
+	@Size(max = 15)
 	public String getFileType() {
 		return (String) getValue(13);
 	}

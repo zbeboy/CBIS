@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Users;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Record4<String, String, Byte, Integer> {
 
-	private static final long serialVersionUID = -189245419;
+	private static final long serialVersionUID = 2094818685;
 
 	/**
 	 * Setter for <code>cbis.users.username</code>.
@@ -40,6 +42,8 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.users.username</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getUsername() {
 		return (String) getValue(0);
 	}
@@ -54,6 +58,8 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.users.password</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getPassword() {
 		return (String) getValue(1);
 	}
@@ -68,6 +74,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.users.enabled</code>.
 	 */
+	@NotNull
 	public Byte getEnabled() {
 		return (Byte) getValue(2);
 	}
@@ -82,6 +89,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.users.user_type_id</code>.
 	 */
+	@NotNull
 	public Integer getUserTypeId() {
 		return (Integer) getValue(3);
 	}

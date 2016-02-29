@@ -133,6 +133,10 @@
                         <password>123456</password>
                     </jdbc>
                     <generator>
+                        <generate>
+                            <daos>true</daos>
+                            <validationAnnotations>true</validationAnnotations>
+                        </generate>
                         <database>
                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                             <includes>.*</includes>

@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Yard;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class YardRecord extends UpdatableRecordImpl<YardRecord> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = 665082296;
+	private static final long serialVersionUID = 404867344;
 
 	/**
 	 * Setter for <code>cbis.yard.id</code>.
@@ -40,6 +42,7 @@ public class YardRecord extends UpdatableRecordImpl<YardRecord> implements Recor
 	/**
 	 * Getter for <code>cbis.yard.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,8 @@ public class YardRecord extends UpdatableRecordImpl<YardRecord> implements Recor
 	/**
 	 * Getter for <code>cbis.yard.yard_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getYardName() {
 		return (String) getValue(1);
 	}
@@ -68,6 +73,7 @@ public class YardRecord extends UpdatableRecordImpl<YardRecord> implements Recor
 	/**
 	 * Getter for <code>cbis.yard.yard_address</code>.
 	 */
+	@Size(max = 200)
 	public String getYardAddress() {
 		return (String) getValue(2);
 	}

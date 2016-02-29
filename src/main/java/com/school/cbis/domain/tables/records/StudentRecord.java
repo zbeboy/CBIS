@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.Student;
 import java.sql.Date;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements Record12<Integer, String, String, Integer, String, String, Date, String, String, String, String, Integer> {
 
-	private static final long serialVersionUID = -769913700;
+	private static final long serialVersionUID = -512251063;
 
 	/**
 	 * Setter for <code>cbis.student.id</code>.
@@ -42,6 +44,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,8 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_number</code>.
 	 */
+	@NotNull
+	@Size(max = 25)
 	public String getStudentNumber() {
 		return (String) getValue(1);
 	}
@@ -70,6 +75,8 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_name</code>.
 	 */
+	@NotNull
+	@Size(max = 20)
 	public String getStudentName() {
 		return (String) getValue(2);
 	}
@@ -84,6 +91,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.grade_id</code>.
 	 */
+	@NotNull
 	public Integer getGradeId() {
 		return (Integer) getValue(3);
 	}
@@ -98,6 +106,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_phone</code>.
 	 */
+	@Size(max = 15)
 	public String getStudentPhone() {
 		return (String) getValue(4);
 	}
@@ -112,6 +121,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_email</code>.
 	 */
+	@Size(max = 100)
 	public String getStudentEmail() {
 		return (String) getValue(5);
 	}
@@ -140,6 +150,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_head_photo</code>.
 	 */
+	@Size(max = 800)
 	public String getStudentHeadPhoto() {
 		return (String) getValue(7);
 	}
@@ -154,6 +165,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_sex</code>.
 	 */
+	@Size(max = 2)
 	public String getStudentSex() {
 		return (String) getValue(8);
 	}
@@ -168,6 +180,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_identity_card</code>.
 	 */
+	@Size(max = 20)
 	public String getStudentIdentityCard() {
 		return (String) getValue(9);
 	}
@@ -182,6 +195,7 @@ public class StudentRecord extends UpdatableRecordImpl<StudentRecord> implements
 	/**
 	 * Getter for <code>cbis.student.student_address</code>.
 	 */
+	@Size(max = 200)
 	public String getStudentAddress() {
 		return (String) getValue(10);
 	}

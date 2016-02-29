@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
@@ -35,12 +36,15 @@ import javax.sql.DataSource;
 
 @EnableAutoConfiguration
 @ComponentScan
-public class Application extends WebMvcConfigurerAdapter {
+public class Application extends SpringBootServletInitializer {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
+    /**
+     * 生成war包时需要
+     */
+   /* @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }*/
 
     @Bean
     public ApplicationSecurity applicationSecurity() {
@@ -63,6 +67,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).run(args);
+         /*SpringApplication.run(Application.class, args);//生成war包时需要*/
     }
 
     @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -78,10 +83,10 @@ public class Application extends WebMvcConfigurerAdapter {
                     .failureUrl("/login?error").permitAll().and().sessionManagement().invalidSessionUrl("/login")
                     .and().logout().logoutSuccessUrl("/").permitAll().invalidateHttpSession(true)
                     .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(jdbcTokenRepository(dataSource))
-                    .and().authorizeRequests().antMatchers("/sadmin/**").hasRole("SUPER")
-                    .and().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER")
-                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "ADMIN", "SUPER")
-                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "SUPER")
+                    .and().authorizeRequests().antMatchers("/administrator/**").hasRole("ADMIN")
+                    .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("ADMIN", "MAI")
+                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "ADMIN", "MAI")
+                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI")
                     .and().authorizeRequests().antMatchers("/user/**", "/").permitAll();
         }
 

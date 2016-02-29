@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.TieNoticeAffix;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixRecord> implements Record8<Integer, String, String, String, Timestamp, Integer, String, String> {
 
-	private static final long serialVersionUID = 1792130815;
+	private static final long serialVersionUID = 1313385865;
 
 	/**
 	 * Setter for <code>cbis.tie_notice_affix.id</code>.
@@ -42,6 +44,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -56,6 +59,8 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.tie_notice_file_url</code>.
 	 */
+	@NotNull
+	@Size(max = 500)
 	public String getTieNoticeFileUrl() {
 		return (String) getValue(1);
 	}
@@ -70,6 +75,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.tie_notice_file_size</code>.
 	 */
+	@Size(max = 50)
 	public String getTieNoticeFileSize() {
 		return (String) getValue(2);
 	}
@@ -84,6 +90,8 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.tie_notice_file_name</code>.
 	 */
+	@NotNull
+	@Size(max = 30)
 	public String getTieNoticeFileName() {
 		return (String) getValue(3);
 	}
@@ -112,6 +120,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.tie_notice_id</code>.
 	 */
+	@NotNull
 	public Integer getTieNoticeId() {
 		return (Integer) getValue(5);
 	}
@@ -126,6 +135,8 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.file_user</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getFileUser() {
 		return (String) getValue(6);
 	}
@@ -140,6 +151,8 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.file_type</code>.
 	 */
+	@NotNull
+	@Size(max = 15)
 	public String getFileType() {
 		return (String) getValue(7);
 	}

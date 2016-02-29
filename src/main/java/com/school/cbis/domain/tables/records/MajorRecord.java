@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Major;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MajorRecord extends UpdatableRecordImpl<MajorRecord> implements Record7<Integer, Integer, String, Integer, Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = -382705420;
+	private static final long serialVersionUID = -1963938108;
 
 	/**
 	 * Setter for <code>cbis.major.id</code>.
@@ -40,6 +42,7 @@ public class MajorRecord extends UpdatableRecordImpl<MajorRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.major.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class MajorRecord extends UpdatableRecordImpl<MajorRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.major.tie_id</code>.
 	 */
+	@NotNull
 	public Integer getTieId() {
 		return (Integer) getValue(1);
 	}
@@ -68,6 +72,8 @@ public class MajorRecord extends UpdatableRecordImpl<MajorRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.major.major_name</code>.
 	 */
+	@NotNull
+	@Size(max = 150)
 	public String getMajorName() {
 		return (String) getValue(2);
 	}

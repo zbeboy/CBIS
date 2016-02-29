@@ -9,6 +9,8 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import java.sql.Timestamp;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -30,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PersistentLoginsRecord extends UpdatableRecordImpl<PersistentLoginsRecord> implements Record4<String, String, String, Timestamp> {
 
-	private static final long serialVersionUID = -1291332178;
+	private static final long serialVersionUID = 1287777109;
 
 	/**
 	 * Setter for <code>cbis.persistent_logins.username</code>.
@@ -42,6 +44,8 @@ public class PersistentLoginsRecord extends UpdatableRecordImpl<PersistentLogins
 	/**
 	 * Getter for <code>cbis.persistent_logins.username</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getUsername() {
 		return (String) getValue(0);
 	}
@@ -56,6 +60,8 @@ public class PersistentLoginsRecord extends UpdatableRecordImpl<PersistentLogins
 	/**
 	 * Getter for <code>cbis.persistent_logins.series</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getSeries() {
 		return (String) getValue(1);
 	}
@@ -70,6 +76,8 @@ public class PersistentLoginsRecord extends UpdatableRecordImpl<PersistentLogins
 	/**
 	 * Getter for <code>cbis.persistent_logins.token</code>.
 	 */
+	@NotNull
+	@Size(max = 64)
 	public String getToken() {
 		return (String) getValue(2);
 	}
@@ -84,6 +92,7 @@ public class PersistentLoginsRecord extends UpdatableRecordImpl<PersistentLogins
 	/**
 	 * Getter for <code>cbis.persistent_logins.last_used</code>.
 	 */
+	@NotNull
 	public Timestamp getLastUsed() {
 		return (Timestamp) getValue(3);
 	}

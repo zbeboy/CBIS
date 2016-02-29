@@ -10,7 +10,6 @@ import org.jooq.Result;
  * Created by lenovo on 2016-01-15.
  */
 public interface WordbookService {
-
     /**
      * 文章类型
      *

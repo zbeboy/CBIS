@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.ArticleSub;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> implements Record6<Integer, String, String, String, Integer, Integer> {
 
-	private static final long serialVersionUID = 770608508;
+	private static final long serialVersionUID = -1771039779;
 
 	/**
 	 * Setter for <code>cbis.article_sub.id</code>.
@@ -40,6 +42,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.sub_title</code>.
 	 */
+	@Size(max = 50)
 	public String getSubTitle() {
 		return (String) getValue(1);
 	}
@@ -68,6 +72,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.sub_content</code>.
 	 */
+	@Size(max = 1000)
 	public String getSubContent() {
 		return (String) getValue(2);
 	}
@@ -82,6 +87,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.sub_photo_url</code>.
 	 */
+	@Size(max = 500)
 	public String getSubPhotoUrl() {
 		return (String) getValue(3);
 	}
@@ -96,6 +102,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.article_info_id</code>.
 	 */
+	@NotNull
 	public Integer getArticleInfoId() {
 		return (Integer) getValue(4);
 	}
@@ -110,6 +117,7 @@ public class ArticleSubRecord extends UpdatableRecordImpl<ArticleSubRecord> impl
 	/**
 	 * Getter for <code>cbis.article_sub.row</code>.
 	 */
+	@NotNull
 	public Integer getRow() {
 		return (Integer) getValue(5);
 	}

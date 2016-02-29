@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.Grade;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Record5<Integer, Integer, String, String, String> {
 
-	private static final long serialVersionUID = 707703593;
+	private static final long serialVersionUID = -2008671949;
 
 	/**
 	 * Setter for <code>cbis.grade.id</code>.
@@ -40,6 +42,7 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.grade.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.grade.major_id</code>.
 	 */
+	@NotNull
 	public Integer getMajorId() {
 		return (Integer) getValue(1);
 	}
@@ -68,6 +72,8 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.grade.year</code>.
 	 */
+	@NotNull
+	@Size(max = 20)
 	public String getYear() {
 		return (String) getValue(2);
 	}
@@ -82,21 +88,25 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	/**
 	 * Getter for <code>cbis.grade.grade_name</code>.
 	 */
+	@NotNull
+	@Size(max = 70)
 	public String getGradeName() {
 		return (String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>cbis.grade.grade_teacher</code>.
+	 * Setter for <code>cbis.grade.grade_head</code>.
 	 */
-	public void setGradeTeacher(String value) {
+	public void setGradeHead(String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>cbis.grade.grade_teacher</code>.
+	 * Getter for <code>cbis.grade.grade_head</code>.
 	 */
-	public String getGradeTeacher() {
+	@NotNull
+	@Size(max = 50)
+	public String getGradeHead() {
 		return (String) getValue(4);
 	}
 
@@ -169,7 +179,7 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	 */
 	@Override
 	public Field<String> field5() {
-		return Grade.GRADE.GRADE_TEACHER;
+		return Grade.GRADE.GRADE_HEAD;
 	}
 
 	/**
@@ -209,7 +219,7 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	 */
 	@Override
 	public String value5() {
-		return getGradeTeacher();
+		return getGradeHead();
 	}
 
 	/**
@@ -253,7 +263,7 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	 */
 	@Override
 	public GradeRecord value5(String value) {
-		setGradeTeacher(value);
+		setGradeHead(value);
 		return this;
 	}
 
@@ -284,13 +294,13 @@ public class GradeRecord extends UpdatableRecordImpl<GradeRecord> implements Rec
 	/**
 	 * Create a detached, initialised GradeRecord
 	 */
-	public GradeRecord(Integer id, Integer majorId, String year, String gradeName, String gradeTeacher) {
+	public GradeRecord(Integer id, Integer majorId, String year, String gradeName, String gradeHead) {
 		super(Grade.GRADE);
 
 		setValue(0, id);
 		setValue(1, majorId);
 		setValue(2, year);
 		setValue(3, gradeName);
-		setValue(4, gradeTeacher);
+		setValue(4, gradeHead);
 	}
 }

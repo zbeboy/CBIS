@@ -18,6 +18,7 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
+import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
 import com.school.cbis.domain.tables.SystemInform;
@@ -51,6 +52,7 @@ import com.school.cbis.domain.tables.records.PersistentLoginsRecord;
 import com.school.cbis.domain.tables.records.PlaceFileContentRecord;
 import com.school.cbis.domain.tables.records.PlaceFileInfoRecord;
 import com.school.cbis.domain.tables.records.PlaceFileTitleRecord;
+import com.school.cbis.domain.tables.records.SchemaVersionRecord;
 import com.school.cbis.domain.tables.records.StudentCourseTimetableInfoRecord;
 import com.school.cbis.domain.tables.records.StudentRecord;
 import com.school.cbis.domain.tables.records.SystemInformRecord;
@@ -145,6 +147,7 @@ public class Keys {
 	public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_CONTENT_PRIMARY;
 	public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_INFO_PRIMARY;
 	public static final UniqueKey<PlaceFileTitleRecord> KEY_PLACE_FILE_TITLE_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_TITLE_PRIMARY;
+	public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = UniqueKeys0.KEY_SCHEMA_VERSION_PRIMARY;
 	public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = UniqueKeys0.KEY_STUDENT_PRIMARY;
 	public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY;
 	public static final UniqueKey<SystemInformRecord> KEY_SYSTEM_INFORM_PRIMARY = UniqueKeys0.KEY_SYSTEM_INFORM_PRIMARY;
@@ -181,6 +184,7 @@ public class Keys {
 	public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = ForeignKeys0.FOUR_ITEMS_IBFK_2;
 	public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = ForeignKeys0.FOUR_ITEMS_IBFK_3;
 	public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = ForeignKeys0.GRADE_IBFK_1;
+	public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = ForeignKeys0.GRADE_IBFK_2;
 	public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = ForeignKeys0.MAJOR_IBFK_1;
 	public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = ForeignKeys0.PLACE_FILE_CONTENT_IBFK_1;
 	public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = ForeignKeys0.PLACE_FILE_INFO_IBFK_1;
@@ -260,6 +264,7 @@ public class Keys {
 		public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = createUniqueKey(PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.ID);
 		public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = createUniqueKey(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
 		public static final UniqueKey<PlaceFileTitleRecord> KEY_PLACE_FILE_TITLE_PRIMARY = createUniqueKey(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
+		public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = createUniqueKey(SchemaVersion.SCHEMA_VERSION, SchemaVersion.SCHEMA_VERSION.VERSION);
 		public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = createUniqueKey(Student.STUDENT, Student.STUDENT.ID);
 		public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.ID);
 		public static final UniqueKey<SystemInformRecord> KEY_SYSTEM_INFORM_PRIMARY = createUniqueKey(SystemInform.SYSTEM_INFORM, SystemInform.SYSTEM_INFORM.ID);
@@ -294,6 +299,7 @@ public class Keys {
 		public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_FOUR_ITEMS_TYPE_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FOUR_ITEMS_TYPE_ID);
 		public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FILE_USER);
 		public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_MAJOR_PRIMARY, Grade.GRADE, Grade.GRADE.MAJOR_ID);
+		public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Grade.GRADE, Grade.GRADE.GRADE_HEAD);
 		public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Major.MAJOR, Major.MAJOR.TIE_ID);
 		public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_TITLE_PRIMARY, PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.PLACE_FILE_TITLE_ID);
 		public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.TEACH_TASK_INFO_ID);

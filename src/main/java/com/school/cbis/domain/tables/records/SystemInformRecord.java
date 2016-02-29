@@ -7,6 +7,8 @@ package com.school.cbis.domain.tables.records;
 import com.school.cbis.domain.tables.SystemInform;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemInformRecord extends UpdatableRecordImpl<SystemInformRecord> implements Record3<Integer, String, Integer> {
 
-	private static final long serialVersionUID = 1895631456;
+	private static final long serialVersionUID = 1990997729;
 
 	/**
 	 * Setter for <code>cbis.system_inform.id</code>.
@@ -40,6 +42,7 @@ public class SystemInformRecord extends UpdatableRecordImpl<SystemInformRecord> 
 	/**
 	 * Getter for <code>cbis.system_inform.id</code>.
 	 */
+	@NotNull
 	public Integer getId() {
 		return (Integer) getValue(0);
 	}
@@ -54,6 +57,7 @@ public class SystemInformRecord extends UpdatableRecordImpl<SystemInformRecord> 
 	/**
 	 * Getter for <code>cbis.system_inform.system_inform</code>.
 	 */
+	@Size(max = 1000)
 	public String getSystemInform() {
 		return (String) getValue(1);
 	}

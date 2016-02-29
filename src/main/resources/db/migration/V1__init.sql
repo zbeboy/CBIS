@@ -86,8 +86,9 @@ create table grade(
   major_id int not null,
   year varchar(20) not null,
   grade_name varchar(70) not null,
-  grade_teacher varchar(20),
-  foreign key(major_id) references major(id)
+  grade_head varchar(50) not null,
+  foreign key(major_id) references major(id),
+  foreign key(grade_head) references users(username)
 );
 
 create table student(
@@ -387,10 +388,9 @@ create table classroom_course_timetable_info(
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 
-insert into users values('superadmin','e10adc3949ba59abbe56e057f20f883e',true,2);
-insert into authorities values('superadmin','ROLE_SUPER');
+insert into users values('10000','e10adc3949ba59abbe56e057f20f883e',true,2);
+insert into authorities values('10000','ROLE_ADMIN');
 
-insert into article_type(id,name) values(1,'init');
 insert into article_type(name) values('系简介');
 insert into article_type(name) values('系培养目标');
 insert into article_type(name) values('系特色');
@@ -405,7 +405,7 @@ insert into article_type(name) values('系公告');
 insert into article_type(name) values('招聘模板');
 insert into article_type(name) values('系主任');
 
-insert into article_info(id,article_writer,article_type_id) values(1,'superadmin',1);
+insert into article_info(id,article_writer,article_type_id) values(1,'10000',1);
 
 insert into yard(yard_name,yard_address) values('城市学院','云南省昆明盘龙区新迎校区');
 
@@ -413,9 +413,9 @@ insert into tie(tie_name,yard_id) values('信息工程系',1);
 
 insert into major(tie_id,major_name) values(1,'计算机科学与技术');
 
-insert into grade(major_id,year,grade_name) values(1,'2012','计科1211');
+insert into teacher(tie_id,teacher_job_number,teacher_name) values(1,'10000','10000');
 
-insert into teacher(tie_id,teacher_job_number,teacher_name) values(1,'superadmin','superadmin');
+insert into grade(major_id,year,grade_name,grade_head) values(1,'2012','计科1211','10000');
 
 insert into teach_type(name) values('理论');
 insert into teach_type(name) values('实践');

@@ -1,6 +1,8 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.tables.records.TieRecord;
+import com.school.cbis.domain.tables.pojos.Tie;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-17.
@@ -8,15 +10,24 @@ import com.school.cbis.domain.tables.records.TieRecord;
 public interface TieService {
     /**
      * 更新系表
-     * @param tieRecord
+     *
+     * @param tie
      * @return 是否成功更新
      */
-    boolean updateTie(TieRecord tieRecord);
+    void update(Tie tie);
 
     /**
      * 通过ID获取系信息
+     *
      * @param id
      * @return 系信息
      */
-    TieRecord getTieInfo(int id);
+    Tie findById(int id);
+
+    /**
+     * 通过系名查询
+     * @param tieName
+     * @return
+     */
+    List<Tie> findByTieName(String tieName);
 }
