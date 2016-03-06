@@ -6,8 +6,7 @@
 # CBIS RUN
 ## 二.运行
 ### 1. 使用Intellij idea clone代码;
-### 2. 在mysql 创建数据库 cbis;
-### 3. 运行代码中Application.main方法。
+### 2. 运行代码中Application.main方法。
 #CBIS TEAM
 ## 三.团队合作
 ### 1. 欢迎提出意见与错误修正;
