@@ -10,7 +10,6 @@ public class ArticleData {
     private String subTitle;
     private String subPage;
     private String articleType;
-    private int row;
 
     public String getTitle() {
         return title;
@@ -60,14 +59,6 @@ public class ArticleData {
         this.articleType = articleType;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     @Override
     public String toString() {
         return "ArticleData{" +
@@ -77,7 +68,6 @@ public class ArticleData {
                 ", subTitle='" + subTitle + '\'' +
                 ", subPage='" + subPage + '\'' +
                 ", articleType='" + articleType + '\'' +
-                ", row=" + row +
                 '}';
     }
 }

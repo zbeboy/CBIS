@@ -53,35 +53,14 @@
     <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-2">
             <div class="uk-slidenav-position" data-uk-slideshow="{autoplay:true,kenburns:true}">
-                <ul class="uk-slideshow uk-overlay-active">
-                    <li>
-                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
+                <ul class="uk-slideshow uk-overlay-active" th:unless="${#lists.isEmpty(tieElegantData)}" >
+                    <li th:each="te:${tieElegantData}" >
+                        <img th:src="${te.articlePhotoUrl}" src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
                         <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            <h3>信息工程系统</h3>
-                            <p>
-                                <a href="#">迎新活动1</a>
+                            <h3 th:text="${te.bigTitle}" >信息工程系统</h3>
+                            <p class="uk-text-truncate" >
+                                <a href="#" th:href=" @{/user/tieElegantShow}+'?id='+${te.id} " th:text="${te.articleContent}" >迎新活动1</a>
                             </p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
-                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            <h3>信息工程系统</h3>
-                            <p>迎新活动2</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
-                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            <h3>信息工程系统</h3>
-                            <p>迎新活动3</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="images/placeholder_800x400_3.jpg" width="800" height="400" alt=""/>
-                        <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            <h3>信息工程系统</h3>
-                            <p>迎新活动4</p>
                         </div>
                     </li>
                 </ul>

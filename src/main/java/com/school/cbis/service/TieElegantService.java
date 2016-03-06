@@ -2,10 +2,10 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.vo.tie.TieElegantVo;
-import org.jooq.Record4;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-24.
@@ -60,4 +60,22 @@ public interface TieElegantService {
      * @return
      */
     TieElegant findById(int id);
+
+    /**
+     * 分页查询系风采文章id,标题
+     * @param tieId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    Result<Record4<Integer, String,String,String>> findByTieIdWithArticleOrderByDateDescAndPage(int tieId, int pageNum, int pageSize);
+
+    /**
+     * 通过系风采时间组查询
+     * @param tieElegantTimeId
+     * @return
+     */
+    Result<Record3<Integer, String,Timestamp>> findByTieElegantTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieElegantTimeId,String bigTitle);
+
+
 }

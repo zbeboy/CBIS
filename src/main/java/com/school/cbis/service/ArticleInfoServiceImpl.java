@@ -6,10 +6,14 @@ import com.school.cbis.domain.tables.pojos.ArticleInfo;
 import com.school.cbis.domain.tables.records.ArticleInfoRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.Record7;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
 
 /**
  * Created by lenovo on 2016-01-12.
@@ -57,5 +61,17 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     @Override
     public void update(ArticleInfo articleInfo) {
         articleInfoDao.update(articleInfo);
+    }
+
+    @Override
+    public Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> findByIdWithUsers(int id) {
+        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.USERS.USER_TYPE_ID,
+                Tables.ARTICLE_INFO.DATE, Tables.ARTICLE_INFO.ARTICLE_PHOTO_URL, Tables.ARTICLE_INFO.ARTICLE_CONTENT)
+                .from(Tables.ARTICLE_INFO)
+                .leftJoin(Tables.USERS)
+                .on(Tables.ARTICLE_INFO.ARTICLE_WRITER.eq(Tables.USERS.USERNAME))
+                .where(Tables.ARTICLE_INFO.ID.eq(id))
+                .orderBy(Tables.ARTICLE_INFO.DATE.desc()).fetch();
+        return record7s;
     }
 }

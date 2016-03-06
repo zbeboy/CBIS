@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,9 @@ import java.util.List;
  */
 @Controller
 public class ArticleController {
+
+    @Resource
+    private UploadService upload;
 
     @Resource
     private TieService tieService;
@@ -61,9 +67,9 @@ public class ArticleController {
      * @param subData 文章数据
      * @return
      */
-    @RequestMapping(value = "/maintainer/savearticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/saveArticle", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData saveArticle(@RequestParam(value = "subData") String subData, int majorId) {
+    public AjaxData saveArticle(@RequestParam(value = "subData") String subData,@RequestParam(value = "id") int majorId) {
         AjaxData data = null;
         try {
             data = new AjaxData();
@@ -88,10 +94,8 @@ public class ArticleController {
                     for (int i = 1; i < articleDatas.length; i++) {
                         ArticleSub articleSub = new ArticleSub();
                         articleSub.setSubTitle(articleDatas[i].getSubTitle());
-                        articleSub.setSubContent(articleDatas[i].getSubPage());
-                        articleSub.setSubPhotoUrl(null);
                         articleSub.setArticleInfoId(articleInfoId);
-                        articleSub.setRow(articleDatas[i].getRow());
+                        articleSub.setSubContent(articleDatas[i].getSubPage());
                         articleSubs.add(articleSub);
                     }
                     if (!StringUtils.isEmpty(articleSubs) && articleSubs.size() > 0) {
@@ -129,6 +133,7 @@ public class ArticleController {
                         tieElegantService.save(tieElegant);
                         data.setState(true);
                         data.setMsg("保存系风采成功，是否现在查看效果！");
+                        data.setSingle(articleInfoId);
 
                     } else {
                         data.setState(false);
@@ -139,22 +144,26 @@ public class ArticleController {
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
+                    data.setSingle(articleInfoId);
 
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_SUMMARY)) {
                     tie.setTieIntroduceArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
+                    data.setSingle(articleInfoId);
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_ITEM)) {
                     tie.setTieTraitArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
+                    data.setSingle(articleInfoId);
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_BRING_IN_GOAL)) {
                     tie.setTieTrainingGoalArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
+                    data.setSingle(articleInfoId);
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.MAJOR_LEAD)) {//专业带头人
                     Major major = majorService.findById(majorId);
                     if (!StringUtils.isEmpty(major)) {
@@ -162,6 +171,7 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
+                        data.setSingle(articleInfoId);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -173,6 +183,7 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
+                        data.setSingle(articleInfoId);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -184,6 +195,7 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
+                        data.setSingle(articleInfoId);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -195,6 +207,7 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
+                        data.setSingle(articleInfoId);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -218,12 +231,11 @@ public class ArticleController {
      * @param id      文章id
      * @return
      */
-    @RequestMapping(value = "/maintainer/updatearticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/updateArticle", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData updateArticle(@RequestParam(value = "subData", required = false) String subData, @RequestParam(value = "id", defaultValue = "0") int id) {
+    public AjaxData updateArticle(@RequestParam(value = "subData") String subData, @RequestParam(value = "id") int id) {
         AjaxData data = new AjaxData();
         try {
-            if (id > 0) {
                 //Json转换成Java对象
                 ArticleData[] articleDatas = new ObjectMapper().readValue(subData, ArticleData[].class);
                 if (articleDatas.length > 0) {
@@ -241,8 +253,6 @@ public class ArticleController {
                             ArticleSub articleSub = new ArticleSub();
                             articleSub.setSubTitle(articleDatas[i].getSubTitle());
                             articleSub.setSubContent(articleDatas[i].getSubPage());
-                            articleSub.setSubPhotoUrl(null);
-                            articleSub.setRow(articleDatas[i].getRow());
                             articleSub.setArticleInfoId(id);
                             articleSubs.add(articleSub);
                         }
@@ -253,11 +263,9 @@ public class ArticleController {
                     }
                     data.setState(true);
                     data.setMsg("更新文章成功！");
+                    data.setSingle(id);
                 }
-            } else {
-                data.setState(false);
-                data.setMsg("文章信息为空！");
-            }
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,7 +274,7 @@ public class ArticleController {
 
     }
 
-    @RequestMapping("/maintainer/getarticle")
+    @RequestMapping("/maintainer/getArticle")
     public String getArticle(@RequestParam(value = "id", defaultValue = "0") int id, ModelMap map) {
         if (id > 0) {
             ArticleInfo articleInfo = articleInfoService.findById(id);
@@ -285,20 +293,80 @@ public class ArticleController {
         return "/maintainer/majorheadupdate";
     }
 
-    @RequestMapping(value = "/maintainer/deletearticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/deleteArticle", method = RequestMethod.POST)
     @ResponseBody
-    public Object deleteArticle(@RequestParam(value = "id", defaultValue = "0") int id) {
+    public AjaxData deleteArticle(@RequestParam(value = "id", defaultValue = "0") int id) {
+        AjaxData ajaxData = new AjaxData();
         try {
             ArticleInfo articleInfo = articleInfoService.findById(id);
             if (!StringUtils.isEmpty(articleInfo)) {
                 articleSubService.deleteByArticleInfoId(articleInfo.getId());
                 articleInfoService.deleteById(articleInfo.getId());
                 FilesUtils.deleteFile(articleInfo.getArticlePhotoUrl());
-                return new Object();
+                ajaxData.setState(true);
+            } else {
+                ajaxData.setState(false);
+                ajaxData.setMsg("获取文章信息有误!");
             }
         } catch (IOException e) {
             e.printStackTrace();
+            ajaxData.setState(false);
+            ajaxData.setMsg("数据转换异常!");
         }
-        return null;
+        return ajaxData;
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param multipartHttpServletRequest
+     * @param request
+     * @return 图片保存完整路径
+     */
+    @RequestMapping(value = "/maintainer/uploadPicture", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadPicture(MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request) {
+        AjaxData data = new AjaxData();
+        String lastPath = null;
+        try {
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            lastPath = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
+            data.setState(true);
+            data.setMsg(lastPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastPath;
+    }
+
+    /**
+     * 删除硬盘中的图片
+     *
+     * @param path 真实图片路径
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/deletePictue", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxData deletePictue(@RequestParam("path") String path) {
+        AjaxData data = new AjaxData();
+        try {
+            if (!StringUtils.isEmpty(path) && StringUtils.trimWhitespace(path).length() > 0) {
+                if (FilesUtils.deleteFile(path)) {
+                    data.setState(true);
+                    data.setMsg("删除图片成功！");
+                } else {
+                    data.setState(false);
+                    data.setMsg("未找到图片！");
+                }
+            } else {
+                data.setState(false);
+                data.setMsg("删除图片失败！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            data.setState(false);
+            data.setMsg("删除图片失败！");
+        }
+        return data;
     }
 }

@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleSub extends TableImpl<ArticleSubRecord> {
 
-	private static final long serialVersionUID = -1632001223;
+	private static final long serialVersionUID = 1731242213;
 
 	/**
 	 * The reference instance of <code>cbis.article_sub</code>
@@ -66,19 +66,9 @@ public class ArticleSub extends TableImpl<ArticleSubRecord> {
 	public final TableField<ArticleSubRecord, String> SUB_CONTENT = createField("sub_content", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
 
 	/**
-	 * The column <code>cbis.article_sub.sub_photo_url</code>.
-	 */
-	public final TableField<ArticleSubRecord, String> SUB_PHOTO_URL = createField("sub_photo_url", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
-
-	/**
 	 * The column <code>cbis.article_sub.article_info_id</code>.
 	 */
 	public final TableField<ArticleSubRecord, Integer> ARTICLE_INFO_ID = createField("article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.article_sub.row</code>.
-	 */
-	public final TableField<ArticleSubRecord, Integer> ROW = createField("row", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.article_sub</code> table reference

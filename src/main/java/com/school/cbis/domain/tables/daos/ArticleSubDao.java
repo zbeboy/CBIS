@@ -79,23 +79,9 @@ public class ArticleSubDao extends DAOImpl<ArticleSubRecord, com.school.cbis.dom
 	}
 
 	/**
-	 * Fetch records that have <code>sub_photo_url IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.ArticleSub> fetchBySubPhotoUrl(String... values) {
-		return fetch(ArticleSub.ARTICLE_SUB.SUB_PHOTO_URL, values);
-	}
-
-	/**
 	 * Fetch records that have <code>article_info_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.ArticleSub> fetchByArticleInfoId(Integer... values) {
 		return fetch(ArticleSub.ARTICLE_SUB.ARTICLE_INFO_ID, values);
-	}
-
-	/**
-	 * Fetch records that have <code>row IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.ArticleSub> fetchByRow(Integer... values) {
-		return fetch(ArticleSub.ARTICLE_SUB.ROW, values);
 	}
 }

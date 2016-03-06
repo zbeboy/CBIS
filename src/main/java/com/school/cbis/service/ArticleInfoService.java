@@ -1,6 +1,10 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
+import org.jooq.Record7;
+import org.jooq.Result;
+
+import java.sql.Timestamp;
 
 /**
  * Created by lenovo on 2016-01-12.
@@ -35,5 +39,12 @@ public interface ArticleInfoService {
      * @param articleInfo
      */
     void update(ArticleInfo articleInfo);
+
+    /**
+     * 关联Users表查询
+     * @param id
+     * @return
+     */
+    Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> findByIdWithUsers(int id);
 
 }

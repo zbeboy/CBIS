@@ -45,9 +45,7 @@ create table article_sub(
   id int not null primary key auto_increment,
   sub_title varchar(50),
   sub_content varchar(1000),
-  sub_photo_url varchar(500),
   article_info_id int not null,
-  row int not null,
   foreign key(article_info_id) references article_info(id)
 );
 

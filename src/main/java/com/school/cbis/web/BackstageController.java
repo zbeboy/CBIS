@@ -132,34 +132,7 @@ public class BackstageController {
         return "/maintainer/majortraitlist";
     }
 
-    /**
-     * 系简介管理页面
-     *
-     * @param map
-     * @return
-     */
-    @RequestMapping("/maintainer/tieintroduce")
-    public String backstageTieIntroduce(ModelMap map) {
-        //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
-                }
-            }
-        }
-        if (articleInfoId > 0) {
-            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
-            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
-            map.addAttribute("articlesubinfo", articleSubs);
-        } else {
-            map.addAttribute("articleinfo", new ArticleInfo());
-            map.addAttribute("articlesubinfo", null);
-        }
-        return "/maintainer/tieintroduceupdate";
-    }
+
 
     /**
      * 系主任编辑页面
@@ -293,59 +266,5 @@ public class BackstageController {
         return "/maintainer/teacherlist";
     }
 
-    /**
-     * 上传图片
-     *
-     * @param multipartHttpServletRequest
-     * @param request
-     * @return 图片保存完整路径
-     */
-    @RequestMapping(value = "/maintainer/uploadpicture", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadTieElegantPicture(MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request) {
-        AjaxData data = null;
-        String lastPath = null;
-        try {
-            data = new AjaxData();
-            String realPath = request.getSession().getServletContext().getRealPath("/");
-            lastPath = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
-            data.setState(true);
-            data.setMsg(lastPath);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lastPath;
-    }
 
-    /**
-     * 删除硬盘中的图片
-     *
-     * @param path 真实图片路径
-     * @return
-     */
-    @RequestMapping(value = "/maintainer/deletepictue", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData deleteTieElegantPicture(@RequestParam("path") String path) {
-        AjaxData data = null;
-        try {
-            data = new AjaxData();
-            if (!StringUtils.isEmpty(path) && StringUtils.trimWhitespace(path).length() > 0) {
-                if (FilesUtils.deleteFile(path)) {
-                    data.setState(true);
-                    data.setMsg("删除图片成功！");
-                } else {
-                    data.setState(false);
-                    data.setMsg("未找到图片！");
-                }
-            } else {
-                data.setState(false);
-                data.setMsg("删除图片失败！");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            data.setState(false);
-            data.setMsg("删除图片失败！");
-        }
-        return data;
-    }
 }

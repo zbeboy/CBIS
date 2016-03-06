@@ -36,13 +36,11 @@ public class ArticleSubServiceImpl implements ArticleSubService {
         BatchBindStep bindStep = create.batch(create.insertInto(Tables.ARTICLE_SUB,
                 Tables.ARTICLE_SUB.SUB_TITLE,
                 Tables.ARTICLE_SUB.SUB_CONTENT,
-                Tables.ARTICLE_SUB.SUB_PHOTO_URL,
-                Tables.ARTICLE_SUB.ARTICLE_INFO_ID,
-                Tables.ARTICLE_SUB.ROW).values(
-                null, null, null, (Integer) null, 0
+                Tables.ARTICLE_SUB.ARTICLE_INFO_ID).values(
+                null, null, (Integer) null
         ));
         for (ArticleSub r : articleSubs) {
-            bindStep.bind(r.getSubTitle(), r.getSubContent(), r.getSubPhotoUrl(), r.getArticleInfoId(), r.getRow());
+            bindStep.bind(r.getSubTitle(), r.getSubContent(), r.getArticleInfoId());
         }
         bindStep.execute();
     }

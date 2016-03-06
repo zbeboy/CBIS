@@ -10,12 +10,13 @@ var articleSaveOrUpdateUrl = '';//文章保存或更新地址
 var clickOkUrl = '';//文章保存或更新成功点击确定需要刷新的地址
 var clickNoUrl = '';//文章保存或更新成功点击取消需要刷新的地址
 var uploadParamFileName = '';//上传图片需要保存图片的文件夹名
+var id = 0;//用于专业文章使用主键
 var cleanFromClient = false;//删除图片时，服务器端也删除，默认只删除html dom
 var cleanUrl = '';//若开启cleanFromClient,此项必填，删除请求地址
 
 //初始化配置
 function initArticleParam(initArticleWordType, initCheckArticleTitle, initCheckArticleContent, initCheckArticlePic, initArticleSaveOrUpdateUrl,
-                          initClickOkUrl, initClickNoUrl, initUploadParamFileName, initCleanFromClient, initCleanUrl) {
+                          initClickOkUrl, initClickNoUrl, initUploadParamFileName, initId, initCleanFromClient, initCleanUrl) {
     articleWordType = initArticleWordType;
     checkArticleTitle = initCheckArticleTitle;
     checkArticleContent = initCheckArticleContent;
@@ -24,8 +25,18 @@ function initArticleParam(initArticleWordType, initCheckArticleTitle, initCheckA
     clickOkUrl = initClickOkUrl;
     clickNoUrl = initClickNoUrl;
     uploadParamFileName = initUploadParamFileName;
+    id = initId;
     cleanFromClient = initCleanFromClient;
     cleanUrl = initCleanUrl;
+    initUpload();
+
+    if (imgPath != ''&&imgPath != null) {
+        var str = imgPath.substring(imgPath.lastIndexOf('\\') + 1, imgPath.length);
+        $('#articleimg').attr('src', '/files/' + initUploadParamFileName + '/' + str);
+    } else {
+        $('#upload-drop').removeClass("uk-hidden");
+        $('#imgShow').children().addClass("uk-hidden");
+    }
 }
 
 
@@ -83,14 +94,13 @@ function addsubarticle() {
  * @param subTitle 子标题
  * @param subPage 子内容
  */
-function articleData(title, summary, picPath, subTitle, subPage, articleType, row) {
+function articleData(title, summary, picPath, subTitle, subPage, articleType) {
     this.title = title;
     this.summary = summary;
     this.picPath = picPath;
     this.subTitle = subTitle;
     this.subPage = subPage;
     this.articleType = articleType;
-    this.row = row;
 }
 
 /**
@@ -111,13 +121,13 @@ function saveArticle() {
 
     var subData = new Array();
 
-    subData.push(new articleData(title, summary, picPath, "", "", articleWordType, -1));
+    subData.push(new articleData(title, summary, picPath, "", "", articleWordType));
     /*可以没有子标题数据，只组装第一条*/
     for (var i = 0; i < subtitle.length; i++) {
         if ($($('.mysubtitle')[i]).val().trim().length > 0 || $($('.mysubpage')[i]).val().trim().length > 0) {/*当子标题与内容都为空时，不算入文章*/
             if ($($('.mysubtitle')[i]).val().trim().length <= 50) {
                 if ($($('.mysubpage')[i]).val().trim().length <= 2000) {
-                    subData.push(new articleData(title, summary, picPath, repalceHtmlCode($($('.mysubtitle')[i]).val()), repalceHtmlCode($($('.mysubpage')[i]).val()), articleWordType, i));
+                    subData.push(new articleData(title, summary, picPath, repalceHtmlCode($($('.mysubtitle')[i]).val()), repalceHtmlCode($($('.mysubpage')[i]).val()), articleWordType));
                 } else {
                     $($('.summaryerror')[i]).text("文章简介长度应小于2000个字符！");
                 }
@@ -174,7 +184,8 @@ function sendArtitle(subData) {
     var index = layer.load(1, {shade: false});
 
     $.post(articleSaveOrUpdateUrl, {
-        'subData': subData
+        'subData': subData,
+        'id': id/*0表示不更新班级*/
     }, function (data, status) {
         layer.close(index);
         if (status) {
@@ -182,7 +193,7 @@ function sendArtitle(subData) {
                 layer.confirm(data.msg, {
                     btn: ['确定', '取消'] //按钮
                 }, function () {
-                    window.location.href = clickOkUrl;
+                    window.location.href = clickOkUrl + "?id=" + data.single;
                 }, function () {
                     window.location.href = clickNoUrl;
                 });
@@ -224,7 +235,8 @@ function writerSummary() {
 /**
  * 上传图片到服务器端
  */
-$(function () {
+
+function initUpload() {
     var progressbar = $("#progressbar"),
         bar = progressbar.find('.uk-progress-bar'),
         settings = {
@@ -265,7 +277,6 @@ $(function () {
 
                 //显示图片
                 $('#articleimg').attr('src', '/files/' + uploadParamFileName + '/' + str);
-                $('#articleimg').data('path', response);
                 $('#articleimg').parent().parent().removeClass('uk-hidden');
 
                 //保存服务器端绝对路径
@@ -275,7 +286,7 @@ $(function () {
 
     var select = UIkit.uploadSelect($("#upload-select"), settings),
         drop = UIkit.uploadDrop($("#upload-drop"), settings);
-});
+}
 
 
 /**
@@ -284,7 +295,7 @@ $(function () {
 function cleanimg() {
 
     if (cleanFromClient) {
-        var path = $('#articleimg').data('path');
+        var path = imgPath;
         if (path != null) {
             $.post(cleanUrl, {
                 'path': path
@@ -309,7 +320,19 @@ function cleanimg() {
         $('#upload-drop').removeClass('uk-hidden');
         $('#articleimg').parent().parent().addClass('uk-hidden');
     }
+}
 
-
+function deleteArticle() {
+    $.post("/maintainer/deleteArticle", {
+        'id': id
+    }, function (data, status) {
+        if (status) {
+            if (data.state) {
+                window.location.href = clickNoUrl;
+            }
+        } else {
+            layer.msg("网络异常，请稍后重试！");
+        }
+    });
 }
 

@@ -24,14 +24,12 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleSub implements Serializable {
 
-	private static final long serialVersionUID = 168015217;
+	private static final long serialVersionUID = 2044665546;
 
 	private Integer id;
 	private String  subTitle;
 	private String  subContent;
-	private String  subPhotoUrl;
 	private Integer articleInfoId;
-	private Integer row;
 
 	public ArticleSub() {}
 
@@ -39,25 +37,19 @@ public class ArticleSub implements Serializable {
 		this.id = value.id;
 		this.subTitle = value.subTitle;
 		this.subContent = value.subContent;
-		this.subPhotoUrl = value.subPhotoUrl;
 		this.articleInfoId = value.articleInfoId;
-		this.row = value.row;
 	}
 
 	public ArticleSub(
 		Integer id,
 		String  subTitle,
 		String  subContent,
-		String  subPhotoUrl,
-		Integer articleInfoId,
-		Integer row
+		Integer articleInfoId
 	) {
 		this.id = id;
 		this.subTitle = subTitle;
 		this.subContent = subContent;
-		this.subPhotoUrl = subPhotoUrl;
 		this.articleInfoId = articleInfoId;
-		this.row = row;
 	}
 
 	@NotNull
@@ -87,15 +79,6 @@ public class ArticleSub implements Serializable {
 		this.subContent = subContent;
 	}
 
-	@Size(max = 500)
-	public String getSubPhotoUrl() {
-		return this.subPhotoUrl;
-	}
-
-	public void setSubPhotoUrl(String subPhotoUrl) {
-		this.subPhotoUrl = subPhotoUrl;
-	}
-
 	@NotNull
 	public Integer getArticleInfoId() {
 		return this.articleInfoId;
@@ -105,15 +88,6 @@ public class ArticleSub implements Serializable {
 		this.articleInfoId = articleInfoId;
 	}
 
-	@NotNull
-	public Integer getRow() {
-		return this.row;
-	}
-
-	public void setRow(Integer row) {
-		this.row = row;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("ArticleSub (");
@@ -121,9 +95,7 @@ public class ArticleSub implements Serializable {
 		sb.append(id);
 		sb.append(", ").append(subTitle);
 		sb.append(", ").append(subContent);
-		sb.append(", ").append(subPhotoUrl);
 		sb.append(", ").append(articleInfoId);
-		sb.append(", ").append(row);
 
 		sb.append(")");
 		return sb.toString();

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-24.
@@ -25,7 +26,7 @@ public class TieElegantServiceImpl implements TieElegantService {
     private TieElegantDao tieElegantDao;
 
     @Autowired
-    public TieElegantServiceImpl(DSLContext dslContext,Configuration configuration) {
+    public TieElegantServiceImpl(DSLContext dslContext, Configuration configuration) {
         this.create = dslContext;
         this.tieElegantDao = new TieElegantDao(configuration);
     }
@@ -104,7 +105,7 @@ public class TieElegantServiceImpl implements TieElegantService {
             e.orderBy(b);
         }
 
-        return  e.limit((tieElegantVo.getPageIndex() - 1) * tieElegantVo.getPageSize(), tieElegantVo.getPageSize()).fetch();
+        return e.limit((tieElegantVo.getPageIndex() - 1) * tieElegantVo.getPageSize(), tieElegantVo.getPageSize()).fetch();
 
     }
 
@@ -150,5 +151,36 @@ public class TieElegantServiceImpl implements TieElegantService {
     public TieElegant findById(int id) {
         TieElegant tieElegant = tieElegantDao.findById(id);
         return tieElegant;
+    }
+
+    @Override
+    public Result<Record4<Integer, String,String,String>> findByTieIdWithArticleOrderByDateDescAndPage(int tieId, int pageNum, int pageSize) {
+        Result<Record4<Integer, String,String,String>> record4s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE,Tables.ARTICLE_INFO.ARTICLE_PHOTO_URL,Tables.ARTICLE_INFO.ARTICLE_CONTENT)
+                .from(Tables.TIE_ELEGANT)
+                .join(Tables.ARTICLE_INFO)
+                .on(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                .where(Tables.TIE_ELEGANT.TIE_ID.eq(tieId))
+                .orderBy(Tables.ARTICLE_INFO.DATE.desc())
+                .limit(pageNum, pageSize).fetch();
+        return record4s;
+    }
+
+    @Override
+    public Result<Record3<Integer, String,Timestamp>> findByTieElegantTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieElegantTimeId, String bigTitle) {
+
+        Condition a = Tables.TIE_ELEGANT.TIE_ELEGANT_TIME_ID.eq(tieElegantTimeId);
+
+        if (StringUtils.hasLength(bigTitle)) {
+            a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + bigTitle + "%"));
+        }
+
+        Result<Record3<Integer, String,Timestamp>> record3s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE,Tables.ARTICLE_INFO.DATE)
+                .from(Tables.TIE_ELEGANT)
+                .join(Tables.ARTICLE_INFO)
+                .on(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                .where(a)
+                .orderBy(Tables.ARTICLE_INFO.DATE.desc())
+                .fetch();
+        return record3s;
     }
 }

@@ -49,7 +49,7 @@ function showDetailsDialog(type,client){
         layer.confirm('去编辑?', {
             btn: ['确定','取消'] //按钮
         }, function(){
-            window.location.href='/cbis/maintainer/tieelegantupdate?id='+client.id;
+            window.location.href='/maintainer/tieElegantUpdate?id='+client.id;
         });
     } else if(type === 'Add'){
         window.location.href='/maintainer/tieElegantAdd';

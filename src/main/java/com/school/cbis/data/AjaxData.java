@@ -5,10 +5,11 @@ import java.util.List;
 /**
  * Created by lenovo on 2016-01-09.
  */
-public class AjaxData {
+public class AjaxData<T> {
     private boolean state;//消息状态
     private String msg;//消息
-    private List<Object> result;
+    private Object single;
+    private List<T> result;
     private PaginationData paginationData;
 
     public boolean getState() {
@@ -27,11 +28,19 @@ public class AjaxData {
         this.msg = msg;
     }
 
-    public List<Object> getResult() {
+    public Object getSingle() {
+        return single;
+    }
+
+    public void setSingle(Object single) {
+        this.single = single;
+    }
+
+    public List<T> getResult() {
         return result;
     }
 
-    public void setResult(List<Object> result) {
+    public void setResult(List<T> result) {
         this.result = result;
     }
 
@@ -48,6 +57,7 @@ public class AjaxData {
         return "AjaxData{" +
                 "state=" + state +
                 ", msg='" + msg + '\'' +
+                ", single=" + single +
                 ", result=" + result +
                 ", paginationData=" + paginationData +
                 '}';
