@@ -16,7 +16,7 @@ $(document).ready(function () {
         deletePicWay = false;
     }
 
-    initArticleParam("系简介", true, true, false, url, "/maintainer/tieArticleShow", "/maintainer/tieIntroduceUpdate", "tieintroduce", id, deletePicWay, "");
+    initArticleParam("系简介", true, true, false, url, "/user/tieArticleShow", "/maintainer/tieIntroduceUpdate", "tieintroduce", id, deletePicWay, "");
 
 });
 

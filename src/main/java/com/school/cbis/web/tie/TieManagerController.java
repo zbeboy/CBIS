@@ -248,16 +248,16 @@ public class TieManagerController {
                 articleVos.get(0).setArticlePhotoUrl(photo);
             }
 
-            modelMap.put("articleInfo", articleVos.get(0));
-            modelMap.put("articleSub", articleSubs);
+            modelMap.addAttribute("articleInfo", articleVos.get(0));
+            modelMap.addAttribute("articleSub", articleSubs);
 
             //左侧菜单
             Result<Record4<Integer, String, String, String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
             if (record4s.isNotEmpty()) {
                 List<ArticleVo> menuList = record4s.into(ArticleVo.class);
-                modelMap.put("menuList", menuList);
+                modelMap.addAttribute("menuList", menuList);
             } else {
-                modelMap.put("menuList", null);
+                modelMap.addAttribute("menuList", null);
             }
 
         }
@@ -370,47 +370,67 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/tieArticleShow")
+    @RequestMapping("/user/tieArticleShow")
     public String tieArticleShow(ModelMap modelMap, @RequestParam("id") int id) {
-        if (id == wordbook.getArticleTypeMap().get(Wordbook.TIE_SUMMARY)) {
-            modelMap.addAttribute("navId", "navtieintroduce");
-            Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
-            if (record7s.isNotEmpty()) {
-                List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
-                if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
-                    List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
-                    if (!teachers.isEmpty()) {
-                        articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
-                    }
-                } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
-                    List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
-                    if (!students.isEmpty()) {
-                        articleVos.get(0).setUserRealName(students.get(0).getStudentName());
-                    }
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                if (id == r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) {
+                    modelMap.addAttribute("navId", "navtieintroduce");
+                } else if (id == r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) {
+                    modelMap.addAttribute("navId", "navtiehead");
+                } else if (id == r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID)) {
+                    modelMap.addAttribute("navId", "navtiegoal");
+                } else if (id == r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID)) {
+                    modelMap.addAttribute("navId", "navtieitem");
                 }
 
-                List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
-
-                Result<Record> records = usersService.findAll(usersService.getUserName());
-                int tieId = 0;
-                if (records.isNotEmpty()) {
-                    for (Record r : records) {
-                        tieId = r.getValue(Tables.TIE.ID);
-                    }
-                }
-
-                if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                    String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
-                    String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                    articleVos.get(0).setArticlePhotoUrl(photo);
-                }
-
-                modelMap.put("tieIntroduceArticleInfo", articleVos.get(0));
-                modelMap.put("tieIntroduceArticlesubInfo", articleSubs);
+                modelMap.addAttribute("tieintroduceid", r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID));
+                modelMap.addAttribute("tieheadid", r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID));
+                modelMap.addAttribute("tiegoalid", r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID));
+                modelMap.addAttribute("tieitemid", r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID));
+                modelMap.addAttribute("currentId", id);
             }
         }
 
-        return "/maintainer/tiearticleshow";
+        return "/user/tiearticleshow";
     }
 
+    /**
+     * 系风采文章数据
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/user/tieArticleShowData")
+    @ResponseBody
+    public Map<String, Object> tieArticleShowData(@RequestParam("id") int id) {
+        Map<String, Object> map = new HashMap<>();
+        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
+        if (record7s.isNotEmpty()) {
+            List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
+            if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
+                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
+                if (!teachers.isEmpty()) {
+                    articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
+                }
+            } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
+                List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
+                if (!students.isEmpty()) {
+                    articleVos.get(0).setUserRealName(students.get(0).getStudentName());
+                }
+            }
+
+            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
+
+            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
+                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
+                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
+                articleVos.get(0).setArticlePhotoUrl(photo);
+            }
+            map.put("articleInfo", articleVos.get(0));
+            map.put("articleSub", articleSubs);
+        }
+        return map;
+    }
 }

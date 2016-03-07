@@ -62,16 +62,16 @@
                 <ul class="uk-tab uk-tab-left"
                     data-uk-tab="{connect:&#39;#my-id&#39;,animation: &#39;slide-bottom&#39;}">
                     <li id="navtieintroduce">
-                        <a href="#" th:href=" @{/user/tieArticleShow}+'?id='+${tieIntroduceArticleInfo.id} ">简介</a>
+                        <a href="#" onclick="toIntroduce();" >简介</a>
                     </li>
-                    <li id="navtiehead" class="uk-active">
-                        <a href="#">系主任</a>
+                    <li id="navtiehead">
+                        <a href="#" onclick="toHead();" >系主任</a>
                     </li>
                     <li id="navtiegoal">
-                        <a href="#">培养目标</a>
+                        <a href="#" onclick="toGoal();" >培养目标</a>
                     </li>
                     <li id="navtieitem">
-                        <a href="#">特色</a>
+                        <a href="#" onclick="toItem();" >特色</a>
                     </li>
                 </ul>
             </div>
@@ -81,135 +81,93 @@
                 <li>
                     <article class="uk-article">
                         <h1 class="uk-article-title">
-                            <a href="#" th:href=" @{/user/tieArticleShow}+'?id='+${tieIntroduceArticleInfo.id} "
-                               th:text="${tieIntroduceArticleInfo.bigTitle}">简介</a>
+                            <a href="#" id="tieintroducebigtitle">简介</a>
                         </h1>
                         <p class="uk-article-meta">
-                            <span th:text="${tieIntroduceArticleInfo.userRealName}"></span>&nbsp;&nbsp;
-                            <span th:text="${tieIntroduceArticleInfo.date}"></span>
+                            <span id="tieintroducerealname"></span>&nbsp;&nbsp;
+                            <span id="tieintroducedate"></span>
+                        </p>
                         <p>
-                            <a href="#" th:href=" @{/user/tieArticleShow}+'?id='+${tieIntroduceArticleInfo.id} ">
-                                <img width="900" height="300" th:src="${tieIntroduceArticleInfo.articlePhotoUrl}"
+                            <a href="#" id="tieintroduceimgurl">
+                                <img width="900" height="300" id="tieintroduceimgsrc"
                                      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
                                      alt=""/>
                             </a>
                         </p>
-                        <p th:text="${tieIntroduceArticleInfo.articleContent}"></p>
-                        <div th:unless="${#lists.isEmpty(tieIntroduceArticlesubInfo)}" th:each="as:${tieIntroduceArticlesubInfo}">
-
-                            <h2 th:text="${as.subTitle}"></h2>
-
-                            <p th:text="${as.subContent}"></p>
-
+                        <p id="tieintroducecontent"></p>
+                        <div id="tieintroducesub">
+                            <h2></h2>
+                            <p></p>
                         </div>
                     </article>
                 </li>
                 <li>
                     <article class="uk-article">
                         <h1 class="uk-article-title">
-                            <a href="layouts_post.html">系主任</a>
+                            <a href="#" id="tieheadbigtitle">系主任</a>
                         </h1>
-                        <p class="uk-article-meta">Written by Author on 12 April 2013. Posted in
-                            <a href="#">Blog</a></p>
+                        <p class="uk-article-meta">
+                            <span id="tieheadrealname"></span>&nbsp;&nbsp;
+                            <span id="tieheaddate"></span>
+                        </p>
                         <p>
-                            <a href="layouts_post.html">
-                                <img width="900" height="300"
+                            <a href="#" id="tieheadimgurl">
+                                <img width="900" height="300" id="tieheadimgsrc"
                                      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
                                      alt=""/>
                             </a>
                         </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <h2>Subheading</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <p>
-                            <a class="uk-button uk-button-primary" href="layouts_post.html">Continue Reading</a>
-                            <a class="uk-button" href="layouts_post.html">4 Comments</a></p>
+                        <p id="tieheadcontent"></p>
+                        <div id="tieheadsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
                     </article>
                 </li>
                 <li>
                     <article class="uk-article">
                         <h1 class="uk-article-title">
-                            <a href="layouts_post.html">培养目标</a>
+                            <a href="#" id="tiegoalbigtitle" >培养目标</a>
                         </h1>
-                        <p class="uk-article-meta">Written by Author on 12 April 2013. Posted in
-                            <a href="#">Blog</a></p>
+                        <p class="uk-article-meta">
+                            <span id="tiegoalrealname"></span>&nbsp;&nbsp;
+                            <span id="tiegoaldate"></span>
+                        </p>
                         <p>
-                            <a href="layouts_post.html">
-                                <img width="900" height="300"
+                            <a href="#" id="tiegoalimgurl" >
+                                <img width="900" height="300" id="tiegoalimgsrc"
                                      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
                                      alt=""/>
                             </a>
                         </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <h2>Subheading</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <p>
-                            <a class="uk-button uk-button-primary" href="layouts_post.html">Continue Reading</a>
-                            <a class="uk-button" href="layouts_post.html">4 Comments</a></p>
+                        <p id="tiegoalcontent" ></p>
+                        <div id="tiegoalsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
                     </article>
                 </li>
                 <li>
                     <article class="uk-article">
                         <h1 class="uk-article-title">
-                            <a href="layouts_post.html">特色</a>
+                            <a href="#" id="tieitembigtitle" >特色</a>
                         </h1>
-                        <p class="uk-article-meta">Written by Author on 12 April 2013. Posted in
-                            <a href="#">Blog</a></p>
+                        <p class="uk-article-meta">
+                            <span id="tieitemrealname"></span>&nbsp;&nbsp;
+                            <span id="tieitemdate"></span>
+                        </p>
                         <p>
-                            <a href="layouts_post.html">
-                                <img width="900" height="300"
+                            <a href="#" id="tieitemimgurl" >
+                                <img width="900" height="300" id="tieitemimgsrc"
                                      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
                                      alt=""/>
                             </a>
                         </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <h2>Subheading</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore
-                            et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid
-                            ex ea commodi consequat.
-                            Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint
-                            obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.</p>
-                        <p>
-                            <a class="uk-button uk-button-primary" href="layouts_post.html">Continue Reading</a>
-                            <a class="uk-button" href="layouts_post.html">4 Comments</a></p>
+                        <p id="tieitemcontent" ></p>
+                        <div id="tieitemsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
                     </article>
                 </li>
             </ul>
@@ -227,9 +185,16 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var id = /*[[${navId}]]*/ '';
-    $('#' + id).addClass('uk-active');
+    var navId = /*[[${navId}]]*/ '';
+    $('#' + navId).addClass('uk-active');
+    var tieintroduceid = /*[[${tieintroduceid}]]*/ 0;
+    var tieheadid = /*[[${tieheadid}]]*/ 0;
+    var tiegoalid = /*[[${tiegoalid}]]*/ 0;
+    var tieitemid = /*[[${tieitemid}]]*/ 0;
+    var currentId = /*[[${currentId}]]*/ -1;
     /*]]>*/
 </script>
+<script th:src="@{/js/cbis/js/tie/tiearticleshow.js}"
+        src="js/cbis/js/tie/tiearticleshow.js"></script>
 </body>
 </html>

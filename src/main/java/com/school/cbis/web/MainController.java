@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.service.ArticleInfoService;
 import com.school.cbis.service.TieElegantService;
+import com.school.cbis.service.TieService;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.article.ArticleVo;
 import org.jooq.Record;
@@ -32,6 +33,9 @@ public class MainController {
     private TieElegantService tieElegantService;
 
     @Resource
+    private TieService tieService;
+
+    @Resource
     private ArticleInfoService articleInfoService;
 
     /**
@@ -41,12 +45,16 @@ public class MainController {
     @RequestMapping("/")
     public String root(ModelMap modelMap) {
         //系风采
-        Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
+        if(!StringUtils.isEmpty(usersService.getUserName())){
+            Result<Record> records = usersService.findAll(usersService.getUserName());
+            if (records.isNotEmpty()) {
+                for (Record r : records) {
+                    tieId = r.getValue(Tables.TIE.ID);
+                }
             }
+        } else {
+            tieId = 1;
         }
         Result<Record4<Integer, String,String,String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
         if (record4s.isNotEmpty()) {
