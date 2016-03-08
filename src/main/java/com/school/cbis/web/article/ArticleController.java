@@ -139,26 +139,26 @@ public class ArticleController {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
                     }
-                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_LEAD)) {
+                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_LEAD)) {//系主任
                     tie.setTiePrincipalArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
                     data.setSingle(articleInfoId);
 
-                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_SUMMARY)) {
+                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_SUMMARY)) {//系简介
                     tie.setTieIntroduceArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
                     data.setSingle(articleInfoId);
-                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_ITEM)) {
+                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_ITEM)) {//系特色
                     tie.setTieTraitArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
                     data.setSingle(articleInfoId);
-                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_BRING_IN_GOAL)) {
+                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_BRING_IN_GOAL)) {//系培养目标
                     tie.setTieTrainingGoalArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);

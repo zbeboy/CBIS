@@ -1,14 +1,11 @@
 package com.school.cbis.web.tie;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.school.cbis.commons.Wordbook;
+import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
-import com.school.cbis.domain.tables.records.TieElegantTimeRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
-import com.school.cbis.data.AjaxData;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.tie.TieElegantTimeVo;
@@ -26,10 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -342,7 +337,7 @@ public class TieManagerController {
      * @return
      */
     @RequestMapping("/maintainer/tieIntroduceUpdate")
-    public String tieIntroduce(ModelMap modelMap) {
+    public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
@@ -362,6 +357,95 @@ public class TieManagerController {
             modelMap.addAttribute("articlesubinfo", null);
         }
         return "/maintainer/tieintroduceupdate";
+    }
+
+    /**
+     * 系主任管理页面
+     *
+     * @param map
+     * @return
+     */
+    @RequestMapping("/maintainer/tieHeadUpdate")
+    public String tieHeadUpdate(ModelMap map) {
+        //通过用户类型获取系表文章ID
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int articleInfoId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
+                    articleInfoId = r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
+                }
+            }
+        }
+        if (articleInfoId > 0) {
+            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
+            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
+            map.addAttribute("articlesubinfo", articleSubs);
+        } else {
+            map.addAttribute("articlesubinfo", null);
+            map.addAttribute("articleinfo", new ArticleInfo());
+        }
+        return "/maintainer/tieheadupdate";
+    }
+
+    /**
+     * 系培养目标管理页面
+     *
+     * @param map
+     * @return
+     */
+    @RequestMapping("/maintainer/tieTrainGoalUpdate")
+    public String backstageTieTrainGoal(ModelMap map) {
+        //通过用户类型获取系表文章ID
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int articleInfoId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
+                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
+                }
+            }
+        }
+        if (articleInfoId > 0) {
+            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
+            map.addAttribute("articlesubinfo", articleSubs);
+            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
+        } else {
+            map.addAttribute("articleinfo", new ArticleInfo());
+            map.addAttribute("articlesubinfo", null);
+        }
+        return "/maintainer/tietraingoalupdate";
+    }
+
+    /**
+     * 系特色管理页面
+     *
+     * @param map
+     * @return
+     */
+    @RequestMapping("/maintainer/tieItemUpdate")
+    public String tieItemUpdate(ModelMap map) {
+        //通过用户类型获取系表文章ID
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int articleInfoId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
+                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
+                }
+            }
+        }
+        if (articleInfoId > 0) {
+            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
+            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
+            map.addAttribute("articlesubinfo", articleSubs);
+
+        } else {
+            map.addAttribute("articleinfo", new ArticleInfo());
+            map.addAttribute("articlesubinfo", null);
+
+        }
+        return "/maintainer/tieitemupdate";
     }
 
     /**

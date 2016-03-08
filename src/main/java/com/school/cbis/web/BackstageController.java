@@ -107,123 +107,36 @@ public class BackstageController {
 
     /**
      * 专业带头人界面
+     *
      * @return
      */
     @RequestMapping("/maintainer/majorhead")
-    public String majorHead(){
+    public String majorHead() {
         return "/maintainer/majorheadlist";
     }
 
     /**
      * 专业培养目标
+     *
      * @return
      */
     @RequestMapping("/maintainer/majortraininggoal")
-    public String majorTrainingGoal(){
+    public String majorTrainingGoal() {
         return "/maintainer/majortraininggoallist";
     }
 
     /**
      * 专业特色
+     *
      * @return
      */
     @RequestMapping("/maintainer/majortrait")
-    public String majorTrait(){
+    public String majorTrait() {
         return "/maintainer/majortraitlist";
     }
 
-
-
-    /**
-     * 系主任编辑页面
-     *
-     * @param map
-     * @return
-     */
-    @RequestMapping("/maintainer/tiehead")
-    public String backstageTieHead(ModelMap map) {
-        //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
-                }
-            }
-        }
-        if (articleInfoId > 0) {
-            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
-            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
-            map.addAttribute("articlesubinfo", articleSubs);
-        } else {
-            map.addAttribute("articlesubinfo", null);
-            map.addAttribute("articleinfo", new ArticleInfo());
-        }
-        return "/maintainer/tieheadupdate";
-    }
-
-    /**
-     * 系培养目标页面
-     *
-     * @param map
-     * @return
-     */
-    @RequestMapping("/maintainer/tietraingoal")
-    public String backstageTieTrainGoal(ModelMap map) {
-        //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
-                }
-            }
-        }
-        if (articleInfoId > 0) {
-            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
-            map.addAttribute("articlesubinfo", articleSubs);
-            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
-        } else {
-            map.addAttribute("articleinfo", new ArticleInfo());
-            map.addAttribute("articlesubinfo", null);
-        }
-        return "/maintainer/tietraingoalupdate";
-    }
-
-    /**
-     * 系特色
-     * @param map
-     * @return
-     */
-    @RequestMapping("/maintainer/tieitem")
-    public String backstageTieItem(ModelMap map) {
-        //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
-                }
-            }
-        }
-        if (articleInfoId > 0) {
-            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
-            map.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
-            map.addAttribute("articlesubinfo", articleSubs);
-
-        } else {
-            map.addAttribute("articleinfo", new ArticleInfo());
-            map.addAttribute("articlesubinfo", null);
-
-        }
-        return "/maintainer/tieitemupdate";
-    }
-
     @RequestMapping("/maintainer/grademanager")
-    public String gradeManager(ModelMap map){
+    public String gradeManager(ModelMap map) {
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -233,22 +146,22 @@ public class BackstageController {
             }
         }
         List<Major> majors = majorService.findByTieId(tieId);
-        map.addAttribute("majorNames",majors);
+        map.addAttribute("majorNames", majors);
         return "/maintainer/gradelist";
     }
 
     @RequestMapping("/maintainer/usersmanager")
-    public String usersManager(){
+    public String usersManager() {
         return "/maintainer/studentlist";
     }
 
     @RequestMapping("/maintainer/studentmanager")
-    public String studentManager(ModelMap map){
+    public String studentManager(ModelMap map) {
         return "/maintainer/studentlist";
     }
 
     @RequestMapping("/maintainer/teachermanager")
-    public String teacherManager(ModelMap map){
+    public String teacherManager(ModelMap map) {
         List<TeacherVo> teacherVos = new ArrayList<>();
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -259,10 +172,10 @@ public class BackstageController {
             }
         }
         Result<Record5<Integer, String, String, Byte, String>> record5s = teacherService.findByTieId(tieId);
-        if(record5s.isNotEmpty()){
+        if (record5s.isNotEmpty()) {
             teacherVos = record5s.into(TeacherVo.class);
         }
-        map.addAttribute("teachers",teacherVos);
+        map.addAttribute("teachers", teacherVos);
         return "/maintainer/teacherlist";
     }
 
