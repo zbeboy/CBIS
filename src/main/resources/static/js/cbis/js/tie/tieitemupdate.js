@@ -2,6 +2,13 @@
  * Created by lenovo on 2016-02-01.
  */
 $(document).ready(function () {
+    initArticleParam();
+});
+
+/**
+ * 初始化参数
+ */
+function initArticleParam(){
     var id = $('#articleInfoId').text();
     var url = '';
     var deletePicWay = false;//删除图片方式
@@ -15,8 +22,17 @@ $(document).ready(function () {
         url = "/maintainer/updateArticle";
         deletePicWay = false;
     }
-
-    initArticleParam("系特色", true, true, false, url, "/user/tieArticleShow", "/maintainer/tieItemUpdate", "tieitem", id, deletePicWay, "");
-
-});
-
+    param.articleWordType = "系特色";
+    param.checkArticleTitle = true;
+    param.checkArticleContent = true;
+    param.checkArticlePic = false;
+    param.articleSaveOrUpdateUrl = url;
+    param.clickOkUrl = "/user/tieArticleShow";
+    param.clickNoUrl = "/maintainer/tieItemUpdate";
+    param.uploadParamFileName = "tieitem";
+    param.id = id;
+    param.cleanFromClient = deletePicWay;
+    param.cleanUrl = deleteUrl;
+    initUpload();
+    initImage();
+}

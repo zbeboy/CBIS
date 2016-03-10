@@ -8,9 +8,7 @@ import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.article.ArticleVo;
-import com.school.cbis.vo.tie.TieElegantTimeVo;
-import com.school.cbis.vo.tie.TieElegantVo;
-import com.school.cbis.vo.tie.TieVo;
+import com.school.cbis.vo.tie.*;
 import org.jooq.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,6 +58,12 @@ public class TieManagerController {
 
     @Resource
     private TieElegantTimeService tieElegantTimeService;
+
+    @Resource
+    private TieNoticeService tieNoticeService;
+
+    @Resource
+    private TieNoticeTimeService tieNoticeTimeService;
 
     /**
      * 检验系名
@@ -111,7 +115,7 @@ public class TieManagerController {
      * @return 页面地址
      */
     @RequestMapping(value = "/maintainer/tieElegant")
-    public String backstageTieElegant() {
+    public String tieElegant() {
         return "/maintainer/tieelegantlist";
     }
 
@@ -516,5 +520,211 @@ public class TieManagerController {
             map.put("articleSub", articleSubs);
         }
         return map;
+    }
+
+    /**
+     * 系公告管理页面
+     *
+     * @return 页面地址
+     */
+    @RequestMapping(value = "/maintainer/tieNotice")
+    public String tieNotice() {
+        return "/maintainer/tienoticelist";
+    }
+
+    /**
+     * 加载系公告数据
+     *
+     * @param tieNoticeVo
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/tieNoticeData")
+    @ResponseBody
+    public Map<String, Object> tieNoticeData(TieNoticeVo tieNoticeVo) {
+        JsGrid<TieNoticeVo> jsGrid = new JsGrid<>(new HashMap<>());
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                tieId = r.getValue(Tables.TIE.ID);
+            }
+        }
+        List<TieNoticeVo> list = new ArrayList<>();
+        if (tieId > 0) {
+            Result<Record4<Integer, String, String, Timestamp>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
+            if (record5s.isNotEmpty()) {
+                list = record5s.into(TieNoticeVo.class);
+                jsGrid.loadData(list, tieNoticeService.findByTieIdWithBigTitleAndCount(tieNoticeVo, tieId));
+            } else {
+                jsGrid.loadData(list, 0);
+            }
+        } else {
+            jsGrid.loadData(list, 0);
+        }
+        return jsGrid.getMap();
+    }
+
+    /**
+     * 删除系公告
+     *
+     * @param id 文章id
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/deleteTieNotice", method = RequestMethod.POST)
+    @ResponseBody
+    public TieNoticeVo deleteTieNotice(@RequestParam(value = "id") int id, String imgpath) {
+        JsGrid<TieNoticeVo> jsGrid = new JsGrid<>();
+        try {
+            ArticleInfo articleInfo = articleInfoService.findById(id);
+            if (!StringUtils.isEmpty(articleInfo)) {
+                tieNoticeService.deleteById(id);
+                articleSubService.deleteByArticleInfoId(id);
+                articleInfoService.deleteById(id);
+                FilesUtils.deleteFile(imgpath);
+                TieNoticeVo tieNoticeVo = new TieNoticeVo();
+                tieNoticeVo.setId(id);
+                tieNoticeVo.setBigTitle(articleInfo.getBigTitle());
+                tieNoticeVo.setUsername(usersService.getUserName());
+                tieNoticeVo.setDate(new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date(articleInfo.getDate().getTime())));
+                return jsGrid.deleteItem(tieNoticeVo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 系公告添加页面
+     *
+     * @return
+     */
+    @RequestMapping("/maintainer/tieNoticeAdd")
+    public String tieNoticeAdd() {
+        return "/maintainer/tienoticeadd";
+    }
+
+    /**
+     * 跳转更新页面
+     *
+     * @param id       文章id
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/tieNoticeUpdate")
+    public String tieNoticeUpdate(@RequestParam("id") int id, ModelMap modelMap) {
+        modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
+        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
+        modelMap.addAttribute("articlesubinfo", articleSubs);
+        return "/maintainer/tienoticeupdate";
+    }
+
+    /**
+     * 系风采详细展示页
+     *
+     * @param id
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/user/tieNoticeShow")
+    public String tieNoticeShow(@RequestParam("id") int id, ModelMap modelMap) {
+        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
+        if (record7s.isNotEmpty()) {
+            List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
+            if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
+                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
+                if (!teachers.isEmpty()) {
+                    articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
+                }
+            } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
+                List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
+                if (!students.isEmpty()) {
+                    articleVos.get(0).setUserRealName(students.get(0).getStudentName());
+                }
+            }
+
+            List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
+
+            Result<Record> records = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (records.isNotEmpty()) {
+                for (Record r : records) {
+                    tieId = r.getValue(Tables.TIE.ID);
+                }
+            }
+
+            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
+                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
+                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
+                articleVos.get(0).setArticlePhotoUrl(photo);
+            }
+
+            modelMap.addAttribute("articleInfo", articleVos.get(0));
+            modelMap.addAttribute("articleSub", articleSubs);
+
+        }
+        return "/user/tienoticeshow";
+    }
+
+    /**
+     * 系公告列表展示页面
+     *
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/user/tieNoticeTime")
+    public String tieNoticeTime(ModelMap modelMap, String bigTitle) {
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                tieId = r.getValue(Tables.TIE.ID);
+            }
+        }
+
+        Result<Record2<Integer, String>> record2s = tieNoticeTimeService.findByBigTitleAndTieIdAndTimeDistinctId(
+                bigTitle,
+                tieId
+        );
+
+        List<TieNoticeTime> tieNoticeTimes = new ArrayList<>();
+
+        if (record2s.isNotEmpty()) {
+
+            tieNoticeTimes = record2s.into(TieNoticeTime.class);
+        }
+
+        modelMap.addAttribute("timeList", tieNoticeTimes);
+
+        modelMap.addAttribute("bigTitle", bigTitle);
+        return "/user/tienoticetimeshow";
+    }
+
+    /**
+     * 对应时间下数据
+     *
+     * @param modelMap
+     * @param id
+     * @param bigTitle
+     * @return
+     */
+    @RequestMapping("/user/tieNoticeTimeDropData")
+    @ResponseBody
+    public AjaxData<TieNoticeTimeVo> tieNoticeTimeDropData(ModelMap modelMap, @RequestParam("id") int id, String bigTitle) {
+        AjaxData<TieNoticeTimeVo> ajaxData = new AjaxData();
+
+        Result<Record3<Integer, String, Timestamp>> record3s =
+                tieNoticeService.findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(id, bigTitle);
+        List<TieNoticeTimeVo> tieNoticeTimeVos = record3s.into(TieNoticeTimeVo.class);
+        for (TieNoticeTimeVo t : tieNoticeTimeVos) {
+
+            t.setDate(t.getDate().split(" ")[0]);
+
+        }
+
+        ajaxData.setState(true);
+        ajaxData.setResult(tieNoticeTimeVos);
+
+        return ajaxData;
     }
 }

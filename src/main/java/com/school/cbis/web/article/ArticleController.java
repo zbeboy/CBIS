@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.ArticleData;
+import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
@@ -57,6 +58,12 @@ public class ArticleController {
 
     @Resource
     private TieElegantTimeService tieElegantTimeService;
+
+    @Resource
+    private TieNoticeService tieNoticeService;
+
+    @Resource
+    private TieNoticeTimeService tieNoticeTimeService;
 
     @Resource
     private MajorService majorService;
@@ -164,6 +171,31 @@ public class ArticleController {
                     data.setState(true);
                     data.setMsg("更新文章成功！");
                     data.setSingle(articleInfoId);
+                } else if(articleDatas[0].getArticleType().equals(Wordbook.TIE_NOTICE)) {//系公告
+                    if (tieId > 0) {
+                        int tieNoticeTimeId = 0;
+                        List<TieNoticeTime> tieNoticeTimes = tieNoticeTimeService.findByTime(new SimpleDateFormat("yyyy年MM月").format(new Date()));
+                        if (StringUtils.isEmpty(tieNoticeTimes) || tieNoticeTimes.size() <= 0) {
+                            TieNoticeTime tieNoticeTime = new TieNoticeTime();
+                            tieNoticeTime.setTime(new SimpleDateFormat("yyyy年MM月").format(new Date()));
+                            tieNoticeTimeId = tieNoticeTimeService.save(tieNoticeTime);
+                        } else {
+                            tieNoticeTimeId = tieNoticeTimes.get(0).getId();
+                        }
+
+                        TieNotice tieNotice= new TieNotice();
+                        tieNotice.setTieId(tieId);
+                        tieNotice.setTieNoticeArticleInfoId(articleInfoId);
+                        tieNotice.setTieNoticeTimeId(tieNoticeTimeId);
+                        tieNoticeService.save(tieNotice);
+                        data.setState(true);
+                        data.setMsg("保存系公告成功，是否现在查看效果！");
+                        data.setSingle(articleInfoId);
+
+                    } else {
+                        data.setState(false);
+                        data.setMsg("获取用户信息失败！");
+                    }
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.MAJOR_LEAD)) {//专业带头人
                     Major major = majorService.findById(majorId);
                     if (!StringUtils.isEmpty(major)) {
@@ -330,7 +362,8 @@ public class ArticleController {
         String lastPath = null;
         try {
             String realPath = request.getSession().getServletContext().getRealPath("/");
-            lastPath = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
+            List<FileData> fileDatas = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
+            lastPath = fileDatas.get(0).getLastPath();
             data.setState(true);
             data.setMsg(lastPath);
         } catch (Exception e) {

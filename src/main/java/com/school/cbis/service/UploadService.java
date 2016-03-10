@@ -1,6 +1,9 @@
 package com.school.cbis.service;
 
+import com.school.cbis.data.FileData;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-10.
@@ -14,5 +17,5 @@ public interface UploadService {
      * @param address 地址
      * @return
      */
-    String upload(MultipartHttpServletRequest request, String path, String address);
+    List<FileData> upload(MultipartHttpServletRequest request, String path, String address);
 }
