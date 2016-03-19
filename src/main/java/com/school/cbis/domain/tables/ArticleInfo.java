@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleInfo extends TableImpl<ArticleInfoRecord> {
 
-	private static final long serialVersionUID = -1855294889;
+	private static final long serialVersionUID = -1001829066;
 
 	/**
 	 * The reference instance of <code>cbis.article_info</code>
@@ -69,7 +69,7 @@ public class ArticleInfo extends TableImpl<ArticleInfoRecord> {
 	/**
 	 * The column <code>cbis.article_info.date</code>.
 	 */
-	public final TableField<ArticleInfoRecord, Timestamp> DATE = createField("date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<ArticleInfoRecord, Timestamp> DATE = createField("date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.article_info.article_type_id</code>.

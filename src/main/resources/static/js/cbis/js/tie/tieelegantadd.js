@@ -19,7 +19,7 @@ function initArticleParam(){
     param.uploadParamFileName = "tieelegant";
     param.id = 0;
     param.cleanFromClient = true;
-    param.cleanUrl = "/maintainer/deletePictue";
+    param.cleanUrl = "/maintainer/deleteFile";
     initUpload();
     initImage();
 }

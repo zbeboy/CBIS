@@ -33,7 +33,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord> implements Record13<Integer, Integer, String, String, String, Timestamp, String, Integer, Integer, Date, Date, String, String> {
 
-	private static final long serialVersionUID = -293321660;
+	private static final long serialVersionUID = -1858597301;
 
 	/**
 	 * Setter for <code>cbis.teach_task_info.id</code>.
@@ -122,6 +122,7 @@ public class TeachTaskInfoRecord extends UpdatableRecordImpl<TeachTaskInfoRecord
 	/**
 	 * Getter for <code>cbis.teach_task_info.teach_task_file_date</code>.
 	 */
+	@NotNull
 	public Timestamp getTeachTaskFileDate() {
 		return (Timestamp) getValue(5);
 	}

@@ -16,24 +16,24 @@
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
 
     <!-- jsgrid css-->
-    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid.min.css}" />
-    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css" th:href="@{/css/jsgrid-theme.min.css}" />
+    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid/jsgrid.min.css}" />
+    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css" th:href="@{/css/jsgrid/jsgrid-theme.min.css}" />
 
-    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
-    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
-    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
-    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
 
     <!-- layer js -->
-    <script src="js/layer.js" th:src="@{/js/layer.js}"></script>
+    <script src="js/layer.js" th:src="@{/js/layer/layer.js}"></script>
 
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
 
@@ -83,18 +83,24 @@
 
     </footer>
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var majors  = /*[[${majors}]]*/ null;
+    /*]]>*/
+</script>
 <!-- jsgrid js-->
-<script src="js/cbis/db/majortraininggoaldb.js" th:src="@{/js/cbis/db/majortraininggoaldb.js}" ></script>
-<script src="js/jsgrid.core.js" th:src="@{/js/jsgrid.core.js}" ></script>
-<script src="js/jsgrid.load-indicator.js" th:src="@{/js/jsgrid.load-indicator.js}" ></script>
-<script src="js/jsgrid.load-strategies.js" th:src="@{/js/jsgrid.load-strategies.js}" ></script>
-<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/jsgrid.sort-strategies.js}" ></script>
-<script src="js/jsgrid.field.js" th:src="@{/js/jsgrid.field.js}" ></script>
-<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/fields/jsgrid.field.text.js}" ></script>
-<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/fields/jsgrid.field.number.js}" ></script>
-<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/fields/jsgrid.field.control.js}" ></script>
+<script src="js/cbis/db/major/majortraininggoaldb.js" th:src="@{/js/cbis/db/major/majortraininggoaldb.js}" ></script>
+<script src="js/jsgrid.core.js" th:src="@{/js/jsgrid/jsgrid.core.js}" ></script>
+<script src="js/jsgrid.load-indicator.js" th:src="@{/js/jsgrid/jsgrid.load-indicator.js}" ></script>
+<script src="js/jsgrid.load-strategies.js" th:src="@{/js/jsgrid/jsgrid.load-strategies.js}" ></script>
+<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/jsgrid/jsgrid.sort-strategies.js}" ></script>
+<script src="js/jsgrid.field.js" th:src="@{/js/jsgrid/jsgrid.field.js}" ></script>
+<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/jsgrid/fields/jsgrid.field.text.js}" ></script>
+<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/jsgrid/fields/jsgrid.field.number.js}" ></script>
+<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/jsgrid/fields/jsgrid.field.select.js}"></script>
+<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/jsgrid/fields/jsgrid.field.control.js}" ></script>
 
-<script th:src="@{/js/cbis/js/majortraininggoallist.js}"
-        src="js/cbis/js/majortraininggoallist.js"></script>
+<script th:src="@{/js/cbis/js/major/majortraininggoallist.js}"
+        src="js/cbis/js/major/majortraininggoallist.js"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfo implements Serializable {
 
-	private static final long serialVersionUID = 2098536815;
+	private static final long serialVersionUID = -493314744;
 
 	private Integer   id;
 	private Integer   tieId;
@@ -137,6 +137,7 @@ public class TeachTaskInfo implements Serializable {
 		this.teachTaskFileName = teachTaskFileName;
 	}
 
+	@NotNull
 	public Timestamp getTeachTaskFileDate() {
 		return this.teachTaskFileDate;
 	}

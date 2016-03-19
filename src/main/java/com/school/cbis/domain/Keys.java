@@ -209,8 +209,7 @@ public class Keys {
 	public static final ForeignKey<TieRecord, YardRecord> TIE_IBFK_1 = ForeignKeys0.TIE_IBFK_1;
 	public static final ForeignKey<TieElegantRecord, TieRecord> TIE_ELEGANT_IBFK_1 = ForeignKeys0.TIE_ELEGANT_IBFK_1;
 	public static final ForeignKey<TieNoticeRecord, TieRecord> TIE_NOTICE_IBFK_1 = ForeignKeys0.TIE_NOTICE_IBFK_1;
-	public static final ForeignKey<TieNoticeAffixRecord, TieNoticeRecord> TIE_NOTICE_AFFIX_IBFK_1 = ForeignKeys0.TIE_NOTICE_AFFIX_IBFK_1;
-	public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_2 = ForeignKeys0.TIE_NOTICE_AFFIX_IBFK_2;
+	public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_1 = ForeignKeys0.TIE_NOTICE_AFFIX_IBFK_1;
 	public static final ForeignKey<UsersRecord, UserTypeRecord> USERS_IBFK_1 = ForeignKeys0.USERS_IBFK_1;
 
 	// -------------------------------------------------------------------------
@@ -324,8 +323,7 @@ public class Keys {
 		public static final ForeignKey<TieRecord, YardRecord> TIE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_YARD_PRIMARY, Tie.TIE, Tie.TIE.YARD_ID);
 		public static final ForeignKey<TieElegantRecord, TieRecord> TIE_ELEGANT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TieElegant.TIE_ELEGANT, TieElegant.TIE_ELEGANT.TIE_ID);
 		public static final ForeignKey<TieNoticeRecord, TieRecord> TIE_NOTICE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TieNotice.TIE_NOTICE, TieNotice.TIE_NOTICE.TIE_ID);
-		public static final ForeignKey<TieNoticeAffixRecord, TieNoticeRecord> TIE_NOTICE_AFFIX_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_NOTICE_PRIMARY, TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.TIE_NOTICE_ID);
-		public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.FILE_USER);
+		public static final ForeignKey<TieNoticeAffixRecord, UsersRecord> TIE_NOTICE_AFFIX_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.FILE_USER);
 		public static final ForeignKey<UsersRecord, UserTypeRecord> USERS_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USER_TYPE_PRIMARY, Users.USERS, Users.USERS.USER_TYPE_ID);
 	}
 }

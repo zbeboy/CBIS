@@ -76,6 +76,7 @@ public class UploadServiceImpl implements UploadService {
             logger.info(path);
             FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(path + File.separator + filename));
             lastPath = path + File.separator + filename;
+            lastPath = lastPath.replaceAll("\\\\","/");
         } else {
             logger.info("not valiablespace!");
             return null;

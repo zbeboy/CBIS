@@ -7,7 +7,7 @@
         loadData: function (filter) {
             return $.ajax({
                 type:"GET",
-                url:"/cbis/maintainer/majordata",
+                url:"/maintainer/majorData",
                 data:filter,
                 dataType:"json"
             });
@@ -16,7 +16,7 @@
         insertItem:function(item){
             return $.ajax({
                type:"POST",
-                url:"/cbis/maintainer/savemajor",
+                url:"/maintainer/saveMajor",
                 data:item,
                 dataType:"json"
             });
@@ -25,7 +25,7 @@
         updateItem:function(item){
             return $.ajax({
                type:"POST",
-                url:"/cbis/maintainer/updatemajor",
+                url:"/maintainer/updateMajor",
                 data:item,
                 dataType:"json"
             });
@@ -34,7 +34,7 @@
         deleteItem: function (item) {
             return $.ajax({
                 type:"POST",
-                url:"/cbis/maintainer/deletemajor",
+                url:"/maintainer/deleteMajor",
                 data:item,
                 dataType:"json"
             });

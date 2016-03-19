@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>信息工程系</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
+    <script src="js/components/accordion.js" th:src="@{/js/components/accordion.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/layer/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-1">
+            <div class="uk-panel uk-panel-box">
+                <ul class="uk-grid uk-grid-width-medium-1-4 uk-text-center" th:unless="${#lists.isEmpty(majorList)}" >
+                    <li th:each="ml:${majorList}" >
+                        <a class="uk-link-muted" href="#" th:text="${ml.majorName}" th:data="${ml.id}" onclick="toMajor(this);" >计算机科学与技术</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <h1 class="uk-heading-large" id="currentMajorName">计算机科学与技术</h1>
+            <p class="uk-text-large">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt
+                ut.</p>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4">
+            <div class="uk-panel" data-uk-sticky="{top:70}">
+                <ul class="uk-tab uk-tab-left"
+                    data-uk-tab="{connect:&#39;#my-id&#39;,animation: &#39;slide-bottom&#39;}">
+                    <li id="navmajorintroduce">
+                        <a href="#" onclick="toIntroduce();">专业简介</a>
+                    </li>
+                    <li id="navmajorhead">
+                        <a href="#" onclick="toHead();" >专业带头人</a>
+                    </li>
+                    <li id="navmajortraingoal">
+                        <a href="#" onclick="toGoal();">专业培养目标</a>
+                    </li>
+                    <li id="navmajortrait">
+                        <a href="#" onclick="toItem();">专业特色</a>
+                    </li>
+                    <li class="">
+                        <a href="#">专业教师</a>
+                    </li>
+                    <li class="">
+                        <a href="#">专业实验室</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="uk-width-medium-3-4">
+            <ul id="my-id" class="uk-switcher">
+                <li class="uk-active">
+                    <article class="uk-article">
+                        <h1 class="uk-article-title">
+                            <a href="#" id="majorintroducebigtitle" >专业简介</a>
+                        </h1>
+                        <p class="uk-article-meta">
+                            <span id="majorintroducerealname"></span>&nbsp;&nbsp;
+                            <span id="majorintroducedate"></span>
+                        </p>
+                        <p>
+                            <a href="#" id="majorintroduceimgurl">
+                                <img width="900" height="300" id="majorintroduceimgsrc"
+                                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                     alt=""/>
+                            </a>
+                        </p>
+                        <p id="majorintroducecontent" ></p>
+                        <div id="majorintroducesub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="uk-article">
+                        <h1 class="uk-article-title">
+                            <a href="#" id="majorheadbigtitle" >专业带头人</a>
+                        </h1>
+                        <p class="uk-article-meta">
+                            <span id="majorheadrealname"></span>&nbsp;&nbsp;
+                            <span id="majorheaddate"></span>
+                        </p>
+                        <p>
+                            <a href="#" id="majorheadimgurl">
+                                <img width="900" height="300" id="majorheadimgsrc"
+                                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                     alt=""/>
+                            </a>
+                        </p>
+                        <p id="majorheadcontent" ></p>
+                        <div id="majorheadsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="uk-article">
+                        <h1 class="uk-article-title">
+                            <a href="#" id="majorgoalbigtitle" >专业培养目标</a>
+                        </h1>
+                        <p class="uk-article-meta">
+                            <span id="majorgoalrealname"></span>&nbsp;&nbsp;
+                            <span id="majorgoaldate"></span>
+                        </p>
+                        <p>
+                            <a href="#" id="majorgoalimgurl">
+                                <img width="900" height="300" id="majorgoalimgsrc"
+                                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                     alt=""/>
+                            </a>
+                        </p>
+                        <p id="majorgoalcontent"></p>
+                        <div id="majorgoalsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="uk-article">
+                        <h1 class="uk-article-title">
+                            <a href="#" id="majoritembigtitle" >专业特色</a>
+                        </h1>
+                        <p class="uk-article-meta">
+                            <span id="majoritemrealname"></span>&nbsp;&nbsp;
+                            <span id="majoritemdate"></span>
+                        </p>
+                        <p>
+                            <a href="#" id="majoritemimgurl" >
+                                <img width="900" height="300" id="majoritemimgsrc"
+                                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                     alt=""/>
+                            </a>
+                        </p>
+                        <p id="majoritemcontent"></p>
+                        <div id="majoritemsub" >
+                            <h2></h2>
+                            <p></p>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <h1>专业教师</h1>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-4">
+                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
+                                <img class="uk-thumbnail" alt=""/>
+                                <div class="uk-thumbnail-caption">...</div>
+                            </a>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
+                                <img class="uk-thumbnail"  alt=""/>
+                                <div class="uk-thumbnail-caption">...</div>
+                            </a>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
+                                <img class="uk-thumbnail"  alt=""/>
+                                <div class="uk-thumbnail-caption">...</div>
+                            </a>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
+                                <img class="uk-thumbnail" alt=""/>
+                                <div class="uk-thumbnail-caption">...</div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h1>实验室简介</h1>
+                    <p>Lorem ipsum dolor sit amet,
+                        <code>consectetuer adipiscing</code> elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
+                        sociis natoque
+                        penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+                        nec, pellentesque eu,
+                        pretium quis, sem. Nulla consequat massa quis enim.</p>
+                    <h1>实验室信息</h1>
+                    <ul class="uk-list uk-list-line">
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-large">实验室设备数</div>
+                                <div class="uk-width-1-2 uk-text-primary">20</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-large">实验室所在位置</div>
+                                <div class="uk-width-1-2 uk-text-primary">20</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-large">实验室设备数</div>
+                                <div class="uk-width-1-2 uk-text-primary">20</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <h1>实验室所开实验</h1>
+                    <div class="uk-accordion" data-uk-accordion="">
+                        <h3 class="uk-accordion-title">实验1</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介</p>
+                        </div>
+                        <h3 class="uk-accordion-title">实验1</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介1</p>
+                        </div>
+                        <h3 class="uk-accordion-title">实验2</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介2</p>
+                        </div>
+                        <h3 class="uk-accordion-title">实验3</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介3</p>
+                        </div>
+                        <h3 class="uk-accordion-title">实验4</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介4</p>
+                        </div>
+                        <h3 class="uk-accordion-title">实验5</h3>
+                        <div class="uk-accordion-content">
+                            <p>简介5</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="loginmodal" th:include="commons::loginmodal" class="uk-modal">
+
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var navId = /*[[${navId}]]*/ '';
+    $('#' + navId).addClass('uk-active');
+    var majorintroduceid = /*[[${majorintroduceid}]]*/ 0;
+    var majortraingoalid = /*[[${majortraingoalid}]]*/ 0;
+    var majortraitid = /*[[${majortraitid}]]*/ 0;
+    var majorheadid = /*[[${majorheadid}]]*/ 0;
+    var currentId = /*[[${currentId}]]*/ -1;
+    var currentMajorId = /*[[${currentMajorId}]]*/ -1;
+    var currentMajorName = /*[[${currentMajorName}]]*/ '';
+    $('#currentMajorName').text(currentMajorName);
+    /*]]>*/
+</script>
+<script th:src="@{/js/cbis/js/major/majorarticleshow.js}"
+        src="js/cbis/js/major/majorarticleshow.js"></script>
+</body>
+</html>

@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNoticeAffix extends TableImpl<TieNoticeAffixRecord> {
 
-	private static final long serialVersionUID = 2039592417;
+	private static final long serialVersionUID = 880688258;
 
 	/**
 	 * The reference instance of <code>cbis.tie_notice_affix</code>
@@ -74,12 +74,12 @@ public class TieNoticeAffix extends TableImpl<TieNoticeAffixRecord> {
 	/**
 	 * The column <code>cbis.tie_notice_affix.tie_notice_file_date</code>.
 	 */
-	public final TableField<TieNoticeAffixRecord, Timestamp> TIE_NOTICE_FILE_DATE = createField("tie_notice_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<TieNoticeAffixRecord, Timestamp> TIE_NOTICE_FILE_DATE = createField("tie_notice_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>cbis.tie_notice_affix.tie_notice_id</code>.
+	 * The column <code>cbis.tie_notice_affix.article_info_id</code>.
 	 */
-	public final TableField<TieNoticeAffixRecord, Integer> TIE_NOTICE_ID = createField("tie_notice_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<TieNoticeAffixRecord, Integer> ARTICLE_INFO_ID = createField("article_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.tie_notice_affix.file_user</code>.
@@ -142,7 +142,7 @@ public class TieNoticeAffix extends TableImpl<TieNoticeAffixRecord> {
 	 */
 	@Override
 	public List<ForeignKey<TieNoticeAffixRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TieNoticeAffixRecord, ?>>asList(Keys.TIE_NOTICE_AFFIX_IBFK_1, Keys.TIE_NOTICE_AFFIX_IBFK_2);
+		return Arrays.<ForeignKey<TieNoticeAffixRecord, ?>>asList(Keys.TIE_NOTICE_AFFIX_IBFK_1);
 	}
 
 	/**

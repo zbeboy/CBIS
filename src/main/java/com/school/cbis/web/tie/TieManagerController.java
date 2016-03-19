@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,6 +65,9 @@ public class TieManagerController {
 
     @Resource
     private TieNoticeTimeService tieNoticeTimeService;
+
+    @Resource
+    private TieNoticeAffixService tieNoticeAffixService;
 
     /**
      * 检验系名
@@ -242,7 +246,7 @@ public class TieManagerController {
             }
 
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
+                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
                 String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
                 articleVos.get(0).setArticlePhotoUrl(photo);
             }
@@ -463,13 +467,13 @@ public class TieManagerController {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         if (records.isNotEmpty()) {
             for (Record r : records) {
-                if (id == r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) {
+                if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID) == id) {
                     modelMap.addAttribute("navId", "navtieintroduce");
-                } else if (id == r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) {
+                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID) == id) {
                     modelMap.addAttribute("navId", "navtiehead");
-                } else if (id == r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID)) {
+                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID) == id) {
                     modelMap.addAttribute("navId", "navtiegoal");
-                } else if (id == r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID)) {
+                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID) == id) {
                     modelMap.addAttribute("navId", "navtieitem");
                 }
 
@@ -512,7 +516,7 @@ public class TieManagerController {
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
+                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
                 String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
                 articleVos.get(0).setArticlePhotoUrl(photo);
             }
@@ -616,6 +620,8 @@ public class TieManagerController {
         modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
         modelMap.addAttribute("articlesubinfo", articleSubs);
+        List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
+        modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
         return "/maintainer/tienoticeupdate";
     }
 
@@ -654,11 +660,13 @@ public class TieManagerController {
             }
 
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("\\\\");
+                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
                 String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
                 articleVos.get(0).setArticlePhotoUrl(photo);
             }
 
+            List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
+            modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
             modelMap.addAttribute("articleInfo", articleVos.get(0));
             modelMap.addAttribute("articleSub", articleSubs);
 

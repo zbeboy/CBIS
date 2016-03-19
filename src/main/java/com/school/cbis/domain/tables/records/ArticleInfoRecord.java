@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> implements Record7<Integer, String, String, Timestamp, Integer, String, String> {
 
-	private static final long serialVersionUID = 2000764223;
+	private static final long serialVersionUID = 1521716120;
 
 	/**
 	 * Setter for <code>cbis.article_info.id</code>.
@@ -90,6 +90,7 @@ public class ArticleInfoRecord extends UpdatableRecordImpl<ArticleInfoRecord> im
 	/**
 	 * Getter for <code>cbis.article_info.date</code>.
 	 */
+	@NotNull
 	public Timestamp getDate() {
 		return (Timestamp) getValue(3);
 	}

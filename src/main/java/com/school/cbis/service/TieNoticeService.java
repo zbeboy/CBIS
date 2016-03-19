@@ -2,6 +2,8 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.domain.tables.pojos.TieNotice;
+import com.school.cbis.domain.tables.pojos.TieNoticeAffix;
+import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
 import org.jooq.Record3;
 import org.jooq.Record4;
@@ -17,7 +19,6 @@ public interface TieNoticeService {
      * 保存文章信息到系公告表
      *
      * @param tieNotice
-     * @return id
      */
     void save(TieNotice tieNotice);
 
@@ -53,4 +54,13 @@ public interface TieNoticeService {
      * @return
      */
     Result<Record3<Integer, String,Timestamp>> findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieNoticeTimeId, String bigTitle);
+
+    /**
+     * 通过系id分页查询
+     * @param tieId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    Result<Record3<Integer,String,Timestamp>> findByTieIdAndPage(int tieId ,int pageNum,int pageSize);
 }

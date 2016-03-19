@@ -16,7 +16,7 @@ function initArticleParam() {
     if (id.trim().length <= 0) {
         url = "/maintainer/saveArticle";
         deletePicWay = true;
-        deleteUrl = "/maintainer/deletePictue";
+        deleteUrl = "/maintainer/deleteFile";
         id = 0;
     } else {
         url = "/maintainer/updateArticle";

@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetableInfoRecord> {
 
-	private static final long serialVersionUID = 1984736075;
+	private static final long serialVersionUID = -2111342358;
 
 	/**
 	 * The reference instance of <code>cbis.teacher_course_timetable_info</code>
@@ -85,7 +85,7 @@ public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetable
 	/**
 	 * The column <code>cbis.teacher_course_timetable_info.timetable_info_file_date</code>.
 	 */
-	public final TableField<TeacherCourseTimetableInfoRecord, Timestamp> TIMETABLE_INFO_FILE_DATE = createField("timetable_info_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<TeacherCourseTimetableInfoRecord, Timestamp> TIMETABLE_INFO_FILE_DATE = createField("timetable_info_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.teacher_course_timetable_info.timetable_info_file_down_times</code>.

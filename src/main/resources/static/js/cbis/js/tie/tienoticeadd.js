@@ -19,7 +19,25 @@ function initArticleParam(){
     param.uploadParamFileName = "tienotice";
     param.id = 0;
     param.cleanFromClient = true;
-    param.cleanUrl = "/maintainer/deletePictue";
+    param.cleanUrl = "/maintainer/deleteFile";
+    param.openAffix = true;
+    param.affixSaveFunc = "tieNoticeAffix"
+    param.affixEndFunc = "endFunc()";
+    param.cleanAffixFromClient = true;
     initUpload();
     initImage();
+}
+var tieNoticeAffixArr = new Array();
+function tieNoticeAffixData(id,url,original_name){
+    this.id = id;
+    this.tieNoticeFileUrl = url;
+    this.tieNoticeFileName = original_name;
+}
+
+function tieNoticeAffix(id,url,original_name){
+    tieNoticeAffixArr.push(new tieNoticeAffixData(id,url,original_name));
+}
+
+function endFunc(){
+    param.affixData = tieNoticeAffixArr;
 }

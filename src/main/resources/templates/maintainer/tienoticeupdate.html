@@ -71,12 +71,12 @@
         <div class="uk-width-medium-3-4">
             <h2 id="getstarted">系公告</h2>
             <form class="uk-form uk-form-horizontal">
-                <p hidden="hidden" th:text="${articleinfo.id}" id="articleInfoId" ></p>
+                <p hidden="hidden" th:text="${articleinfo.id}" id="articleInfoId"></p>
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="title">标题</label>
                     <div class="uk-form-controls">
                         <input type="text" id="title" class="uk-form-width-large" onblur="writerTitle();"
-                               placeholder="标题" th:value="${articleinfo.bigTitle}" />
+                               placeholder="标题" th:value="${articleinfo.bigTitle}"/>
                         <p class="uk-text-danger" id="titileError"></p>
                     </div>
                 </div>
@@ -93,27 +93,31 @@
                         <p>
                             <img id="articleimg" width="900" height="300"
                                  src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
-                                 alt="" />
+                                 alt=""/>
                         </p>
                     </div>
                 </div>
                 <div class="uk-form-row">
-                    <textarea cols="115" rows="15" id="summary" th:text="${articleinfo.articleContent}" onblur="writerSummary();" placeholder="文章简介"></textarea>
+                    <textarea cols="115" rows="15" id="summary" th:text="${articleinfo.articleContent}"
+                              onblur="writerSummary();" placeholder="文章简介"></textarea>
                     <p class="uk-text-danger" id="summaryError"></p>
                 </div>
-                <div class="uk-sortable" data-uk-sortable="" >
-                    <div class="uk-alert" data-uk-alert="" th:unless="${#lists.isEmpty(articlesubinfo)}" th:each="as:${articlesubinfo}" >
+                <div class="uk-sortable" data-uk-sortable="">
+                    <div class="uk-alert" data-uk-alert="" th:unless="${#lists.isEmpty(articlesubinfo)}"
+                         th:each="as:${articlesubinfo}">
                         <a href='' class="uk-alert-close uk-close" onclick="deleteSubPage(this);"></a>
                         <p hidden="hidden" th:text="${as.id}"></p>
                         <div class="uk-form-row">
                             <label class="uk-form-label" for="title">标题</label>
                             <div class="uk-form-controls">
-                                <input type="text" th:value="${as.subTitle}" class="uk-form-width-large mysubtitle" placeholder="标题"/>
+                                <input type="text" th:value="${as.subTitle}" class="uk-form-width-large mysubtitle"
+                                       placeholder="标题"/>
                                 <p class="uk-text-danger titleerror"></p>
                             </div>
                         </div>
                         <div class="uk-form-row">
-                            <textarea cols="120" class="mysubpage" rows="5" th:text="${as.subContent}" placeholder="文章"></textarea>
+                            <textarea cols="120" class="mysubpage" rows="5" th:text="${as.subContent}"
+                                      placeholder="文章"></textarea>
                             <p class="uk-text-danger summaryerror"></p>
                         </div>
                     </div>
@@ -122,6 +126,30 @@
             <br/>
             <div class="uk-text-center">
                 <button class="uk-button" onclick="addsubarticle();">添加正文</button>
+            </div>
+            <br/>
+            <div class="uk-placeholder uk-placeholder-large">
+                <ul class="uk-list uk-list-space" id="affixDatas" >
+                    <li class="affixdata" th:unless="${#lists.isEmpty(tieNoticeAffix)}" th:each="ta:${tieNoticeAffix}" >
+                        <p style="display:none;" th:text="${ta.tieNoticeFileUrl}"></p>
+                        <p style="display:none;" th:text="${ta.tieNoticeFileName}"></p>
+                        <div class="uk-grid">
+                            <div class="uk-width-4-5 uk-text-truncate" th:text="${ta.tieNoticeFileName}">
+
+                            </div>
+                            <div class="uk-width-1-5 uk-text-muted uk-text-right">
+                                <a href="javascript:;" onclick="deleteAffix(this);">删除</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <br/>
+            <div class=" uk-text-center">
+                <div class="uk-form-file">
+                    <button class="uk-button">添加附件</button>
+                    <input id="affixFile" type="file"/>
+                </div>
             </div>
             <br/>
             <div class="uk-text-center">
@@ -144,7 +172,7 @@
         src="js/cbis/plugin/article.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var imgPath  = /*[[${articleinfo.articlePhotoUrl}]]*/ null;
+    var imgPath = /*[[${articleinfo.articlePhotoUrl}]]*/ null;
     /*]]>*/
 
 </script>

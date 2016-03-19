@@ -15,4 +15,19 @@ public class FilesUtils {
         File file = new File(path);
         return file.delete();
     }
+
+    public static String sizeToString(long size) {
+        String str = "";
+        if (size < 1024) {
+            str = size + "B";
+        } else if (size >= 1024 && size < 1024 * 1024) {
+            str = (size / 1024) + "KB";
+        } else if (size >= 1024 * 1024 && size < 1024 * 1024 * 1024) {
+            str = (size / (1024 * 1024)) + "MB";
+        } else {
+            str = (size / (1024 * 1024 * 1024)) + "GB";
+        }
+
+        return str;
+    }
 }

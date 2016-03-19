@@ -105,62 +105,17 @@
                 </div>
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
                     <h3 class="uk-panel-title">附件</h3>
-                    <ul class="uk-list uk-list-space">
-                        <li>
+                    <ul class="uk-list uk-list-space" th:unless="${#lists.isEmpty(tieNoticeAffix)}">
+                        <li th:each="ta:${tieNoticeAffix}">
                             <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="#">附件1</a>
+                                <div class="uk-width-1-2 uk-text-truncate">
+                                    <a href="#" th:text="${ta.tieNoticeFileName}" th:href="@{/user/downloadTieNoticeAffix}+'?id='+${ta.id}" >附件1</a>
                                 </div>
                                 <div class="uk-width-1-2 uk-text-muted uk-text-right">
                                     <div class="uk-grid">
-                                        <div class="uk-width-1-2 uk-text-muted">size:10MB</div>
-                                        <div class="uk-width-1-2 uk-text-muted">
-                                            <a href="#">下载</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="#">附件2</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-2 uk-text-muted">size:10MB</div>
-                                        <div class="uk-width-1-2 uk-text-muted">
-                                            <a href="#">下载</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="#">附件3</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-2 uk-text-muted">size:10MB</div>
-                                        <div class="uk-width-1-2 uk-text-muted">
-                                            <a href="#">下载</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="#">附件4</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-2 uk-text-muted">size:10MB</div>
-                                        <div class="uk-width-1-2 uk-text-muted">
-                                            <a href="#">下载</a>
+                                        <div class="uk-width-1-2 uk-text-muted" th:text="${'size : '+ta.tieNoticeFileSize}" >size:10MB</div>
+                                        <div class="uk-width-1-2 uk-text-muted" th:text="${#strings.toString(ta.tieNoticeFileDate)}" >
+
                                         </div>
                                     </div>
                                 </div>

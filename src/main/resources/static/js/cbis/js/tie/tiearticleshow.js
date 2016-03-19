@@ -97,11 +97,13 @@ var target = {
  * 执行入口
  */
 function action() {
-    $.post("/user/tieArticleShowData", {
-        'id': target.id
-    }, function (data) {
-        outputHtml(data);
-    }, 'json');
+    if (target.id != null && target.id > 0) {
+        $.post("/user/tieArticleShowData", {
+            'id': target.id
+        }, function (data) {
+            outputHtml(data);
+        }, 'json');
+    }
 }
 
 $(document).ready(function () {

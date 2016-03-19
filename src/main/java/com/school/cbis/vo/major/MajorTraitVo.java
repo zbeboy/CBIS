@@ -5,7 +5,6 @@ package com.school.cbis.vo.major;
  */
 public class MajorTraitVo {
     private int id;
-    private String majorName;
     private String bigTitle;
     private String username;
     private String date;
@@ -20,14 +19,6 @@ public class MajorTraitVo {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getMajorName() {
-        return majorName;
-    }
-
-    public void setMajorName(String majorName) {
-        this.majorName = majorName;
     }
 
     public String getBigTitle() {
@@ -90,7 +81,6 @@ public class MajorTraitVo {
     public String toString() {
         return "MajorTraitVo{" +
                 "id=" + id +
-                ", majorName='" + majorName + '\'' +
                 ", bigTitle='" + bigTitle + '\'' +
                 ", username='" + username + '\'' +
                 ", date='" + date + '\'' +

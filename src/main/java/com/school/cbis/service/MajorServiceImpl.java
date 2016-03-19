@@ -108,7 +108,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Result<Record5< Integer, String, String, String, Timestamp>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId) {
+    public Result<Record4<Integer, String, String, Timestamp>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
         if (StringUtils.hasLength(majorIntroduceVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + majorIntroduceVo.getBigTitle() + "%"));
@@ -122,12 +122,12 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorIntroduceVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorIntroduceVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorIntroduceVo.getMajorName() + "%"));
+        if (majorIntroduceVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorIntroduceVo.getId()));
         }
 
-        SelectConditionStep<Record5<Integer, String, String, String, Timestamp>> b = create
-                .select(Tables.MAJOR.ID,Tables.MAJOR.MAJOR_NAME,
+        SelectConditionStep<Record4<Integer, String, String, Timestamp>> b = create
+                .select(Tables.MAJOR.ID,
                         Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
                 .from(Tables.MAJOR)
                 .leftJoin(Tables.ARTICLE_INFO)
@@ -161,11 +161,11 @@ public class MajorServiceImpl implements MajorService {
                 } else {
                     e = Tables.ARTICLE_INFO.DATE.asc();
                 }
-            } else if(majorIntroduceVo.getMajorName().equals("majorName")){
+            } else if (majorIntroduceVo.getSortField().equals("id")) {
                 if (majorIntroduceVo.getSortOrder().equals("desc")) {
-                    d = Tables.MAJOR.MAJOR_NAME.desc();
+                    c = Tables.MAJOR.ID.desc();
                 } else {
-                    d = Tables.MAJOR.MAJOR_NAME.asc();
+                    c = Tables.MAJOR.ID.asc();
                 }
             }
 
@@ -180,7 +180,7 @@ public class MajorServiceImpl implements MajorService {
             b.orderBy(c);
         }
 
-        return  b.limit((majorIntroduceVo.getPageIndex() - 1) * majorIntroduceVo.getPageSize(), majorIntroduceVo.getPageSize()).fetch();
+        return b.limit((majorIntroduceVo.getPageIndex() - 1) * majorIntroduceVo.getPageSize(), majorIntroduceVo.getPageSize()).fetch();
     }
 
     @Override
@@ -198,8 +198,8 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorIntroduceVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorIntroduceVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorIntroduceVo.getMajorName() + "%"));
+        if (majorIntroduceVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorIntroduceVo.getId()));
         }
 
         Record1<Integer> count = create.selectCount()
@@ -213,7 +213,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, String, Timestamp>> findAllWithHeadByPage(MajorHeadVo majorHeadVo, int tieId) {
+    public Result<Record4<Integer, String, String, Timestamp>> findAllWithHeadByPage(MajorHeadVo majorHeadVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
         if (StringUtils.hasLength(majorHeadVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + majorHeadVo.getBigTitle() + "%"));
@@ -227,12 +227,12 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorHeadVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorHeadVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorHeadVo.getMajorName() + "%"));
+        if (majorHeadVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorHeadVo.getId()));
         }
 
-        SelectConditionStep<Record5<Integer, String, String, String, Timestamp>> b = create
-                .select(Tables.MAJOR.ID,Tables.MAJOR.MAJOR_NAME,
+        SelectConditionStep<Record4<Integer, String, String, Timestamp>> b = create
+                .select(Tables.MAJOR.ID,
                         Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
                 .from(Tables.MAJOR)
                 .leftJoin(Tables.ARTICLE_INFO)
@@ -266,11 +266,11 @@ public class MajorServiceImpl implements MajorService {
                 } else {
                     e = Tables.ARTICLE_INFO.DATE.asc();
                 }
-            } else if(majorHeadVo.getMajorName().equals("majorName")){
+            } else if (majorHeadVo.getSortField().equals("id")) {
                 if (majorHeadVo.getSortOrder().equals("desc")) {
-                    d = Tables.MAJOR.MAJOR_NAME.desc();
+                    c = Tables.MAJOR.ID.desc();
                 } else {
-                    d = Tables.MAJOR.MAJOR_NAME.asc();
+                    c = Tables.MAJOR.ID.asc();
                 }
             }
 
@@ -285,7 +285,7 @@ public class MajorServiceImpl implements MajorService {
             b.orderBy(c);
         }
 
-        return  b.limit((majorHeadVo.getPageIndex() - 1) * majorHeadVo.getPageSize(), majorHeadVo.getPageSize()).fetch();
+        return b.limit((majorHeadVo.getPageIndex() - 1) * majorHeadVo.getPageSize(), majorHeadVo.getPageSize()).fetch();
     }
 
     @Override
@@ -303,8 +303,8 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorHeadVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorHeadVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorHeadVo.getMajorName() + "%"));
+        if (majorHeadVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorHeadVo.getId()));
         }
 
         Record1<Integer> count = create.selectCount()
@@ -318,7 +318,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, String, Timestamp>> findAllWithTrainingGoalByPage(MajorTrainingGoalVo majorTrainingGoalVo, int tieId) {
+    public Result<Record4<Integer, String, String, Timestamp>> findAllWithTrainingGoalByPage(MajorTrainingGoalVo majorTrainingGoalVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
         if (StringUtils.hasLength(majorTrainingGoalVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + majorTrainingGoalVo.getBigTitle() + "%"));
@@ -332,12 +332,12 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorTrainingGoalVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorTrainingGoalVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorTrainingGoalVo.getMajorName() + "%"));
+        if (majorTrainingGoalVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorTrainingGoalVo.getId()));
         }
 
-        SelectConditionStep<Record5<Integer, String, String, String, Timestamp>> b = create
-                .select(Tables.MAJOR.ID,Tables.MAJOR.MAJOR_NAME,
+        SelectConditionStep<Record4<Integer, String, String, Timestamp>> b = create
+                .select(Tables.MAJOR.ID,
                         Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
                 .from(Tables.MAJOR)
                 .leftJoin(Tables.ARTICLE_INFO)
@@ -371,11 +371,11 @@ public class MajorServiceImpl implements MajorService {
                 } else {
                     e = Tables.ARTICLE_INFO.DATE.asc();
                 }
-            } else if(majorTrainingGoalVo.getMajorName().equals("majorName")){
+            } else if (majorTrainingGoalVo.getSortField().equals("id")) {
                 if (majorTrainingGoalVo.getSortOrder().equals("desc")) {
-                    d = Tables.MAJOR.MAJOR_NAME.desc();
+                    c = Tables.MAJOR.ID.desc();
                 } else {
-                    d = Tables.MAJOR.MAJOR_NAME.asc();
+                    c = Tables.MAJOR.ID.asc();
                 }
             }
 
@@ -390,7 +390,7 @@ public class MajorServiceImpl implements MajorService {
             b.orderBy(c);
         }
 
-        return  b.limit((majorTrainingGoalVo.getPageIndex() - 1) * majorTrainingGoalVo.getPageSize(), majorTrainingGoalVo.getPageSize()).fetch();
+        return b.limit((majorTrainingGoalVo.getPageIndex() - 1) * majorTrainingGoalVo.getPageSize(), majorTrainingGoalVo.getPageSize()).fetch();
     }
 
     @Override
@@ -408,8 +408,8 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorTrainingGoalVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorTrainingGoalVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorTrainingGoalVo.getMajorName() + "%"));
+        if (majorTrainingGoalVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorTrainingGoalVo.getId()));
         }
 
         Record1<Integer> count = create.selectCount()
@@ -423,7 +423,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, String, Timestamp>> findAllWithTraitByPage(MajorTraitVo majorTraitVo, int tieId) {
+    public Result<Record4<Integer, String, String, Timestamp>> findAllWithTraitByPage(MajorTraitVo majorTraitVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
         if (StringUtils.hasLength(majorTraitVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + majorTraitVo.getBigTitle() + "%"));
@@ -437,12 +437,12 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorTraitVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorTraitVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorTraitVo.getMajorName() + "%"));
+        if (majorTraitVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorTraitVo.getId()));
         }
 
-        SelectConditionStep<Record5<Integer, String, String, String, Timestamp>> b = create
-                .select(Tables.MAJOR.ID,Tables.MAJOR.MAJOR_NAME,
+        SelectConditionStep<Record4<Integer, String, String, Timestamp>> b = create
+                .select(Tables.MAJOR.ID,
                         Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
                 .from(Tables.MAJOR)
                 .leftJoin(Tables.ARTICLE_INFO)
@@ -476,11 +476,11 @@ public class MajorServiceImpl implements MajorService {
                 } else {
                     e = Tables.ARTICLE_INFO.DATE.asc();
                 }
-            } else if(majorTraitVo.getMajorName().equals("majorName")){
+            } else if (majorTraitVo.getSortField().equals("id")) {
                 if (majorTraitVo.getSortOrder().equals("desc")) {
-                    d = Tables.MAJOR.MAJOR_NAME.desc();
+                    c = Tables.MAJOR.ID.desc();
                 } else {
-                    d = Tables.MAJOR.MAJOR_NAME.asc();
+                    c = Tables.MAJOR.ID.asc();
                 }
             }
 
@@ -495,7 +495,7 @@ public class MajorServiceImpl implements MajorService {
             b.orderBy(c);
         }
 
-        return  b.limit((majorTraitVo.getPageIndex() - 1) * majorTraitVo.getPageSize(), majorTraitVo.getPageSize()).fetch();
+        return b.limit((majorTraitVo.getPageIndex() - 1) * majorTraitVo.getPageSize(), majorTraitVo.getPageSize()).fetch();
     }
 
     @Override
@@ -513,8 +513,8 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + majorTraitVo.getDate() + "%"));
         }
 
-        if (StringUtils.hasLength(majorTraitVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + majorTraitVo.getMajorName() + "%"));
+        if (majorTraitVo.getId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(majorTraitVo.getId()));
         }
 
         Record1<Integer> count = create.selectCount()
@@ -531,5 +531,28 @@ public class MajorServiceImpl implements MajorService {
     public List<Major> findByTieId(int tieId) {
         List<Major> majors = majorDao.fetchByTieId(tieId);
         return majors;
+    }
+
+    @Override
+    public Result<Record2<Integer, String>> findByTieIdToList(int tieId) {
+        Result<Record2<Integer, String>> record2s = create.select(Tables.MAJOR.ID, Tables.MAJOR.MAJOR_NAME)
+                .from(Tables.MAJOR)
+                .where(Tables.MAJOR.TIE_ID.eq(tieId)).fetch();
+        return record2s;
+    }
+
+    @Override
+    public Result<Record4<Integer, String, Integer, String>> findByTieIdWithArticleAndPage(int tieId, int pageNum, int pageSize) {
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        Result<Record4<Integer, String, Integer, String>> record4s = create.select(Tables.MAJOR.ID.as("majorId"), Tables.MAJOR.MAJOR_NAME, Tables.ARTICLE_INFO.ID.as("articleInfoId"), Tables.ARTICLE_INFO.ARTICLE_CONTENT)
+                .from(Tables.MAJOR)
+                .leftJoin(Tables.ARTICLE_INFO)
+                .on(Tables.MAJOR.MAJOR_INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                .where(Tables.MAJOR.TIE_ID.eq(tieId))
+                .limit((pageNum - 1) * pageSize, pageSize)
+                .fetch();
+        return record4s;
     }
 }

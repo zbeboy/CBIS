@@ -3,6 +3,9 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieNoticeDao;
 import com.school.cbis.domain.tables.pojos.TieNotice;
+import com.school.cbis.domain.tables.records.ArticleInfoRecord;
+import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
+import com.school.cbis.domain.tables.records.TieNoticeRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +35,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void save(TieNotice tieNotice) {
-        create.insertInto(Tables.TIE_NOTICE)
-                .set(Tables.TIE_NOTICE.TIE_ID, tieNotice.getTieId())
-                .set(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID, tieNotice.getTieNoticeArticleInfoId())
-                .set(Tables.TIE_NOTICE.TIE_NOTICE_TIME_ID, tieNotice.getTieNoticeTimeId())
-                .execute();
+        tieNoticeDao.insert(tieNotice);
     }
 
     @Override
@@ -146,12 +145,28 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + bigTitle + "%"));
         }
 
-        Result<Record3<Integer, String,Timestamp>> record3s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE,Tables.ARTICLE_INFO.DATE)
+        Result<Record3<Integer, String, Timestamp>> record3s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.ARTICLE_INFO.DATE)
                 .from(Tables.TIE_NOTICE)
                 .join(Tables.ARTICLE_INFO)
                 .on(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
                 .where(a)
                 .orderBy(Tables.ARTICLE_INFO.DATE.desc())
+                .fetch();
+        return record3s;
+    }
+
+    @Override
+    public Result<Record3<Integer, String, Timestamp>> findByTieIdAndPage(int tieId, int pageNum, int pageSize) {
+        if(pageNum <= 0){
+            pageNum = 1;
+        }
+        Result<Record3<Integer, String, Timestamp>> record3s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.ARTICLE_INFO.DATE)
+                .from(Tables.TIE_NOTICE)
+                .join(Tables.ARTICLE_INFO)
+                .on(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                .where(Tables.TIE_NOTICE.TIE_ID.eq(tieId))
+                .orderBy(Tables.ARTICLE_INFO.DATE.desc())
+                .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record3s;
     }

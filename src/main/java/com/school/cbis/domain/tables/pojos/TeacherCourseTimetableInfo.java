@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherCourseTimetableInfo implements Serializable {
 
-	private static final long serialVersionUID = -2099561402;
+	private static final long serialVersionUID = 1901092511;
 
 	private Integer   id;
 	private Integer   tieId;
@@ -147,6 +147,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		this.timetableInfoFileName = timetableInfoFileName;
 	}
 
+	@NotNull
 	public Timestamp getTimetableInfoFileDate() {
 		return this.timetableInfoFileDate;
 	}

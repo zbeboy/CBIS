@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItems extends TableImpl<FourItemsRecord> {
 
-	private static final long serialVersionUID = 75352603;
+	private static final long serialVersionUID = -1252925220;
 
 	/**
 	 * The reference instance of <code>cbis.four_items</code>
@@ -89,7 +89,7 @@ public class FourItems extends TableImpl<FourItemsRecord> {
 	/**
 	 * The column <code>cbis.four_items.four_items_file_date</code>.
 	 */
-	public final TableField<FourItemsRecord, Timestamp> FOUR_ITEMS_FILE_DATE = createField("four_items_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<FourItemsRecord, Timestamp> FOUR_ITEMS_FILE_DATE = createField("four_items_file_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.four_items.file_user</code>.

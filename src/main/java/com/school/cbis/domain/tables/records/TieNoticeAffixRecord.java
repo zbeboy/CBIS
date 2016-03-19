@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixRecord> implements Record8<Integer, String, String, String, Timestamp, Integer, String, String> {
 
-	private static final long serialVersionUID = 1313385865;
+	private static final long serialVersionUID = 63377962;
 
 	/**
 	 * Setter for <code>cbis.tie_notice_affix.id</code>.
@@ -106,22 +106,23 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Getter for <code>cbis.tie_notice_affix.tie_notice_file_date</code>.
 	 */
+	@NotNull
 	public Timestamp getTieNoticeFileDate() {
 		return (Timestamp) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>cbis.tie_notice_affix.tie_notice_id</code>.
+	 * Setter for <code>cbis.tie_notice_affix.article_info_id</code>.
 	 */
-	public void setTieNoticeId(Integer value) {
+	public void setArticleInfoId(Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>cbis.tie_notice_affix.tie_notice_id</code>.
+	 * Getter for <code>cbis.tie_notice_affix.article_info_id</code>.
 	 */
 	@NotNull
-	public Integer getTieNoticeId() {
+	public Integer getArticleInfoId() {
 		return (Integer) getValue(5);
 	}
 
@@ -234,7 +235,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	 */
 	@Override
 	public Field<Integer> field6() {
-		return TieNoticeAffix.TIE_NOTICE_AFFIX.TIE_NOTICE_ID;
+		return TieNoticeAffix.TIE_NOTICE_AFFIX.ARTICLE_INFO_ID;
 	}
 
 	/**
@@ -298,7 +299,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	 */
 	@Override
 	public Integer value6() {
-		return getTieNoticeId();
+		return getArticleInfoId();
 	}
 
 	/**
@@ -367,7 +368,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	 */
 	@Override
 	public TieNoticeAffixRecord value6(Integer value) {
-		setTieNoticeId(value);
+		setArticleInfoId(value);
 		return this;
 	}
 
@@ -419,7 +420,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 	/**
 	 * Create a detached, initialised TieNoticeAffixRecord
 	 */
-	public TieNoticeAffixRecord(Integer id, String tieNoticeFileUrl, String tieNoticeFileSize, String tieNoticeFileName, Timestamp tieNoticeFileDate, Integer tieNoticeId, String fileUser, String fileType) {
+	public TieNoticeAffixRecord(Integer id, String tieNoticeFileUrl, String tieNoticeFileSize, String tieNoticeFileName, Timestamp tieNoticeFileDate, Integer articleInfoId, String fileUser, String fileType) {
 		super(TieNoticeAffix.TIE_NOTICE_AFFIX);
 
 		setValue(0, id);
@@ -427,7 +428,7 @@ public class TieNoticeAffixRecord extends UpdatableRecordImpl<TieNoticeAffixReco
 		setValue(2, tieNoticeFileSize);
 		setValue(3, tieNoticeFileName);
 		setValue(4, tieNoticeFileDate);
-		setValue(5, tieNoticeId);
+		setValue(5, articleInfoId);
 		setValue(6, fileUser);
 		setValue(7, fileType);
 	}

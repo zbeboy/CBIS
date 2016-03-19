@@ -24,10 +24,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lenovo on 2016-02-24.
@@ -68,6 +67,9 @@ public class ArticleController {
     @Resource
     private MajorService majorService;
 
+    @Resource
+    private TieNoticeAffixService tieNoticeAffixService;
+
     /**
      * 保存文章
      *
@@ -76,7 +78,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "/maintainer/saveArticle", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData saveArticle(@RequestParam(value = "subData") String subData,@RequestParam(value = "id") int majorId) {
+    public AjaxData saveArticle(@RequestParam(value = "subData") String subData, @RequestParam(value = "id") int majorId, boolean openAffix, String affixData) {
         AjaxData data = null;
         try {
             data = new AjaxData();
@@ -140,7 +142,9 @@ public class ArticleController {
                         tieElegantService.save(tieElegant);
                         data.setState(true);
                         data.setMsg("保存系风采成功，是否现在查看效果！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
 
                     } else {
                         data.setState(false);
@@ -151,27 +155,35 @@ public class ArticleController {
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
-                    data.setSingle(articleInfoId);
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("single",articleInfoId);
+                    data.setSingle(map);
 
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_SUMMARY)) {//系简介
                     tie.setTieIntroduceArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
-                    data.setSingle(articleInfoId);
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("single",articleInfoId);
+                    data.setSingle(map);
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_ITEM)) {//系特色
                     tie.setTieTraitArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
-                    data.setSingle(articleInfoId);
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("single",articleInfoId);
+                    data.setSingle(map);
                 } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_BRING_IN_GOAL)) {//系培养目标
                     tie.setTieTrainingGoalArticleInfoId(articleInfoId);
                     tieService.update(tie);
                     data.setState(true);
                     data.setMsg("更新文章成功！");
-                    data.setSingle(articleInfoId);
-                } else if(articleDatas[0].getArticleType().equals(Wordbook.TIE_NOTICE)) {//系公告
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("single",articleInfoId);
+                    data.setSingle(map);
+                } else if (articleDatas[0].getArticleType().equals(Wordbook.TIE_NOTICE)) {//系公告
                     if (tieId > 0) {
                         int tieNoticeTimeId = 0;
                         List<TieNoticeTime> tieNoticeTimes = tieNoticeTimeService.findByTime(new SimpleDateFormat("yyyy年MM月").format(new Date()));
@@ -183,14 +195,31 @@ public class ArticleController {
                             tieNoticeTimeId = tieNoticeTimes.get(0).getId();
                         }
 
-                        TieNotice tieNotice= new TieNotice();
+                        TieNotice tieNotice = new TieNotice();
                         tieNotice.setTieId(tieId);
                         tieNotice.setTieNoticeArticleInfoId(articleInfoId);
                         tieNotice.setTieNoticeTimeId(tieNoticeTimeId);
                         tieNoticeService.save(tieNotice);
+
+                        //处理附件
+                        if (openAffix) {
+                            if (StringUtils.hasLength(affixData)) {
+                                TieNoticeAffix[] tieNoticeAffices = new ObjectMapper().readValue(affixData, TieNoticeAffix[].class);
+                                for (TieNoticeAffix t : tieNoticeAffices) {
+                                    t.setTieNoticeFileSize(FilesUtils.sizeToString(new File(t.getTieNoticeFileUrl()).length()));
+                                    t.setArticleInfoId(articleInfoId);
+                                    t.setFileUser(usersService.getUserName());
+                                    t.setFileType(t.getTieNoticeFileUrl().substring(t.getTieNoticeFileUrl().lastIndexOf(".") + 1));
+                                    tieNoticeAffixService.save(t);
+                                }
+                            }
+                        }
+
                         data.setState(true);
                         data.setMsg("保存系公告成功，是否现在查看效果！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
 
                     } else {
                         data.setState(false);
@@ -203,7 +232,9 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -215,7 +246,9 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -227,7 +260,9 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
@@ -239,12 +274,15 @@ public class ArticleController {
                         majorService.update(major);
                         data.setState(true);
                         data.setMsg("更新文章成功！");
-                        data.setSingle(articleInfoId);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("single",articleInfoId);
+                        data.setSingle(map);
                     } else {
                         data.setState(false);
                         data.setMsg("获取用户信息失败！");
                     }
                 }
+
             } else {
                 data.setState(false);
                 data.setMsg("文章信息为空！");
@@ -265,38 +303,54 @@ public class ArticleController {
      */
     @RequestMapping(value = "/maintainer/updateArticle", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData updateArticle(@RequestParam(value = "subData") String subData, @RequestParam(value = "id") int id) {
+    public AjaxData updateArticle(@RequestParam(value = "subData") String subData, @RequestParam(value = "id") int id, boolean openAffix, String affixData) {
         AjaxData data = new AjaxData();
         try {
-                //Json转换成Java对象
-                ArticleData[] articleDatas = new ObjectMapper().readValue(subData, ArticleData[].class);
-                if (articleDatas.length > 0) {
+            //Json转换成Java对象
+            ArticleData[] articleDatas = new ObjectMapper().readValue(subData, ArticleData[].class);
+            if (articleDatas.length > 0) {
 
-                    ArticleInfo articleInfo = articleInfoService.findById(id);
-                    articleInfo.setBigTitle(articleDatas[0].getTitle());
-                    articleInfo.setArticleContent(articleDatas[0].getSummary());
-                    articleInfo.setArticlePhotoUrl(articleDatas[0].getPicPath());
+                ArticleInfo articleInfo = articleInfoService.findById(id);
+                articleInfo.setBigTitle(articleDatas[0].getTitle());
+                articleInfo.setArticleContent(articleDatas[0].getSummary());
+                articleInfo.setArticlePhotoUrl(articleDatas[0].getPicPath());
 
-                    articleInfoService.update(articleInfo);//文章信息表
-                    //插入信息到文章子标题表
-                    if (articleDatas.length > 1) {
-                        List<ArticleSub> articleSubs = new ArrayList<>();
-                        for (int i = 1; i < articleDatas.length; i++) {
-                            ArticleSub articleSub = new ArticleSub();
-                            articleSub.setSubTitle(articleDatas[i].getSubTitle());
-                            articleSub.setSubContent(articleDatas[i].getSubPage());
-                            articleSub.setArticleInfoId(id);
-                            articleSubs.add(articleSub);
-                        }
-                        if (!StringUtils.isEmpty(articleSubs) && articleSubs.size() > 0) {
-                            articleSubService.deleteByArticleInfoId(id);
-                            articleSubService.save(articleSubs);
+                articleInfoService.update(articleInfo);//文章信息表
+                //插入信息到文章子标题表
+                if (articleDatas.length > 1) {
+                    List<ArticleSub> articleSubs = new ArrayList<>();
+                    for (int i = 1; i < articleDatas.length; i++) {
+                        ArticleSub articleSub = new ArticleSub();
+                        articleSub.setSubTitle(articleDatas[i].getSubTitle());
+                        articleSub.setSubContent(articleDatas[i].getSubPage());
+                        articleSub.setArticleInfoId(id);
+                        articleSubs.add(articleSub);
+                    }
+                    if (!StringUtils.isEmpty(articleSubs) && articleSubs.size() > 0) {
+                        articleSubService.deleteByArticleInfoId(id);
+                        articleSubService.save(articleSubs);
+                    }
+                }
+
+                if(openAffix){
+                    tieNoticeAffixService.deleteByArticleInfoId(id);
+                    if (StringUtils.hasLength(affixData)) {
+                        TieNoticeAffix[] tieNoticeAffices = new ObjectMapper().readValue(affixData, TieNoticeAffix[].class);
+                        for (TieNoticeAffix t : tieNoticeAffices) {
+                            t.setTieNoticeFileSize(FilesUtils.sizeToString(new File(t.getTieNoticeFileUrl()).length()));
+                            t.setArticleInfoId(id);
+                            t.setFileUser(usersService.getUserName());
+                            t.setFileType(t.getTieNoticeFileUrl().substring(t.getTieNoticeFileUrl().lastIndexOf(".") + 1));
+                            tieNoticeAffixService.save(t);
                         }
                     }
-                    data.setState(true);
-                    data.setMsg("更新文章成功！");
-                    data.setSingle(id);
                 }
+                data.setState(true);
+                data.setMsg("更新文章成功！");
+                Map<String,Object> map = new HashMap<>();
+                map.put("single",id);
+                data.setSingle(map);
+            }
 
 
         } catch (IOException e) {
@@ -348,58 +402,5 @@ public class ArticleController {
         return ajaxData;
     }
 
-    /**
-     * 上传图片
-     *
-     * @param multipartHttpServletRequest
-     * @param request
-     * @return 图片保存完整路径
-     */
-    @RequestMapping(value = "/maintainer/uploadPicture", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadPicture(MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request) {
-        AjaxData data = new AjaxData();
-        String lastPath = null;
-        try {
-            String realPath = request.getSession().getServletContext().getRealPath("/");
-            List<FileData> fileDatas = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
-            lastPath = fileDatas.get(0).getLastPath();
-            data.setState(true);
-            data.setMsg(lastPath);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lastPath;
-    }
 
-    /**
-     * 删除硬盘中的图片
-     *
-     * @param path 真实图片路径
-     * @return
-     */
-    @RequestMapping(value = "/maintainer/deletePictue", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData deletePictue(@RequestParam("path") String path) {
-        AjaxData data = new AjaxData();
-        try {
-            if (!StringUtils.isEmpty(path) && StringUtils.trimWhitespace(path).length() > 0) {
-                if (FilesUtils.deleteFile(path)) {
-                    data.setState(true);
-                    data.setMsg("删除图片成功！");
-                } else {
-                    data.setState(false);
-                    data.setMsg("未找到图片！");
-                }
-            } else {
-                data.setState(false);
-                data.setMsg("删除图片失败！");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            data.setState(false);
-            data.setMsg("删除图片失败！");
-        }
-        return data;
-    }
 }

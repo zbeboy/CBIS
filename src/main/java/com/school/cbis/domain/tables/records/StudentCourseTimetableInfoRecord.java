@@ -33,7 +33,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StudentCourseTimetableInfoRecord extends UpdatableRecordImpl<StudentCourseTimetableInfoRecord> implements Record14<Integer, Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String> {
 
-	private static final long serialVersionUID = 1602362243;
+	private static final long serialVersionUID = 1345432010;
 
 	/**
 	 * Setter for <code>cbis.student_course_timetable_info.id</code>.
@@ -153,6 +153,7 @@ public class StudentCourseTimetableInfoRecord extends UpdatableRecordImpl<Studen
 	/**
 	 * Getter for <code>cbis.student_course_timetable_info.timetable_info_file_date</code>.
 	 */
+	@NotNull
 	public Timestamp getTimetableInfoFileDate() {
 		return (Timestamp) getValue(7);
 	}

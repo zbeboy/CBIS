@@ -5,10 +5,8 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.article.ArticleVo;
-import org.jooq.Record;
-import org.jooq.Record2;
-import org.jooq.Record4;
-import org.jooq.Result;
+import com.school.cbis.vo.major.MajorIndexVo;
+import org.jooq.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -45,6 +44,12 @@ public class MainController {
     @Resource
     private StudentService studentService;
 
+    @Resource
+    private TieNoticeService tieNoticeService;
+
+    @Resource
+    private MajorService majorService;
+
     /**
      * 主页
      * @return
@@ -59,7 +64,9 @@ public class MainController {
             if (records.isNotEmpty()) {
                 for (Record r : records) {
                     tieId = r.getValue(Tables.TIE.ID);
-                    tieIntroduceArticleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
+                    if(!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))){
+                        tieIntroduceArticleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
+                    }
                 }
             }
         } else {
@@ -67,9 +74,12 @@ public class MainController {
 
             //系简介
             Tie tie = tieService.findById(tieId);
-            tieIntroduceArticleInfoId = tie.getTieIntroduceArticleInfoId();
+            if(!StringUtils.isEmpty(tie)){
+                tieIntroduceArticleInfoId = tie.getTieIntroduceArticleInfoId();
+            }
         }
 
+        //系风采
         Result<Record4<Integer, String,String,String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
         if (record4s.isNotEmpty()) {
             List<ArticleVo> tieElegantData = record4s.into(ArticleVo.class);
@@ -83,24 +93,43 @@ public class MainController {
             modelMap.addAttribute("tieElegantData", tieElegantData);
         }
 
-        ArticleInfo articleInfo = articleInfoService.findById(tieIntroduceArticleInfoId);
-        Users users = usersService.findByUsername(articleInfo.getArticleWriter());
-        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
-            List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleInfo.getArticleWriter());
-            if(!teachers.isEmpty()){
-                articleInfo.setArticleWriter(teachers.get(0).getTeacherName());
-            }
-        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
-            List<Student> students = studentService.findByStudentNumber(articleInfo.getArticleWriter());
-            if(!students.isEmpty()){
-                articleInfo.setArticleWriter(students.get(0).getStudentName());
-            }
+        //系公告
+        Result<Record3<Integer, String, Timestamp>> record3s = tieNoticeService.findByTieIdAndPage(tieId,0,4);
+        if(record3s.isNotEmpty()){
+            List<ArticleVo> tieNoticeData = record3s.into(ArticleVo.class);
+            modelMap.addAttribute("tieNoticeData", tieNoticeData);
         }
-        if(articleInfo.getArticleContent().trim().length()>100){
-            articleInfo.setArticleContent(articleInfo.getArticleContent().substring(0,100)+"....");
+
+        //系简介
+        ArticleInfo articleInfo = articleInfoService.findById(tieIntroduceArticleInfoId);
+        if(!StringUtils.isEmpty(articleInfo)){
+            Users users = usersService.findByUsername(articleInfo.getArticleWriter());
+            if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
+                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleInfo.getArticleWriter());
+                if(!teachers.isEmpty()){
+                    articleInfo.setArticleWriter(teachers.get(0).getTeacherName());
+                }
+            } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
+                List<Student> students = studentService.findByStudentNumber(articleInfo.getArticleWriter());
+                if(!students.isEmpty()){
+                    articleInfo.setArticleWriter(students.get(0).getStudentName());
+                }
+            }
+            if(articleInfo.getArticleContent().trim().length()>100){
+                articleInfo.setArticleContent(articleInfo.getArticleContent().substring(0,100)+"....");
+            }
+        } else {
+            articleInfo = new ArticleInfo();
         }
 
         modelMap.addAttribute("tieIntroduce",articleInfo);
+
+        //专业简介
+        Result<Record4<Integer, String, Integer, String>> majorRecord = majorService.findByTieIdWithArticleAndPage(tieId,0,8);
+        if(majorRecord.isNotEmpty()){
+            List<MajorIndexVo> majorIndexVos = majorRecord.into(MajorIndexVo.class);
+            modelMap.addAttribute("majorInfo",majorIndexVos);
+        }
 
         return "/user/index";
     }

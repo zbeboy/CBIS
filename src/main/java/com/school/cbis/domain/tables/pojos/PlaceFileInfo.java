@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileInfo implements Serializable {
 
-	private static final long serialVersionUID = 2079430383;
+	private static final long serialVersionUID = -605663608;
 
 	private Integer   id;
 	private Integer   teachTaskInfoId;
@@ -116,6 +116,7 @@ public class PlaceFileInfo implements Serializable {
 		this.placeFileInfoName = placeFileInfoName;
 	}
 
+	@NotNull
 	public Timestamp getPlaceFileInfoDate() {
 		return this.placeFileInfoDate;
 	}

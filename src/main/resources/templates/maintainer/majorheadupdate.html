@@ -11,26 +11,26 @@
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
-    <title>专业简介管理</title>
+    <title>专业带头人管理</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
-    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
-    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
-    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
     <script src="js/components/upload.js" th:src="@{/js/components/upload.js}"></script>
     <script src="js/components/sortable.js" th:src="@{/js/components/sortable.js}"></script>
-    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
 
     <!-- layer js -->
-    <script src="js/layer.js" th:src="@{/js/layer.js}"></script>
+    <script src="js/layer.js" th:src="@{/js/layer/layer.js}"></script>
 
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
     <script>
@@ -127,7 +127,7 @@
             </div>
             <br/>
             <div class="uk-text-center">
-                <button class="uk-button uk-button-success uk-button-large" onclick="updateArticle();">保存文章</button>
+                <button class="uk-button uk-button-success uk-button-large" onclick="saveArticle();">保存文章</button>
             </div>
         </div>
     </div>
@@ -138,14 +138,17 @@
 
     </footer>
 </div>
+
+<script th:src="@{/js/cbis/plugin/textutil.js}" src="js/cbis/plugin/textutil.js" ></script>
+<script th:src="@{/js/cbis/plugin/charcount.js}" src="js/cbis/plugin/charcount.js"></script>
+<script th:src="@{/js/cbis/plugin/article.js}"
+        src="js/cbis/plugin/article.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     var imgPath  = /*[[${articleinfo.articlePhotoUrl}]]*/ null;
     /*]]>*/
 </script>
-<script th:src="@{/js/cbis/plugin/textutil.js}" src="js/cbis/plugin/textutil.js" ></script>
-<script th:src="@{/js/cbis/plugin/charcount.js}" src="js/cbis/plugin/charcount.js"></script>
-<script th:src="@{/js/cbis/js/majorheadupdate.js}"
-        src="js/cbis/js/majorheadupdate.js"></script>
+<script th:src="@{/js/cbis/js/major/majorheadupdate.js}"
+        src="js/cbis/js/major/majorheadupdate.js"></script>
 </body>
 </html>

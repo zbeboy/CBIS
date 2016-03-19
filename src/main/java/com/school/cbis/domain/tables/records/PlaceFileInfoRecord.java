@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord> implements Record8<Integer, Integer, String, String, String, Timestamp, String, String> {
 
-	private static final long serialVersionUID = 1321784845;
+	private static final long serialVersionUID = -31294618;
 
 	/**
 	 * Setter for <code>cbis.place_file_info.id</code>.
@@ -121,6 +121,7 @@ public class PlaceFileInfoRecord extends UpdatableRecordImpl<PlaceFileInfoRecord
 	/**
 	 * Getter for <code>cbis.place_file_info.place_file_info_date</code>.
 	 */
+	@NotNull
 	public Timestamp getPlaceFileInfoDate() {
 		return (Timestamp) getValue(5);
 	}

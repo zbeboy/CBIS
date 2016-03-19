@@ -3,17 +3,23 @@
  */
 //全局配置
 var param = {
-    'articleWordType':'',//文章类别
-    'checkArticleTitle':true,//开启标题检验
-    'checkArticleContent':true,//开启内容检验
-    'checkArticlePic':true,//开启封面检验
-    'articleSaveOrUpdateUrl':'',//文章保存或更新地址
-    'clickOkUrl':'',//文章保存或更新成功点击确定需要刷新的地址
-    'clickNoUrl':'',//文章保存或更新成功点击取消需要刷新的地址
-    'uploadParamFileName':'',//上传图片需要保存图片的文件夹名
-    'id':0,//用于专业文章使用主键
-    'cleanFromClient':false,//删除图片时，服务器端也删除，默认只删除html dom
-    'cleanUrl':''//若开启cleanFromClient,此项必填，删除请求地址
+    'articleWordType': '',//文章类别
+    'checkArticleTitle': true,//开启标题检验
+    'checkArticleContent': true,//开启内容检验
+    'checkArticlePic': true,//开启封面检验
+    'articleSaveOrUpdateUrl': '',//文章保存或更新地址
+    'clickOkUrl': '',//文章保存或更新成功点击确定需要刷新的地址
+    'clickNoUrl': '',//文章保存或更新成功点击取消需要刷新的地址
+    'uploadParamFileName': '',//上传图片需要保存图片的文件夹名
+    'id': 0,//用于专业文章使用主键
+    'cleanFromClient': false,//删除图片时，服务器端也删除，默认只删除html dom
+    'cleanUrl': '',//若开启cleanFromClient,此项必填，删除请求地址
+    'openAffix': false,//开启附件功能
+    'affixSaveFunc': '',//数据存储要调用的函数，调用时，会传输附件id,url,original_name
+    'affixEndFunc': '',//数据存储完毕要调用的函数，调用该函数时，请封装param.affixData过来，系统会调用该参数
+    'affixData': '',//附件数据
+    'cleanAffixFromClient': false,//删除附件时，服务器端也删除，默认只删除html dom
+    'pluginClickOkUrlParam':''//文章保存或更新成功点击确定需要刷新的地址 的扩展参数
 };
 
 //全局变量 添加子标题和文章模板
@@ -58,9 +64,9 @@ $(document).ready(function () {
     });
 });
 
-function initImage(){
-    if (imgPath != ''&&imgPath != null) {
-        var str = imgPath.substring(imgPath.lastIndexOf('\\') + 1, imgPath.length);
+function initImage() {
+    if (imgPath != '' && imgPath != null) {
+        var str = imgPath.substring(imgPath.lastIndexOf('/') + 1, imgPath.length);
         $('#articleimg').attr('src', '/files/' + param.uploadParamFileName + '/' + str);
     } else {
         $('#upload-drop').removeClass("uk-hidden");
@@ -101,7 +107,7 @@ function saveArticle() {
     /*文章概述*/
     var summary = repalceHtmlCode($('#summary').val());
 
-    if(is_del){//更新时图片已删除
+    if (is_del) {//更新时图片已删除
         imgPath = '';
     }
     /*图片绝对路径*/
@@ -127,6 +133,18 @@ function saveArticle() {
             }
         }
     }
+
+    //附件数据
+    if (param.openAffix) {
+        for (var i = 0; i < $('.affixdata').length; i++) {
+            var temp = $($('.affixdata')[i]).children();
+            var url = $(temp[0]).text();
+            var originalName = $(temp[1]).text();
+            eval(param.affixSaveFunc + "('" + 0 + "','" + url + "','" + originalName + "')");
+        }
+        eval(param.affixEndFunc);
+    }
+
 
     /*校验标题*/
     if (param.checkArticleTitle) {
@@ -176,7 +194,9 @@ function sendArtitle(subData) {
 
     $.post(param.articleSaveOrUpdateUrl, {
         'subData': subData,
-        'id': param.id/*0表示不更新班级*/
+        'id': param.id, /*0表示不更新班级*/
+        'openAffix': param.openAffix,//附件开关
+        'affixData': JSON.stringify(param.affixData)//附件数据
     }, function (data, status) {
         layer.close(index);
         if (status) {
@@ -184,7 +204,7 @@ function sendArtitle(subData) {
                 layer.confirm(data.msg, {
                     btn: ['确定', '取消'] //按钮
                 }, function () {
-                    window.location.href = param.clickOkUrl + "?id=" + data.single;
+                    window.location.href = param.clickOkUrl + "?id=" + data.single.single + param.pluginClickOkUrlParam;
                 }, function () {
                     window.location.href = param.clickNoUrl;
                 });
@@ -232,7 +252,7 @@ function initUpload() {
         bar = progressbar.find('.uk-progress-bar'),
         settings = {
 
-            action: '/maintainer/uploadPicture', // upload url
+            action: '/maintainer/uploadFile', // upload url
 
             allow: '*.(jpeg|jpg|gif|png|JPEG|JPG|GIF|PNG)', // allow only images
 
@@ -259,7 +279,8 @@ function initUpload() {
                 //隐藏上传组件
                 $('#upload-drop').addClass('uk-hidden');
                 //获取服务器端图片相对路径
-                var str = response.substring(response.lastIndexOf('\\') + 1, response.length);
+                var json = JSON.parse(response);
+                var str = json.msg.substring(json.msg.lastIndexOf('/') + 1, json.msg.length);
 
                 //若图片组件已被删除，需要重新添加图片显示组件
                 if ($('#imgShow').html().trim().length <= 0) {
@@ -271,7 +292,7 @@ function initUpload() {
                 $('#articleimg').parent().parent().removeClass('uk-hidden');
 
                 //保存服务器端绝对路径
-                imgPath = response;
+                imgPath = json.msg;
 
                 //删除图片标记
                 is_del = false;
@@ -280,6 +301,26 @@ function initUpload() {
 
     var select = UIkit.uploadSelect($("#upload-select"), settings),
         drop = UIkit.uploadDrop($("#upload-drop"), settings);
+
+    //初始化附件
+    if (param.openAffix) {
+        var affixSettings = {
+
+            action: '/maintainer/uploadFile', // upload url
+
+            allow: '*.(txt|doc|docx|xls|xlsx|ppt|pptx|zip|7z|rar|iso|gzip|png|jpeg|jpg|gif|tar|pdf)', // allow only images
+
+            params: {'pathname': param.uploadParamFileName},//json 数据 该文件服务器端相对 files下路径
+
+
+            allcomplete: function (response) {
+                var json = JSON.parse(response);
+                outputAffixHtml(json.single.single);
+            }
+        };
+        var affixSelect = UIkit.uploadSelect($("#affixFile"), affixSettings)
+    }
+
 }
 
 
@@ -333,5 +374,61 @@ function deleteArticle() {
             layer.msg("网络异常，请稍后重试！");
         }
     });
+}
+
+/**
+ * 输出附件html
+ */
+function outputAffixHtml(data) {
+
+    var html = "<li class='affixdata' >" +
+        "<p style='display:none;'>" +
+        data.lastPath +
+        "</p>" +
+        "<p style='display:none;'>" +
+        data.originalFilename +
+        "</p>" +
+        "<div class='uk-grid'>" +
+        "<div class='uk-width-4-5 uk-text-truncate'>" +
+        data.originalFilename +
+        "</div>" +
+        "<div class='uk-width-1-5 uk-text-muted uk-text-right'>" +
+        " <a href='javascript:;' onclick='deleteAffix(this);'>" +
+        "删除" +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        "</li>";
+    $('#affixDatas').append(html);
+}
+
+/**
+ * 删除附件
+ * @param path
+ */
+function deleteAffix(obj) {
+    var r = $(obj).parent().parent().parent();
+    var p = r.children();
+    var path = $(p[0]).text();
+    if (param.cleanAffixFromClient) {
+        $.post(param.cleanUrl, {
+            'path': path
+        }, function (data, status) {
+
+            if (status) {/*网络正常*/
+                if (data.state) {
+                    r.remove();
+                } else {
+                    layer.msg(data.msg);
+                }
+            } else {
+                layer.msg("网络异常，请稍后重试！");
+            }
+        });
+    } else {
+        r.remove();
+    }
+
+
 }
 

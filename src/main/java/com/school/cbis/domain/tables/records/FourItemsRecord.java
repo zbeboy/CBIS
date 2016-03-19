@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implements Record10<Integer, Integer, Integer, Integer, String, String, String, Timestamp, String, String> {
 
-	private static final long serialVersionUID = 1733364429;
+	private static final long serialVersionUID = 1571536742;
 
 	/**
 	 * Setter for <code>cbis.four_items.id</code>.
@@ -151,6 +151,7 @@ public class FourItemsRecord extends UpdatableRecordImpl<FourItemsRecord> implem
 	/**
 	 * Getter for <code>cbis.four_items.four_items_file_date</code>.
 	 */
+	@NotNull
 	public Timestamp getFourItemsFileDate() {
 		return (Timestamp) getValue(7);
 	}

@@ -19,6 +19,25 @@ function initArticleParam() {
     param.id = $('#articleInfoId').text();
     param.cleanFromClient = false;
     param.cleanUrl = "";
+    param.openAffix = true;
+    param.affixSaveFunc = "tieNoticeAffix"
+    param.affixEndFunc = "endFunc()";
+    param.cleanAffixFromClient = false;
     initUpload();
     initImage();
+}
+
+var tieNoticeAffixArr = new Array();
+function tieNoticeAffixData(id,url,original_name){
+    this.id = id;
+    this.tieNoticeFileUrl = url;
+    this.tieNoticeFileName = original_name;
+}
+
+function tieNoticeAffix(id,url,original_name){
+    tieNoticeAffixArr.push(new tieNoticeAffixData(id,url,original_name));
+}
+
+function endFunc(){
+    param.affixData = tieNoticeAffixArr;
 }

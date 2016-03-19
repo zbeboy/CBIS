@@ -94,10 +94,10 @@ public class TieNoticeAffixDao extends DAOImpl<TieNoticeAffixRecord, com.school.
 	}
 
 	/**
-	 * Fetch records that have <code>tie_notice_id IN (values)</code>
+	 * Fetch records that have <code>article_info_id IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.TieNoticeAffix> fetchByTieNoticeId(Integer... values) {
-		return fetch(TieNoticeAffix.TIE_NOTICE_AFFIX.TIE_NOTICE_ID, values);
+	public List<com.school.cbis.domain.tables.pojos.TieNoticeAffix> fetchByArticleInfoId(Integer... values) {
+		return fetch(TieNoticeAffix.TIE_NOTICE_AFFIX.ARTICLE_INFO_ID, values);
 	}
 
 	/**

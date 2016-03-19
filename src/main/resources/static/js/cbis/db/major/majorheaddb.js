@@ -7,17 +7,8 @@
         loadData: function (filter) {
             return $.ajax({
                 type:"GET",
-                url:"/cbis/maintainer/majorheaddata",
+                url:"/maintainer/majorHeadData",
                 data:filter,
-                dataType:"json"
-            });
-        },
-
-        deleteItem: function (item) {
-            return $.ajax({
-                type:"POST",
-                url:"/cbis/maintainer/deletemajorhead",
-                data:item,
                 dataType:"json"
             });
         }
@@ -25,5 +16,7 @@
     };
 
     window.db = db;
+
+    db.majors = majors;
 
 }());

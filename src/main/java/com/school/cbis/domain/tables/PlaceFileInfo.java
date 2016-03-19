@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlaceFileInfo extends TableImpl<PlaceFileInfoRecord> {
 
-	private static final long serialVersionUID = -1094918181;
+	private static final long serialVersionUID = 1146236410;
 
 	/**
 	 * The reference instance of <code>cbis.place_file_info</code>
@@ -79,7 +79,7 @@ public class PlaceFileInfo extends TableImpl<PlaceFileInfoRecord> {
 	/**
 	 * The column <code>cbis.place_file_info.place_file_info_date</code>.
 	 */
-	public final TableField<PlaceFileInfoRecord, Timestamp> PLACE_FILE_INFO_DATE = createField("place_file_info_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<PlaceFileInfoRecord, Timestamp> PLACE_FILE_INFO_DATE = createField("place_file_info_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.place_file_info.file_user</code>.

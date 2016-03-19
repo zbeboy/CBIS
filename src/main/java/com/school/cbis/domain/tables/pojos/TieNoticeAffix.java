@@ -25,14 +25,14 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNoticeAffix implements Serializable {
 
-	private static final long serialVersionUID = -1474360092;
+	private static final long serialVersionUID = 630838809;
 
 	private Integer   id;
 	private String    tieNoticeFileUrl;
 	private String    tieNoticeFileSize;
 	private String    tieNoticeFileName;
 	private Timestamp tieNoticeFileDate;
-	private Integer   tieNoticeId;
+	private Integer   articleInfoId;
 	private String    fileUser;
 	private String    fileType;
 
@@ -44,7 +44,7 @@ public class TieNoticeAffix implements Serializable {
 		this.tieNoticeFileSize = value.tieNoticeFileSize;
 		this.tieNoticeFileName = value.tieNoticeFileName;
 		this.tieNoticeFileDate = value.tieNoticeFileDate;
-		this.tieNoticeId = value.tieNoticeId;
+		this.articleInfoId = value.articleInfoId;
 		this.fileUser = value.fileUser;
 		this.fileType = value.fileType;
 	}
@@ -55,7 +55,7 @@ public class TieNoticeAffix implements Serializable {
 		String    tieNoticeFileSize,
 		String    tieNoticeFileName,
 		Timestamp tieNoticeFileDate,
-		Integer   tieNoticeId,
+		Integer   articleInfoId,
 		String    fileUser,
 		String    fileType
 	) {
@@ -64,7 +64,7 @@ public class TieNoticeAffix implements Serializable {
 		this.tieNoticeFileSize = tieNoticeFileSize;
 		this.tieNoticeFileName = tieNoticeFileName;
 		this.tieNoticeFileDate = tieNoticeFileDate;
-		this.tieNoticeId = tieNoticeId;
+		this.articleInfoId = articleInfoId;
 		this.fileUser = fileUser;
 		this.fileType = fileType;
 	}
@@ -107,6 +107,7 @@ public class TieNoticeAffix implements Serializable {
 		this.tieNoticeFileName = tieNoticeFileName;
 	}
 
+	@NotNull
 	public Timestamp getTieNoticeFileDate() {
 		return this.tieNoticeFileDate;
 	}
@@ -116,12 +117,12 @@ public class TieNoticeAffix implements Serializable {
 	}
 
 	@NotNull
-	public Integer getTieNoticeId() {
-		return this.tieNoticeId;
+	public Integer getArticleInfoId() {
+		return this.articleInfoId;
 	}
 
-	public void setTieNoticeId(Integer tieNoticeId) {
-		this.tieNoticeId = tieNoticeId;
+	public void setArticleInfoId(Integer articleInfoId) {
+		this.articleInfoId = articleInfoId;
 	}
 
 	@NotNull
@@ -153,7 +154,7 @@ public class TieNoticeAffix implements Serializable {
 		sb.append(", ").append(tieNoticeFileSize);
 		sb.append(", ").append(tieNoticeFileName);
 		sb.append(", ").append(tieNoticeFileDate);
-		sb.append(", ").append(tieNoticeId);
+		sb.append(", ").append(articleInfoId);
 		sb.append(", ").append(fileUser);
 		sb.append(", ").append(fileType);
 

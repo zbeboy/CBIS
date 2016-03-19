@@ -41,6 +41,22 @@ public class JsGrid<T> {
         return t;
     }
 
+    /**
+     * 插入数据
+     * @param t
+     * @return
+     */
+    public T insertItem(T t){return t;}
+
+    /**
+     * 更新数据
+     * @param t
+     * @return
+     */
+    public T updateItem(T t){
+        return t;
+    }
+
     public Map<String, Object> getMap() {
         return map;
     }
