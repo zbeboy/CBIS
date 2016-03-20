@@ -85,7 +85,7 @@ public class MainController {
             List<ArticleVo> tieElegantData = record4s.into(ArticleVo.class);
             for(ArticleVo a:tieElegantData){
                 if (StringUtils.hasLength(a.getArticlePhotoUrl())) {
-                    String[] paths = a.getArticlePhotoUrl().split("\\\\");
+                    String[] paths = a.getArticlePhotoUrl().split("/");
                     String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1] ;
                     a.setArticlePhotoUrl(photo);
                 }
