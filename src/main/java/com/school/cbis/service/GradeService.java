@@ -1,7 +1,9 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Grade;
+import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
+import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Result;
 
@@ -26,7 +28,7 @@ public interface GradeService {
      * @param tieId   系id
      * @return
      */
-    Result<Record7<Integer, Integer, String, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId);
+    Result<Record6<Integer, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId);
 
     /**
      * 查询总数
@@ -52,9 +54,16 @@ public interface GradeService {
     void update(Grade grade);
 
     /**
-     * 通过班级名查询
-     *
-     * @param gradeName 班级名
+     * 检验班级名是否存在使用，注意是查询该id以外的班级名
+     * @param id
+     * @param gradeName
+     * @return
+     */
+    List<GradeRecord> findByGradeNameAndId(int id , String gradeName);
+
+    /**
+     * 根据班级名查询
+     * @param gradeName
      * @return
      */
     List<Grade> findByGradeName(String gradeName);

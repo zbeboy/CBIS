@@ -5,8 +5,7 @@ package com.school.cbis.vo.grade;
  */
 public class GradeVo {
     private int id;
-    private int teacherId;
-    private String majorName;
+    private int majorId;
     private String year;
     private String gradeName;
     private String gradeHead;
@@ -24,20 +23,12 @@ public class GradeVo {
         this.id = id;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public int getMajorId() {
+        return majorId;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public String getMajorName() {
-        return majorName;
-    }
-
-    public void setMajorName(String majorName) {
-        this.majorName = majorName;
+    public void setMajorId(int majorId) {
+        this.majorId = majorId;
     }
 
     public String getYear() {
@@ -108,8 +99,7 @@ public class GradeVo {
     public String toString() {
         return "GradeVo{" +
                 "id=" + id +
-                ", teacherId=" + teacherId +
-                ", majorName='" + majorName + '\'' +
+                ", majorId='" + majorId + '\'' +
                 ", year='" + year + '\'' +
                 ", gradeName='" + gradeName + '\'' +
                 ", gradeHead='" + gradeHead + '\'' +

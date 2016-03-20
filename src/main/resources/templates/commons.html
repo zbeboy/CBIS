@@ -144,7 +144,7 @@
         </div>
         <div class="uk-vertical-align uk-text-center uk-height-1-1">
             <div class="uk-vertical-align-middle" style="width: 250px;">
-                <form class="uk-panel uk-form" name="form" th:action="@{/login}" action="/login" method="POST" data-validator-option="{stopOnError:false, timely:'yellow_right_effect'}" >
+                <form class="uk-panel uk-form" name="form" th:action="@{/login}" action="/login" method="POST" data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}" >
                     <div class="uk-form-row">
                         <input class="uk-width-1-1 uk-form-large" id="username" type="text" name="username" placeholder="用户名" data-rule="required;" data-msg-required="请填写用户名!"  data-tip="您的编号" />
                     </div>

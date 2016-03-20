@@ -74,13 +74,13 @@
         </div>
         <div class="uk-width-medium-3-4">
             <h2 id="getstarted">系管理</h2>
-            <form class="uk-form uk-form-horizontal" th:action="@{/maintainer/updateTieInfo}" method="post" data-validator-option="{stopOnError:false, timely:'yellow_right_effect'}" >
+            <form class="uk-form uk-form-horizontal" th:action="@{/maintainer/updateTieInfo}" method="post" data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}" >
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="tieName">系名</label>
                     <div class="uk-form-controls">
                         <input type="hidden" id="tieId" name="tieId" th:value="${tie.id}" />
                         <input type="text" id="tieName" name="tieName" th:value="${tie.tieName}" class="uk-form-width-large"
-                               placeholder="系名" data-rule="required;remote[/maintainer/validTieName]" />
+                               placeholder="系名" data-rule="required;remote[/maintainer/validTieName, tieId]" />
                     </div>
                 </div>
                 <div class="uk-form-row">

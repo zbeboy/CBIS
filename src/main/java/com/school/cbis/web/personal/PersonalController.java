@@ -30,12 +30,6 @@ public class PersonalController {
     @Resource
     private UsersService usersService;// 用户表
 
-    @Resource
-    private TeacherService teacherService;
-
-    @Resource
-    private AuthoritiesService authoritiesService;
-
     /**
      * 修改密码页面
      *
@@ -121,42 +115,4 @@ public class PersonalController {
         map.addAttribute("validationSuccess", validationSuccess);//校验成功
         map.addAttribute("msg", msg);//错误消息
     }
-
-    @RequestMapping(value = "/admin/resetpassword", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData resetPassword(@RequestParam("username") String username) {
-        AjaxData ajaxData = new AjaxData();
-        if (!StringUtils.isEmpty(username)) {
-            Users users = usersService.findByUsername(username);
-            users.setPassword(MD5Util.md5(username));
-            usersService.update(users);
-            ajaxData.setState(true);
-            ajaxData.setMsg("更新密码成功，默认密码为账号！");
-        } else {
-            ajaxData.setState(false);
-            ajaxData.setMsg("参数异常");
-        }
-        return ajaxData;
-    }
-
-    @RequestMapping(value = "/admin/validusername", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData validUsername(@RequestParam("username") String username) {
-        AjaxData ajaxData = new AjaxData();
-        if (!StringUtils.isEmpty(username)) {
-            Users users = usersService.findByUsername(username);
-            if (!StringUtils.isEmpty(users)) {
-                ajaxData.setState(false);
-                ajaxData.setMsg("用户名已存在！");
-            } else {
-                ajaxData.setState(true);
-            }
-        } else {
-            ajaxData.setState(false);
-            ajaxData.setMsg("参数异常！");
-        }
-        return ajaxData;
-    }
-
-
 }

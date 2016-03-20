@@ -1,44 +1,27 @@
 /**
  * Created by lenovo on 2016-01-31.
  */
-(function($) {
+$(function(){
 
-    $.fn.charCount = function(options){
-        var defaults = {
-            allowed: 140,
-            warning: 25,
-            css: 'counter',
-            counterElement: 'span',
-            cssWarning: 'warning',
-            cssExceeded: 'exceeded',
-            counterText: ''
-        };
+    //先选出 textarea 和 统计字数 dom 节点
+    var wordCount = $("#wordCount"),
+        textArea = wordCount.find("textarea"),
+        word = wordCount.find(".word");
+    //调用
+    statInputNum(textArea,word);
 
-        var options = $.extend(defaults, options);
-
-        function calculate(obj){
-            var count = $(obj).val().length;
-            var available = options.allowed - count;
-            if(available <= options.warning && available >= 0){
-                $(obj).next().addClass(options.cssWarning);
-            } else {
-                $(obj).next().removeClass(options.cssWarning);
-            }
-            if(available < 0){
-                $(obj).next().addClass(options.cssExceeded);
-            } else {
-                $(obj).next().removeClass(options.cssExceeded);
-            }
-            $(obj).next().html(options.counterText + available);
-        };
-
-        this.each(function() {
-            $(this).after('<'+ options.counterElement +' class="' + options.css + '">'+ options.counterText +'</'+ options.counterElement +'>');
-            calculate(this);
-            $(this).keyup(function(){calculate(this)});
-            $(this).change(function(){calculate(this)});
-        });
-
-    };
-
-})(jQuery);
+});
+/*
+ * 剩余字数统计
+ * 注意 最大字数只需要在放数字的节点哪里直接写好即可 如：<var class="word">200</var>
+ */
+function statInputNum(textArea,numItem) {
+    var max = numItem.text(),
+        curLength;
+    textArea[0].setAttribute("maxlength", max);
+    curLength = textArea.val().length;
+    numItem.text(max - curLength);
+    textArea.on('input propertychange', function () {
+        numItem.text(max - $(this).val().length);
+    });
+}

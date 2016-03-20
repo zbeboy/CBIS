@@ -4,11 +4,13 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TeacherDao;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
+import com.school.cbis.vo.users.TeacherVo;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -48,7 +50,23 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, Byte, String>> findByTieId(int tieId) {
+    public Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(TeacherVo teacherVo, int tieId) {
+        Condition a = Tables.TEACHER.TIE_ID.eq(tieId);
+
+        if (!StringUtils.isEmpty(teacherVo)) {
+            if (StringUtils.hasLength(teacherVo.getTeacherName())) {
+                a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherVo.getTeacherName() + "%"));
+            }
+
+            if (StringUtils.hasLength(teacherVo.getTeacherJobNumber())) {
+                a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherVo.getTeacherJobNumber() + "%"));
+            }
+        }
+        int pageNum = teacherVo.getPageNum();
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+
         Result<Record5<Integer, String, String, Byte, String>> record5s = create.select(Tables.TEACHER.ID,
                 Tables.TEACHER.TEACHER_NAME, Tables.TEACHER.TEACHER_JOB_NUMBER, Tables.USERS.ENABLED,
                 Tables.AUTHORITIES.AUTHORITY)
@@ -57,9 +75,34 @@ public class TeacherServiceImpl implements TeacherService {
                 .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
                 .leftJoin(Tables.AUTHORITIES)
                 .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
-                .where(Tables.TEACHER.TIE_ID.eq(tieId))
+                .where(a)
+                .limit((pageNum - 1) * teacherVo.getPageSize(), teacherVo.getPageSize())
                 .fetch();
         return record5s;
+    }
+
+    @Override
+    public int findByTieIdAndPageCount(TeacherVo teacherVo, int tieId) {
+        Condition a = Tables.TEACHER.TIE_ID.eq(tieId);
+
+        if (!StringUtils.isEmpty(teacherVo)) {
+            if (StringUtils.hasLength(teacherVo.getTeacherName())) {
+                a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherVo.getTeacherName() + "%"));
+            }
+
+            if (StringUtils.hasLength(teacherVo.getTeacherJobNumber())) {
+                a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherVo.getTeacherJobNumber() + "%"));
+            }
+        }
+        Record1<Integer> count = create.selectCount()
+                .from(Tables.TEACHER)
+                .leftJoin(Tables.USERS)
+                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                .leftJoin(Tables.AUTHORITIES)
+                .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
+                .where(a)
+                .fetchOne();
+        return count.value1();
     }
 
     @Override

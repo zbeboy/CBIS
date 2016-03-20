@@ -1,9 +1,12 @@
 package com.school.cbis.service;
 
+import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieDao;
 import com.school.cbis.domain.tables.pojos.Tie;
+import com.school.cbis.domain.tables.records.TieRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -40,8 +43,10 @@ public class TieServiceImpl implements TieService {
     }
 
     @Override
-    public List<Tie> findByTieName(String tieName) {
-        List<Tie> ties = tieDao.fetchByTieName(tieName);
-        return ties;
+    public Result<TieRecord> findByTieName(int id,String tieName) {
+       Result<TieRecord> records =  create .selectFrom(Tables.TIE)
+                .where(Tables.TIE.ID.ne(id).and(Tables.TIE.TIE_NAME.eq(tieName)))
+                .fetch();
+        return records;
     }
 }

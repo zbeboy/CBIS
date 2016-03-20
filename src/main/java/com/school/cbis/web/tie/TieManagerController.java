@@ -4,6 +4,7 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.domain.tables.records.TieRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
@@ -77,12 +78,12 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/validTieName", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> validTieName(@RequestParam("tieName") String tieName) {
+    public Map<String, Object> validTieName(@RequestParam("tieId") int id,@RequestParam("tieName") String tieName) {
         Map<String, Object> map = new HashMap<>();
         if (!StringUtils.isEmpty(tieName)) {
-            List<Tie> ties = tieService.findByTieName(tieName);
+            Result<TieRecord> records = tieService.findByTieName(id,tieName);
 
-            if (!ties.isEmpty() && ties.size() > 1) {
+            if (records.isNotEmpty()) {
                 map.put("error", "系名已存在!");
             } else {
                 map.put("ok", "");

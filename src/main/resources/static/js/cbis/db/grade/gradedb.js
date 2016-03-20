@@ -7,7 +7,7 @@
         loadData: function (filter) {
             return $.ajax({
                 type:"GET",
-                url:"/cbis/maintainer/gradedata",
+                url:"/maintainer/gradeData",
                 data:filter,
                 dataType:"json"
             });
@@ -16,7 +16,7 @@
         deleteItem: function (item) {
             return $.ajax({
                 type:"POST",
-                url:"/cbis/maintainer/deletegrade",
+                url:"/maintainer/deleteGrade",
                 data:item,
                 dataType:"json"
             });
@@ -27,4 +27,5 @@
     };
 
     window.db = db;
+    db.majors = majors;
 }());

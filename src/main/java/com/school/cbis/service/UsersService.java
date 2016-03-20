@@ -43,5 +43,11 @@ public interface UsersService {
      * @param username
      * @return 用户完整有效信息
      */
-    public Result<Record> findAll(String username);
+    Result<Record> findAll(String username);
+
+    /**
+     * 保存用户
+     * @param users
+     */
+    void save(Users users);
 }

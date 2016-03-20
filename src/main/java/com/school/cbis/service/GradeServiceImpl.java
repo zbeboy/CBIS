@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.GradeDao;
 import com.school.cbis.domain.tables.pojos.Grade;
+import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,11 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Result<Record7<Integer, Integer, String, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId) {
+    public Result<Record6<Integer, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
-        if (StringUtils.hasLength(gradeVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + gradeVo.getMajorName() + "%"));
+        if (gradeVo.getMajorId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(gradeVo.getMajorId()));
         }
 
         if (StringUtils.hasLength(gradeVo.getGradeName())) {
@@ -57,8 +58,8 @@ public class GradeServiceImpl implements GradeService {
             a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + gradeVo.getGradeHead() + "%"));
         }
 
-        SelectConditionStep<Record7<Integer, Integer, String, String, String, String, String>> b =
-                create.select(Tables.GRADE.ID, Tables.TEACHER.ID.as("teacherId"), Tables.MAJOR.MAJOR_NAME, Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
+        SelectConditionStep<Record6<Integer, Integer, String, String, String, String>> b =
+                create.select(Tables.GRADE.ID,  Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
                         Tables.TEACHER.TEACHER_NAME.as("gradeHead"), Tables.TEACHER.TEACHER_JOB_NUMBER.as("gradeHeadID"))
                         .from(Tables.GRADE)
                         .leftJoin(Tables.MAJOR)
@@ -109,8 +110,8 @@ public class GradeServiceImpl implements GradeService {
     public int findAllByPageCount(GradeVo gradeVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
-        if (StringUtils.hasLength(gradeVo.getMajorName())) {
-            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + gradeVo.getMajorName() + "%"));
+        if (gradeVo.getMajorId() > 0) {
+            a = a.and(Tables.MAJOR.ID.eq(gradeVo.getMajorId()));
         }
 
         if (StringUtils.hasLength(gradeVo.getGradeName())) {
@@ -130,7 +131,7 @@ public class GradeServiceImpl implements GradeService {
                 .leftJoin(Tables.MAJOR)
                 .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
                 .leftJoin(Tables.TEACHER)
-                .on(Tables.TEACHER.TEACHER_NAME.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
+                .on(Tables.GRADE.GRADE_HEAD.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
                 .where(a).fetchOne();
         return count.value1();
     }
@@ -144,6 +145,13 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public void update(Grade grade) {
         gradeDao.update(grade);
+    }
+
+    @Override
+    public List<GradeRecord> findByGradeNameAndId(int id,String gradeName) {
+        List<GradeRecord> records = create.selectFrom(Tables.GRADE)
+                .where(Tables.GRADE.GRADE_NAME.eq(gradeName).and(Tables.GRADE.ID.ne(id))).fetch();
+        return records;
     }
 
     @Override

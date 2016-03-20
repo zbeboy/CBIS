@@ -1,16 +1,19 @@
 package com.school.cbis.web.grade;
 
+import com.school.cbis.data.AjaxData;
+import com.school.cbis.data.AutoCompleteData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Teacher;
+import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.domain.tables.records.TeacherRecord;
+import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.GradeService;
 import com.school.cbis.service.TeacherService;
 import com.school.cbis.service.UsersService;
-import com.school.cbis.data.AjaxData;
-import com.school.cbis.data.AutoCompleteData;
 import com.school.cbis.vo.grade.GradeVo;
 import org.jooq.Record;
+import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Result;
 import org.springframework.stereotype.Controller;
@@ -40,10 +43,16 @@ public class GradeManagerController {
     @Resource
     private TeacherService teacherService;
 
-    @RequestMapping("/maintainer/gradedata")
+    /**
+     * 班级数据
+     *
+     * @param gradeVo
+     * @return
+     */
+    @RequestMapping("/maintainer/gradeData")
     @ResponseBody
-    public Map<String, Object> gradeDatas(GradeVo gradeVo) {
-        Map<String, Object> map = new HashMap<>();
+    public Map<String, Object> gradeData(GradeVo gradeVo) {
+        JsGrid<GradeVo> jsGrid = new JsGrid<>(new HashMap<>());
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -54,23 +63,26 @@ public class GradeManagerController {
         }
         List<GradeVo> gradeVos = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record7<Integer, Integer, String, String, String, String, String>> record7s = gradeService.findAllByPage(gradeVo, tieId);
-            if (record7s.isNotEmpty()) {
-                gradeVos = record7s.into(GradeVo.class);
-                map.put("data", gradeVos);
-                map.put("itemsCount", gradeService.findAllByPageCount(gradeVo, tieId));
+            Result<Record6<Integer, Integer, String, String, String, String>> record6s = gradeService.findAllByPage(gradeVo, tieId);
+            if (record6s.isNotEmpty()) {
+                gradeVos = record6s.into(GradeVo.class);
+                jsGrid.loadData(gradeVos, gradeService.findAllByPageCount(gradeVo, tieId));
             } else {
-                map.put("data", gradeVos);
-                map.put("itemsCount", 0);
+                jsGrid.loadData(gradeVos, 0);
             }
         } else {
-            map.put("data", gradeVos);
-            map.put("itemsCount", 0);
+            jsGrid.loadData(gradeVos, 0);
         }
-        return map;
+        return jsGrid.getMap();
     }
 
-    @RequestMapping("/maintainer/gradehead")
+    /**
+     * 班级主任自动完成数据
+     *
+     * @param search
+     * @return
+     */
+    @RequestMapping("/maintainer/gradeHead")
     @ResponseBody
     public List<AutoCompleteData> gradeHead(String search) {
         List<AutoCompleteData> autoCompleteDatas = new ArrayList<>();
@@ -96,103 +108,115 @@ public class GradeManagerController {
         return autoCompleteDatas;
     }
 
-    @RequestMapping(value = "/maintainer/checktearchernum", method = RequestMethod.POST)
+    /**
+     * 检查教师编号是否存在
+     *
+     * @param teacherJobNum
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/checkTeacherNum", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData checkTeacherNum(@RequestParam(value = "tearcherJobNum") String tearcherJobNum) {
-        AjaxData data = new AjaxData();
-        if (StringUtils.hasLength(tearcherJobNum)) {
-            List<Teacher> teachers = teacherService.findByTeacherJobNumber(tearcherJobNum);
+    public Map<String, Object> checkTeacherNum(@RequestParam(value = "gradeHeadID") String teacherJobNum) {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.hasLength(teacherJobNum)) {
+            List<Teacher> teachers = teacherService.findByTeacherJobNumber(teacherJobNum);
             if (teachers.isEmpty()) {
-                data.setState(false);
-                data.setMsg("教师不存在！");
+                map.put("error", "教师不存在!");
             } else {
-                data.setState(true);
-                data.setMsg("教师存在！");
+                map.put("ok", "");
             }
         } else {
-            data.setState(false);
-            data.setMsg("教师工号为空！");
+            map.put("error", "教师编号为空!");
         }
-        return data;
+        return map;
     }
 
-    @RequestMapping(value = "/maintainer/checkgradename", method = RequestMethod.POST)
+    /**
+     * 检查班级名
+     *
+     * @param gradeName
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/checkGradeName", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData checkGradeName(@RequestParam(value = "gradeName") String gradeName) {
-        AjaxData data = new AjaxData();
+    public Map<String, Object> checkGradeName(@RequestParam("gradeId") int id, @RequestParam(value = "gradeName") String gradeName) {
+        Map<String, Object> map = new HashMap<>();
         if (StringUtils.hasLength(gradeName)) {
-            List<Grade> grades = gradeService.findByGradeName(gradeName);
-            if (grades.isEmpty()) {
-                data.setState(true);
-                data.setMsg("班级名不存在！");
+            if (id > 0) {
+                List<GradeRecord> grades = gradeService.findByGradeNameAndId(id, gradeName);
+                if (grades.isEmpty()) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "班级名已存在!");
+                }
             } else {
-                data.setState(false);
-                data.setMsg("班级名已存在！");
+                List<Grade> grades = gradeService.findByGradeName(gradeName);
+                if (grades.isEmpty()) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "班级名已存在!");
+                }
             }
         } else {
-            data.setState(false);
-            data.setMsg("班级名为空！");
+            map.put("error", "班级名为空!");
         }
-        return data;
+        return map;
     }
 
-    @RequestMapping(value = "/maintainer/addgrade", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData addGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
-        AjaxData data = new AjaxData();
-        if (gradeId == -1 && majorName > 0 && StringUtils.hasLength(year) && year.matches("\\d{4}") && StringUtils.hasLength(gradeName) && StringUtils.hasLength(gradeHeadID)) {
-            List<Teacher> teachers = teacherService.findByTeacherJobNumber(gradeHeadID);
-            if (!teachers.isEmpty()) {
-                Grade grade = new Grade();
-                grade.setMajorId(majorName);
-                grade.setYear(year);
-                grade.setGradeName(gradeName);
-                grade.setGradeHead(teachers.get(0).getTeacherJobNumber());
-                gradeService.save(grade);
-                data.setState(true);
-                data.setMsg("保存班级信息成功！");
-            } else {
-                data.setState(false);
-                data.setMsg("教师信息获取失败！");
-            }
-        } else {
-            data.setState(false);
-            data.setMsg("参数有误！");
-        }
-        return data;
+    /**
+     * 添加班级
+     *
+     * @param gradeId
+     * @param majorName
+     * @param year
+     * @param gradeName
+     * @param gradeHeadID
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/addGrade", method = RequestMethod.POST)
+    public String addGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
+        Grade grade = new Grade();
+        grade.setMajorId(majorName);
+        grade.setYear(year);
+        grade.setGradeName(gradeName);
+        grade.setGradeHead(gradeHeadID);
+        gradeService.save(grade);
+        return "redirect:/maintainer/gradeManager";
     }
 
-    @RequestMapping(value = "/maintainer/updategrade", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxData updateGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
-        AjaxData data = new AjaxData();
-        if (gradeId > 0 && majorName > 0 && StringUtils.hasLength(year) && year.matches("\\d{4}") && StringUtils.hasLength(gradeName) && StringUtils.hasLength(gradeHeadID)) {
-            List<Teacher> teachers = teacherService.findByTeacherJobNumber(gradeHeadID);
-            if (!teachers.isEmpty()) {
-                Grade grade = new Grade();
-                grade.setId(gradeId);
-                grade.setMajorId(majorName);
-                grade.setYear(year);
-                grade.setGradeName(gradeName);
-                grade.setGradeHead(teachers.get(0).getTeacherJobNumber());
-                gradeService.update(grade);
-                data.setState(true);
-                data.setMsg("保存班级信息成功！");
-            } else {
-                data.setState(false);
-                data.setMsg("教师信息获取失败！");
-            }
-        } else {
-            data.setState(false);
-            data.setMsg("参数有误！");
-        }
-        return data;
+    /**
+     * 更新班级信息
+     *
+     * @param gradeId
+     * @param majorName
+     * @param year
+     * @param gradeName
+     * @param gradeHeadID
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/updateGrade", method = RequestMethod.POST)
+    public String updateGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
+        Grade grade = new Grade();
+        grade.setId(gradeId);
+        grade.setMajorId(majorName);
+        grade.setYear(year);
+        grade.setGradeName(gradeName);
+        grade.setGradeHead(gradeHeadID);
+        gradeService.update(grade);
+        return "redirect:/maintainer/gradeManager";
     }
 
-    @RequestMapping(value = "/maintainer/deletegrade",method = RequestMethod.POST)
+    /**
+     * 删除班级
+     *
+     * @param gradeVo
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/deleteGrade", method = RequestMethod.POST)
     @ResponseBody
-    public GradeVo deleteGrade(GradeVo gradeVo){
+    public GradeVo deleteGrade(GradeVo gradeVo) {
+        JsGrid<GradeVo> jsGrid = new JsGrid<>();
         gradeService.deleteById(gradeVo.getId());
-        return gradeVo;
+        return jsGrid.deleteItem(gradeVo);
     }
 }

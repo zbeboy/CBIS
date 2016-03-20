@@ -4,7 +4,7 @@
 var gradeModal = null;//添加模态框
 var gradeName = null;//检验班级名
 $(function () {
-    UIkit.autocomplete("#gradeHeadAuto", {source: "/maintainer/gradehead"});
+    UIkit.autocomplete("#gradeHeadAuto", {source: "/maintainer/gradeHead",minLength:1});
     gradeModal = UIkit.modal("#gradeModal");
     $("#jsGrid").jsGrid({
         width: "100%",
@@ -27,9 +27,8 @@ $(function () {
         controller: db,
         fields: [
             {name: "id", title: "id", type: "number", visible: false},
-            {name: "teacherId", title: "teacherId", type: "number", visible: false},
             {name: "gradeHeadID", title: "gradeHeadID", type: "text", visible: false},
-            {name: "majorName", title: "专业", type: "text", width: 80},
+            {name: "majorId", title: "专业", type: "select",items: db.majors, valueField: "id", textField: "majorName", width: 80},
             {name: "year", title: "年级", type: "text", width: 60},
             {name: "gradeName", title: "班级", type: "text", width: 70},
             {name: "gradeHead", title: "班主任", type: "text", width: 50},
@@ -49,6 +48,7 @@ $(function () {
 
     var showDetailsDialog = function (dialogType, client) {
         if (dialogType === 'Add') {
+            $('#gradeForm').attr('action','/maintainer/addGrade');
             $('#modalTitle').text("添加班级");
             $($('#majorName').children()[0]).attr("selected", "selected");
             $('#year').val('');
@@ -57,10 +57,12 @@ $(function () {
             $('#gradeId').val(-1);
             gradeModal.show();
         } else if (dialogType === 'Edit') {
+            $('#gradeForm').attr('action','/maintainer/updateGrade');
             $('#modalTitle').text("更新班级");
             for (var i = 0; i < $('#majorName').children().length; i++) {
-                if ($($('#majorName').children()[i]).text() === client.majorName) {
+                if (Number($($('#majorName').children()[i]).val()) === client.majorId) {
                     $($('#majorName').children()[i]).attr("selected", "selected");
+                    break;
                 }
             }
             $('#year').val(client.year);
@@ -77,127 +79,3 @@ $(function () {
 function cancel() {
     window.location.reload(true);
 }
-
-$('form[name="gradeForm"]').validator({
-    ignore: ':hidden',
-    stopOnError: false,
-    timely: false,
-    rules:{
-        year:[/^\d{4}$/,'请输入4位数字']
-    },
-    fields: {
-        'majorName': {
-            rule: "required;",
-            msg: {required: "请选择专业"},
-            tip: "选择所属专业",
-            ok: "您稍后可再更改",
-            target: "#majorNameError"
-        },
-        'year': {
-            rule: "required;year",
-            msg: {required: "请填写年级"},
-            tip: "年级",
-            target: "#yearError"
-        },
-        'gradeName': {
-            rule: "required;length[1~70]",
-            msg: {required: "请填写班级名"},
-            tip: "班级名",
-            target: "#gradeNameError"
-        },
-        'gradeHeadID': {
-            rule: "required;length[1~25]",
-            msg: {checked: "请填写班主任"}
-        }
-    },
-    validClass: "uk-form-success",
-    invalidClass: "uk-form-danger",
-    msgClass: "n-right",
-    valid: function (form) {
-        var me = this;
-        $.post("/cbis/maintainer/checktearchernum", {
-            'tearcherJobNum': $('#gradeHeadID').val()
-        }, function (data) {
-            if (data.state) {
-                $('#gradeHeadError').removeClass('uk-text-danger');
-                $('#gradeHeadError').text('');
-
-                var url = '';
-                var checkGradeName = false;
-
-                if (Number($('#gradeId').val()) == -1) {
-
-                    $.post("/cbis/maintainer/checkgradename",{
-                        'gradeName':$('#gradeName').val()
-                    },function(data){
-                        if(data.state){
-                            me.holdSubmit();
-                            $.ajax({
-                                url: "/cbis/maintainer/addgrade",
-                                data: $(form).serialize(),
-                                type: 'post',
-                                success: function (d) {
-                                    if (d.state) {
-                                        window.location.reload(true);
-                                    } else {
-                                        layer.msg(d.msg);
-                                    }
-                                    me.holdSubmit(false);
-                                }
-                            });
-                        } else {
-                            $('#gradeName').removeClass('uk-form-success').addClass('uk-form-danger');
-                            layer.msg(data.msg);
-                        }
-                    },'json');
-                } else if (Number($('#gradeId').val()) > 0) {
-
-                    if(gradeName === $('#gradeName').val()){
-                        me.holdSubmit();
-                        $.ajax({
-                            url: "/cbis/maintainer/updategrade",
-                            data: $(form).serialize(),
-                            type: 'post',
-                            success: function (d) {
-                                if (d.state) {
-                                    window.location.reload(true);
-                                } else {
-                                    layer.msg(d.msg);
-                                }
-                                me.holdSubmit(false);
-                            }
-                        });
-                    } else {
-                        $.post("/cbis/maintainer/checkgradename",{
-                            'gradeName':$('#gradeName').val()
-                        },function(data){
-                            if(data.state){
-                                me.holdSubmit();
-                                $.ajax({
-                                    url: "/cbis/maintainer/updategrade",
-                                    data: $(form).serialize(),
-                                    type: 'post',
-                                    success: function (d) {
-                                        if (d.state) {
-                                            window.location.reload(true);
-                                        } else {
-                                            layer.msg(d.msg);
-                                        }
-                                        me.holdSubmit(false);
-                                    }
-                                });
-                            } else {
-                                $('#gradeName').removeClass('uk-form-success').addClass('uk-form-danger');
-                                layer.msg(data.msg);
-                            }
-                        },'json');
-                    }
-                }
-
-            } else {
-                $('#gradeHeadError').removeClass('uk-text-danger').addClass('uk-text-danger');
-                $('#gradeHeadError').text(data.msg);
-            }
-        }, 'json');
-    }
-});

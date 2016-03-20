@@ -16,36 +16,38 @@
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
 
     <!-- jsgrid css-->
-    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid.min.css}"/>
-    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css" th:href="@{/css/jsgrid-theme.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid/jsgrid.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css"
+          th:href="@{/css/jsgrid/jsgrid-theme.min.css}"/>
 
     <!-- nice validator css-->
-    <link rel="stylesheet" href="validator/jquery.validator.css" th:href="@{/validator/jquery.validator.css}" />
+    <link rel="stylesheet" href="js/validator/jquery.validator.css" th:href="@{/js/validator/jquery.validator.css}"/>
 
-    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
-    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
-    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
     <script src="js/components/autocomplete.js" th:src="@{/js/components/autocomplete.js}"></script>
     <script src="js/components/datepicker.js" th:src="@{/js/components/datepicker.js}"></script>
     <script src="js/components/form-select.js" th:src="@{/js/components/form-select.js}"></script>
-    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
 
     <!-- layer js -->
-    <script src="js/layer.js" th:src="@{/js/layer.js}"></script>
+    <script src="js/layer.js" th:src="@{/js/layer/layer.js}"></script>
 
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
 
     <!-- nice validator js-->
-    <script type="text/javascript" src="validator/jquery.validator.js" th:src="@{/validator/jquery.validator.js }" ></script>
-    <script type="text/javascript" src="validator/local/zh-CN.js" th:src="@{/validator/local/zh-CN.js}"></script>
+    <script type="text/javascript" src="js/validator/jquery.validator.js"
+            th:src="@{/js/validator/jquery.validator.js }"></script>
+    <script type="text/javascript" src="js/validator/local/zh-CN.js" th:src="@{/js/validator/local/zh-CN.js}"></script>
 
     <script>
         $(function () {
@@ -91,42 +93,47 @@
                     <div class="uk-modal-header">
                         <h2 id="modalTitle">班级</h2>
                     </div>
-                    <form name="gradeForm" class="uk-form uk-form-horizontal">
+                    <form class="uk-form uk-form-horizontal" id="gradeForm" method="post"
+                          data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
                         <div>
-                            <input id="gradeId" name="gradeId" type="hidden" />
+                            <input id="gradeId" name="gradeId" type="hidden"/>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="majorName">专业:</label>
                                 <div class="uk-form-controls">
-                                    <select id="majorName" name="majorName">
+                                    <select id="majorName" name="majorName" data-rule="required;" data-tip="选择专业"
+                                            data-msg-required="请选择专业">
                                         <option value="">请选择</option>
                                         <option th:unless="${#lists.isEmpty(majorNames)}" th:each="type:${majorNames}"
-                                                th:value="${type.id}" th:text="${type.majorName}">United
-                                            States
+                                                th:value="${type.id}" th:text="${type.majorName}">
                                         </option>
                                     </select>
-                                    <p id="majorNameError"></p>
                                 </div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="year">年级:</label>
                                 <div class="uk-form-controls">
                                     <input id="year" name="year" type="text"
-                                           data-uk-datepicker="{format:'YYYY'}"/>
-                                    <p id="yearError"></p>
+                                           data-uk-datepicker="{format:'YYYY'}" data-rule="年级:required;year;"
+                                           data-rule-year="[/^\d{4}$/, '年级由4位数字组成!']" data-tip="年级由4位数字组成"
+                                           data-msg-required="请填写年级"/>
                                 </div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="gradeName">班级名:</label>
                                 <div class="uk-form-controls">
-                                    <input id="gradeName" name="gradeName" type="text"/>
-                                    <p id="gradeNameError"></p>
+                                    <input id="gradeName" name="gradeName" type="text"
+                                           data-rule="required;length[1~70];remote[/maintainer/checkGradeName, gradeId]"
+                                           data-tip="班级名,如:计科1211" data-msg-required="请填写班级名"/>
                                 </div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="gradeHeadID">班主任:</label>
-                                <div class="uk-autocomplete uk-form-controls" id="gradeHeadAuto">
-                                    <input id="gradeHeadID" name="gradeHeadID" type="text"/>
-                                    <script type="text/autocomplete">
+                                <div class="uk-form-controls">
+                                    <div class="uk-autocomplete" id="gradeHeadAuto">
+                                        <input id="gradeHeadID" name="gradeHeadID" type="text"
+                                               data-rule="required;length[1~25];remote[/maintainer/checkTeacherNum]"
+                                               data-tip="教师姓名" data-msg-required="请填写班主任"/>
+                                        <script type="text/autocomplete">
                                         <ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">
                                             {{~items}}
                                             <li data-value="{{ $item.value }}">
@@ -139,7 +146,8 @@
                                         </ul>
 
 
-                                    </script>
+                                        </script>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -148,6 +156,7 @@
                             <button type="submit" class="uk-button uk-button-primary">
                                 保存
                             </button>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
                         </div>
                     </form>
                 </div>
@@ -161,19 +170,24 @@
 
     </footer>
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var majors  = /*[[${majors}]]*/ null;
+    /*]]>*/
+</script>
 <!-- jsgrid js-->
-<script src="js/cbis/db/gradedb.js" th:src="@{/js/cbis/db/gradedb.js}"></script>
-<script src="js/jsgrid.core.js" th:src="@{/js/jsgrid.core.js}"></script>
-<script src="js/jsgrid.load-indicator.js" th:src="@{/js/jsgrid.load-indicator.js}"></script>
-<script src="js/jsgrid.load-strategies.js" th:src="@{/js/jsgrid.load-strategies.js}"></script>
-<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/jsgrid.sort-strategies.js}"></script>
-<script src="js/jsgrid.field.js" th:src="@{/js/jsgrid.field.js}"></script>
-<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/fields/jsgrid.field.text.js}"></script>
-<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/fields/jsgrid.field.number.js}"></script>
-<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/fields/jsgrid.field.select.js}"></script>
-<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/fields/jsgrid.field.control.js}"></script>
+<script src="js/cbis/db/grade/gradedb.js" th:src="@{/js/cbis/db/grade/gradedb.js}"></script>
+<script src="js/jsgrid.core.js" th:src="@{/js/jsgrid/jsgrid.core.js}"></script>
+<script src="js/jsgrid.load-indicator.js" th:src="@{/js/jsgrid/jsgrid.load-indicator.js}"></script>
+<script src="js/jsgrid.load-strategies.js" th:src="@{/js/jsgrid/jsgrid.load-strategies.js}"></script>
+<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/jsgrid/jsgrid.sort-strategies.js}"></script>
+<script src="js/jsgrid.field.js" th:src="@{/js/jsgrid/jsgrid.field.js}"></script>
+<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/jsgrid/fields/jsgrid.field.text.js}"></script>
+<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/jsgrid/fields/jsgrid.field.number.js}"></script>
+<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/jsgrid/fields/jsgrid.field.select.js}"></script>
+<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/jsgrid/fields/jsgrid.field.control.js}"></script>
 
-<script th:src="@{/js/cbis/js/gradelist.js}"
-        src="js/cbis/js/gradelist.js"></script>
+<script th:src="@{/js/cbis/js/grade/gradelist.js}"
+        src="js/cbis/js/grade/gradelist.js"></script>
 </body>
 </html>

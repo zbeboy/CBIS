@@ -46,24 +46,6 @@ var imgPath = "";
 //全局变量，是否已删除图片标题，用于修复更新时图片未删除bug
 var is_del = false;
 
-/**
- * 字数控制
- */
-$(document).ready(function () {
-    //default usage
-    $("#title").charCount({
-        allowed: 50,
-        warning: 10,
-        counterText: '剩余字数: '
-    });
-    //custom usage
-    $("#summary").charCount({
-        allowed: 2000,
-        warning: 100,
-        counterText: '剩余字数: '
-    });
-});
-
 function initImage() {
     if (imgPath != '' && imgPath != null) {
         var str = imgPath.substring(imgPath.lastIndexOf('/') + 1, imgPath.length);

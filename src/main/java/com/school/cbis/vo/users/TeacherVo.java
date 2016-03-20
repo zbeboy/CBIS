@@ -1,4 +1,4 @@
-package com.school.cbis.vo.personal;
+package com.school.cbis.vo.users;
 
 /**
  * Created by lenovo on 2016-02-17.
@@ -9,6 +9,9 @@ public class TeacherVo {
     private String teacherJobNumber;
     private boolean enabled;
     private String authority;
+    private int pageNum = 1;
+    private int pageSize = 6;
+    private int totalData;
 
     public int getId() {
         return id;
@@ -50,6 +53,30 @@ public class TeacherVo {
         this.authority = authority;
     }
 
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalData() {
+        return totalData;
+    }
+
+    public void setTotalData(int totalData) {
+        this.totalData = totalData;
+    }
+
     @Override
     public String toString() {
         return "TeacherVo{" +
@@ -58,6 +85,9 @@ public class TeacherVo {
                 ", teacherJobNumber='" + teacherJobNumber + '\'' +
                 ", enabled=" + enabled +
                 ", authority='" + authority + '\'' +
+                ", pageNum=" + pageNum +
+                ", pageSize=" + pageSize +
+                ", totalData=" + totalData +
                 '}';
     }
 }

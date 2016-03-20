@@ -6,7 +6,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
-import com.school.cbis.vo.personal.TeacherVo;
+import com.school.cbis.vo.major.MajorListVo;
 import org.jooq.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,9 +47,6 @@ public class BackstageController {
 
     @Resource
     private MajorService majorService;
-
-    @Resource
-    private TeacherService teacherService;
 
     @Resource
     private TieNoticeAffixService tieNoticeAffixService;
@@ -97,8 +94,13 @@ public class BackstageController {
         return "/maintainer/majorlist";
     }
 
-    @RequestMapping("/maintainer/grademanager")
-    public String gradeManager(ModelMap map) {
+    /**
+     * 专业管理界面
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/gradeManager")
+    public String gradeManager(ModelMap modelMap) {
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -108,37 +110,20 @@ public class BackstageController {
             }
         }
         List<Major> majors = majorService.findByTieId(tieId);
-        map.addAttribute("majorNames", majors);
+        modelMap.addAttribute("majorNames", majors);
+
+        List<MajorListVo> majorListVos = new ArrayList<>();
+        MajorListVo majorListVo = new MajorListVo();
+        majorListVo.setId(0);
+        majorListVo.setMajorName("");
+        majorListVos.add(majorListVo);
+        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
+        if (record2s.isNotEmpty()) {
+            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
+            majorListVos.addAll(majorListVoList);
+        }
+        modelMap.addAttribute("majors", majorListVos);
         return "/maintainer/gradelist";
-    }
-
-    @RequestMapping("/maintainer/usersmanager")
-    public String usersManager() {
-        return "/maintainer/studentlist";
-    }
-
-    @RequestMapping("/maintainer/studentmanager")
-    public String studentManager(ModelMap map) {
-        return "/maintainer/studentlist";
-    }
-
-    @RequestMapping("/maintainer/teachermanager")
-    public String teacherManager(ModelMap map) {
-        List<TeacherVo> teacherVos = new ArrayList<>();
-        //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
-        }
-        Result<Record5<Integer, String, String, Byte, String>> record5s = teacherService.findByTieId(tieId);
-        if (record5s.isNotEmpty()) {
-            teacherVos = record5s.into(TeacherVo.class);
-        }
-        map.addAttribute("teachers", teacherVos);
-        return "/maintainer/teacherlist";
     }
 
     /**
@@ -165,6 +150,15 @@ public class BackstageController {
             e.printStackTrace();
         }
         return data;
+    }
+
+    /**
+     * 用户管理界面
+     * @return
+     */
+    @RequestMapping("/maintainer/usersManager")
+    public String usersManager() {
+        return "/maintainer/studentlist";
     }
 
     /**

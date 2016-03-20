@@ -1,6 +1,8 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Tie;
+import com.school.cbis.domain.tables.records.TieRecord;
+import org.jooq.Result;
 
 import java.util.List;
 
@@ -25,9 +27,10 @@ public interface TieService {
     Tie findById(int id);
 
     /**
-     * 通过系名查询
+     * 检验系名用，注意是不等于该id
+     * @param id
      * @param tieName
      * @return
      */
-    List<Tie> findByTieName(String tieName);
+    Result<TieRecord> findByTieName(int id, String tieName);
 }

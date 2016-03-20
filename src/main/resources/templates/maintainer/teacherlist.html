@@ -16,31 +16,31 @@
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace-theme-minimal.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
 
     <!-- nice validator css-->
-    <link rel="stylesheet" href="validator/jquery.validator.css" th:href="@{/validator/jquery.validator.css}"/>
+    <link rel="stylesheet" href="validator/jquery.validator.css" th:href="@{/js/validator/jquery.validator.css}"/>
 
-    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
-    <script src="js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
-    <script src="js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="js/respond.min.js" th:src="@{/js/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/html5/html5.min.js}"></script>
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/components/sticky.js}"></script>
     <script src="js/components/pagination.js" th:src="@{/js/components/pagination.js}"></script>
-    <script src="js/pace.min.js" th:src="@{/js/pace.min.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/totop.js}"></script>
 
     <!-- layer js -->
-    <script src="js/layer.js" th:src="@{/js/layer.js}"></script>
+    <script src="js/layer.js" th:src="@{/js/layer/layer.js}"></script>
 
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/cbis/plugin/csrf.js}"></script>
 
     <!-- nice validator js-->
     <script type="text/javascript" src="validator/jquery.validator.js"
-            th:src="@{/validator/jquery.validator.js }"></script>
-    <script type="text/javascript" src="validator/local/zh-CN.js" th:src="@{/validator/local/zh-CN.js}"></script>
+            th:src="@{/js/validator/jquery.validator.js }"></script>
+    <script type="text/javascript" src="validator/local/zh-CN.js" th:src="@{/js/validator/local/zh-CN.js}"></script>
 
     <script>
         $(function () {
@@ -79,16 +79,18 @@
         </div>
         <div class="uk-width-medium-3-4">
 
-            <form class="uk-form">
+            <form class="uk-form" th:action="@{/maintainer/teacherManager}">
                 <fieldset data-uk-margin="">
                     <legend>教师管理</legend>
                     <div class="uk-grid">
                         <div class="uk-width-1-2 uk-text-left">
-                            <button class="uk-button uk-button-success uk-margin-small-top" type="button">添加用户</button>
+                            <button class="uk-button uk-button-success uk-margin-small-top" type="button"
+                                    onclick="openAddModal();">添加用户
+                            </button>
                         </div>
-                        <div class="uk-width-1-2 uk-text-right"><input type="text" placeholder="姓名"
+                        <div class="uk-width-1-2 uk-text-right"><input type="text" placeholder="姓名" name="teacherName"
                                                                        class="uk-margin-small-top"/>
-                            <input type="text" placeholder="工号" class="uk-margin-small-top"/>
+                            <input type="text" placeholder="工号" name="teacherJobNumber" class="uk-margin-small-top"/>
                             <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
                         </div>
                     </div>
@@ -106,20 +108,26 @@
                                          th:text="${t.enabled}?'正常':'注销'">正常</span></li>
                             <li class="uk-clearfix">
                                 <p hidden="hidden" th:text="${t.teacherJobNumber}"></p>
-                                <button class="uk-button uk-button-primary uk-float-right" onclick="openEditModal(this);" type="button">编辑</button>
-                                <button class="uk-button uk-float-left" onclick="resetPassword(this);" type="button">重置</button>
+                                <button class="uk-button uk-button-primary uk-float-right"
+                                        onclick="openEditModal(this);" type="button">编辑
+                                </button>
+                                <button class="uk-button uk-float-left" onclick="resetPassword(this);" type="button">
+                                    重置
+                                </button>
                             </li>
                             <li class="uk-clearfix">
                                 <p hidden="hidden" th:text="${t.teacherJobNumber}"></p>
                                 <button class="uk-button uk-float-right" type="button">权限</button>
-                                <p hidden="hidden" th:text="${t.enabled}?'y':'n'" ></p>
-                                <button class="uk-button uk-button-danger uk-float-left" onclick="openStateModal(this);" type="button">状态</button>
+                                <p hidden="hidden" th:text="${t.enabled}?'y':'n'"></p>
+                                <button class="uk-button uk-button-danger uk-float-left" onclick="openStateModal(this);"
+                                        type="button">状态
+                                </button>
                             </li>
                         </ul>
                     </div>
                 </li>
             </ul>
-            <ul class="uk-pagination" data-uk-pagination="{items:100, itemsOnPage:10}"></ul>
+            <ul class="uk-pagination"></ul>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -129,6 +137,43 @@
 
     </footer>
 
+    <!-- 添加用户模态框-->
+    <div id="addModal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header">
+                <h2>添加用户</h2>
+            </div>
+            <form th:action="@{/maintainer/addTeacher}" method="post" class="uk-form uk-form-horizontal"
+                  data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="add-realname">用户姓名</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="add-realname" name="realname" placeholder="用户姓名"
+                               data-rule="required;length[1~20]" data-tip="用户姓名"
+                               data-msg-required="请填写用户姓名"/>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="add-username">用户账号</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="add-username" name="username" placeholder="用户账号"
+                               data-rule="required;length[1~25];remote[/maintainer/validUsername]" data-tip="用户编号"
+                               data-msg-required="请填写用户账号"/>
+                    </div>
+                </div>
+                <p class="uk-text-small uk-text-primary">注意:密码为用户账号!</p>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="uk-button" onclick="cancel('#addModal');">取消</button>
+                    <button type="submit" class="uk-button uk-button-primary">保存</button>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 编辑模态框 待定-->
     <div id="editModal" class="uk-modal">
         <div class="uk-modal-dialog">
             <button type="button" class="uk-modal-close uk-close"></button>
@@ -139,17 +184,18 @@
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="edit-username">用户账号</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="edit-username" placeholder="用户账号" />
+                        <input type="text" id="edit-username" placeholder="用户账号"/>
                     </div>
                 </div>
             </form>
             <div class="uk-modal-footer uk-text-right">
-                <button type="button" class="uk-button" onclick="cancel('#editModal');" >Cancel</button>
-                <button type="button" class="uk-button uk-button-primary" onclick="edit();" >Save</button>
+                <button type="button" class="uk-button" onclick="cancel('#editModal');">Cancel</button>
+                <button type="button" class="uk-button uk-button-primary" onclick="edit();">Save</button>
             </div>
         </div>
     </div>
 
+    <!-- 状态模态框模态框-->
     <div id="stateModal" class="uk-modal">
         <div class="uk-modal-dialog">
             <button type="button" class="uk-modal-close uk-close"></button>
@@ -159,21 +205,29 @@
             <form class="uk-form uk-form-horizontal">
                 <div class="uk-form-row">
                     <div class="uk-form-controls">
-                        <input type="radio" id="form-s-r" name="stateRadio" value="1"/> <label for="form-s-r">正常</label><br />
-                        <input type="radio" id="form-s-r1" name="stateRadio"  value="2"/> <label for="form-s-r1">注销</label>
+                        <input type="hidden" id="stateNum"/>
+                        <input type="radio" id="form-s-r" name="stateRadio" value="1"/> <label for="form-s-r">正常</label><br/>
+                        <input type="radio" id="form-s-r1" name="stateRadio" value="0"/> <label
+                            for="form-s-r1">注销</label>
                     </div>
                 </div>
             </form>
             <div class="uk-modal-footer uk-text-right">
-                <button type="button" class="uk-button" onclick="cancel('#stateModal');" >Cancel</button>
-                <button type="button" class="uk-button uk-button-primary" onclick="state();" >Save</button>
+                <button type="button" class="uk-button" onclick="cancel('#stateModal');">取消</button>
+                <button type="button" class="uk-button uk-button-primary" onclick="state();">保存</button>
             </div>
         </div>
     </div>
 
-</div>
+    <!-- 权限模态框  待定-->
 
-<script th:src="@{/js/cbis/js/teacherlist.js}"
-        src="js/cbis/js/teacherlist.js"></script>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var param = /*[[${teacherVo}]]*/ null;
+    /*]]>*/
+</script>
+<script th:src="@{/js/cbis/js/users/teacherlist.js}"
+        src="js/cbis/js/users/teacherlist.js"></script>
 </body>
 </html>

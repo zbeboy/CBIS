@@ -102,4 +102,9 @@ public class UsersServiceImpl implements UsersService {
 
         return null;
     }
+
+    @Override
+    public void save(Users users) {
+        usersDao.insert(users);
+    }
 }
