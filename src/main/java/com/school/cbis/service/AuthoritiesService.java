@@ -16,7 +16,7 @@ public interface AuthoritiesService {
      * @param username
      * @return
      */
-    Result<AuthoritiesRecord> findByUsername(String username);
+    AuthoritiesRecord findByUsername(String username);
 
     /**
      * 通过用户名删除
@@ -26,9 +26,14 @@ public interface AuthoritiesService {
     void delete(String username);
 
     /**
-     * 批量保存
-     *
-     * @param authorities 权限信息
+     * 更新权限
+     * @param authoritiesRecord
      */
-    void save(List<Authorities> authorities);
+    void update(AuthoritiesRecord authoritiesRecord);
+
+    /**
+     * 保存权限
+     * @param authoritiesRecord
+     */
+    void save(AuthoritiesRecord authoritiesRecord);
 }

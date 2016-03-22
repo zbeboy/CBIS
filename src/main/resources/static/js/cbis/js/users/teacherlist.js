@@ -72,10 +72,16 @@ function openStateModal(obj) {
     var modal = UIkit.modal('#stateModal');
     var p = $(obj).parent();
     $('#stateNum').val($(p.children()[0]).text());
+
+    var radio = document.getElementsByName('stateRadio');
+    for(var i = 0;i<radio.length;i++){
+        radio[i].checked = false;
+    }
+
     if ($(obj).prev().text() === 'y') {
-        $('#form-s-r').attr('checked', 'checked');
+        document.getElementById('form-s-r').checked = true;
     } else if ($(obj).prev().text() === 'n') {
-        $('#form-s-r1').attr('checked', 'checked');
+        document.getElementById('form-s-r1').checked = true;
     }
     if (!modal.isActive()) {
         modal.show();
@@ -86,9 +92,7 @@ function openStateModal(obj) {
  * 保存状态
  */
 function state() {
-    var n = $("input[type='radio']:checked").val();
-    console.log($('#stateNum').val());
-    console.log(n);
+    var n = $("input[name='stateRadio']:checked").val();
     $.post('/maintainer/resetEnable', {
         'username': $('#stateNum').val(),
         'enable': n
@@ -118,4 +122,52 @@ function cancel(obj) {
 function edit() {
 
 
+}
+
+/**
+ * 权限窗口
+ * @param obj
+ */
+function openAuthoritiesModal(obj){
+    var modal = UIkit.modal('#authoritiesModal');
+    var p = $(obj).parent();
+    $('#authoritiesNum').val($(p.children()[0]).text());
+
+    var radio = document.getElementsByName('authoritiesRadio');
+    for(var i = 0;i<radio.length;i++){
+        radio[i].checked = false;
+    }
+
+    if($(obj).prev().text().trim() === '超级管理员'){
+        document.getElementById('form-a-r').checked = true;
+    } else if($(obj).prev().text().trim() === '管理员'){
+        document.getElementById('form-a-r1').checked = true;
+    } else if($(obj).prev().text().trim() === '教师'){
+        document.getElementById('form-a-r2').checked = true;
+    } else if($(obj).prev().text().trim() === '学生'){
+        document.getElementById('form-a-r3').checked = true;
+    }
+
+    if (!modal.isActive()) {
+        modal.show();
+    }
+}
+
+/**
+ * 权限保存
+ */
+function authorities(){
+    var n = $("input[name='authoritiesRadio']:checked").val();
+    console.log(n);
+    console.log($('#authoritiesNum').val());
+    $.post('/maintainer/resetAuthority', {
+        'username': $('#authoritiesNum').val(),
+        'authority': n
+    }, function (data) {
+        if (data.state) {
+            window.location.reload(true);
+        } else {
+            layer.msg(data.msg);
+        }
+    }, 'json');
 }

@@ -59,7 +59,7 @@ public class GradeServiceImpl implements GradeService {
         }
 
         SelectConditionStep<Record6<Integer, Integer, String, String, String, String>> b =
-                create.select(Tables.GRADE.ID,  Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
+                create.select(Tables.GRADE.ID, Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
                         Tables.TEACHER.TEACHER_NAME.as("gradeHead"), Tables.TEACHER.TEACHER_JOB_NUMBER.as("gradeHeadID"))
                         .from(Tables.GRADE)
                         .leftJoin(Tables.MAJOR)
@@ -148,7 +148,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<GradeRecord> findByGradeNameAndId(int id,String gradeName) {
+    public List<GradeRecord> findByGradeNameAndId(int id, String gradeName) {
         List<GradeRecord> records = create.selectFrom(Tables.GRADE)
                 .where(Tables.GRADE.GRADE_NAME.eq(gradeName).and(Tables.GRADE.ID.ne(id))).fetch();
         return records;
@@ -164,4 +164,17 @@ public class GradeServiceImpl implements GradeService {
     public void deleteById(int id) {
         gradeDao.deleteById(id);
     }
+
+    @Override
+    public Result<Record2<Integer,String>> findByTieId(int tieId) {
+        Result<Record2<Integer,String>> record2s = create.select(Tables.GRADE.ID,Tables.GRADE.GRADE_NAME)
+                .from(Tables.GRADE)
+                .leftJoin(Tables.MAJOR)
+                .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
+                .where(Tables.MAJOR.TIE_ID.eq(tieId))
+                .orderBy(Tables.GRADE.ID.desc()).fetch();
+        return record2s;
+    }
+
+
 }

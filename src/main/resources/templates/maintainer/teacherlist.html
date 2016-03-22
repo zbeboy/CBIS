@@ -101,11 +101,12 @@
                 th:unless="${#lists.isEmpty(teachers)}">
                 <li th:each="t:${teachers}">
                     <div class="uk-panel uk-panel-space uk-panel-box uk-panel-box-secondary">
-                        <h3 class="uk-panel-title" th:text="${t.teacherName}">张三</h3>
+                        <h3 class="uk-panel-title" th:text="${t.teacherName}"></h3>
                         <ul class="uk-list uk-list-space">
-                            <li>工号:<span th:text="${t.teacherJobNumber}">2012118505129</span></li>
+                            <li>工号:<span th:text="${t.teacherJobNumber}"></span></li>
+                            <li>角色:<span th:text="${t.authority}"></span> </li>
                             <li>状态:<span th:class="${t.enabled}?'':'uk-text-danger'"
-                                         th:text="${t.enabled}?'正常':'注销'">正常</span></li>
+                                         th:text="${t.enabled}?'正常':'注销'"></span></li>
                             <li class="uk-clearfix">
                                 <p hidden="hidden" th:text="${t.teacherJobNumber}"></p>
                                 <button class="uk-button uk-button-primary uk-float-right"
@@ -117,7 +118,8 @@
                             </li>
                             <li class="uk-clearfix">
                                 <p hidden="hidden" th:text="${t.teacherJobNumber}"></p>
-                                <button class="uk-button uk-float-right" type="button">权限</button>
+                                <p hidden="hidden" th:text="${t.authority}"></p>
+                                <button class="uk-button uk-float-right" type="button" onclick="openAuthoritiesModal(this);">权限</button>
                                 <p hidden="hidden" th:text="${t.enabled}?'y':'n'"></p>
                                 <button class="uk-button uk-button-danger uk-float-left" onclick="openStateModal(this);"
                                         type="button">状态
@@ -220,7 +222,29 @@
     </div>
 
     <!-- 权限模态框  待定-->
-
+    <div id="authoritiesModal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header">
+                <h2>用户状态</h2>
+            </div>
+            <form class="uk-form uk-form-horizontal">
+                <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                        <input type="hidden" id="authoritiesNum"/>
+                        <input type="radio" id="form-a-r" name="authoritiesRadio" value="ROLE_ADMIN"/> <label for="form-a-r">超级管理员</label><br/>
+                        <input type="radio" id="form-a-r1" name="authoritiesRadio" value="ROLE_MAI"/> <label for="form-a-r1">管理员</label><br/>
+                        <input type="radio" id="form-a-r2" name="authoritiesRadio" value="ROLE_TEA"/> <label for="form-a-r2">教师</label><br/>
+                        <input type="radio" id="form-a-r3" name="authoritiesRadio" value="ROLE_STU"/> <label for="form-a-r3">学生</label>
+                    </div>
+                </div>
+            </form>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="uk-button" onclick="cancel('#authoritiesModal');">取消</button>
+                <button type="button" class="uk-button uk-button-primary" onclick="authorities();">保存</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/

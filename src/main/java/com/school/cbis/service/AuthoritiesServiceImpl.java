@@ -27,9 +27,9 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
-    public Result<AuthoritiesRecord> findByUsername(String username) {
-        Result<AuthoritiesRecord> authoritiesRecords = create.selectFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username)).fetch();
-        return authoritiesRecords;
+    public AuthoritiesRecord findByUsername(String username) {
+        AuthoritiesRecord authoritiesRecord = create.selectFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username)).fetchOne();
+        return authoritiesRecord;
     }
 
     @Override
@@ -38,13 +38,17 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
-    public void save(List<Authorities> authorities) {
-        BatchBindStep bindStep = create.batch(create.insertInto(Tables.AUTHORITIES,
-                Tables.AUTHORITIES.USERNAME,
-                Tables.AUTHORITIES.AUTHORITY).values("", ""));
-        for (Authorities r : authorities) {
-            bindStep.bind(r.getUsername(), r.getAuthority());
-        }
-        bindStep.execute();
+    public void update(AuthoritiesRecord authoritiesRecord) {
+        create.update(Tables.AUTHORITIES)
+                .set(Tables.AUTHORITIES.AUTHORITY, authoritiesRecord.getAuthority())
+                .where(Tables.AUTHORITIES.USERNAME.eq(authoritiesRecord.getUsername())).execute();
+    }
+
+    @Override
+    public void save(AuthoritiesRecord authoritiesRecord) {
+        create.insertInto(Tables.AUTHORITIES)
+                .set(Tables.AUTHORITIES.USERNAME, authoritiesRecord.getUsername())
+                .set(Tables.AUTHORITIES.AUTHORITY, authoritiesRecord.getAuthority())
+                .execute();
     }
 }

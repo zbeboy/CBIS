@@ -158,7 +158,7 @@ public class BackstageController {
      */
     @RequestMapping("/maintainer/usersManager")
     public String usersManager() {
-        return "/maintainer/studentlist";
+        return "redirect:/maintainer/studentManager";
     }
 
     /**

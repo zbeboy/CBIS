@@ -3,9 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.util.List;
 
@@ -55,14 +53,16 @@ public interface GradeService {
 
     /**
      * 检验班级名是否存在使用，注意是查询该id以外的班级名
+     *
      * @param id
      * @param gradeName
      * @return
      */
-    List<GradeRecord> findByGradeNameAndId(int id , String gradeName);
+    List<GradeRecord> findByGradeNameAndId(int id, String gradeName);
 
     /**
      * 根据班级名查询
+     *
      * @param gradeName
      * @return
      */
@@ -74,4 +74,11 @@ public interface GradeService {
      * @param id
      */
     void deleteById(int id);
+
+    /**
+     * 查询根据系id
+     * @param tieId
+     * @return
+     */
+    Result<Record2<Integer,String>> findByTieId(int tieId);
 }
