@@ -35,10 +35,10 @@ public class PersonalController {
      *
      * @return 页面地址
      */
-    @RequestMapping("/student/revisePassword")
+    @RequestMapping("/student/personal/revisePassword")
     public String revisePassword(ModelMap map) {
         buildMap(map, false, new RevisePasswordVo(), false, false, "");
-        return "/student/revisepassword";
+        return "/student/personal/revisepassword";
     }
 
     /**
@@ -46,7 +46,7 @@ public class PersonalController {
      *
      * @return 消息
      */
-    @RequestMapping(value = "/student/updatePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/personal/updatePassword", method = RequestMethod.POST)
     public String updatePassword(@Valid RevisePasswordVo passwordVo, BindingResult bindingResult, ModelMap map) {
         if (!bindingResult.hasErrors()) {
             String oldPassword = StringUtils.trimWhitespace(passwordVo.getOldPassword());
@@ -69,7 +69,7 @@ public class PersonalController {
                 return "/login";
             }
         }
-        return "/student/revisepassword";
+        return "/student/personal/revisepassword";
     }
 
     /**
@@ -78,7 +78,7 @@ public class PersonalController {
      * @param oldPassword
      * @return ajax
      */
-    @RequestMapping(value = "/student/validPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/personal/validPassword", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> validPassword(@RequestParam("oldPassword") String oldPassword) {
         Map<String,Object> map = new HashMap<>();

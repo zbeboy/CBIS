@@ -50,17 +50,19 @@ public interface TieNoticeService {
 
     /**
      * 通过系风采时间组查询
+     *
      * @param tieNoticeTimeId
      * @return
      */
-    Result<Record3<Integer, String,Timestamp>> findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieNoticeTimeId, String bigTitle);
+    Result<Record3<Integer, String, Timestamp>> findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieNoticeTimeId, String bigTitle);
 
     /**
      * 通过系id分页查询
+     *
      * @param tieId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    Result<Record3<Integer,String,Timestamp>> findByTieIdAndPage(int tieId ,int pageNum,int pageSize);
+    Result<Record3<Integer, String, Timestamp>> findByTieIdAndPage(int tieId, int pageNum, int pageSize);
 }

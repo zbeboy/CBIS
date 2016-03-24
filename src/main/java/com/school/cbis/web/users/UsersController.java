@@ -58,7 +58,7 @@ public class UsersController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/studentManager")
+    @RequestMapping("/maintainer/users/studentManager")
     public String studentManager(ModelMap map, StudentVo studentVo) {
         List<StudentVo> studentVos = new ArrayList<>();
         //通过用户类型获取系表ID
@@ -99,7 +99,7 @@ public class UsersController {
         map.addAttribute("grades",gradeVos);
         map.addAttribute("students", studentVos);
         map.addAttribute("studentVo", studentVo);
-        return "/maintainer/studentlist";
+        return "/maintainer/users/studentlist";
     }
 
     /**
@@ -108,7 +108,7 @@ public class UsersController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/teacherManager")
+    @RequestMapping("/maintainer/users/teacherManager")
     public String teacherManager(ModelMap map, TeacherVo teacherVo) {
         List<TeacherVo> teacherVos = new ArrayList<>();
         //通过用户类型获取系表ID
@@ -141,7 +141,7 @@ public class UsersController {
         }
         map.addAttribute("teachers", teacherVos);
         map.addAttribute("teacherVo", teacherVo);
-        return "/maintainer/teacherlist";
+        return "/maintainer/users/teacherlist";
     }
 
     /**
@@ -150,7 +150,7 @@ public class UsersController {
      * @param username
      * @return
      */
-    @RequestMapping(value = "/maintainer/resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/resetPassword", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData resetPassword(@RequestParam("username") String username) {
         AjaxData ajaxData = new AjaxData();
@@ -172,7 +172,7 @@ public class UsersController {
      *
      * @return
      */
-    @RequestMapping(value = "/maintainer/resetEnable", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/resetEnable", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData resetEnable(@RequestParam("username") String username, @RequestParam("enable") Byte enable) {
         AjaxData ajaxData = new AjaxData();
@@ -194,7 +194,7 @@ public class UsersController {
      *
      * @return
      */
-    @RequestMapping(value = "/maintainer/resetAuthority", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/resetAuthority", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData resetEnable(@RequestParam("username") String username, @RequestParam("authority") String authority) {
         AjaxData ajaxData = new AjaxData();
@@ -225,7 +225,7 @@ public class UsersController {
      * @param realname
      * @return
      */
-    @RequestMapping(value = "/maintainer/addTeacher", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/addTeacher", method = RequestMethod.POST)
     public String addTeacher(@RequestParam("username") String username, @RequestParam("realname") String realname) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -246,7 +246,7 @@ public class UsersController {
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
         usersService.save(users);
-        return "redirect:/maintainer/teacherManager";
+        return "redirect:/maintainer/users/teacherManager";
     }
 
     /**
@@ -256,7 +256,7 @@ public class UsersController {
      * @param realname
      * @return
      */
-    @RequestMapping(value = "/maintainer/addStudent", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/addStudent", method = RequestMethod.POST)
     public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname,@RequestParam("grade") int grade ) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -278,7 +278,7 @@ public class UsersController {
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));
         usersService.save(users);
-        return "redirect:/maintainer/studentManager";
+        return "redirect:/maintainer/users/studentManager";
     }
 
     /**
@@ -287,7 +287,7 @@ public class UsersController {
      * @param username
      * @return
      */
-    @RequestMapping(value = "/maintainer/validUsername", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/users/validUsername", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> validUsername(@RequestParam("username") String username) {
         Map<String, Object> map = new HashMap<>();

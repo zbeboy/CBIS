@@ -10,12 +10,14 @@ import java.util.List;
 public interface TieNoticeAffixService {
     /**
      * 保存
+     *
      * @param tieNoticeAffix
      */
     void save(TieNoticeAffix tieNoticeAffix);
 
     /**
      * 通过文章id查询附件
+     *
      * @param articleInfoId
      * @return
      */
@@ -23,12 +25,14 @@ public interface TieNoticeAffixService {
 
     /**
      * 通过文章id删除
+     *
      * @param articleInfoId
      */
     void deleteByArticleInfoId(int articleInfoId);
 
     /**
      * 通过id查询
+     *
      * @param id
      * @return
      */

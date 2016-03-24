@@ -10,6 +10,7 @@ import java.util.List;
 public interface YardService {
     /**
      * 查询所有院信息
+     *
      * @return
      */
     List<Yard> findAll();

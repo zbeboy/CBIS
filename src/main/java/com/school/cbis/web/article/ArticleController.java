@@ -360,25 +360,11 @@ public class ArticleController {
 
     }
 
-    @RequestMapping("/maintainer/getArticle")
-    public String getArticle(@RequestParam(value = "id", defaultValue = "0") int id, ModelMap map) {
-        if (id > 0) {
-            ArticleInfo articleInfo = articleInfoService.findById(id);
-            if (!StringUtils.isEmpty(articleInfo)) {
-                List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
-                map.addAttribute("articleinfo", articleInfo);
-                map.addAttribute("articlesubinfo", articleSubs);
-            } else {
-                map.addAttribute("articleinfo", new ArticleInfo());
-                map.addAttribute("articlesubinfo", null);
-            }
-        } else {
-            map.addAttribute("articleinfo", new ArticleInfo());
-            map.addAttribute("articlesubinfo", null);
-        }
-        return "/maintainer/majorheadupdate";
-    }
-
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/maintainer/deleteArticle", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData deleteArticle(@RequestParam(value = "id", defaultValue = "0") int id) {

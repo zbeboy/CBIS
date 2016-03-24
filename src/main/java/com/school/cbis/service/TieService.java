@@ -28,6 +28,7 @@ public interface TieService {
 
     /**
      * 检验系名用，注意是不等于该id
+     *
      * @param id
      * @param tieName
      * @return

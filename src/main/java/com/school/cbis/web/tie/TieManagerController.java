@@ -76,7 +76,7 @@ public class TieManagerController {
      * @param tieName
      * @return
      */
-    @RequestMapping(value = "/maintainer/validTieName", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/tie/validTieName", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> validTieName(@RequestParam("tieId") int id,@RequestParam("tieName") String tieName) {
         Map<String, Object> map = new HashMap<>();
@@ -101,7 +101,7 @@ public class TieManagerController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/maintainer/updateTieInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/tie/updateTieInfo", method = RequestMethod.POST)
     public String updateTieInfo(@Valid TieVo tieVo, BindingResult result, ModelMap modelMap) {
         if (!result.hasErrors()) {
             Tie tie = tieService.findById(tieVo.getTieId());
@@ -111,7 +111,7 @@ public class TieManagerController {
             tie.setYardId(tieVo.getYard());
             tieService.update(tie);
         }
-        return "redirect:/maintainer/tieManager";
+        return "redirect:/maintainer/tie/tieManager";
     }
 
     /**
@@ -119,9 +119,9 @@ public class TieManagerController {
      *
      * @return 页面地址
      */
-    @RequestMapping(value = "/maintainer/tieElegant")
+    @RequestMapping(value = "/maintainer/tie/tieElegant")
     public String tieElegant() {
-        return "/maintainer/tieelegantlist";
+        return "/maintainer/tie/tieelegantlist";
     }
 
     /**
@@ -130,7 +130,7 @@ public class TieManagerController {
      * @param tieElegantVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/tieElegantData")
+    @RequestMapping(value = "/maintainer/tie/tieElegantData")
     @ResponseBody
     public Map<String, Object> tieElegantData(TieElegantVo tieElegantVo) {
         JsGrid<TieElegantVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -162,7 +162,7 @@ public class TieManagerController {
      * @param id 文章id
      * @return
      */
-    @RequestMapping(value = "/maintainer/deleteTieElegant", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/tie/deleteTieElegant", method = RequestMethod.POST)
     @ResponseBody
     public TieElegantVo deleteTieElegant(@RequestParam(value = "id") int id, String imgpath) {
         JsGrid<TieElegantVo> jsGrid = new JsGrid<>();
@@ -191,9 +191,9 @@ public class TieManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/tieElegantAdd")
+    @RequestMapping("/maintainer/tie/tieElegantAdd")
     public String tieElegantAdd() {
-        return "/maintainer/tieelegantadd";
+        return "/maintainer/tie/tieelegantadd";
     }
 
 
@@ -204,12 +204,12 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/tieElegantUpdate")
+    @RequestMapping("/maintainer/tie/tieElegantUpdate")
     public String tieElegantUpdate(@RequestParam("id") int id, ModelMap modelMap) {
         modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
         modelMap.addAttribute("articlesubinfo", articleSubs);
-        return "/maintainer/tieelegantupdate";
+        return "/maintainer/tie/tieelegantupdate";
     }
 
     /**
@@ -219,7 +219,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/user/tieElegantShow")
+    @RequestMapping("/user/tie/tieElegantShow")
     public String tieElegantShow(@RequestParam("id") int id, ModelMap modelMap) {
         Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
         if (record7s.isNotEmpty()) {
@@ -265,7 +265,7 @@ public class TieManagerController {
             }
 
         }
-        return "/user/tieelegantshow";
+        return "/user/tie/tieelegantshow";
     }
 
     /**
@@ -274,7 +274,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/user/tieElegantTime")
+    @RequestMapping("/user/tie/tieElegantTime")
     public String tieElegantTime(ModelMap modelMap, String bigTitle) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -308,7 +308,7 @@ public class TieManagerController {
         }
 
         modelMap.addAttribute("bigTitle", bigTitle);
-        return "/user/tieeleganttimeshow";
+        return "/user/tie/tieeleganttimeshow";
     }
 
     /**
@@ -319,7 +319,7 @@ public class TieManagerController {
      * @param bigTitle
      * @return
      */
-    @RequestMapping("/user/tieElegantTimeDropData")
+    @RequestMapping("/user/tie/tieElegantTimeDropData")
     @ResponseBody
     public AjaxData<TieElegantTimeVo> tieElegantTimeDropData(ModelMap modelMap, @RequestParam("id") int id, String bigTitle) {
         AjaxData<TieElegantTimeVo> ajaxData = new AjaxData();
@@ -345,7 +345,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/tieIntroduceUpdate")
+    @RequestMapping("/maintainer/tie/tieIntroduceUpdate")
     public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -365,7 +365,7 @@ public class TieManagerController {
             modelMap.addAttribute("articleinfo", new ArticleInfo());
             modelMap.addAttribute("articlesubinfo", null);
         }
-        return "/maintainer/tieintroduceupdate";
+        return "/maintainer/tie/tieintroduceupdate";
     }
 
     /**
@@ -374,7 +374,7 @@ public class TieManagerController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/tieHeadUpdate")
+    @RequestMapping("/maintainer/tie/tieHeadUpdate")
     public String tieHeadUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -394,7 +394,7 @@ public class TieManagerController {
             map.addAttribute("articlesubinfo", null);
             map.addAttribute("articleinfo", new ArticleInfo());
         }
-        return "/maintainer/tieheadupdate";
+        return "/maintainer/tie/tieheadupdate";
     }
 
     /**
@@ -403,7 +403,7 @@ public class TieManagerController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/tieTrainGoalUpdate")
+    @RequestMapping("/maintainer/tie/tieTrainGoalUpdate")
     public String backstageTieTrainGoal(ModelMap map) {
         //通过用户类型获取系表文章ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -423,7 +423,7 @@ public class TieManagerController {
             map.addAttribute("articleinfo", new ArticleInfo());
             map.addAttribute("articlesubinfo", null);
         }
-        return "/maintainer/tietraingoalupdate";
+        return "/maintainer/tie/tietraingoalupdate";
     }
 
     /**
@@ -432,7 +432,7 @@ public class TieManagerController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/tieItemUpdate")
+    @RequestMapping("/maintainer/tie/tieItemUpdate")
     public String tieItemUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -454,7 +454,7 @@ public class TieManagerController {
             map.addAttribute("articlesubinfo", null);
 
         }
-        return "/maintainer/tieitemupdate";
+        return "/maintainer/tie/tieitemupdate";
     }
 
     /**
@@ -463,7 +463,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/user/tieArticleShow")
+    @RequestMapping("/user/tie/tieArticleShow")
     public String tieArticleShow(ModelMap modelMap, @RequestParam("id") int id) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         if (records.isNotEmpty()) {
@@ -486,7 +486,7 @@ public class TieManagerController {
             }
         }
 
-        return "/user/tiearticleshow";
+        return "/user/tie/tiearticleshow";
     }
 
     /**
@@ -495,7 +495,7 @@ public class TieManagerController {
      * @param id
      * @return
      */
-    @RequestMapping("/user/tieArticleShowData")
+    @RequestMapping("/user/tie/tieArticleShowData")
     @ResponseBody
     public Map<String, Object> tieArticleShowData(@RequestParam("id") int id) {
         Map<String, Object> map = new HashMap<>();
@@ -532,9 +532,9 @@ public class TieManagerController {
      *
      * @return 页面地址
      */
-    @RequestMapping(value = "/maintainer/tieNotice")
+    @RequestMapping(value = "/maintainer/tie/tieNotice")
     public String tieNotice() {
-        return "/maintainer/tienoticelist";
+        return "/maintainer/tie/tienoticelist";
     }
 
     /**
@@ -543,7 +543,7 @@ public class TieManagerController {
      * @param tieNoticeVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/tieNoticeData")
+    @RequestMapping(value = "/maintainer/tie/tieNoticeData")
     @ResponseBody
     public Map<String, Object> tieNoticeData(TieNoticeVo tieNoticeVo) {
         JsGrid<TieNoticeVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -575,7 +575,7 @@ public class TieManagerController {
      * @param id 文章id
      * @return
      */
-    @RequestMapping(value = "/maintainer/deleteTieNotice", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/tie/deleteTieNotice", method = RequestMethod.POST)
     @ResponseBody
     public TieNoticeVo deleteTieNotice(@RequestParam(value = "id") int id, String imgpath) {
         JsGrid<TieNoticeVo> jsGrid = new JsGrid<>();
@@ -604,9 +604,9 @@ public class TieManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/tieNoticeAdd")
+    @RequestMapping("/maintainer/tie/tieNoticeAdd")
     public String tieNoticeAdd() {
-        return "/maintainer/tienoticeadd";
+        return "/maintainer/tie/tienoticeadd";
     }
 
     /**
@@ -616,14 +616,14 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/tieNoticeUpdate")
+    @RequestMapping("/maintainer/tie/tieNoticeUpdate")
     public String tieNoticeUpdate(@RequestParam("id") int id, ModelMap modelMap) {
         modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
         modelMap.addAttribute("articlesubinfo", articleSubs);
         List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
         modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
-        return "/maintainer/tienoticeupdate";
+        return "/maintainer/tie/tienoticeupdate";
     }
 
     /**
@@ -633,7 +633,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/user/tieNoticeShow")
+    @RequestMapping("/user/tie/tieNoticeShow")
     public String tieNoticeShow(@RequestParam("id") int id, ModelMap modelMap) {
         Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
         if (record7s.isNotEmpty()) {
@@ -672,7 +672,7 @@ public class TieManagerController {
             modelMap.addAttribute("articleSub", articleSubs);
 
         }
-        return "/user/tienoticeshow";
+        return "/user/tie/tienoticeshow";
     }
 
     /**
@@ -681,7 +681,7 @@ public class TieManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/user/tieNoticeTime")
+    @RequestMapping("/user/tie/tieNoticeTime")
     public String tieNoticeTime(ModelMap modelMap, String bigTitle) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -706,7 +706,7 @@ public class TieManagerController {
         modelMap.addAttribute("timeList", tieNoticeTimes);
 
         modelMap.addAttribute("bigTitle", bigTitle);
-        return "/user/tienoticetimeshow";
+        return "/user/tie/tienoticetimeshow";
     }
 
     /**
@@ -717,7 +717,7 @@ public class TieManagerController {
      * @param bigTitle
      * @return
      */
-    @RequestMapping("/user/tieNoticeTimeDropData")
+    @RequestMapping("/user/tie/tieNoticeTimeDropData")
     @ResponseBody
     public AjaxData<TieNoticeTimeVo> tieNoticeTimeDropData(ModelMap modelMap, @RequestParam("id") int id, String bigTitle) {
         AjaxData<TieNoticeTimeVo> ajaxData = new AjaxData();

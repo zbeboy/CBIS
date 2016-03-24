@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * Created by lenovo on 2016-01-12.
+ * 全局常用变量配置
  */
 @Component
 public class Wordbook {

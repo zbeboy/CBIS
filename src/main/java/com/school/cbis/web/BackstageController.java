@@ -57,7 +57,7 @@ public class BackstageController {
      * @param map
      * @return
      */
-    @RequestMapping("/maintainer/tieManager")
+    @RequestMapping("/maintainer/tie/tieManager")
     public String tieManager(ModelMap map) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -81,7 +81,7 @@ public class BackstageController {
         map.addAttribute("tie", tie);
         map.addAttribute("yardInfo", yard);
         map.addAttribute("yardList", yardList);
-        return "/maintainer/tiemanager";
+        return "/maintainer/tie/tiemanager";
     }
 
     /**
@@ -89,9 +89,9 @@ public class BackstageController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/majorManager")
+    @RequestMapping("/maintainer/major/majorManager")
     public String majorManager() {
-        return "/maintainer/majorlist";
+        return "/maintainer/major/majorlist";
     }
 
     /**
@@ -99,7 +99,7 @@ public class BackstageController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/gradeManager")
+    @RequestMapping("/maintainer/grade/gradeManager")
     public String gradeManager(ModelMap modelMap) {
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -123,7 +123,7 @@ public class BackstageController {
             majorListVos.addAll(majorListVoList);
         }
         modelMap.addAttribute("majors", majorListVos);
-        return "/maintainer/gradelist";
+        return "/maintainer/grade/gradelist";
     }
 
     /**
@@ -156,9 +156,9 @@ public class BackstageController {
      * 用户管理界面
      * @return
      */
-    @RequestMapping("/maintainer/usersManager")
+    @RequestMapping("/maintainer/users/usersManager")
     public String usersManager() {
-        return "redirect:/maintainer/studentManager";
+        return "redirect:/maintainer/users/studentManager";
     }
 
     /**
@@ -192,7 +192,12 @@ public class BackstageController {
         return data;
     }
 
-    @RequestMapping("/user/downloadTieNoticeAffix")
+    /**
+     * 下载公告附件
+     * @param id
+     * @param response
+     */
+    @RequestMapping("/user/tie/downloadTieNoticeAffix")
     public void download(@RequestParam("id") int id, HttpServletResponse response) {
         try {
             TieNoticeAffix tieNoticeAffix = tieNoticeAffixService.findById(id);

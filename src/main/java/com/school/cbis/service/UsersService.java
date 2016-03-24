@@ -20,12 +20,14 @@ public interface UsersService {
 
     /**
      * 从 spring security 获取密码
+     *
      * @return Users password
      */
     String getPassword();
 
     /**
      * 根据用户名获取Users表完整信息
+     *
      * @param username
      * @return 用户信息
      */
@@ -40,6 +42,7 @@ public interface UsersService {
 
     /**
      * 通过用户名获得用户完整有效信息，包括所在院，系，班级信息
+     *
      * @param username
      * @return 用户完整有效信息
      */
@@ -47,6 +50,7 @@ public interface UsersService {
 
     /**
      * 保存用户
+     *
      * @param users
      */
     void save(Users users);

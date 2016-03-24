@@ -28,6 +28,7 @@ public interface TieElegantTimeService {
 
     /**
      * 通过id查询
+     *
      * @param id
      * @return
      */
@@ -35,10 +36,11 @@ public interface TieElegantTimeService {
 
     /**
      * 系风采分组查询
+     *
      * @param bigTitle
      * @param tieId
      * @return
      */
-    Result<Record2<Integer,String>> findByBigTitleAndTieIdAndTimeDistinctId(String bigTitle, int tieId);
+    Result<Record2<Integer, String>> findByBigTitleAndTieIdAndTimeDistinctId(String bigTitle, int tieId);
 
 }

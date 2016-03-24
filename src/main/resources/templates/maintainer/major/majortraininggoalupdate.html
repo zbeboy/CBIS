@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>专业培养目标管理</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <link rel="stylesheet" href="css/cbis/plugin/charcount.css" th:href="@{/css/charcount/charcount.css}"/>
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/upload.js" th:src="@{/js/plugin/components/upload.js}"></script>
+    <script src="js/components/sortable.js" th:src="@{/js/plugin/components/sortable.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#navmajortraingoal').addClass('uk-active');
+            $('#offcanvasmajortraingoal').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>平台管理</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::majornav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <h2 id="getstarted">专业培养目标</h2>
+            <form class="uk-form uk-form-horizontal">
+                <p hidden="hidden" th:text="${articleinfo.id}" id="articleInfoId" ></p>
+                <p hidden="hidden" th:text="${majorId}" id="majorId"></p>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="title">标题</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="title" class="uk-form-width-large" onblur="writerTitle();"
+                               placeholder="标题" th:value="${articleinfo.bigTitle}" />
+                        <p class="uk-text-danger" id="titileError"></p>
+                    </div>
+                </div>
+                <div id="upload-drop" class="uk-placeholder uk-text-center uk-hidden">
+                    <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 拖动图片到这 或 <a
+                        class="uk-form-file">选择图片<input id="upload-select" type="file"/></a>.
+                </div>
+                <div id="progressbar" class="uk-progress uk-hidden">
+                    <div class="uk-progress-bar" style="width: 0%;">0%</div>
+                </div>
+                <p hidden="hidden" id="imgPath" th:text="${articleinfo.articlePhotoUrl}" ></p>
+                <div id="imgShow">
+                    <div class="uk-alert uk-alert-large" data-uk-alert="">
+                        <a href="" class="uk-alert-close uk-close" onclick="cleanimg();"></a>
+                        <p>
+                            <img id="articleimg" width="900" height="300"
+                                 src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                 alt="" />
+                        </p>
+                    </div>
+                </div>
+                <div class="uk-form-row wordCount" id="wordCount">
+                    <textarea cols="135" rows="15" id="summary" th:text="${articleinfo.articleContent}" onblur="writerSummary();" placeholder="文章简介"></textarea>
+                    <span class="wordwrap"><var class="word">2000</var>/2000</span>
+                    <p class="uk-text-danger" id="summaryError"></p>
+                </div>
+                <div class="uk-sortable" data-uk-sortable="" >
+                    <div class="uk-alert" data-uk-alert="" th:unless="${#lists.isEmpty(articlesubinfo)}" th:each="as:${articlesubinfo}" >
+                        <a href='' class="uk-alert-close uk-close" onclick="deleteSubPage(this);"></a>
+                        <p hidden="hidden" th:text="${as.id}"></p>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" for="title">标题</label>
+                            <div class="uk-form-controls">
+                                <input type="text" th:value="${as.subTitle}" class="uk-form-width-large mysubtitle" placeholder="标题"/>
+                                <p class="uk-text-danger titleerror"></p>
+                            </div>
+                        </div>
+                        <div class="uk-form-row">
+                            <textarea cols="120" class="mysubpage" rows="5" th:text="${as.subContent}" placeholder="文章"></textarea>
+                            <p class="uk-text-danger summaryerror"></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br/>
+            <div class="uk-text-center">
+                <button class="uk-button" onclick="addsubarticle();">添加正文</button>
+            </div>
+            <br/>
+            <div class="uk-text-center">
+                <button class="uk-button uk-button-success uk-button-large" onclick="saveArticle();">保存文章</button>
+            </div>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:src="@{/js/plugin/text/textutil.js}" src="js/cbis/plugin/textutil.js" ></script>
+<script th:src="@{/js/plugin/charcount/charcount.js}" src="js/cbis/plugin/charcount.js"></script>
+<script th:src="@{/js/plugin/article/article.js}"
+        src="js/cbis/plugin/article.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var imgPath  = /*[[${articleinfo.articlePhotoUrl}]]*/ null;
+    var web_path  = /*[[#{web_path}]]*/ '';
+    /*]]>*/
+</script>
+<script th:src="@{/js/maintainer/major/majortraininggoalupdate.js}"
+        src="js/cbis/js/major/majortraininggoalupdate.js"></script>
+</body>
+</html>

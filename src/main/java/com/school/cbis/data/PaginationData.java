@@ -2,11 +2,12 @@ package com.school.cbis.data;
 
 /**
  * Created by lenovo on 2016-01-22.
+ * 全局分页数据
  */
 public class PaginationData {
-    private int totalPages;
-    private int pageNum;
-    private int pageSize;
+    private int totalPages;//总页数
+    private int pageNum;//当前页
+    private int pageSize;//每页大小
 
     public PaginationData(int totalPages, int pageNum, int pageSize) {
         this.totalPages = totalPages;

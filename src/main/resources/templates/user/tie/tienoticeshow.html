@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>系公告</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4">
+            <div class="uk-panel uk-panel-box uk-hidden-small"
+                 data-uk-sticky="{top:70,media: '(min-width: 640px) and (orientation: landscape)'}">
+                <ul class="uk-nav uk-nav-side">
+                    <li class="uk-nav-header">快速导航</li>
+                    <li>
+                        <a href="#" th:href="@{/user/tie/tieNoticeTime}">公告列表</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+                <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>菜单
+                </button>
+            </div>
+            <div id="my-id" class="uk-offcanvas uk-visible-small">
+                <div class="uk-offcanvas-bar">
+                    <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="">
+                        <h3 class="uk-panel-title uk-text-center">快速导航</h3>
+                        <li>
+                            <a href="#" th:href="@{/user/tie/tieNoticeTime}" >公告列表</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-medium-3-4">
+            <article class="uk-article">
+
+                <h1 class="uk-article-title">
+                    <a href="#" th:href=" @{/user/tie/tieNoticeShow}+'?id='+${articleInfo.id} "
+                       th:text="${articleInfo.bigTitle}">Article Heading</a>
+                </h1>
+
+                <p class="uk-article-meta"><span th:text="${articleInfo.userRealName}"></span>&nbsp;&nbsp; <span
+                        th:text="${articleInfo.date}"></span></p>
+
+                <p>
+                    <a href="#" th:href=" @{/user/tie/tieNoticeShow}+'?id='+${articleInfo.id} "><img width="900"
+                                                                                                  height="300"
+                                                                                                  th:src="${articleInfo.articlePhotoUrl}"
+                                                                                                  src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iOTAwcHgiIGhlaWdodD0iMzAwcHgiIHZpZXdCb3g9IjAgMCA5MDAgMzAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA5MDAgMzAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI5MDAiIGhlaWdodD0iMzAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0zNzguMTg0LDkzLjV2MTEzaDE0My42MzN2LTExM0gzNzguMTg0eiBNNTEwLjI0NCwxOTQuMjQ3SDM5MC40Mzd2LTg4LjQ5NGgxMTkuODA4TDUxMC4yNDQsMTk0LjI0Nw0KCQlMNTEwLjI0NCwxOTQuMjQ3eiIvPg0KCTxwb2x5Z29uIGZpbGw9IiNEOEQ4RDgiIHBvaW50cz0iMzk2Ljg4MSwxODQuNzE3IDQyMS41NzIsMTU4Ljc2NCA0MzAuODI0LDE2Mi43NjggNDYwLjAxNSwxMzEuNjg4IDQ3MS41MDUsMTQ1LjQzNCANCgkJNDc2LjY4OSwxNDIuMzAzIDUwNC43NDYsMTg0LjcxNyAJIi8+DQoJPGNpcmNsZSBmaWxsPSIjRDhEOEQ4IiBjeD0iNDI1LjQwNSIgY3k9IjEyOC4yNTciIHI9IjEwLjc4NyIvPg0KPC9nPg0KPC9zdmc+DQo="
+                                                                                                  alt=""/></a>
+                </p>
+
+                <p th:text="${articleInfo.articleContent}"></p>
+
+                <div th:unless="${#lists.isEmpty(articleSub)}" th:each="as:${articleSub}">
+
+                    <h2 th:text="${as.subTitle}"></h2>
+
+                    <p th:text="${as.subContent}"></p>
+
+                </div>
+                <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                    <h3 class="uk-panel-title">附件</h3>
+                    <ul class="uk-list uk-list-space" th:unless="${#lists.isEmpty(tieNoticeAffix)}">
+                        <li th:each="ta:${tieNoticeAffix}">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-truncate">
+                                    <a href="#" th:text="${ta.tieNoticeFileName}" th:href="@{/user/tie/downloadTieNoticeAffix}+'?id='+${ta.id}" >附件1</a>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-2 uk-text-muted" th:text="${'size : '+ta.tieNoticeFileSize}" >size:10MB</div>
+                                        <div class="uk-width-1-2 uk-text-muted" th:text="${#strings.toString(ta.tieNoticeFileDate)}" >
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div id="loginmodal" th:include="commons::loginmodal" class="uk-modal">
+
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+</body>
+</html>

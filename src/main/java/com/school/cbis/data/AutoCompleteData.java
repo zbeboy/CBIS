@@ -2,12 +2,13 @@ package com.school.cbis.data;
 
 /**
  * Created by lenovo on 2016-02-15.
+ * 自动完成数据
  */
 public class AutoCompleteData {
-    private String value;
-    private String title;
-    private String url;
-    private String text;
+    private String value;//值
+    private String title;//标题
+    private String url;//网址
+    private String text;//描述
 
     public String getValue() {
         return value;

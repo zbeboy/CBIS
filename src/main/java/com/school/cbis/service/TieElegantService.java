@@ -63,19 +63,21 @@ public interface TieElegantService {
 
     /**
      * 分页查询系风采文章id,标题
+     *
      * @param tieId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    Result<Record4<Integer, String,String,String>> findByTieIdWithArticleOrderByDateDescAndPage(int tieId, int pageNum, int pageSize);
+    Result<Record4<Integer, String, String, String>> findByTieIdWithArticleOrderByDateDescAndPage(int tieId, int pageNum, int pageSize);
 
     /**
      * 通过系风采时间组查询
+     *
      * @param tieElegantTimeId
      * @return
      */
-    Result<Record3<Integer, String,Timestamp>> findByTieElegantTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieElegantTimeId,String bigTitle);
+    Result<Record3<Integer, String, Timestamp>> findByTieElegantTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieElegantTimeId, String bigTitle);
 
 
 }

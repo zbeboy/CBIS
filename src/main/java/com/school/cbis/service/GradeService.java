@@ -77,8 +77,9 @@ public interface GradeService {
 
     /**
      * 查询根据系id
+     *
      * @param tieId
      * @return
      */
-    Result<Record2<Integer,String>> findByTieId(int tieId);
+    Result<Record2<Integer, String>> findByTieId(int tieId);
 }

@@ -54,7 +54,7 @@ public class MajorManagerController {
      * @param majorVo
      * @return
      */
-    @RequestMapping("/maintainer/majorData")
+    @RequestMapping("/maintainer/major/majorData")
     @ResponseBody
     public Map<String, Object> majorData(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -86,7 +86,7 @@ public class MajorManagerController {
      * @param majorVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/saveMajor", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/major/saveMajor", method = RequestMethod.POST)
     @ResponseBody
     public MajorVo saveMajor(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>();
@@ -118,7 +118,7 @@ public class MajorManagerController {
      * @param majorVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/updateMajor", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/major/updateMajor", method = RequestMethod.POST)
     @ResponseBody
     public MajorVo updateMajor(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>();
@@ -139,7 +139,7 @@ public class MajorManagerController {
      * @param majorVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/deleteMajor", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/major/deleteMajor", method = RequestMethod.POST)
     @ResponseBody
     public MajorVo deleteMajor(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>();
@@ -152,7 +152,7 @@ public class MajorManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/majorIntroduce")
+    @RequestMapping("/maintainer/major/majorIntroduce")
     public String majorIntroduce(ModelMap modelMap) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -172,7 +172,7 @@ public class MajorManagerController {
             majorListVos.addAll(majorListVoList);
         }
         modelMap.addAttribute("majors", majorListVos);
-        return "/maintainer/majorintroducelist";
+        return "/maintainer/major/majorintroducelist";
     }
 
     /**
@@ -181,7 +181,7 @@ public class MajorManagerController {
      * @param majorIntroduceVo
      * @return
      */
-    @RequestMapping("/maintainer/majorIntroduceData")
+    @RequestMapping("/maintainer/major/majorIntroduceData")
     @ResponseBody
     public Map<String, Object> majorIntroduceData(MajorIntroduceVo majorIntroduceVo) {
         JsGrid<MajorIntroduceVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -215,7 +215,7 @@ public class MajorManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/majorIntroduceUpdate")
+    @RequestMapping("/maintainer/major/majorIntroduceUpdate")
     public String majorIntroduceUpdate(@RequestParam("majorId") int majorId, ModelMap modelMap) {
         Major major = majorService.findById(majorId);
         ArticleInfo articleInfo = new ArticleInfo();
@@ -230,7 +230,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articlesubinfo", articleSubs);
         }
         modelMap.addAttribute("majorId", majorId);
-        return "/maintainer/majorintroduceupdate";
+        return "/maintainer/major/majorintroduceupdate";
     }
 
     /**
@@ -241,7 +241,7 @@ public class MajorManagerController {
      * @param id       文章id
      * @return
      */
-    @RequestMapping("/user/majorArticleShow")
+    @RequestMapping("/user/major/majorArticleShow")
     public String majorArticleShow(ModelMap modelMap, @RequestParam("majorId") int majorId, @RequestParam("id") int id) {
         Major major = majorService.findById(majorId);
         if (!StringUtils.isEmpty(major)) {
@@ -280,7 +280,7 @@ public class MajorManagerController {
 
         modelMap.addAttribute("majorList", majorListVos);
 
-        return "/user/majorarticleshow";
+        return "/user/major/majorarticleshow";
     }
 
     /**
@@ -291,7 +291,7 @@ public class MajorManagerController {
      * @param navId    导航id
      * @return
      */
-    @RequestMapping("/user/articleMajorData")
+    @RequestMapping("/user/major/articleMajorData")
     public String articleMajorData(ModelMap modelMap, @RequestParam("majorId") int majorId, String navId) {
         Major major = majorService.findById(majorId);
         if (!StringUtils.isEmpty(major)) {
@@ -332,7 +332,7 @@ public class MajorManagerController {
 
         modelMap.addAttribute("majorList", majorListVos);
 
-        return "/user/majorarticleshow";
+        return "/user/major/majorarticleshow";
     }
 
     /**
@@ -341,7 +341,7 @@ public class MajorManagerController {
      * @param id
      * @return
      */
-    @RequestMapping("/user/majorArticleShowData")
+    @RequestMapping("/user/major/majorArticleShowData")
     @ResponseBody
     public Map<String, Object> majorArticleShowData(@RequestParam("id") int id) {
         Map<String, Object> map = new HashMap<>();
@@ -378,7 +378,7 @@ public class MajorManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/majorHead")
+    @RequestMapping("/maintainer/major/majorHead")
     public String majorHead(ModelMap modelMap) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -398,7 +398,7 @@ public class MajorManagerController {
             majorListVos.addAll(majorListVoList);
         }
         modelMap.addAttribute("majors", majorListVos);
-        return "/maintainer/majorheadlist";
+        return "/maintainer/major/majorheadlist";
     }
 
     /**
@@ -407,7 +407,7 @@ public class MajorManagerController {
      * @param majorHeadVo
      * @return
      */
-    @RequestMapping("/maintainer/majorHeadData")
+    @RequestMapping("/maintainer/major/majorHeadData")
     @ResponseBody
     public Map<String, Object> majorHeadData(MajorHeadVo majorHeadVo) {
         JsGrid<MajorHeadVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -441,7 +441,7 @@ public class MajorManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/majorHeadUpdate")
+    @RequestMapping("/maintainer/major/majorHeadUpdate")
     public String majorHeadUpdate(@RequestParam("majorId") int majorId, ModelMap modelMap) {
         Major major = majorService.findById(majorId);
         ArticleInfo articleInfo = new ArticleInfo();
@@ -456,7 +456,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articlesubinfo", articleSubs);
         }
         modelMap.addAttribute("majorId", majorId);
-        return "/maintainer/majorheadupdate";
+        return "/maintainer/major/majorheadupdate";
     }
 
     /**
@@ -464,7 +464,7 @@ public class MajorManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/majorTrainingGoal")
+    @RequestMapping("/maintainer/major/majorTrainingGoal")
     public String majorTrainingGoal(ModelMap modelMap) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -484,7 +484,7 @@ public class MajorManagerController {
             majorListVos.addAll(majorListVoList);
         }
         modelMap.addAttribute("majors", majorListVos);
-        return "/maintainer/majortraininggoallist";
+        return "/maintainer/major/majortraininggoallist";
     }
 
     /**
@@ -492,7 +492,7 @@ public class MajorManagerController {
      * @param majorTrainingGoalVo
      * @return
      */
-    @RequestMapping("/maintainer/majorTrainingGoalData")
+    @RequestMapping("/maintainer/major/majorTrainingGoalData")
     @ResponseBody
     public Map<String, Object> majorTrainingGoalData(MajorTrainingGoalVo majorTrainingGoalVo) {
         JsGrid<MajorTrainingGoalVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -526,7 +526,7 @@ public class MajorManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/majorTrainingGoalUpdate")
+    @RequestMapping("/maintainer/major/majorTrainingGoalUpdate")
     public String majorTrainingGoalUpdate(@RequestParam("majorId") int majorId, ModelMap modelMap) {
         Major major = majorService.findById(majorId);
         ArticleInfo articleInfo = new ArticleInfo();
@@ -541,7 +541,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articlesubinfo", articleSubs);
         }
         modelMap.addAttribute("majorId", majorId);
-        return "/maintainer/majortraininggoalupdate";
+        return "/maintainer/major/majortraininggoalupdate";
     }
 
     /**
@@ -549,7 +549,7 @@ public class MajorManagerController {
      *
      * @return
      */
-    @RequestMapping("/maintainer/majorTrait")
+    @RequestMapping("/maintainer/major/majorTrait")
     public String majorTrait(ModelMap modelMap) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -569,7 +569,7 @@ public class MajorManagerController {
             majorListVos.addAll(majorListVoList);
         }
         modelMap.addAttribute("majors", majorListVos);
-        return "/maintainer/majortraitlist";
+        return "/maintainer/major/majortraitlist";
     }
 
     /**
@@ -577,7 +577,7 @@ public class MajorManagerController {
      * @param majorTraitVo
      * @return
      */
-    @RequestMapping("/maintainer/majorTraitData")
+    @RequestMapping("/maintainer/major/majorTraitData")
     @ResponseBody
     public Map<String, Object> majorTraitData(MajorTraitVo majorTraitVo) {
         JsGrid<MajorTraitVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -611,7 +611,7 @@ public class MajorManagerController {
      * @param modelMap
      * @return
      */
-    @RequestMapping("/maintainer/majorTraitUpdate")
+    @RequestMapping("/maintainer/major/majorTraitUpdate")
     public String majorTraitUpdate(@RequestParam("majorId") int majorId, ModelMap modelMap) {
         Major major = majorService.findById(majorId);
         ArticleInfo articleInfo = new ArticleInfo();
@@ -626,7 +626,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articlesubinfo", articleSubs);
         }
         modelMap.addAttribute("majorId", majorId);
-        return "/maintainer/majortraitupdate";
+        return "/maintainer/major/majortraitupdate";
     }
 
 }

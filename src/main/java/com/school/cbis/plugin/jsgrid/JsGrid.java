@@ -5,14 +5,13 @@ import java.util.Map;
 
 /**
  * Created by lenovo on 2016-02-28.
+ * JsGrid表格ajax数据封装
  */
 public class JsGrid<T> {
 
     private  Map<String, Object> map;
 
-    public JsGrid(){
-
-    }
+    public JsGrid(){}
 
     public JsGrid(Map<String, Object> map) {
         this.map = map;
@@ -57,6 +56,10 @@ public class JsGrid<T> {
         return t;
     }
 
+    /**
+     * 获取封装好的map数据
+     * @return
+     */
     public Map<String, Object> getMap() {
         return map;
     }

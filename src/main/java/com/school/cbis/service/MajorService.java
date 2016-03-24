@@ -166,8 +166,9 @@ public interface MajorService {
 
     /**
      * 通过系id和文章关联批量查询数据
+     *
      * @param tieId
      * @return
      */
-    Result<Record4<Integer,String,Integer,String>> findByTieIdWithArticleAndPage(int tieId,int pageNum,int pageSize);
+    Result<Record4<Integer, String, Integer, String>> findByTieIdWithArticleAndPage(int tieId, int pageNum, int pageSize);
 }

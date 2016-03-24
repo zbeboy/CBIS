@@ -49,7 +49,7 @@ public class GradeManagerController {
      * @param gradeVo
      * @return
      */
-    @RequestMapping("/maintainer/gradeData")
+    @RequestMapping("/maintainer/grade/gradeData")
     @ResponseBody
     public Map<String, Object> gradeData(GradeVo gradeVo) {
         JsGrid<GradeVo> jsGrid = new JsGrid<>(new HashMap<>());
@@ -82,7 +82,7 @@ public class GradeManagerController {
      * @param search
      * @return
      */
-    @RequestMapping("/maintainer/gradeHead")
+    @RequestMapping("/maintainer/grade/gradeHead")
     @ResponseBody
     public List<AutoCompleteData> gradeHead(String search) {
         List<AutoCompleteData> autoCompleteDatas = new ArrayList<>();
@@ -114,7 +114,7 @@ public class GradeManagerController {
      * @param teacherJobNum
      * @return
      */
-    @RequestMapping(value = "/maintainer/checkTeacherNum", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/grade/checkTeacherNum", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> checkTeacherNum(@RequestParam(value = "gradeHeadID") String teacherJobNum) {
         Map<String, Object> map = new HashMap<>();
@@ -137,7 +137,7 @@ public class GradeManagerController {
      * @param gradeName
      * @return
      */
-    @RequestMapping(value = "/maintainer/checkGradeName", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/grade/checkGradeName", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> checkGradeName(@RequestParam("gradeId") int id, @RequestParam(value = "gradeName") String gradeName) {
         Map<String, Object> map = new HashMap<>();
@@ -173,7 +173,7 @@ public class GradeManagerController {
      * @param gradeHeadID
      * @return
      */
-    @RequestMapping(value = "/maintainer/addGrade", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/grade/addGrade", method = RequestMethod.POST)
     public String addGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
         Grade grade = new Grade();
         grade.setMajorId(majorName);
@@ -181,7 +181,7 @@ public class GradeManagerController {
         grade.setGradeName(gradeName);
         grade.setGradeHead(gradeHeadID);
         gradeService.save(grade);
-        return "redirect:/maintainer/gradeManager";
+        return "redirect:/maintainer/grade/gradeManager";
     }
 
     /**
@@ -194,7 +194,7 @@ public class GradeManagerController {
      * @param gradeHeadID
      * @return
      */
-    @RequestMapping(value = "/maintainer/updateGrade", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/grade/updateGrade", method = RequestMethod.POST)
     public String updateGrade(int gradeId, int majorName, String year, String gradeName, String gradeHeadID) {
         Grade grade = new Grade();
         grade.setId(gradeId);
@@ -203,7 +203,7 @@ public class GradeManagerController {
         grade.setGradeName(gradeName);
         grade.setGradeHead(gradeHeadID);
         gradeService.update(grade);
-        return "redirect:/maintainer/gradeManager";
+        return "redirect:/maintainer/grade/gradeManager";
     }
 
     /**
@@ -212,7 +212,7 @@ public class GradeManagerController {
      * @param gradeVo
      * @return
      */
-    @RequestMapping(value = "/maintainer/deleteGrade", method = RequestMethod.POST)
+    @RequestMapping(value = "/maintainer/grade/deleteGrade", method = RequestMethod.POST)
     @ResponseBody
     public GradeVo deleteGrade(GradeVo gradeVo) {
         JsGrid<GradeVo> jsGrid = new JsGrid<>();

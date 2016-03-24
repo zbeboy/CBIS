@@ -2,14 +2,15 @@ package com.school.cbis.data;
 
 /**
  * Created by lenovo on 2016-01-12.
+ * 文章数据模板
  */
 public class ArticleData {
-    private String title;
-    private String summary;
-    private String picPath;
-    private String subTitle;
-    private String subPage;
-    private String articleType;
+    private String title;//标题
+    private String summary;//内容
+    private String picPath;//图片路径
+    private String subTitle;//子标题
+    private String subPage;//子内容
+    private String articleType;//文章类型
 
     public String getTitle() {
         return title;

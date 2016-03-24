@@ -24,7 +24,7 @@ import java.util.List;
 public class MainController {
 
     @Resource
-    private UsersService usersService;// 用户表
+    private UsersService usersService;
 
     @Resource
     private TieElegantService tieElegantService;
@@ -52,6 +52,7 @@ public class MainController {
 
     /**
      * 主页
+     *
      * @return
      */
     @RequestMapping("/")
@@ -59,12 +60,12 @@ public class MainController {
         //系风采
         int tieId = 0;
         int tieIntroduceArticleInfoId = 0;//系简介
-        if(!StringUtils.isEmpty(usersService.getUserName())){
+        if (!StringUtils.isEmpty(usersService.getUserName())) {
             Result<Record> records = usersService.findAll(usersService.getUserName());
             if (records.isNotEmpty()) {
                 for (Record r : records) {
                     tieId = r.getValue(Tables.TIE.ID);
-                    if(!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))){
+                    if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
                         tieIntroduceArticleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
                     }
                 }
@@ -74,19 +75,19 @@ public class MainController {
 
             //系简介
             Tie tie = tieService.findById(tieId);
-            if(!StringUtils.isEmpty(tie)){
+            if (!StringUtils.isEmpty(tie)) {
                 tieIntroduceArticleInfoId = tie.getTieIntroduceArticleInfoId();
             }
         }
 
         //系风采
-        Result<Record4<Integer, String,String,String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
+        Result<Record4<Integer, String, String, String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
         if (record4s.isNotEmpty()) {
             List<ArticleVo> tieElegantData = record4s.into(ArticleVo.class);
-            for(ArticleVo a:tieElegantData){
+            for (ArticleVo a : tieElegantData) {
                 if (StringUtils.hasLength(a.getArticlePhotoUrl())) {
                     String[] paths = a.getArticlePhotoUrl().split("/");
-                    String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1] ;
+                    String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
                     a.setArticlePhotoUrl(photo);
                 }
             }
@@ -94,41 +95,41 @@ public class MainController {
         }
 
         //系公告
-        Result<Record3<Integer, String, Timestamp>> record3s = tieNoticeService.findByTieIdAndPage(tieId,0,4);
-        if(record3s.isNotEmpty()){
+        Result<Record3<Integer, String, Timestamp>> record3s = tieNoticeService.findByTieIdAndPage(tieId, 0, 4);
+        if (record3s.isNotEmpty()) {
             List<ArticleVo> tieNoticeData = record3s.into(ArticleVo.class);
             modelMap.addAttribute("tieNoticeData", tieNoticeData);
         }
 
         //系简介
         ArticleInfo articleInfo = articleInfoService.findById(tieIntroduceArticleInfoId);
-        if(!StringUtils.isEmpty(articleInfo)){
+        if (!StringUtils.isEmpty(articleInfo)) {
             Users users = usersService.findByUsername(articleInfo.getArticleWriter());
             if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
                 List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleInfo.getArticleWriter());
-                if(!teachers.isEmpty()){
+                if (!teachers.isEmpty()) {
                     articleInfo.setArticleWriter(teachers.get(0).getTeacherName());
                 }
             } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
                 List<Student> students = studentService.findByStudentNumber(articleInfo.getArticleWriter());
-                if(!students.isEmpty()){
+                if (!students.isEmpty()) {
                     articleInfo.setArticleWriter(students.get(0).getStudentName());
                 }
             }
-            if(articleInfo.getArticleContent().trim().length()>100){
-                articleInfo.setArticleContent(articleInfo.getArticleContent().substring(0,100)+"....");
+            if (articleInfo.getArticleContent().trim().length() > 100) {
+                articleInfo.setArticleContent(articleInfo.getArticleContent().substring(0, 100) + "....");
             }
         } else {
             articleInfo = new ArticleInfo();
         }
 
-        modelMap.addAttribute("tieIntroduce",articleInfo);
+        modelMap.addAttribute("tieIntroduce", articleInfo);
 
         //专业简介
-        Result<Record4<Integer, String, Integer, String>> majorRecord = majorService.findByTieIdWithArticleAndPage(tieId,0,8);
-        if(majorRecord.isNotEmpty()){
+        Result<Record4<Integer, String, Integer, String>> majorRecord = majorService.findByTieIdWithArticleAndPage(tieId, 0, 8);
+        if (majorRecord.isNotEmpty()) {
             List<MajorIndexVo> majorIndexVos = majorRecord.into(MajorIndexVo.class);
-            modelMap.addAttribute("majorInfo",majorIndexVos);
+            modelMap.addAttribute("majorInfo", majorIndexVos);
         }
 
         return "/user/index";
@@ -136,11 +137,12 @@ public class MainController {
 
     /**
      * 后台管理
+     *
      * @return
      */
     @RequestMapping("/backstage")
     public String backstage() {
-        if(StringUtils.isEmpty(usersService.getUserName())){
+        if (StringUtils.isEmpty(usersService.getUserName())) {
             return "/login";
         }
         return "/student/backstage";
@@ -148,10 +150,11 @@ public class MainController {
 
     /**
      * 登录页
+     *
      * @return
      */
     @RequestMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 }

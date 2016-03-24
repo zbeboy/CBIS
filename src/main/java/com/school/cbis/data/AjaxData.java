@@ -5,13 +5,14 @@ import java.util.Map;
 
 /**
  * Created by lenovo on 2016-01-09.
+ * ajax消息以及数据封装
  */
 public class AjaxData<T> {
     private boolean state;//消息状态
     private String msg;//消息
-    private Map<String,Object> single;
-    private List<T> result;
-    private PaginationData paginationData;
+    private Map<String,Object> single;//map数据
+    private List<T> result;//list数据
+    private PaginationData paginationData;//分页数据
 
     public boolean getState() {
         return state;

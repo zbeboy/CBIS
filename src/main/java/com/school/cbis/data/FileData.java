@@ -2,6 +2,7 @@ package com.school.cbis.data;
 
 /**
  * Created by lenovo on 2016-03-10.
+ * 全局文件数据封装
  */
 public class FileData {
     private String contentType;//文件头信息

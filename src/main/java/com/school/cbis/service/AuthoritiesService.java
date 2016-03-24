@@ -27,12 +27,14 @@ public interface AuthoritiesService {
 
     /**
      * 更新权限
+     *
      * @param authoritiesRecord
      */
     void update(AuthoritiesRecord authoritiesRecord);
 
     /**
      * 保存权限
+     *
      * @param authoritiesRecord
      */
     void save(AuthoritiesRecord authoritiesRecord);
