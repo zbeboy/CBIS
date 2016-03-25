@@ -61,7 +61,7 @@
                         <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
                             <h3 th:text="${te.bigTitle}">信息工程系统</h3>
                             <p class="uk-text-truncate">
-                                <a href="#" th:href=" @{/user/tieElegantShow}+'?id='+${te.id} "
+                                <a href="#" th:href=" @{/user/tie/tieElegantShow}+'?id='+${te.id} "
                                    th:text="${te.articleContent}">迎新活动1</a>
                             </p>
                         </div>
@@ -80,7 +80,7 @@
                         th:text="${tieIntroduce.date}"></span></p>
                 <p th:text="${tieIntroduce.articleContent}"></p>
                 <a class="uk-button uk-button-primary" href="#" style="float:right"
-                   th:href="@{/user/tieArticleShow}+'?id='+${tieIntroduce.id}">更多</a>
+                   th:href="@{/user/tie/tieArticleShow}+'?id='+${tieIntroduce.id}">更多</a>
             </article>
         </div>
     </div>
@@ -150,13 +150,13 @@
                             <div class="uk-grid">
                                 <div class="uk-width-1-2 uk-text-truncate">
                                     <a href="#" th:text="${tnd.bigTitle}"
-                                       th:href="@{/user/tieNoticeShow}+'?id='+${tnd.id}"></a>
+                                       th:href="@{/user/tie/tieNoticeShow}+'?id='+${tnd.id}"></a>
                                 </div>
                                 <div class="uk-width-1-2 uk-text-muted uk-text-right" th:text="${tnd.date}"></div>
                             </div>
                         </li>
                         <li>
-                            <a class="uk-button uk-button-primary" href="#" th:href="@{/user/tieNoticeTime}"
+                            <a class="uk-button uk-button-primary" href="#" th:href="@{/user/tie/tieNoticeTime}"
                                style="float:right">更多</a>
                         </li>
                     </ul>

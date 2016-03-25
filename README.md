@@ -2,7 +2,8 @@
 ## 一.环境安装
 ### 1. jdk 1.8 +;
 ### 2. mysql 5.36 +;
-### 2. Intellij idea 14 +。
+### 3. 创建数据库CBIS;
+### 4. Intellij idea 14 +。
 # CBIS RUN
 ## 二.运行
 ### 1. 使用Intellij idea clone代码;

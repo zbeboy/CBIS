@@ -75,7 +75,7 @@ public class MainController {
 
             //系简介
             Tie tie = tieService.findById(tieId);
-            if (!StringUtils.isEmpty(tie)) {
+            if (!StringUtils.isEmpty(tie)&&!StringUtils.isEmpty(tie.getTieIntroduceArticleInfoId())) {
                 tieIntroduceArticleInfoId = tie.getTieIntroduceArticleInfoId();
             }
         }
