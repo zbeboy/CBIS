@@ -141,3 +141,10 @@ function toItem() {
     currentId = tieitemid;
     initParam();
 }
+
+$('#loginmodal').on({
+
+    'show.uk.modal': function () {
+        $('#username').focus();
+    }
+});

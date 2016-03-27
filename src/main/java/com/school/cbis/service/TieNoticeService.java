@@ -7,9 +7,11 @@ import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
 import org.jooq.Record3;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Result;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-03-09.
@@ -29,7 +31,7 @@ public interface TieNoticeService {
      * @param tie_id
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findByTieIdWithBigTitleAndPage(TieNoticeVo tieNoticeVo, int tie_id);
+    Result<Record5<Integer, String, String, Timestamp,Byte>> findByTieIdWithBigTitleAndPage(TieNoticeVo tieNoticeVo, int tie_id);
 
     /**
      * 查询总数
@@ -65,4 +67,24 @@ public interface TieNoticeService {
      * @return
      */
     Result<Record3<Integer, String, Timestamp>> findByTieIdAndPage(int tieId, int pageNum, int pageSize);
+
+    /**
+     * 通过公告id查询
+     * @param id
+     * @return
+     */
+    TieNotice findById(int id);
+
+    /**
+     * 更新
+     * @param tieNotice
+     */
+    void update(TieNotice tieNotice);
+
+    /**
+     * 通过show字段查询
+     * @param bytes
+     * @return
+     */
+    List<TieNotice> findByShow(Byte bytes);
 }

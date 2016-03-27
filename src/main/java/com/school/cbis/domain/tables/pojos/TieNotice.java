@@ -23,12 +23,13 @@ import javax.validation.constraints.NotNull;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNotice implements Serializable {
 
-	private static final long serialVersionUID = -805464073;
+	private static final long serialVersionUID = 2080380915;
 
 	private Integer id;
 	private Integer tieId;
 	private Integer tieNoticeArticleInfoId;
 	private Integer tieNoticeTimeId;
+	private Byte    isShow;
 
 	public TieNotice() {}
 
@@ -37,18 +38,21 @@ public class TieNotice implements Serializable {
 		this.tieId = value.tieId;
 		this.tieNoticeArticleInfoId = value.tieNoticeArticleInfoId;
 		this.tieNoticeTimeId = value.tieNoticeTimeId;
+		this.isShow = value.isShow;
 	}
 
 	public TieNotice(
 		Integer id,
 		Integer tieId,
 		Integer tieNoticeArticleInfoId,
-		Integer tieNoticeTimeId
+		Integer tieNoticeTimeId,
+		Byte    isShow
 	) {
 		this.id = id;
 		this.tieId = tieId;
 		this.tieNoticeArticleInfoId = tieNoticeArticleInfoId;
 		this.tieNoticeTimeId = tieNoticeTimeId;
+		this.isShow = isShow;
 	}
 
 	@NotNull
@@ -86,6 +90,14 @@ public class TieNotice implements Serializable {
 		this.tieNoticeTimeId = tieNoticeTimeId;
 	}
 
+	public Byte getIsShow() {
+		return this.isShow;
+	}
+
+	public void setIsShow(Byte isShow) {
+		this.isShow = isShow;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TieNotice (");
@@ -94,6 +106,7 @@ public class TieNotice implements Serializable {
 		sb.append(", ").append(tieId);
 		sb.append(", ").append(tieNoticeArticleInfoId);
 		sb.append(", ").append(tieNoticeTimeId);
+		sb.append(", ").append(isShow);
 
 		sb.append(")");
 		return sb.toString();

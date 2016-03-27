@@ -44,3 +44,10 @@ function outputHtml(id, elementIndex) {
             }
         }, 'json');
 }
+
+$('#loginmodal').on({
+
+    'show.uk.modal': function () {
+        $('#username').focus();
+    }
+});

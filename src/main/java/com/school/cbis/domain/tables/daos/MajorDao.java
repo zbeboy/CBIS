@@ -105,4 +105,11 @@ public class MajorDao extends DAOImpl<MajorRecord, com.school.cbis.domain.tables
 	public List<com.school.cbis.domain.tables.pojos.Major> fetchByMajorForegoerArticleInfoId(Integer... values) {
 		return fetch(Major.MAJOR.MAJOR_FOREGOER_ARTICLE_INFO_ID, values);
 	}
+
+	/**
+	 * Fetch records that have <code>is_show IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Major> fetchByIsShow(Byte... values) {
+		return fetch(Major.MAJOR.IS_SHOW, values);
+	}
 }

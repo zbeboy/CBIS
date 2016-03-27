@@ -28,6 +28,7 @@
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+    <script src="js/plugin/moment/moment.min.js" th:src="@{/js/plugin/moment/moment.min.js}"></script>
 
     <!-- nice validator js -->
     <script type="text/javascript" src="js/validator/jquery.validator.js"
@@ -152,7 +153,7 @@
                                     <a href="#" th:text="${tnd.bigTitle}"
                                        th:href="@{/user/tie/tieNoticeShow}+'?id='+${tnd.id}"></a>
                                 </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right" th:text="${tnd.date}"></div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right formatdate" th:text="${tnd.date}"></div>
                             </div>
                         </li>
                         <li>

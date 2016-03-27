@@ -38,6 +38,8 @@ $(function () {
             {name: "bigTitle", title: "标题", type: "text", width: 100},
             {name: "username", title: "作者", type: "text", width: 50},
             {name: "date", title: "时间", type: "text", width: 70},
+            {name: "show", title: "显示", type: "checkbox",sorting: false, width: 70},
+            {name: "isShow", title: "isShow", type: "number", visible: false},
             {
                 type: "control",
                 modeSwitchButton: true,

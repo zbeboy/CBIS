@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieElegant extends TableImpl<TieElegantRecord> {
 
-	private static final long serialVersionUID = -1296749236;
+	private static final long serialVersionUID = -1570728698;
 
 	/**
 	 * The reference instance of <code>cbis.tie_elegant</code>
@@ -69,6 +69,11 @@ public class TieElegant extends TableImpl<TieElegantRecord> {
 	 * The column <code>cbis.tie_elegant.tie_elegant_time_id</code>.
 	 */
 	public final TableField<TieElegantRecord, Integer> TIE_ELEGANT_TIME_ID = createField("tie_elegant_time_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.tie_elegant.is_show</code>.
+	 */
+	public final TableField<TieElegantRecord, Byte> IS_SHOW = createField("is_show", org.jooq.impl.SQLDataType.TINYINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>cbis.tie_elegant</code> table reference

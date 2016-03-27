@@ -5,35 +5,35 @@ package com.school.cbis.data;
  * 文章数据模板
  */
 public class ArticleData {
-    private String title;//标题
-    private String summary;//内容
-    private String picPath;//图片路径
+    private String bigTitle;//标题
+    private String articleContent;//内容
+    private String articlePhotoUrl;//图片路径
     private String subTitle;//子标题
-    private String subPage;//子内容
+    private String subContent;//子内容
     private String articleType;//文章类型
 
-    public String getTitle() {
-        return title;
+    public String getBigTitle() {
+        return bigTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBigTitle(String bigTitle) {
+        this.bigTitle = bigTitle;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getArticleContent() {
+        return articleContent;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setArticleContent(String articleContent) {
+        this.articleContent = articleContent;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public String getArticlePhotoUrl() {
+        return articlePhotoUrl;
     }
 
-    public void setPicPath(String picPath) {
-        this.picPath = picPath;
+    public void setArticlePhotoUrl(String articlePhotoUrl) {
+        this.articlePhotoUrl = articlePhotoUrl;
     }
 
     public String getSubTitle() {
@@ -44,12 +44,12 @@ public class ArticleData {
         this.subTitle = subTitle;
     }
 
-    public String getSubPage() {
-        return subPage;
+    public String getSubContent() {
+        return subContent;
     }
 
-    public void setSubPage(String subPage) {
-        this.subPage = subPage;
+    public void setSubContent(String subContent) {
+        this.subContent = subContent;
     }
 
     public String getArticleType() {
@@ -63,11 +63,11 @@ public class ArticleData {
     @Override
     public String toString() {
         return "ArticleData{" +
-                "title='" + title + '\'' +
-                ", summary='" + summary + '\'' +
-                ", picPath='" + picPath + '\'' +
+                "bigTitle='" + bigTitle + '\'' +
+                ", articleContent='" + articleContent + '\'' +
+                ", articlePhotoUrl='" + articlePhotoUrl + '\'' +
                 ", subTitle='" + subTitle + '\'' +
-                ", subPage='" + subPage + '\'' +
+                ", subContent='" + subContent + '\'' +
                 ", articleType='" + articleType + '\'' +
                 '}';
     }

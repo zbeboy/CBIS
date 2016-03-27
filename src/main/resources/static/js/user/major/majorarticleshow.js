@@ -154,3 +154,10 @@ function toItem() {
 function toMajor(obj) {
     window.location.href = web_path + '/user/major/articleMajorData?navId=' + target.navId + "&majorId=" + $(obj).attr("data");
 }
+
+$('#loginmodal').on({
+
+    'show.uk.modal': function () {
+        $('#username').focus();
+    }
+});

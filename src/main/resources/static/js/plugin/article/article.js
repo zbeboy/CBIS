@@ -1,6 +1,11 @@
 /**
  * Created by lenovo on 2016-02-28.
  */
+
+/**
+ * 问题记录：参数需要重新封装，文章id和专业Id分开，使用fastjson
+ * @type {{articleWordType: string, checkArticleTitle: boolean, checkArticleContent: boolean, checkArticlePic: boolean, articleSaveOrUpdateUrl: string, clickOkUrl: string, clickNoUrl: string, uploadParamFileName: string, articleId: number, tieId: number, majorId: number, gradeId: number, teacherId: number, studentId: number, cleanFromClient: boolean, cleanUrl: string, openAffix: boolean, affixSaveFunc: string, affixEndFunc: string, affixData: string, cleanAffixFromClient: boolean, pluginClickOkUrlParam: string, isShow: number}}
+ */
 //全局配置
 var param = {
     'articleWordType': '',//文章类别
@@ -11,7 +16,8 @@ var param = {
     'clickOkUrl': '',//文章保存或更新成功点击确定需要刷新的地址
     'clickNoUrl': '',//文章保存或更新成功点击取消需要刷新的地址
     'uploadParamFileName': '',//上传图片需要保存图片的文件夹名
-    'id': 0,//用于专业文章使用主键
+    'articleId': 0,//用于文章id
+    'myParam':{},//自定义参数
     'cleanFromClient': false,//删除图片时，服务器端也删除，默认只删除html dom
     'cleanUrl': '',//若开启cleanFromClient,此项必填，删除请求地址
     'openAffix': false,//开启附件功能
@@ -72,11 +78,11 @@ function addsubarticle() {
  * @param subPage 子内容
  */
 function articleData(title, summary, picPath, subTitle, subPage, articleType) {
-    this.title = title;
-    this.summary = summary;
-    this.picPath = picPath;
+    this.bigTitle = title;
+    this.articleContent = summary;
+    this.articlePhotoUrl = picPath;
     this.subTitle = subTitle;
-    this.subPage = subPage;
+    this.subContent = subPage;
     this.articleType = articleType;
 }
 
@@ -163,7 +169,7 @@ function saveArticle() {
     }
 
     /*发送数据到后台*/
-    sendArtitle(JSON.stringify(subData));
+    sendArtitle(subData);
 }
 
 /**
@@ -172,13 +178,16 @@ function saveArticle() {
  */
 function sendArtitle(subData) {
 
-    var index = layer.load(1, {shade: false});
+    var lastParam = {
+      'articleData':subData,
+        'myParam':param.myParam,
+        'openAffix':param.openAffix,
+        'affixData':param.affixData
+    };
 
+    var index = layer.load(1, {shade: false});
     $.post(param.articleSaveOrUpdateUrl, {
-        'subData': subData,
-        'id': param.id, /*0表示不更新班级*/
-        'openAffix': param.openAffix,//附件开关
-        'affixData': JSON.stringify(param.affixData)//附件数据
+        'lastParam':JSON.stringify(lastParam)
     }, function (data, status) {
         layer.close(index);
         if (status) {
@@ -365,7 +374,7 @@ function deleteArticle() {
  * 输出附件html
  */
 function outputAffixHtml(data) {
-
+/*
     var html = "<li class='affixdata' >" +
         "<p style='display:none;'>" +
         data.lastPath +
@@ -385,6 +394,21 @@ function outputAffixHtml(data) {
         "</div>" +
         "</li>";
     $('#affixDatas').append(html);
+*/
+    var _ = DOMBuilder;
+    $('#affixDatas').append(_.DOM(
+        _('li.affixdata')._([
+            _('p.uk-hidden').H(data.lastPath),
+            _('p.uk-hidden').H(data.originalFilename),
+            _('div.uk-grid')._([
+                _('div.uk-width-4-5.uk-text-truncate').H(data.originalFilename),
+                _('div.uk-width-1-5.uk-text-muted.uk-text-right')._([
+                    _('a[href=javascript:;][onclick=deleteAffix(this)]').H('删除')
+                ])
+            ])
+        ])
+    ));
+
 }
 
 /**

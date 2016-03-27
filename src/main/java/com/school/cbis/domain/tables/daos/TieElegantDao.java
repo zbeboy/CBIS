@@ -84,4 +84,11 @@ public class TieElegantDao extends DAOImpl<TieElegantRecord, com.school.cbis.dom
 	public List<com.school.cbis.domain.tables.pojos.TieElegant> fetchByTieElegantTimeId(Integer... values) {
 		return fetch(TieElegant.TIE_ELEGANT.TIE_ELEGANT_TIME_ID, values);
 	}
+
+	/**
+	 * Fetch records that have <code>is_show IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TieElegant> fetchByIsShow(Byte... values) {
+		return fetch(TieElegant.TIE_ELEGANT.IS_SHOW, values);
+	}
 }

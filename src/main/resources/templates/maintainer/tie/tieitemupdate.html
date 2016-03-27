@@ -106,7 +106,7 @@
                 </div>
                 <div class="uk-sortable" data-uk-sortable="" >
                     <div class="uk-alert" data-uk-alert="" th:unless="${#lists.isEmpty(articlesubinfo)}" th:each="as:${articlesubinfo}" >
-                        <a href='' class="uk-alert-close uk-close" onclick="deleteSubPage(this);"></a>
+                        <a href='' class="uk-alert-close uk-close"></a>
                         <p hidden="hidden" th:text="${as.id}"></p>
                         <div class="uk-form-row">
                             <label class="uk-form-label" for="title">标题</label>

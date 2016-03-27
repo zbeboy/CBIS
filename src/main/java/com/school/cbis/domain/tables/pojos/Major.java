@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Major implements Serializable {
 
-	private static final long serialVersionUID = -622605478;
+	private static final long serialVersionUID = -818812492;
 
 	private Integer id;
 	private Integer tieId;
@@ -33,6 +33,7 @@ public class Major implements Serializable {
 	private Integer majorTrainingGoalArticleInfoId;
 	private Integer majorTraitArticleInfoId;
 	private Integer majorForegoerArticleInfoId;
+	private Byte    isShow;
 
 	public Major() {}
 
@@ -44,6 +45,7 @@ public class Major implements Serializable {
 		this.majorTrainingGoalArticleInfoId = value.majorTrainingGoalArticleInfoId;
 		this.majorTraitArticleInfoId = value.majorTraitArticleInfoId;
 		this.majorForegoerArticleInfoId = value.majorForegoerArticleInfoId;
+		this.isShow = value.isShow;
 	}
 
 	public Major(
@@ -53,7 +55,8 @@ public class Major implements Serializable {
 		Integer majorIntroduceArticleInfoId,
 		Integer majorTrainingGoalArticleInfoId,
 		Integer majorTraitArticleInfoId,
-		Integer majorForegoerArticleInfoId
+		Integer majorForegoerArticleInfoId,
+		Byte    isShow
 	) {
 		this.id = id;
 		this.tieId = tieId;
@@ -62,6 +65,7 @@ public class Major implements Serializable {
 		this.majorTrainingGoalArticleInfoId = majorTrainingGoalArticleInfoId;
 		this.majorTraitArticleInfoId = majorTraitArticleInfoId;
 		this.majorForegoerArticleInfoId = majorForegoerArticleInfoId;
+		this.isShow = isShow;
 	}
 
 	@NotNull
@@ -124,6 +128,14 @@ public class Major implements Serializable {
 		this.majorForegoerArticleInfoId = majorForegoerArticleInfoId;
 	}
 
+	public Byte getIsShow() {
+		return this.isShow;
+	}
+
+	public void setIsShow(Byte isShow) {
+		this.isShow = isShow;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Major (");
@@ -135,6 +147,7 @@ public class Major implements Serializable {
 		sb.append(", ").append(majorTrainingGoalArticleInfoId);
 		sb.append(", ").append(majorTraitArticleInfoId);
 		sb.append(", ").append(majorForegoerArticleInfoId);
+		sb.append(", ").append(isShow);
 
 		sb.append(")");
 		return sb.toString();

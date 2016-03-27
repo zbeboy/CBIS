@@ -83,7 +83,7 @@ public interface MajorService {
      * @param tieId
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId);
+    Result<Record5<Integer, String, String, Timestamp,Byte>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId);
 
     /**
      * 查询专业简介总数
@@ -171,4 +171,11 @@ public interface MajorService {
      * @return
      */
     Result<Record4<Integer, String, Integer, String>> findByTieIdWithArticleAndPage(int tieId, int pageNum, int pageSize);
+
+    /**
+     * 通过show字段查询
+     * @param bytes
+     * @return
+     */
+    List<Major> findByShow(Byte bytes);
 }

@@ -108,7 +108,7 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, Timestamp>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId) {
+    public Result<Record5<Integer, String, String, Timestamp,Byte>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
         if (StringUtils.hasLength(majorIntroduceVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + majorIntroduceVo.getBigTitle() + "%"));
@@ -126,9 +126,19 @@ public class MajorServiceImpl implements MajorService {
             a = a.and(Tables.MAJOR.ID.eq(majorIntroduceVo.getId()));
         }
 
-        SelectConditionStep<Record4<Integer, String, String, Timestamp>> b = create
+        if( !StringUtils.isEmpty(majorIntroduceVo.getShow()) ){
+            if(majorIntroduceVo.getShow()){
+                Byte b = 1;
+                a = a.and(Tables.MAJOR.IS_SHOW.eq(b));
+            } else {
+                Byte b = 0;
+                a = a.and(Tables.MAJOR.IS_SHOW.eq(b));
+            }
+        }
+
+        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> b = create
                 .select(Tables.MAJOR.ID,
-                        Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
+                        Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE,Tables.MAJOR.IS_SHOW)
                 .from(Tables.MAJOR)
                 .leftJoin(Tables.ARTICLE_INFO)
                 .on(Tables.MAJOR.MAJOR_INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
@@ -200,6 +210,16 @@ public class MajorServiceImpl implements MajorService {
 
         if (majorIntroduceVo.getId() > 0) {
             a = a.and(Tables.MAJOR.ID.eq(majorIntroduceVo.getId()));
+        }
+
+        if( !StringUtils.isEmpty(majorIntroduceVo.getShow()) ){
+            if(majorIntroduceVo.getShow()){
+                Byte b = 1;
+                a = a.and(Tables.MAJOR.IS_SHOW.eq(b));
+            } else {
+                Byte b = 0;
+                a = a.and(Tables.MAJOR.IS_SHOW.eq(b));
+            }
         }
 
         Record1<Integer> count = create.selectCount()
@@ -554,5 +574,11 @@ public class MajorServiceImpl implements MajorService {
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record4s;
+    }
+
+    @Override
+    public List<Major> findByShow(Byte bytes) {
+        List<Major> majors = majorDao.fetchByIsShow(bytes);
+        return majors;
     }
 }

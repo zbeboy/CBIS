@@ -76,6 +76,7 @@ create table major(
   major_training_goal_article_info_id int,
   major_trait_article_info_id int,
   major_foregoer_article_info_id int,
+  is_show boolean default 0,
   foreign key(tie_id) references tie(id)
 );
 
@@ -131,6 +132,7 @@ create table tie_elegant(
   tie_id int not null,
   tie_elegant_article_info_id int,
   tie_elegant_time_id int not null,
+  is_show boolean default 0,
   foreign key(tie_id) references tie(id)
 );
 
@@ -144,6 +146,7 @@ create table tie_notice(
   tie_id int not null,
   tie_notice_article_info_id int,
   tie_notice_time_id int not null,
+  is_show boolean default 0,
   foreign key(tie_id) references tie(id)
 );
 

@@ -14,12 +14,50 @@ public class AjaxData<T> {
     private List<T> result;//list数据
     private PaginationData paginationData;//分页数据
 
-    public boolean getState() {
+    public AjaxData<T> success(){
+        this.state = true;
+        return this;
+    }
+
+    public AjaxData<T> fail(){
+        this.state = false;
+        return this;
+    }
+
+    public AjaxData<T> msg(String msg){
+        this.msg = msg;
+        return this;
+    }
+
+    public AjaxData<T> mapData(Map<String,Object> map){
+        this.single = map;
+        return this;
+    }
+
+    public AjaxData<T> listData(List<T> list){
+        this.result = list;
+        return this;
+    }
+
+    public AjaxData<T> paginationData(PaginationData paginationData){
+        this.paginationData = paginationData;
+        return this;
+    }
+
+    public boolean isState() {
         return state;
     }
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    public PaginationData getPaginationData() {
+        return paginationData;
+    }
+
+    public void setPaginationData(PaginationData paginationData) {
+        this.paginationData = paginationData;
     }
 
     public String getMsg() {
@@ -44,14 +82,6 @@ public class AjaxData<T> {
 
     public void setResult(List<T> result) {
         this.result = result;
-    }
-
-    public PaginationData getPaginationData() {
-        return paginationData;
-    }
-
-    public void setPaginationData(PaginationData paginationData) {
-        this.paginationData = paginationData;
     }
 
     @Override

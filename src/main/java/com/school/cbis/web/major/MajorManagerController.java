@@ -51,6 +51,7 @@ public class MajorManagerController {
 
     /**
      * 专业数据
+     *
      * @param majorVo
      * @return
      */
@@ -83,6 +84,7 @@ public class MajorManagerController {
 
     /**
      * 保存专业
+     *
      * @param majorVo
      * @return
      */
@@ -115,6 +117,7 @@ public class MajorManagerController {
 
     /**
      * 更新专业
+     *
      * @param majorVo
      * @return
      */
@@ -136,6 +139,7 @@ public class MajorManagerController {
 
     /**
      * 删除专业
+     *
      * @param majorVo
      * @return
      */
@@ -193,12 +197,16 @@ public class MajorManagerController {
             }
         }
         List<MajorIntroduceVo> list = new ArrayList<>();
-
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithIntroduceByPage(majorIntroduceVo, tieId);
-            if (record4s.isNotEmpty()) {
-                list = record4s.into(MajorIntroduceVo.class);
-                jsGrid.loadData(list,majorService.findAllWithIntroduceByPageCount(majorIntroduceVo, tieId));
+            Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = majorService.findAllWithIntroduceByPage(majorIntroduceVo, tieId);
+            if (record5s.isNotEmpty()) {
+                list = record5s.into(MajorIntroduceVo.class);
+                for (MajorIntroduceVo m : list) {
+                    if (!StringUtils.isEmpty(m.getIsShow())) {
+                        m.setShow(m.getIsShow() == 0 ? false : true);
+                    }
+                }
+                jsGrid.loadData(list, majorService.findAllWithIntroduceByPageCount(majorIntroduceVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
             }
@@ -229,7 +237,8 @@ public class MajorManagerController {
             modelMap.addAttribute("articleinfo", articleInfo);
             modelMap.addAttribute("articlesubinfo", articleSubs);
         }
-        modelMap.addAttribute("majorId", majorId);
+        modelMap.addAttribute("major", major);
+        modelMap.addAttribute("isShow", major.getIsShow() == 0 ? false : true);
         return "/maintainer/major/majorintroduceupdate";
     }
 
@@ -424,7 +433,7 @@ public class MajorManagerController {
             Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithHeadByPage(majorHeadVo, tieId);
             if (record4s.isNotEmpty()) {
                 list = record4s.into(MajorHeadVo.class);
-                jsGrid.loadData(list,majorService.findAllWithHeadByPageCount(majorHeadVo, tieId));
+                jsGrid.loadData(list, majorService.findAllWithHeadByPageCount(majorHeadVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
             }
@@ -489,6 +498,7 @@ public class MajorManagerController {
 
     /**
      * 专业培养目标数据
+     *
      * @param majorTrainingGoalVo
      * @return
      */
@@ -509,7 +519,7 @@ public class MajorManagerController {
             Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithTrainingGoalByPage(majorTrainingGoalVo, tieId);
             if (record4s.isNotEmpty()) {
                 list = record4s.into(MajorTrainingGoalVo.class);
-                jsGrid.loadData(list,majorService.findAllWithTrainingGoalByPageCount(majorTrainingGoalVo, tieId));
+                jsGrid.loadData(list, majorService.findAllWithTrainingGoalByPageCount(majorTrainingGoalVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
             }
@@ -574,6 +584,7 @@ public class MajorManagerController {
 
     /**
      * 专业特色数据
+     *
      * @param majorTraitVo
      * @return
      */
@@ -594,7 +605,7 @@ public class MajorManagerController {
             Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithTraitByPage(majorTraitVo, tieId);
             if (record4s.isNotEmpty()) {
                 list = record4s.into(MajorTraitVo.class);
-                jsGrid.loadData(list,majorService.findAllWithTraitByPageCount(majorTraitVo, tieId));
+                jsGrid.loadData(list, majorService.findAllWithTraitByPageCount(majorTraitVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
             }

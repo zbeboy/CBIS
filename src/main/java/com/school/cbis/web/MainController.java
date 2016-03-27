@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +58,6 @@ public class MainController {
      */
     @RequestMapping("/")
     public String root(ModelMap modelMap) {
-        //系风采
         int tieId = 0;
         int tieIntroduceArticleInfoId = 0;//系简介
         if (!StringUtils.isEmpty(usersService.getUserName())) {
@@ -81,23 +81,29 @@ public class MainController {
         }
 
         //系风采
-        Result<Record4<Integer, String, String, String>> record4s = tieElegantService.findByTieIdWithArticleOrderByDateDescAndPage(tieId, 0, 3);
-        if (record4s.isNotEmpty()) {
-            List<ArticleVo> tieElegantData = record4s.into(ArticleVo.class);
-            for (ArticleVo a : tieElegantData) {
-                if (StringUtils.hasLength(a.getArticlePhotoUrl())) {
-                    String[] paths = a.getArticlePhotoUrl().split("/");
+        List<TieElegant> tieElegants = tieElegantService.findByShow(Byte.parseByte("1"));
+        List<ArticleInfo> tieElegantData = new ArrayList<>();
+        if (!tieElegants.isEmpty()) {
+            for (TieElegant t : tieElegants) {
+                ArticleInfo articleInfo = articleInfoService.findById(t.getTieElegantArticleInfoId());
+                if (StringUtils.hasLength(articleInfo.getArticlePhotoUrl())) {
+                    String[] paths = articleInfo.getArticlePhotoUrl().split("/");
                     String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                    a.setArticlePhotoUrl(photo);
+                    articleInfo.setArticlePhotoUrl(photo);
                 }
+                tieElegantData.add(articleInfo);
             }
             modelMap.addAttribute("tieElegantData", tieElegantData);
         }
 
         //系公告
-        Result<Record3<Integer, String, Timestamp>> record3s = tieNoticeService.findByTieIdAndPage(tieId, 0, 4);
-        if (record3s.isNotEmpty()) {
-            List<ArticleVo> tieNoticeData = record3s.into(ArticleVo.class);
+        List<TieNotice> tieNotices = tieNoticeService.findByShow(Byte.parseByte("1"));
+        List<ArticleInfo> tieNoticeData = new ArrayList<>();
+        if (!tieNotices.isEmpty()) {
+            for(TieNotice t:tieNotices){
+                ArticleInfo articleInfo = articleInfoService.findById(t.getTieNoticeArticleInfoId());
+                tieNoticeData.add(articleInfo);
+            }
             modelMap.addAttribute("tieNoticeData", tieNoticeData);
         }
 
@@ -126,9 +132,20 @@ public class MainController {
         modelMap.addAttribute("tieIntroduce", articleInfo);
 
         //专业简介
-        Result<Record4<Integer, String, Integer, String>> majorRecord = majorService.findByTieIdWithArticleAndPage(tieId, 0, 8);
-        if (majorRecord.isNotEmpty()) {
-            List<MajorIndexVo> majorIndexVos = majorRecord.into(MajorIndexVo.class);
+        List<Major> majors = majorService.findByShow(Byte.parseByte("1"));
+        List<MajorIndexVo> majorIndexVos = new ArrayList<>();
+        if(!majors.isEmpty()){
+            for(Major m:majors){
+                MajorIndexVo majorIndexVo = new MajorIndexVo();
+                ArticleInfo articleInfo1 = articleInfoService.findById(m.getMajorIntroduceArticleInfoId());
+                majorIndexVo.setMajorId(m.getId());
+                majorIndexVo.setMajorName(m.getMajorName());
+                if(!StringUtils.isEmpty(m.getMajorIntroduceArticleInfoId())){
+                    majorIndexVo.setArticleInfoId(m.getMajorIntroduceArticleInfoId());
+                    majorIndexVo.setArticleContent(articleInfo1.getArticleContent());
+                }
+                majorIndexVos.add(majorIndexVo);
+            }
             modelMap.addAttribute("majorInfo", majorIndexVos);
         }
 

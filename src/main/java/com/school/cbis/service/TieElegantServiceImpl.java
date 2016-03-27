@@ -42,7 +42,7 @@ public class TieElegantServiceImpl implements TieElegantService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, Timestamp>> findByTieIdWithBigTitleAndPage(TieElegantVo tieElegantVo, int tie_id) {
+    public Result<Record5<Integer, String, String, Timestamp,Byte>> findByTieIdWithBigTitleAndPage(TieElegantVo tieElegantVo, int tie_id) {
         Condition a = Tables.TIE_ELEGANT.TIE_ID.eq(tie_id);
 
         SortField<Integer> b = Tables.TIE_ELEGANT.ID.desc();
@@ -64,7 +64,17 @@ public class TieElegantServiceImpl implements TieElegantService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieElegantVo.getDate() + "%"));
         }
 
-        SelectConditionStep<Record4<Integer, String, String, Timestamp>> e = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
+        if( !StringUtils.isEmpty(tieElegantVo.getShow()) ){
+            if(tieElegantVo.getShow()){
+                Byte bytes = 1;
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+            } else {
+                Byte bytes = 0;
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+            }
+        }
+
+        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_ELEGANT.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_ELEGANT.IS_SHOW)
                 .from(Tables.TIE_ELEGANT)
                 .join(Tables.ARTICLE_INFO)
                 .on(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID.equal(Tables.ARTICLE_INFO.ID))
@@ -126,6 +136,16 @@ public class TieElegantServiceImpl implements TieElegantService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieElegantVo.getDate() + "%"));
         }
 
+        if( !StringUtils.isEmpty(tieElegantVo.getShow()) ){
+            if(tieElegantVo.getShow()){
+                Byte bytes = 1;
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+            } else {
+                Byte bytes = 0;
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+            }
+        }
+
         Record1<Integer> count = create.selectCount()
                 .from(Tables.TIE_ELEGANT)
                 .join(Tables.ARTICLE_INFO)
@@ -182,5 +202,11 @@ public class TieElegantServiceImpl implements TieElegantService {
                 .orderBy(Tables.ARTICLE_INFO.DATE.desc())
                 .fetch();
         return record3s;
+    }
+
+    @Override
+    public List<TieElegant> findByShow(Byte bytes) {
+        List<TieElegant> tieElegants = tieElegantDao.fetchByIsShow(bytes);
+        return tieElegants;
     }
 }

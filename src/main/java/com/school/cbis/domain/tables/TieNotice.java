@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieNotice extends TableImpl<TieNoticeRecord> {
 
-	private static final long serialVersionUID = 1391104082;
+	private static final long serialVersionUID = -133574064;
 
 	/**
 	 * The reference instance of <code>cbis.tie_notice</code>
@@ -69,6 +69,11 @@ public class TieNotice extends TableImpl<TieNoticeRecord> {
 	 * The column <code>cbis.tie_notice.tie_notice_time_id</code>.
 	 */
 	public final TableField<TieNoticeRecord, Integer> TIE_NOTICE_TIME_ID = createField("tie_notice_time_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.tie_notice.is_show</code>.
+	 */
+	public final TableField<TieNoticeRecord, Byte> IS_SHOW = createField("is_show", org.jooq.impl.SQLDataType.TINYINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>cbis.tie_notice</code> table reference

@@ -5,23 +5,31 @@ $(document).ready(function () {
     initArticleParam();
 });
 
+/*
+ 自定义参数
+ */
+var myParam = {
+    'articleId':0,//文章id
+    'majorId':0//专业id
+}
+
 /**
  * 初始化参数
  */
 function initArticleParam() {
-    var id = $('#articleInfoId').text();
     var url = '';
     var deletePicWay = false;//删除图片方式
     var deleteUrl = "";
-    if (id.trim().length <= 0) {
+    if ($('#articleInfoId').text().trim().length <= 0) {
         url = web_path + "/maintainer/saveArticle";
         deletePicWay = true;
         deleteUrl = web_path + "/maintainer/deleteFile";
-        id = $('#majorId').text();
     } else {
         url = web_path + "/maintainer/updateArticle";
         deletePicWay = false;
     }
+    myParam.articleId = $('#articleInfoId').text().trim();
+    myParam.majorId = $('#majorId').text().trim();
     param.articleWordType = "专业特色";
     param.checkArticleTitle = true;
     param.checkArticleContent = true;
@@ -30,7 +38,7 @@ function initArticleParam() {
     param.clickOkUrl = web_path + "/user/major/majorArticleShow";
     param.clickNoUrl = web_path + "/maintainer/major/majorTrait";
     param.uploadParamFileName = "majortrait";
-    param.id = id;
+    param.myParam = myParam;
     param.cleanFromClient = deletePicWay;
     param.cleanUrl = deleteUrl;
     param.pluginClickOkUrlParam = "&majorId=" + $('#majorId').text();

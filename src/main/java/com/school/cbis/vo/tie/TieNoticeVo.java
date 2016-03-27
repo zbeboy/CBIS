@@ -8,6 +8,8 @@ public class TieNoticeVo {
     private String bigTitle;
     private String username;
     private String date;
+    private Byte isShow;
+    private Boolean show;
     private int pageIndex;
     private int pageSize;
     private String sortField;
@@ -45,6 +47,22 @@ public class TieNoticeVo {
         this.date = date;
     }
 
+    public Byte getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Byte isShow) {
+        this.isShow = isShow;
+    }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
+    }
+
     public int getPageIndex() {
         return pageIndex;
     }
@@ -79,11 +97,13 @@ public class TieNoticeVo {
 
     @Override
     public String toString() {
-        return "TieElegantVo{" +
+        return "TieNoticeVo{" +
                 "id=" + id +
                 ", bigTitle='" + bigTitle + '\'' +
                 ", username='" + username + '\'' +
                 ", date='" + date + '\'' +
+                ", isShow=" + isShow +
+                ", show=" + show +
                 ", pageIndex=" + pageIndex +
                 ", pageSize=" + pageSize +
                 ", sortField='" + sortField + '\'' +

@@ -29,6 +29,7 @@
     <script src="js/components/sortable.js" th:src="@{/js/plugin/components/sortable.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+    <script src="js/plugin/dombuilder/dombuilder.min.js" th:src="@{/js/plugin/dombuilder/dombuilder.min.js}"></script>
 
     <!-- layer js -->
     <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
@@ -78,6 +79,13 @@
                         <input type="text" id="title" class="uk-form-width-large" onblur="writerTitle();"
                                placeholder="标题"/>
                         <p class="uk-text-danger" id="titileError"></p>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <span class="uk-form-label">是否首页显示</span>
+                    <div class="uk-form-controls uk-form-controls-text">
+                        <input type="checkbox" class="uk-form-width-large" id="isShow" />
+                        <label for="isShow">显示</label>
                     </div>
                 </div>
                 <div id="upload-drop" class="uk-placeholder uk-text-center">

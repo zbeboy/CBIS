@@ -1,6 +1,19 @@
 /**
  * Created by lenovo on 2016-03-19.
  */
+$(document).ready(function(){
+    dealTime();
+});
+
+/**
+ * 处理时间
+ */
+function dealTime(){
+    for(var i = 0;i<$('.formatdate').length;i++){
+        var fd = moment( $($('.formatdate')[i]).text()).format("YYYY-MM-DD");
+        $($('.formatdate')[i]).text(fd);
+    }
+}
 /**
  * 点击专业，去专业文章
  * @param obj

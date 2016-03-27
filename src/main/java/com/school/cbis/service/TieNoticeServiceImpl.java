@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-03-09.
@@ -39,7 +40,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, Timestamp>> findByTieIdWithBigTitleAndPage(TieNoticeVo tieNoticeVo, int tie_id) {
+    public Result<Record5<Integer, String, String, Timestamp,Byte>> findByTieIdWithBigTitleAndPage(TieNoticeVo tieNoticeVo, int tie_id) {
         Condition a = Tables.TIE_NOTICE.TIE_ID.eq(tie_id);
 
         SortField<Integer> b = Tables.TIE_NOTICE.ID.desc();
@@ -61,7 +62,17 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieNoticeVo.getDate() + "%"));
         }
 
-        SelectConditionStep<Record4<Integer, String, String, Timestamp>> e = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE)
+        if (!StringUtils.isEmpty(tieNoticeVo.getShow())) {
+            if (tieNoticeVo.getShow()) {
+                Byte bytes = 1;
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+            } else {
+                Byte bytes = 0;
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+            }
+        }
+
+        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_NOTICE.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_NOTICE.IS_SHOW)
                 .from(Tables.TIE_NOTICE)
                 .join(Tables.ARTICLE_INFO)
                 .on(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID.equal(Tables.ARTICLE_INFO.ID))
@@ -121,6 +132,16 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieNoticeVo.getDate() + "%"));
         }
 
+        if (!StringUtils.isEmpty(tieNoticeVo.getShow())) {
+            if (tieNoticeVo.getShow()) {
+                Byte bytes = 1;
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+            } else {
+                Byte bytes = 0;
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+            }
+        }
+
         Record1<Integer> count = create.selectCount()
                 .from(Tables.TIE_NOTICE)
                 .join(Tables.ARTICLE_INFO)
@@ -157,7 +178,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
 
     @Override
     public Result<Record3<Integer, String, Timestamp>> findByTieIdAndPage(int tieId, int pageNum, int pageSize) {
-        if(pageNum <= 0){
+        if (pageNum <= 0) {
             pageNum = 1;
         }
         Result<Record3<Integer, String, Timestamp>> record3s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.ARTICLE_INFO.DATE)
@@ -169,5 +190,22 @@ public class TieNoticeServiceImpl implements TieNoticeService {
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record3s;
+    }
+
+    @Override
+    public TieNotice findById(int id) {
+        TieNotice tieNotice = tieNoticeDao.findById(id);
+        return tieNotice;
+    }
+
+    @Override
+    public void update(TieNotice tieNotice) {
+        tieNoticeDao.update(tieNotice);
+    }
+
+    @Override
+    public List<TieNotice> findByShow(Byte bytes) {
+        List<TieNotice> tieNotices = tieNoticeDao.fetchByIsShow(bytes);
+        return tieNotices;
     }
 }

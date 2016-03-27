@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Major extends TableImpl<MajorRecord> {
 
-	private static final long serialVersionUID = 2086389914;
+	private static final long serialVersionUID = -304182133;
 
 	/**
 	 * The reference instance of <code>cbis.major</code>
@@ -84,6 +84,11 @@ public class Major extends TableImpl<MajorRecord> {
 	 * The column <code>cbis.major.major_foregoer_article_info_id</code>.
 	 */
 	public final TableField<MajorRecord, Integer> MAJOR_FOREGOER_ARTICLE_INFO_ID = createField("major_foregoer_article_info_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>cbis.major.is_show</code>.
+	 */
+	public final TableField<MajorRecord, Byte> IS_SHOW = createField("is_show", org.jooq.impl.SQLDataType.TINYINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>cbis.major</code> table reference

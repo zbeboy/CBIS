@@ -140,12 +140,9 @@ public class BackstageController {
         try {
             String realPath = request.getSession().getServletContext().getRealPath("/");
             List<FileData> fileDatas = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
-            data.setState(true);
-            data.setMsg(fileDatas.get(0).getLastPath());
-            data.setResult(fileDatas);
             Map<String,Object> map = new HashMap<>();
             map.put("single",fileDatas.get(0));
-            data.setSingle(map);
+            data.success().msg(fileDatas.get(0).getLastPath()).listData(fileDatas).mapData(map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,20 +171,16 @@ public class BackstageController {
         try {
             if (!StringUtils.isEmpty(path) && StringUtils.trimWhitespace(path).length() > 0) {
                 if (FilesUtils.deleteFile(path)) {
-                    data.setState(true);
-                    data.setMsg("删除文件成功！");
+                    data.success().msg("删除文件成功!");
                 } else {
-                    data.setState(false);
-                    data.setMsg("未找到文件！");
+                    data.fail().msg("未找到文件!");
                 }
             } else {
-                data.setState(false);
-                data.setMsg("删除文件失败！");
+                data.fail().msg("删除文件失败!");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            data.setState(false);
-            data.setMsg("删除文件失败！");
+            data.fail().msg("删除文件失败");
         }
         return data;
     }

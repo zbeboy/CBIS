@@ -23,12 +23,13 @@ import javax.validation.constraints.NotNull;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TieElegant implements Serializable {
 
-	private static final long serialVersionUID = -1154807211;
+	private static final long serialVersionUID = 1526534653;
 
 	private Integer id;
 	private Integer tieId;
 	private Integer tieElegantArticleInfoId;
 	private Integer tieElegantTimeId;
+	private Byte    isShow;
 
 	public TieElegant() {}
 
@@ -37,18 +38,21 @@ public class TieElegant implements Serializable {
 		this.tieId = value.tieId;
 		this.tieElegantArticleInfoId = value.tieElegantArticleInfoId;
 		this.tieElegantTimeId = value.tieElegantTimeId;
+		this.isShow = value.isShow;
 	}
 
 	public TieElegant(
 		Integer id,
 		Integer tieId,
 		Integer tieElegantArticleInfoId,
-		Integer tieElegantTimeId
+		Integer tieElegantTimeId,
+		Byte    isShow
 	) {
 		this.id = id;
 		this.tieId = tieId;
 		this.tieElegantArticleInfoId = tieElegantArticleInfoId;
 		this.tieElegantTimeId = tieElegantTimeId;
+		this.isShow = isShow;
 	}
 
 	@NotNull
@@ -86,6 +90,14 @@ public class TieElegant implements Serializable {
 		this.tieElegantTimeId = tieElegantTimeId;
 	}
 
+	public Byte getIsShow() {
+		return this.isShow;
+	}
+
+	public void setIsShow(Byte isShow) {
+		this.isShow = isShow;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TieElegant (");
@@ -94,6 +106,7 @@ public class TieElegant implements Serializable {
 		sb.append(", ").append(tieId);
 		sb.append(", ").append(tieElegantArticleInfoId);
 		sb.append(", ").append(tieElegantTimeId);
+		sb.append(", ").append(isShow);
 
 		sb.append(")");
 		return sb.toString();

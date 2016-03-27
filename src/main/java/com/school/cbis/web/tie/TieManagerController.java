@@ -24,7 +24,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -143,9 +142,14 @@ public class TieManagerController {
         }
         List<TieElegantVo> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
+            Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieElegantVo.class);
+                for (TieElegantVo t : list) {
+                    if (!StringUtils.isEmpty(t.getIsShow())) {
+                        t.setShow(t.getIsShow() == 0 ? false : true);
+                    }
+                }
                 jsGrid.loadData(list, tieElegantService.findByTieIdWithBigTitleAndCount(tieElegantVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
@@ -206,9 +210,13 @@ public class TieManagerController {
      */
     @RequestMapping("/maintainer/tie/tieElegantUpdate")
     public String tieElegantUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
-        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
+        TieElegant tieElegant = tieElegantService.findById(id);
+
+        modelMap.addAttribute("articleinfo", articleInfoService.findById(tieElegant.getTieElegantArticleInfoId()));
+        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(tieElegant.getTieElegantArticleInfoId());
         modelMap.addAttribute("articlesubinfo", articleSubs);
+        modelMap.addAttribute("tieElegant",tieElegant);
+        modelMap.addAttribute("isShow",tieElegant.getIsShow() == 0?false:true);
         return "/maintainer/tie/tieelegantupdate";
     }
 
@@ -332,9 +340,7 @@ public class TieManagerController {
             t.setDate(t.getDate().split(" ")[0]);
 
         }
-
-        ajaxData.setState(true);
-        ajaxData.setResult(tieElegantTimeVos);
+        ajaxData.success().listData(tieElegantTimeVos);
 
         return ajaxData;
     }
@@ -556,9 +562,14 @@ public class TieManagerController {
         }
         List<TieNoticeVo> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
+            Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieNoticeVo.class);
+                for(TieNoticeVo t:list){
+                    if(!StringUtils.isEmpty(t.getIsShow())){
+                        t.setShow(t.getIsShow() == 0 ? false : true);
+                    }
+                }
                 jsGrid.loadData(list, tieNoticeService.findByTieIdWithBigTitleAndCount(tieNoticeVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
@@ -618,11 +629,14 @@ public class TieManagerController {
      */
     @RequestMapping("/maintainer/tie/tieNoticeUpdate")
     public String tieNoticeUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        modelMap.addAttribute("articleinfo", articleInfoService.findById(id));
-        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(id);
+        TieNotice tieNotice = tieNoticeService.findById(id);
+        modelMap.addAttribute("articleinfo", articleInfoService.findById(tieNotice.getTieNoticeArticleInfoId()));
+        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
         modelMap.addAttribute("articlesubinfo", articleSubs);
-        List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
+        List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
         modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
+        modelMap.addAttribute("tieNotice",tieNotice);
+        modelMap.addAttribute("isShow",tieNotice.getIsShow() == 0?false:true);
         return "/maintainer/tie/tienoticeupdate";
     }
 
@@ -730,10 +744,7 @@ public class TieManagerController {
             t.setDate(t.getDate().split(" ")[0]);
 
         }
-
-        ajaxData.setState(true);
-        ajaxData.setResult(tieNoticeTimeVos);
-
+        ajaxData.success().listData(tieNoticeTimeVos);
         return ajaxData;
     }
 }

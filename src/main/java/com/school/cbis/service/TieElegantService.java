@@ -26,7 +26,7 @@ public interface TieElegantService {
      * @param tie_id
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findByTieIdWithBigTitleAndPage(TieElegantVo tieElegantVo, int tie_id);
+    Result<Record5<Integer, String, String, Timestamp,Byte>> findByTieIdWithBigTitleAndPage(TieElegantVo tieElegantVo, int tie_id);
 
     /**
      * 查询总数
@@ -79,5 +79,10 @@ public interface TieElegantService {
      */
     Result<Record3<Integer, String, Timestamp>> findByTieElegantTimeIdOrBigTitleWithArticleOrderByDateDesc(int tieElegantTimeId, String bigTitle);
 
-
+    /**
+     * 通过show字段查询
+     * @param bytes
+     * @return
+     */
+    List<TieElegant> findByShow(Byte bytes);
 }

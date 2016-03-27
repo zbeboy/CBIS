@@ -1,9 +1,26 @@
 /**
  * Created by lenovo on 2016-03-09.
  */
+var isShow = 0;
 $(document).ready(function () {
     initArticleParam();
+    $('#isShow').click(function(){
+        if (isShow == 0) {
+            isShow = 1;
+        } else {
+            isShow = 0;
+        }
+        myParam.isShow = isShow;
+    });
 });
+
+
+/*
+ 自定义参数
+ */
+var myParam = {
+    'isShow':isShow//是否首页显示
+}
 
 /**
  * 初始化参数
@@ -17,10 +34,10 @@ function initArticleParam() {
     param.clickOkUrl = web_path + "/user/tie/tieNoticeShow";
     param.clickNoUrl = web_path + "/maintainer/tie/tieNotice";
     param.uploadParamFileName = "tienotice";
-    param.id = 0;
     param.cleanFromClient = true;
     param.cleanUrl = web_path + "/maintainer/deleteFile";
     param.openAffix = true;
+    param.myParam = myParam;
     param.affixSaveFunc = "tieNoticeAffix"
     param.affixEndFunc = "endFunc()";
     param.cleanAffixFromClient = true;

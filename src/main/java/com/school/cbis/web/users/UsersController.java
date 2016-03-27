@@ -158,11 +158,9 @@ public class UsersController {
             Users users = usersService.findByUsername(username);
             users.setPassword(MD5Util.md5(username));
             usersService.update(users);
-            ajaxData.setState(true);
-            ajaxData.setMsg("更新密码成功，默认密码为账号!");
+            ajaxData.success().msg("更新密码成功，默认密码为账号!");
         } else {
-            ajaxData.setState(false);
-            ajaxData.setMsg("参数异常!");
+            ajaxData.fail().msg("参数异常!");
         }
         return ajaxData;
     }
@@ -180,11 +178,9 @@ public class UsersController {
             Users users = usersService.findByUsername(username);
             users.setEnabled(enable);
             usersService.update(users);
-            ajaxData.setState(true);
-            ajaxData.setMsg("更新状态成功!");
+            ajaxData.success().msg("更新状态成功!");
         } else {
-            ajaxData.setState(false);
-            ajaxData.setMsg("参数异常!");
+            ajaxData.fail().msg("参数异常!");
         }
         return ajaxData;
     }
@@ -209,11 +205,9 @@ public class UsersController {
                 authoritiesRecord.setAuthority(authority);
                 authoritiesService.update(authoritiesRecord);
             }
-            ajaxData.setState(true);
-            ajaxData.setMsg("更新权限成功!");
+            ajaxData.success().msg("更新权限成功!");
         } else {
-            ajaxData.setState(false);
-            ajaxData.setMsg("参数异常!");
+            ajaxData.fail().msg("参数异常!");
         }
         return ajaxData;
     }

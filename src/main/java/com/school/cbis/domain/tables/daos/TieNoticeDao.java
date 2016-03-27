@@ -84,4 +84,11 @@ public class TieNoticeDao extends DAOImpl<TieNoticeRecord, com.school.cbis.domai
 	public List<com.school.cbis.domain.tables.pojos.TieNotice> fetchByTieNoticeTimeId(Integer... values) {
 		return fetch(TieNotice.TIE_NOTICE.TIE_NOTICE_TIME_ID, values);
 	}
+
+	/**
+	 * Fetch records that have <code>is_show IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TieNotice> fetchByIsShow(Byte... values) {
+		return fetch(TieNotice.TIE_NOTICE.IS_SHOW, values);
+	}
 }
