@@ -2,8 +2,8 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/Base64Util.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/MD5Util.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/Base64Utils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/school/cbis/util/MD5Utils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j.properties" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/administrator/home.html" charset="GBK" />

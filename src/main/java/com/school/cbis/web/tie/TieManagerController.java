@@ -10,6 +10,7 @@ import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.tie.*;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,8 @@ import java.util.*;
  */
 @Controller
 public class TieManagerController {
+
+    private static Logger logger = Logger.getLogger(TieManagerController.class);
 
     @Resource
     private TieService tieService;

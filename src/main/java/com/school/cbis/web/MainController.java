@@ -6,6 +6,7 @@ import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.major.MajorIndexVo;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,8 @@ import java.util.List;
  */
 @Controller
 public class MainController {
+
+    private static Logger logger = Logger.getLogger(MainController.class);
 
     @Resource
     private UsersService usersService;

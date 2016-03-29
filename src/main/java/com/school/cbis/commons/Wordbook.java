@@ -5,6 +5,7 @@ import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.TeachTypeRecord;
 import com.school.cbis.domain.tables.records.UserTypeRecord;
 import com.school.cbis.service.WordbookService;
+import org.apache.log4j.Logger;
 import org.jooq.Result;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,8 @@ import java.util.Map;
  */
 @Component
 public class Wordbook {
+
+    private static Logger logger = Logger.getLogger(Wordbook.class);
 
     @Resource
     private WordbookService wordbookService;

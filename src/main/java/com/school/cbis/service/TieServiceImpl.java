@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieDao;
 import com.school.cbis.domain.tables.pojos.Tie;
 import com.school.cbis.domain.tables.records.TieRecord;
+import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -20,6 +21,8 @@ import java.util.List;
 @Service("tieService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieServiceImpl implements TieService {
+
+    private static Logger logger = Logger.getLogger(TieServiceImpl.class);
 
     private final DSLContext create;
 

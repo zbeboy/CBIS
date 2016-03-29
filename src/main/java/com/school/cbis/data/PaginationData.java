@@ -1,10 +1,15 @@
 package com.school.cbis.data;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by lenovo on 2016-01-22.
  * 全局分页数据
  */
 public class PaginationData {
+
+    private static Logger logger = Logger.getLogger(PaginationData.class);
+
     private int totalPages;//总页数
     private int pageNum;//当前页
     private int pageSize;//每页大小

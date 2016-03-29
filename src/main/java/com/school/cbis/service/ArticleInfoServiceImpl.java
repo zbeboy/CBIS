@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.ArticleInfoDao;
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
 import com.school.cbis.domain.tables.records.ArticleInfoRecord;
+import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record7;
@@ -21,6 +22,8 @@ import java.sql.Timestamp;
 @Service("articleService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ArticleInfoServiceImpl implements ArticleInfoService {
+
+    private static Logger logger = Logger.getLogger(ArticleInfoServiceImpl.class);
 
     private final DSLContext create;
 

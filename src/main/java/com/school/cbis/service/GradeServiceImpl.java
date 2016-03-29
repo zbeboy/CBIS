@@ -5,6 +5,7 @@ import com.school.cbis.domain.tables.daos.GradeDao;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ import java.util.List;
 @Service("gradeService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class GradeServiceImpl implements GradeService {
+
+    private static Logger logger = Logger.getLogger(GradeServiceImpl.class);
 
     private final DSLContext create;
 

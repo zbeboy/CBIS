@@ -1,10 +1,15 @@
 package com.school.cbis.data;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by lenovo on 2016-01-12.
  * 文章数据模板
  */
 public class ArticleData {
+
+    private static Logger logger = Logger.getLogger(ArticleData.class);
+
     private String bigTitle;//标题
     private String articleContent;//内容
     private String articlePhotoUrl;//图片路径

@@ -4,11 +4,16 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.UsersDao;
 import com.school.cbis.domain.tables.pojos.Users;
+import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 
 /**
  * Created by lenovo on 2016-01-05.
@@ -24,6 +30,8 @@ import javax.annotation.Resource;
 @Service("usersService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UsersServiceImpl implements UsersService {
+
+    private static Logger logger = Logger.getLogger(UsersServiceImpl.class);
 
     private final DSLContext create;
 
@@ -62,6 +70,33 @@ public class UsersServiceImpl implements UsersService {
     public Users findByUsername(String username) {
         Users users = usersDao.fetchOneByUsername(username);
         return users;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Collection<? extends GrantedAuthority> authorities = securityContext.getAuthentication().getAuthorities();
+        if (authorities != null) {
+            for (GrantedAuthority authority : authorities) {
+                if (authority.getAuthority().equals("ROLE_USER")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isCurrentUserInRole(String authority) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                return springSecurityUser.getAuthorities().contains(new SimpleGrantedAuthority(authority));
+            }
+        }
+        return false;
     }
 
     @Override

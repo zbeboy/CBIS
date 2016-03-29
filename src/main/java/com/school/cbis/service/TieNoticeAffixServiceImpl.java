@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieNoticeAffixDao;
 import com.school.cbis.domain.tables.daos.TieNoticeDao;
 import com.school.cbis.domain.tables.pojos.TieNoticeAffix;
+import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.List;
 @Service("tieNoticeAffixService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieNoticeAffixServiceImpl implements TieNoticeAffixService {
+
+    private static Logger logger = Logger.getLogger(TieNoticeAffixServiceImpl.class);
+
     private final DSLContext create;
 
     private TieNoticeAffixDao tieNoticeAffixDao;

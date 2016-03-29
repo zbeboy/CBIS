@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Authorities;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
+import org.apache.log4j.Logger;
 import org.jooq.BatchBindStep;
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -19,6 +20,9 @@ import java.util.List;
 @Service("authoritiesService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class AuthoritiesServiceImpl implements AuthoritiesService {
+
+    private static Logger logger = Logger.getLogger(AuthoritiesServiceImpl.class);
+
     private final DSLContext create;
 
     @Autowired

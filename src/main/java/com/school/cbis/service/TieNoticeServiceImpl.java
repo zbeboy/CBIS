@@ -7,6 +7,7 @@ import com.school.cbis.domain.tables.records.ArticleInfoRecord;
 import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
 import com.school.cbis.domain.tables.records.TieNoticeRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ import java.util.List;
 @Service("tieNoticeService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieNoticeServiceImpl implements TieNoticeService {
+
+    private static Logger logger = Logger.getLogger(TieNoticeServiceImpl.class);
+
     private final DSLContext create;
 
     private TieNoticeDao tieNoticeDao;

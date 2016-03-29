@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieElegantTimeDao;
 import com.school.cbis.domain.tables.pojos.TieElegantTime;
 import com.school.cbis.domain.tables.records.TieElegantTimeRecord;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.List;
 @Service("tieElegantTimeService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieElegantTimeServiceImpl implements TieElegantTimeService {
+
+    private static Logger logger = Logger.getLogger(TieElegantTimeServiceImpl.class);
 
     private final DSLContext create;
 

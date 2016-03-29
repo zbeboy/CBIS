@@ -1,10 +1,15 @@
 package com.school.cbis.data;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by lenovo on 2016-03-10.
  * 全局文件数据封装
  */
 public class FileData {
+
+    private static Logger logger = Logger.getLogger(FileData.class);
+
     private String contentType;//文件头信息
     private Long size;//文件大小
     private String originalFilename;//文件原始名字

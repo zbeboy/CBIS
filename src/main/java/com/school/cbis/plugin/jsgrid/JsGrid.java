@@ -1,5 +1,7 @@
 package com.school.cbis.plugin.jsgrid;
 
+import org.apache.log4j.Logger;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,8 @@ import java.util.Map;
  * JsGrid表格ajax数据封装
  */
 public class JsGrid<T> {
+
+    private static Logger logger = Logger.getLogger(JsGrid.class);
 
     private  Map<String, Object> map;
 

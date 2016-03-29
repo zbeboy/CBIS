@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.ArticleSubDao;
 import com.school.cbis.domain.tables.pojos.ArticleSub;
+import org.apache.log4j.Logger;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -19,6 +20,8 @@ import java.util.List;
 @Service("articleSubService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ArticleSubServiceImpl implements ArticleSubService {
+
+    private static Logger logger = Logger.getLogger(ArticleSubServiceImpl.class);
 
     private final DSLContext create;
 

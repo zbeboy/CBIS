@@ -11,6 +11,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
+import org.apache.log4j.Logger;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.springframework.stereotype.Controller;
@@ -36,8 +37,7 @@ import java.util.*;
 @Controller
 public class ArticleController {
 
-    @Resource
-    private UploadService upload;
+    private static Logger logger = Logger.getLogger(ArticleController.class);
 
     @Resource
     private TieService tieService;

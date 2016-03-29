@@ -1,5 +1,7 @@
 package com.school.cbis.data;
 
+import org.apache.log4j.Logger;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import java.util.Map;
  * ajax消息以及数据封装
  */
 public class AjaxData<T> {
+
+    private static Logger logger = Logger.getLogger(AjaxData.class);
+
     private boolean state;//消息状态
     private String msg;//消息
     private Map<String,Object> single;//map数据

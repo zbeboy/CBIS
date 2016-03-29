@@ -16,6 +16,7 @@ package com.school.cbis;
  */
 
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -37,6 +38,8 @@ import javax.sql.DataSource;
 @EnableAutoConfiguration
 @ComponentScan
 public class Application extends SpringBootServletInitializer {
+
+    private static Logger logger = Logger.getLogger(Application.class);
 
     /**
      * 生成war包时需要

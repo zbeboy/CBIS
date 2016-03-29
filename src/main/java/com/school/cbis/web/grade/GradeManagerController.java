@@ -12,6 +12,7 @@ import com.school.cbis.service.GradeService;
 import com.school.cbis.service.TeacherService;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.grade.GradeVo;
+import org.apache.log4j.Logger;
 import org.jooq.Record;
 import org.jooq.Record6;
 import org.jooq.Record7;
@@ -34,6 +35,9 @@ import java.util.Map;
  */
 @Controller
 public class GradeManagerController {
+
+    private static Logger logger = Logger.getLogger(GradeManagerController.class);
+
     @Resource
     private UsersService usersService;
 

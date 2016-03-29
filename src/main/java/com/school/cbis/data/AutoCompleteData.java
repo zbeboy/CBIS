@@ -1,10 +1,15 @@
 package com.school.cbis.data;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by lenovo on 2016-02-15.
  * 自动完成数据
  */
 public class AutoCompleteData {
+
+    private static Logger logger = Logger.getLogger(AutoCompleteData.class);
+
     private String value;//值
     private String title;//标题
     private String url;//网址

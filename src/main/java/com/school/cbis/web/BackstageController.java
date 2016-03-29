@@ -3,11 +3,17 @@ package com.school.cbis.web;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.domain.tables.pojos.Major;
+import com.school.cbis.domain.tables.pojos.Tie;
+import com.school.cbis.domain.tables.pojos.TieNoticeAffix;
+import com.school.cbis.domain.tables.pojos.Yard;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.major.MajorListVo;
-import org.jooq.*;
+import org.apache.log4j.Logger;
+import org.jooq.Record;
+import org.jooq.Record2;
+import org.jooq.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -25,13 +31,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2016-01-10.
  */
 @Controller
 public class BackstageController {
+
+    private static Logger logger = Logger.getLogger(BackstageController.class);
 
     @Resource
     private UploadService upload;
@@ -166,7 +177,7 @@ public class BackstageController {
      */
     @RequestMapping(value = "/maintainer/deleteFile")
     @ResponseBody
-    public AjaxData deletePictue(@RequestParam("path") String path) {
+    public AjaxData deleteFile(@RequestParam("path") String path) {
         AjaxData data = new AjaxData();
         try {
             if (!StringUtils.isEmpty(path) && StringUtils.trimWhitespace(path).length() > 0) {

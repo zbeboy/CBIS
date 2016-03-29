@@ -5,6 +5,7 @@ import com.school.cbis.domain.tables.daos.TeacherDao;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
 import com.school.cbis.vo.users.TeacherVo;
+import org.apache.log4j.Logger;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ import java.util.List;
 @Service("teacherService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TeacherServiceImpl implements TeacherService {
+
+    private static Logger logger = Logger.getLogger(TeacherServiceImpl.class);
 
     private final DSLContext create;
 

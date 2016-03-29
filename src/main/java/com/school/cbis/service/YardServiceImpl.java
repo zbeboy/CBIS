@@ -2,6 +2,7 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.daos.YardDao;
 import com.school.cbis.domain.tables.pojos.Yard;
+import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 @Service("yardService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class YardServiceImpl implements YardService {
+
+    private static Logger logger = Logger.getLogger(YardServiceImpl.class);
 
     private final DSLContext create;
 
