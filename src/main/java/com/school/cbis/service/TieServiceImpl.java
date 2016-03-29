@@ -4,16 +4,15 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieDao;
 import com.school.cbis.domain.tables.pojos.Tie;
 import com.school.cbis.domain.tables.records.TieRecord;
-import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-17.
@@ -22,7 +21,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieServiceImpl implements TieService {
 
-    private static Logger logger = Logger.getLogger(TieServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TieServiceImpl.class);
 
     private final DSLContext create;
 

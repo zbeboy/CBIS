@@ -3,12 +3,10 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieNoticeDao;
 import com.school.cbis.domain.tables.pojos.TieNotice;
-import com.school.cbis.domain.tables.records.ArticleInfoRecord;
-import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
-import com.school.cbis.domain.tables.records.TieNoticeRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
-import org.apache.log4j.Logger;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,7 +23,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieNoticeServiceImpl implements TieNoticeService {
 
-    private static Logger logger = Logger.getLogger(TieNoticeServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TieNoticeServiceImpl.class);
 
     private final DSLContext create;
 

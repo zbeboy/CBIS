@@ -2,11 +2,11 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.StudentDao;
-import com.school.cbis.domain.tables.daos.TeacherDao;
 import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.vo.users.StudentVo;
-import org.apache.log4j.Logger;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class StudentServiceImpl implements StudentService {
 
-    private static Logger logger = Logger.getLogger(StudentServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private final DSLContext create;
 

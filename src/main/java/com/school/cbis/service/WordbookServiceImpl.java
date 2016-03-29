@@ -5,9 +5,10 @@ import com.school.cbis.domain.tables.records.ArticleTypeRecord;
 import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.TeachTypeRecord;
 import com.school.cbis.domain.tables.records.UserTypeRecord;
-import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service("wordbookService")
 public class WordbookServiceImpl implements WordbookService {
 
-    private static Logger logger = Logger.getLogger(WordbookServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(WordbookServiceImpl.class);
 
     private final DSLContext create;
 

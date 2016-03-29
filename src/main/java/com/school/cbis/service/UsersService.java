@@ -1,9 +1,6 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Users;
-import com.school.cbis.domain.tables.records.StudentRecord;
-import com.school.cbis.domain.tables.records.TeacherRecord;
-import com.school.cbis.domain.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 

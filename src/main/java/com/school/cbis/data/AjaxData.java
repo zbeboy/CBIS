@@ -1,6 +1,8 @@
 package com.school.cbis.data;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,7 @@ import java.util.Map;
  */
 public class AjaxData<T> {
 
-    private static Logger logger = Logger.getLogger(AjaxData.class);
+    private final Logger log = LoggerFactory.getLogger(AjaxData.class);
 
     private boolean state;//消息状态
     private String msg;//消息

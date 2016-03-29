@@ -4,8 +4,9 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieElegantDao;
 import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.vo.tie.TieElegantVo;
-import org.apache.log4j.Logger;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,7 +23,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieElegantServiceImpl implements TieElegantService {
 
-    private static Logger logger = Logger.getLogger(TieElegantServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TieElegantServiceImpl.class);
 
     private final DSLContext create;
 

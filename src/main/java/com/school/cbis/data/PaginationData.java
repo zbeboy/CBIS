@@ -1,6 +1,8 @@
 package com.school.cbis.data;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by lenovo on 2016-01-22.
@@ -8,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class PaginationData {
 
-    private static Logger logger = Logger.getLogger(PaginationData.class);
+    private final Logger log = LoggerFactory.getLogger(PaginationData.class);
 
     private int totalPages;//总页数
     private int pageNum;//当前页

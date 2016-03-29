@@ -4,8 +4,6 @@ import com.school.cbis.domain.tables.pojos.Tie;
 import com.school.cbis.domain.tables.records.TieRecord;
 import org.jooq.Result;
 
-import java.util.List;
-
 /**
  * Created by lenovo on 2016-01-17.
  */

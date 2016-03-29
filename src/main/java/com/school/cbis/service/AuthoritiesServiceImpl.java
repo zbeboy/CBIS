@@ -1,18 +1,14 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.pojos.Authorities;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
-import org.apache.log4j.Logger;
-import org.jooq.BatchBindStep;
 import org.jooq.DSLContext;
-import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by lenovo on 2016-02-21.
@@ -21,7 +17,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class AuthoritiesServiceImpl implements AuthoritiesService {
 
-    private static Logger logger = Logger.getLogger(AuthoritiesServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(AuthoritiesServiceImpl.class);
 
     private final DSLContext create;
 

@@ -1,12 +1,8 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.domain.tables.pojos.TieNotice;
-import com.school.cbis.domain.tables.pojos.TieNoticeAffix;
-import com.school.cbis.domain.tables.records.TieNoticeAffixRecord;
 import com.school.cbis.vo.tie.TieNoticeVo;
 import org.jooq.Record3;
-import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Result;
 

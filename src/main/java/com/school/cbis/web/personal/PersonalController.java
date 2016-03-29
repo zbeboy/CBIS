@@ -1,11 +1,12 @@
 package com.school.cbis.web.personal;
 
+import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.util.MD5Utils;
-import com.school.cbis.data.AjaxData;
 import com.school.cbis.vo.personal.RevisePasswordVo;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -26,7 +27,7 @@ import java.util.Map;
 @Controller
 public class PersonalController {
 
-    private static Logger logger = Logger.getLogger(PersonalController.class);
+    private final Logger log = LoggerFactory.getLogger(PersonalController.class);
 
     @Resource
     private UsersService usersService;// 用户表

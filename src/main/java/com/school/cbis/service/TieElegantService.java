@@ -2,7 +2,10 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.TieElegant;
 import com.school.cbis.vo.tie.TieElegantVo;
-import org.jooq.*;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Result;
 
 import java.sql.Timestamp;
 import java.util.List;

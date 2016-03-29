@@ -4,18 +4,17 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
-import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.major.MajorIndexVo;
-import org.apache.log4j.Logger;
-import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    private static Logger logger = Logger.getLogger(MainController.class);
+    private final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @Resource
     private UsersService usersService;

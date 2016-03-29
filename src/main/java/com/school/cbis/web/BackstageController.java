@@ -10,10 +10,11 @@ import com.school.cbis.domain.tables.pojos.Yard;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.major.MajorListVo;
-import org.apache.log4j.Logger;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -42,7 +43,7 @@ import java.util.Map;
 @Controller
 public class BackstageController {
 
-    private static Logger logger = Logger.getLogger(BackstageController.class);
+    private final Logger log = LoggerFactory.getLogger(BackstageController.class);
 
     @Resource
     private UploadService upload;

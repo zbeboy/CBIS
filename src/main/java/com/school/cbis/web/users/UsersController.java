@@ -12,8 +12,9 @@ import com.school.cbis.util.MD5Utils;
 import com.school.cbis.vo.grade.GradeVo;
 import com.school.cbis.vo.users.StudentVo;
 import com.school.cbis.vo.users.TeacherVo;
-import org.apache.log4j.Logger;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -34,7 +35,7 @@ import java.util.Map;
 @Controller
 public class UsersController {
 
-    private static Logger logger = Logger.getLogger(UsersController.class);
+    private final Logger log = LoggerFactory.getLogger(UsersController.class);
 
     @Resource
     private UsersService usersService;

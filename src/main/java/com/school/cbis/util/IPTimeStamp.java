@@ -1,6 +1,8 @@
 package com.school.cbis.util;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.Random;
 
 public class IPTimeStamp {
 
-    private static Logger logger = Logger.getLogger(IPTimeStamp.class);
+    private final Logger log = LoggerFactory.getLogger(IPTimeStamp.class);
 
     private SimpleDateFormat sdf = null;
 

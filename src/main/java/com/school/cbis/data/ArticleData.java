@@ -1,6 +1,7 @@
 package com.school.cbis.data;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by lenovo on 2016-01-12.
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
  */
 public class ArticleData {
 
-    private static Logger logger = Logger.getLogger(ArticleData.class);
+    private final Logger log = LoggerFactory.getLogger(ArticleData.class);
 
     private String bigTitle;//标题
     private String articleContent;//内容

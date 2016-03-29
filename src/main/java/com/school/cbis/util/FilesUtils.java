@@ -1,6 +1,8 @@
 package com.school.cbis.util;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.Objects;
  */
 public class FilesUtils {
 
-    private static Logger logger = Logger.getLogger(FilesUtils.class);
+    private final Logger log = LoggerFactory.getLogger(FilesUtils.class);
 
     public static boolean deleteFile(String path) throws IOException {
         if (Objects.isNull(path)) {

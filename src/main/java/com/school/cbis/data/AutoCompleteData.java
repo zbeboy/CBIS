@@ -1,6 +1,8 @@
 package com.school.cbis.data;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by lenovo on 2016-02-15.
@@ -8,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class AutoCompleteData {
 
-    private static Logger logger = Logger.getLogger(AutoCompleteData.class);
+    private final Logger log = LoggerFactory.getLogger(AutoCompleteData.class);
 
     private String value;//值
     private String title;//标题

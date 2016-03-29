@@ -4,11 +4,12 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.UsersDao;
 import com.school.cbis.domain.tables.pojos.Users;
-import org.apache.log4j.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +32,7 @@ import java.util.Collection;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UsersServiceImpl implements UsersService {
 
-    private static Logger logger = Logger.getLogger(UsersServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(UsersServiceImpl.class);
 
     private final DSLContext create;
 

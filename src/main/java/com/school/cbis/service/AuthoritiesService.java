@@ -1,10 +1,6 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.tables.pojos.Authorities;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
-import org.jooq.Result;
-
-import java.util.List;
 
 /**
  * Created by lenovo on 2016-02-21.

@@ -2,7 +2,8 @@ package com.school.cbis.service;
 
 import com.school.cbis.data.FileData;
 import com.school.cbis.util.IPTimeStamp;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
@@ -22,7 +23,7 @@ import java.util.List;
 @Service("uploadService")
 public class UploadServiceImpl implements UploadService {
 
-    private static Logger logger = Logger.getLogger(UploadServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(UploadServiceImpl.class);
 
     @Override
     public List<FileData> upload(MultipartHttpServletRequest request, String path, String address) {
@@ -35,7 +36,7 @@ public class UploadServiceImpl implements UploadService {
             FileData fileData = new FileData();
             //2.1 get next MultipartFile
             multipartFile = request.getFile(iterator.next());
-            logger.info(multipartFile.getOriginalFilename() + " uploaded!");
+            log.info(multipartFile.getOriginalFilename() + " uploaded!");
             fileData.setContentType(multipartFile.getContentType());
             IPTimeStamp ipTimeStamp = new IPTimeStamp(address);
             String[] words = multipartFile.getOriginalFilename().split("\\.");
@@ -73,12 +74,12 @@ public class UploadServiceImpl implements UploadService {
             if (!saveFile.getParentFile().exists()) {//create file
                 saveFile.getParentFile().mkdirs();
             }
-            logger.info(path);
+            log.info(path);
             FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(path + File.separator + filename));
             lastPath = path + File.separator + filename;
             lastPath = lastPath.replaceAll("\\\\","/");
         } else {
-            logger.info("not valiablespace!");
+            log.info("not valiablespace!");
             return null;
         }
         return lastPath;

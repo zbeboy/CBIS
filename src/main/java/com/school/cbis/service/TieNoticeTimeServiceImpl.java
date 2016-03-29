@@ -2,12 +2,11 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TieNoticeTimeDao;
-import com.school.cbis.domain.tables.pojos.TieElegantTime;
 import com.school.cbis.domain.tables.pojos.TieNoticeTime;
-import com.school.cbis.domain.tables.records.TieElegantTimeRecord;
 import com.school.cbis.domain.tables.records.TieNoticeTimeRecord;
-import org.apache.log4j.Logger;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +22,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TieNoticeTimeServiceImpl implements TieNoticeTimeService {
 
-    private static Logger logger = Logger.getLogger(TieNoticeTimeServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TieNoticeTimeServiceImpl.class);
 
     private final DSLContext create;
 

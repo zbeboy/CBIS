@@ -4,11 +4,13 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.ArticleInfoDao;
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
 import com.school.cbis.domain.tables.records.ArticleInfoRecord;
-import org.apache.log4j.Logger;
+
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record7;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +25,7 @@ import java.sql.Timestamp;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ArticleInfoServiceImpl implements ArticleInfoService {
 
-    private static Logger logger = Logger.getLogger(ArticleInfoServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ArticleInfoServiceImpl.class);
 
     private final DSLContext create;
 

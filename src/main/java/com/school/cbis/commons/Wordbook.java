@@ -5,8 +5,9 @@ import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.TeachTypeRecord;
 import com.school.cbis.domain.tables.records.UserTypeRecord;
 import com.school.cbis.service.WordbookService;
-import org.apache.log4j.Logger;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Component
 public class Wordbook {
 
-    private static Logger logger = Logger.getLogger(Wordbook.class);
+    private final Logger log = LoggerFactory.getLogger(Wordbook.class);
 
     @Resource
     private WordbookService wordbookService;
@@ -64,7 +65,6 @@ public class Wordbook {
 
     public Map<String, Integer> getArticleTypeMap() {
         Result<ArticleTypeRecord> articleTypeRecordResult = wordbookService.articleType();
-
         for(ArticleTypeRecord r:articleTypeRecordResult){
             articleTypeMap.put(r.getName(),r.getId());
         }
