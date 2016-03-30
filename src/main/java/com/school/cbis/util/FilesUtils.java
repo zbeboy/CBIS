@@ -1,5 +1,9 @@
 package com.school.cbis.util;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -8,6 +12,9 @@ import java.util.Objects;
  * Created by lenovo on 2015/9/11.
  */
 public class FilesUtils {
+
+    private final Logger log = LoggerFactory.getLogger(FilesUtils.class);
+
     public static boolean deleteFile(String path) throws IOException {
         if (Objects.isNull(path)) {
             return false;

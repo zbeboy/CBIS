@@ -1,6 +1,5 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.tables.pojos.TieElegantTime;
 import com.school.cbis.domain.tables.pojos.TieNoticeTime;
 import org.jooq.Record2;
 import org.jooq.Result;

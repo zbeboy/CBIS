@@ -4,12 +4,17 @@ package com.school.cbis.util;
  * Created by lenovo on 2015/8/31.
  */
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+public class MD5Utils {
+
+    private final Logger log = LoggerFactory.getLogger(MD5Utils.class);
 
     public static String md5(String password) {
         Md5PasswordEncoder md5 = new Md5PasswordEncoder();

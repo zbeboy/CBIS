@@ -1,10 +1,17 @@
 package com.school.cbis.data;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by lenovo on 2016-03-10.
  * 全局文件数据封装
  */
 public class FileData {
+
+    private final Logger log = LoggerFactory.getLogger(FileData.class);
+
     private String contentType;//文件头信息
     private Long size;//文件大小
     private String originalFilename;//文件原始名字

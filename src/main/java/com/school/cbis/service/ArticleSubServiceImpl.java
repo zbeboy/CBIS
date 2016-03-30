@@ -6,6 +6,8 @@ import com.school.cbis.domain.tables.pojos.ArticleSub;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +21,8 @@ import java.util.List;
 @Service("articleSubService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ArticleSubServiceImpl implements ArticleSubService {
+
+    private final Logger log = LoggerFactory.getLogger(ArticleSubServiceImpl.class);
 
     private final DSLContext create;
 

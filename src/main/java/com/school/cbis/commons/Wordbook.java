@@ -6,6 +6,8 @@ import com.school.cbis.domain.tables.records.TeachTypeRecord;
 import com.school.cbis.domain.tables.records.UserTypeRecord;
 import com.school.cbis.service.WordbookService;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,6 +20,8 @@ import java.util.Map;
  */
 @Component
 public class Wordbook {
+
+    private final Logger log = LoggerFactory.getLogger(Wordbook.class);
 
     @Resource
     private WordbookService wordbookService;
@@ -37,19 +41,19 @@ public class Wordbook {
     public static final String TEACHER_SUMMARY = "教师简介";
     public static final String RECRUIT_MOULD = "招聘模板";
 
-    private Map<String, Integer> articleTypeMap = new HashMap<>();
+    private Map<String ,Integer> articleTypeMap = new HashMap<>();
 
     //用户类型
     public static final String USER_TYPE_TEACHER = "教师";
     public static final String USER_TYPE_STUDENT = "学生";
 
-    private Map<String, Integer> userTypeMap = new HashMap<>();
+    private Map<String ,Integer> userTypeMap = new HashMap<>();
 
     //教学类型
     public static final String TEACH_TYPE_THEORY = "理论";
     public static final String TEACH_TYPE_PRACTICE = "实践";
 
-    private Map<String, Integer> teachTypeMap = new HashMap<>();
+    private Map<String ,Integer> teachTypeMap = new HashMap<>();
 
     //四大件类型
     public static final String FOUR_ITEMS_TYPE_OUTLINE = "大纲";
@@ -57,15 +61,12 @@ public class Wordbook {
     public static final String FOUR_ITEMS_TYPE_SCHEDULE = "日程";
     public static final String FOUR_ITEMS_TYPE_PPT = "ppt";
 
-    private Map<String, Integer> fourItemsTypeMap = new HashMap<>();
-
-    private Map<String, String> roleMap = new HashMap<>();
+    private Map<String ,Integer> fourItemsTypeMap = new HashMap<>();
 
     public Map<String, Integer> getArticleTypeMap() {
         Result<ArticleTypeRecord> articleTypeRecordResult = wordbookService.articleType();
-
-        for (ArticleTypeRecord r : articleTypeRecordResult) {
-            articleTypeMap.put(r.getName(), r.getId());
+        for(ArticleTypeRecord r:articleTypeRecordResult){
+            articleTypeMap.put(r.getName(),r.getId());
         }
         return articleTypeMap;
     }
@@ -73,8 +74,8 @@ public class Wordbook {
     public Map<String, Integer> getUserTypeMap() {
         Result<UserTypeRecord> userTypeRecordResult = wordbookService.userType();
 
-        for (UserTypeRecord r : userTypeRecordResult) {
-            userTypeMap.put(r.getName(), r.getId());
+        for(UserTypeRecord r:userTypeRecordResult){
+            userTypeMap.put(r.getName(),r.getId());
         }
         return userTypeMap;
     }
@@ -82,26 +83,18 @@ public class Wordbook {
     public Map<String, Integer> getTeachTypeMap() {
         Result<TeachTypeRecord> teachTypeRecordResult = wordbookService.teachType();
 
-        for (TeachTypeRecord r : teachTypeRecordResult) {
-            teachTypeMap.put(r.getName(), r.getId());
+        for(TeachTypeRecord r:teachTypeRecordResult){
+            teachTypeMap.put(r.getName(),r.getId());
         }
         return teachTypeMap;
     }
 
     public Map<String, Integer> getFourItemsTypeMap() {
-        Result<FourItemsTypeRecord> fourItemsTypeRecordResult = wordbookService.fourItemsType();
+        Result<FourItemsTypeRecord> fourItemsTypeRecordResult  = wordbookService.fourItemsType();
 
-        for (FourItemsTypeRecord r : fourItemsTypeRecordResult) {
-            fourItemsTypeMap.put(r.getName(), r.getId());
+        for(FourItemsTypeRecord r:fourItemsTypeRecordResult){
+            fourItemsTypeMap.put(r.getName(),r.getId());
         }
         return fourItemsTypeMap;
-    }
-
-    public Map<String, String> getRoleMap() {
-        roleMap.put("ROLE_ADMIN", "超级管理员");
-        roleMap.put("ROLE_MAI", "管理员");
-        roleMap.put("ROLE_TEA", "教师");
-        roleMap.put("ROLE_STU", "学生");
-        return roleMap;
     }
 }

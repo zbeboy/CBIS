@@ -2,7 +2,6 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.vo.users.StudentVo;
-import org.jooq.Record1;
 import org.jooq.Record6;
 import org.jooq.Result;
 

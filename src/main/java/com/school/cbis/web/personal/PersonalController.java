@@ -1,12 +1,12 @@
 package com.school.cbis.web.personal;
 
-import com.school.cbis.domain.tables.pojos.Users;
-import com.school.cbis.service.AuthoritiesService;
-import com.school.cbis.service.TeacherService;
-import com.school.cbis.service.UsersService;
-import com.school.cbis.util.MD5Util;
 import com.school.cbis.data.AjaxData;
+import com.school.cbis.domain.tables.pojos.Users;
+import com.school.cbis.service.UsersService;
+import com.school.cbis.util.MD5Utils;
 import com.school.cbis.vo.personal.RevisePasswordVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -26,6 +26,8 @@ import java.util.Map;
  */
 @Controller
 public class PersonalController {
+
+    private final Logger log = LoggerFactory.getLogger(PersonalController.class);
 
     @Resource
     private UsersService usersService;// 用户表
@@ -51,10 +53,10 @@ public class PersonalController {
         if (!bindingResult.hasErrors()) {
             String oldPassword = StringUtils.trimWhitespace(passwordVo.getOldPassword());
             if (!StringUtils.isEmpty(usersService.getPassword())) {//用户登录密码
-                if (MD5Util.md5(oldPassword).equals(usersService.getPassword())) {//校验旧密码
+                if (MD5Utils.md5(oldPassword).equals(usersService.getPassword())) {//校验旧密码
                     if (StringUtils.trimWhitespace(passwordVo.getNewPassword()).equals(StringUtils.trimWhitespace(passwordVo.getOkPassword()))) {//确认密码一致
                         Users users = usersService.findByUsername(usersService.getUserName());
-                        users.setPassword(MD5Util.md5(passwordVo.getOkPassword()));
+                        users.setPassword(MD5Utils.md5(passwordVo.getOkPassword()));
                         users.setUsername(usersService.getUserName());
                         usersService.update(users);//存入数据库
                         buildMap(map, false, new RevisePasswordVo(), false, true, "修改成功，请点击退出按钮，重新登录！");
@@ -86,7 +88,7 @@ public class PersonalController {
         String op = StringUtils.trimWhitespace(oldPassword);
         AjaxData ajaxData = new AjaxData();
         if (op.matches(regex)) {
-            if (StringUtils.trimWhitespace(usersService.getPassword()).equals(MD5Util.md5(op))) {
+            if (StringUtils.trimWhitespace(usersService.getPassword()).equals(MD5Utils.md5(op))) {
                 map.put("ok","");
             } else {
                 map.put("error","密码错误!");

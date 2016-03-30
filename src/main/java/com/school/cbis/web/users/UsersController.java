@@ -5,17 +5,18 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.service.*;
-import com.school.cbis.util.MD5Util;
+import com.school.cbis.util.MD5Utils;
 import com.school.cbis.vo.grade.GradeVo;
 import com.school.cbis.vo.users.StudentVo;
 import com.school.cbis.vo.users.TeacherVo;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -35,6 +36,8 @@ import java.util.Map;
  */
 @Controller
 public class UsersController {
+
+    private final Logger log = LoggerFactory.getLogger(UsersController.class);
 
     @Resource
     private UsersService usersService;
@@ -196,7 +199,7 @@ public class UsersController {
         AjaxData ajaxData = new AjaxData();
         if (!StringUtils.isEmpty(username)) {
             Users users = usersService.findByUsername(username);
-            users.setPassword(MD5Util.md5(username));
+            users.setPassword(MD5Utils.md5(username));
             usersService.update(users);
             ajaxData.success().msg("更新密码成功，默认密码为账号!");
         } else {
@@ -275,7 +278,7 @@ public class UsersController {
         teacherService.save(teacher);
         Users users = new Users();
         users.setUsername(username);
-        users.setPassword(MD5Util.md5(username));
+        users.setPassword(MD5Utils.md5(username));
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
@@ -307,7 +310,7 @@ public class UsersController {
         studentService.save(student);
         Users users = new Users();
         users.setUsername(username);
-        users.setPassword(MD5Util.md5(username));
+        users.setPassword(MD5Utils.md5(username));
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));

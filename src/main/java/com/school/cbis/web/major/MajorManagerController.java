@@ -7,9 +7,9 @@ import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.major.*;
-import com.school.cbis.vo.tie.TieElegantVo;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.jooq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -20,13 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2016-02-07.
  */
 @Controller
 public class MajorManagerController {
+
+    private final Logger log = LoggerFactory.getLogger(MajorManagerController.class);
 
     @Resource
     private UsersService usersService;

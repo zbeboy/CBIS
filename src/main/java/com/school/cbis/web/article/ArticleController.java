@@ -2,31 +2,27 @@ package com.school.cbis.web.article;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.ArticleData;
-import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,8 +32,7 @@ import java.util.*;
 @Controller
 public class ArticleController {
 
-    @Resource
-    private UploadService upload;
+    private final Logger log = LoggerFactory.getLogger(ArticleController.class);
 
     @Resource
     private TieService tieService;

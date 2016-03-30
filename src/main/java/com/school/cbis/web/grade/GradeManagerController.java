@@ -1,6 +1,5 @@
 package com.school.cbis.web.grade;
 
-import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.AutoCompleteData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
@@ -14,8 +13,9 @@ import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.grade.GradeVo;
 import org.jooq.Record;
 import org.jooq.Record6;
-import org.jooq.Record7;
 import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +34,9 @@ import java.util.Map;
  */
 @Controller
 public class GradeManagerController {
+
+    private final Logger log = LoggerFactory.getLogger(GradeManagerController.class);
+
     @Resource
     private UsersService usersService;
 

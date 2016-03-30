@@ -1,9 +1,6 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Users;
-import com.school.cbis.domain.tables.records.StudentRecord;
-import com.school.cbis.domain.tables.records.TeacherRecord;
-import com.school.cbis.domain.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -31,8 +28,20 @@ public interface UsersService {
      * @param username
      * @return 用户信息
      */
-    public Users findByUsername(String username);
+    Users findByUsername(String username);
 
+    /**
+     * 检查是否有权限
+     * @return
+     */
+    boolean isAuthenticated();
+
+    /**
+     * 检查当前用户是否有此权限
+     * @param authority
+     * @return
+     */
+    boolean isCurrentUserInRole(String authority);
     /**
      * 根据用户名更新用户密码
      *
