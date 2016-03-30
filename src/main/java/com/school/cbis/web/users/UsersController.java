@@ -5,6 +5,7 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
+import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.pojos.Users;

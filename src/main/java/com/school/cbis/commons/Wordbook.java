@@ -63,6 +63,16 @@ public class Wordbook {
 
     private Map<String ,Integer> fourItemsTypeMap = new HashMap<>();
 
+    private Map<String,String> roleMap = new HashMap<>();
+
+    public Map<String, String> getRoleMap() {
+        roleMap.put("ROLE_ADMIN","超级管理员");
+        roleMap.put("ROLE_MAI","管理员");
+        roleMap.put("ROLE_TEA","教师");
+        roleMap.put("ROLE_STU","学生");
+        return roleMap;
+    }
+
     public Map<String, Integer> getArticleTypeMap() {
         Result<ArticleTypeRecord> articleTypeRecordResult = wordbookService.articleType();
         for(ArticleTypeRecord r:articleTypeRecordResult){

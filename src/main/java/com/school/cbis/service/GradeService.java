@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
+import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record6;
 import org.jooq.Result;
