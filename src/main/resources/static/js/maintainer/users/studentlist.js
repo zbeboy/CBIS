@@ -10,7 +10,7 @@ function outputHtml(data) {
     $('#studentData').empty();
     var _ = DOMBuilder;
     for (var i = 0; i < data.result.length; i++) {
-        $('#teacherData').append(_.DOM(
+        $('#studentData').append(_.DOM(
             _('li')._(
                 _('div.uk-panel.uk-panel-space.uk-panel-box.uk-panel-box-secondary')._([
                     _('h3.uk-panel-title').H('姓名:' + (data.result[i].studentName == null ? '' : data.result[i].studentName)),
@@ -105,9 +105,6 @@ function openAddModal() {
  */
 function selectYear(obj) {
     if ($(obj).val().trim().length > 0) {
-
-        var html =
-
         $.post(web_path + "/maintainer/users/gradeData", {
             'year': $(obj).val().trim()
         }, function (data) {
@@ -129,6 +126,18 @@ function selectYear(obj) {
                 layer.msg(data.msg);
             }
         });
+    }
+}
+
+/**
+ * 检验是否选择了班级
+ */
+function submitAddData(){
+    var n = $("input[name='grade']:checked").val();
+    if(n==undefined){
+        layer.msg('请选择一个班级!');
+    } else {
+        $('#addStudentForm').submit();
     }
 }
 

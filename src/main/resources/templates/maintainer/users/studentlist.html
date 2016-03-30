@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}" />
+    <meta http-equiv="description" content="" th:content="#{web_description}" />
     <!-- csrf -->
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
@@ -120,7 +122,7 @@
             <h2>添加用户</h2>
         </div>
         <form th:action="@{/maintainer/users/addStudent}" method="post" class="uk-form uk-form-horizontal"
-              data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
+              data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}" id="addStudentForm">
             <div class="uk-form-row">
                 <label class="uk-form-label" for="add-realname">用户姓名</label>
                 <div class="uk-form-controls">
@@ -158,10 +160,9 @@
                 </div>
             </div>
             <p class="uk-text-small uk-text-primary">注意:密码为用户账号!</p>
-
             <div class="uk-modal-footer uk-text-right">
                 <button type="button" class="uk-button" onclick="cancel('#addModal');">取消</button>
-                <button type="submit" class="uk-button uk-button-primary">保存</button>
+                <button type="button" onclick="submitAddData();" class="uk-button uk-button-primary">保存</button>
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
             </div>
         </form>

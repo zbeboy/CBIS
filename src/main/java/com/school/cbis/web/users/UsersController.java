@@ -3,7 +3,6 @@ package com.school.cbis.web.users;
 import com.alibaba.fastjson.JSON;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
-import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Student;
@@ -12,7 +11,6 @@ import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.MD5Utils;
-import com.school.cbis.vo.grade.GradeVo;
 import com.school.cbis.vo.users.StudentVo;
 import com.school.cbis.vo.users.TeacherVo;
 import org.jooq.*;
@@ -84,7 +82,7 @@ public class UsersController {
                 list.add(r.getValue("year").toString());
             }
         }
-        modelMap.addAttribute("years",list);
+        modelMap.addAttribute("years", list);
         return "/maintainer/users/studentlist";
     }
 
@@ -92,7 +90,7 @@ public class UsersController {
     @ResponseBody
     public AjaxData<Grade> gradeData(@RequestParam("year") String year) {
         AjaxData<Grade> ajaxData = new AjaxData<>();
-        if(StringUtils.hasLength(year)){
+        if (StringUtils.hasLength(year)) {
             List<Grade> grades = gradeService.findByYear(year);
             ajaxData.success().listData(grades);
         } else {
@@ -296,14 +294,6 @@ public class UsersController {
      */
     @RequestMapping(value = "/maintainer/users/addStudent", method = RequestMethod.POST)
     public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
-        }
-
         Student student = new Student();
         student.setStudentNumber(username);
         student.setStudentName(realname);
