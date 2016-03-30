@@ -166,15 +166,18 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Result<Record2<Integer,String>> findByTieId(int tieId) {
-        Result<Record2<Integer,String>> record2s = create.select(Tables.GRADE.ID,Tables.GRADE.GRADE_NAME)
-                .from(Tables.GRADE)
+    public Result<Record1<String>> findAllYearDistinct(int tieId) {
+        Result<Record1<String>> record1s = create.selectDistinct(Tables.GRADE.YEAR).from(Tables.GRADE)
                 .leftJoin(Tables.MAJOR)
                 .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
                 .where(Tables.MAJOR.TIE_ID.eq(tieId))
                 .orderBy(Tables.GRADE.ID.desc()).fetch();
-        return record2s;
+        return record1s;
     }
 
-
+    @Override
+    public List<Grade> findByYear(String year) {
+        List<Grade> grades = gradeDao.fetchByYear(year);
+        return grades;
+    }
 }

@@ -37,26 +37,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record6<Integer, String, String, Byte, String,String>> findByTieIdAndPage(StudentVo studentVo, int tieId) {
+    public Result<Record6<Integer, String, String, Byte, String, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
-        if (!StringUtils.isEmpty(studentVo)) {
-            if (StringUtils.hasLength(studentVo.getStudentName())) {
-                a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentVo.getStudentName() + "%"));
-            }
-
-            if (StringUtils.hasLength(studentVo.getStudentNumber())) {
-                a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%" + studentVo.getStudentNumber() + "%"));
-            }
+        if (StringUtils.hasLength(studentName)) {
+            a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentName + "%"));
         }
-        int pageNum = studentVo.getPageNum();
+
+        if (StringUtils.hasLength(studentNumber)) {
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%" + studentNumber + "%"));
+        }
         if (pageNum <= 0) {
             pageNum = 1;
         }
 
-        Result<Record6<Integer, String, String, Byte, String,String>> record6s = create.select(Tables.STUDENT.ID,
+        Result<Record6<Integer, String, String, Byte, String, String>> record6s = create.select(Tables.STUDENT.ID,
                 Tables.STUDENT.STUDENT_NAME, Tables.STUDENT.STUDENT_NUMBER, Tables.USERS.ENABLED,
-                Tables.AUTHORITIES.AUTHORITY,Tables.GRADE.GRADE_NAME)
+                Tables.AUTHORITIES.AUTHORITY, Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .leftJoin(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
@@ -67,23 +64,21 @@ public class StudentServiceImpl implements StudentService {
                 .leftJoin(Tables.MAJOR)
                 .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
                 .where(a)
-                .limit((pageNum - 1) * studentVo.getPageSize(), studentVo.getPageSize())
+                .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record6s;
     }
 
     @Override
-    public int findByTieIdAndPageCount(StudentVo studentVo, int tieId) {
+    public int findByTieIdAndPageCount(String studentName, String studentNumber, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
-        if (!StringUtils.isEmpty(studentVo)) {
-            if (StringUtils.hasLength(studentVo.getStudentName())) {
-                a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentVo.getStudentName() + "%"));
-            }
+        if (StringUtils.hasLength(studentName)) {
+            a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentName + "%"));
+        }
 
-            if (StringUtils.hasLength(studentVo.getStudentNumber())) {
-                a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%" + studentVo.getStudentNumber() + "%"));
-            }
+        if (StringUtils.hasLength(studentNumber)) {
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%" + studentNumber + "%"));
         }
 
         Record1<Integer> count = create.selectCount()

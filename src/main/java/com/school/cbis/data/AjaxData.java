@@ -12,6 +12,7 @@ public class AjaxData<T> {
     private String msg;//消息
     private Map<String,Object> single;//map数据
     private List<T> result;//list数据
+    private Object obj;//单个对象数据
     private PaginationData paginationData;//分页数据
 
     public AjaxData<T> success(){
@@ -26,6 +27,11 @@ public class AjaxData<T> {
 
     public AjaxData<T> msg(String msg){
         this.msg = msg;
+        return this;
+    }
+
+    public AjaxData<T> obj(Object obj){
+        this.obj = obj;
         return this;
     }
 
@@ -68,6 +74,14 @@ public class AjaxData<T> {
         this.msg = msg;
     }
 
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
     public Map<String, Object> getSingle() {
         return single;
     }
@@ -91,6 +105,7 @@ public class AjaxData<T> {
                 ", msg='" + msg + '\'' +
                 ", single=" + single +
                 ", result=" + result +
+                ", obj=" + obj +
                 ", paginationData=" + paginationData +
                 '}';
     }

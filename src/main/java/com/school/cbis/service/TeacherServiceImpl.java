@@ -50,19 +50,18 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(TeacherVo teacherVo, int tieId) {
+    public Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId) {
         Condition a = Tables.TEACHER.TIE_ID.eq(tieId);
 
-        if (!StringUtils.isEmpty(teacherVo)) {
-            if (StringUtils.hasLength(teacherVo.getTeacherName())) {
-                a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherVo.getTeacherName() + "%"));
-            }
 
-            if (StringUtils.hasLength(teacherVo.getTeacherJobNumber())) {
-                a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherVo.getTeacherJobNumber() + "%"));
-            }
+        if (StringUtils.hasLength(teacherName)) {
+            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%"));
         }
-        int pageNum = teacherVo.getPageNum();
+
+        if (StringUtils.hasLength(teacherJobNumber)) {
+            a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherJobNumber + "%"));
+        }
+
         if (pageNum <= 0) {
             pageNum = 1;
         }
@@ -76,24 +75,24 @@ public class TeacherServiceImpl implements TeacherService {
                 .leftJoin(Tables.AUTHORITIES)
                 .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
                 .where(a)
-                .limit((pageNum - 1) * teacherVo.getPageSize(), teacherVo.getPageSize())
+                .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record5s;
     }
 
     @Override
-    public int findByTieIdAndPageCount(TeacherVo teacherVo, int tieId) {
+    public int findByTieIdAndPageCount(String teacherName, String teacherJobNumber, int tieId) {
         Condition a = Tables.TEACHER.TIE_ID.eq(tieId);
 
-        if (!StringUtils.isEmpty(teacherVo)) {
-            if (StringUtils.hasLength(teacherVo.getTeacherName())) {
-                a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherVo.getTeacherName() + "%"));
-            }
 
-            if (StringUtils.hasLength(teacherVo.getTeacherJobNumber())) {
-                a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherVo.getTeacherJobNumber() + "%"));
-            }
+        if (StringUtils.hasLength(teacherName)) {
+            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%"));
         }
+
+        if (StringUtils.hasLength(teacherJobNumber)) {
+            a = a.and(Tables.TEACHER.TEACHER_JOB_NUMBER.like("%" + teacherJobNumber + "%"));
+        }
+
         Record1<Integer> count = create.selectCount()
                 .from(Tables.TEACHER)
                 .leftJoin(Tables.USERS)

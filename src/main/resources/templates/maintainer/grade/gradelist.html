@@ -24,7 +24,8 @@
           th:href="@{/css/jsgrid/jsgrid-theme.min.css}"/>
 
     <!-- nice validator css-->
-    <link rel="stylesheet" href="js/validator/jquery.validator.css" th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -34,7 +35,6 @@
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
     <script src="js/components/autocomplete.js" th:src="@{/js/plugin/components/autocomplete.js}"></script>
-    <script src="js/components/datepicker.js" th:src="@{/js/plugin/components/datepicker.js}"></script>
     <script src="js/components/form-select.js" th:src="@{/js/plugin/components/form-select.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
@@ -47,7 +47,8 @@
     <!-- nice validator js-->
     <script type="text/javascript" src="js/validator/jquery.validator.js"
             th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
-    <script type="text/javascript" src="js/validator/local/zh-CN.js" th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh-CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
 
     <script>
         $(function () {
@@ -93,7 +94,7 @@
                     <div class="uk-modal-header">
                         <h2 id="modalTitle">班级</h2>
                     </div>
-                    <form class="uk-form uk-form-horizontal" id="gradeForm" method="post"
+                    <form class="uk-form uk-form-horizontal" id="gradeForm" name="gradeForm" method="post"
                           data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
                         <div>
                             <input id="gradeId" name="gradeId" type="hidden"/>
@@ -112,16 +113,17 @@
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="year">年级:</label>
                                 <div class="uk-form-controls">
-                                    <input id="year" name="year" type="text"
-                                           data-uk-datepicker="{format:'YYYY'}" data-rule="年级:required;year;"
-                                           data-rule-year="[/^\d{4}$/, '年级由4位数字组成!']" data-tip="年级由4位数字组成"
-                                           data-msg-required="请填写年级"/>
+                                    <select id="year" name="year" data-rule="年级:required;year;"
+                                            data-rule-year="[/^\d{4}$/, '年级由4位数字组成!']" data-tip="年级由4位数字组成"
+                                            data-msg-required="请填写年级">
+                                        <option value="">请选择年级</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="gradeName">班级名:</label>
                                 <div class="uk-form-controls">
-                                    <input id="gradeName" name="gradeName" type="text"
+                                    <input id="gradeName" name="gradeName" type="text" placeholder="班级名"
                                            data-rule="required;length[1~70];remote[/maintainer/grade/checkGradeName, gradeId]"
                                            data-tip="班级名,如:计科1211" data-msg-required="请填写班级名"/>
                                 </div>
@@ -130,7 +132,7 @@
                                 <label class="uk-form-label" for="gradeHeadID">班主任:</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-autocomplete" id="gradeHeadAuto">
-                                        <input id="gradeHeadID" name="gradeHeadID" type="text"
+                                        <input id="gradeHeadID" name="gradeHeadID" type="text" placeholder="班主任"
                                                data-rule="required;length[1~25];remote[/maintainer/grade/checkTeacherNum]"
                                                data-tip="教师姓名" data-msg-required="请填写班主任"/>
                                         <script type="text/autocomplete">
@@ -146,6 +148,7 @@
                                         </ul>
 
 
+
                                         </script>
                                     </div>
                                 </div>
@@ -156,7 +159,7 @@
                             <button type="submit" class="uk-button uk-button-primary">
                                 保存
                             </button>
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                         </div>
                     </form>
                 </div>
@@ -172,8 +175,8 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var majors  = /*[[${majors}]]*/ null;
-    var web_path  = /*[[#{web_path}]]*/ '';
+    var majors = /*[[${majors}]]*/ null;
+    var web_path = /*[[#{web_path}]]*/ '';
     /*]]>*/
 </script>
 <!-- jsgrid js-->

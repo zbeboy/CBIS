@@ -43,7 +43,7 @@ public interface TeacherService {
      * @param tieId
      * @return
      */
-    Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(TeacherVo teacherVo, int tieId);
+    Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId);
 
     /**
      * 通过系id查询教师总数
@@ -51,7 +51,7 @@ public interface TeacherService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(TeacherVo teacherVo, int tieId);
+    int findByTieIdAndPageCount(String teacherName, String teacherJobNumber, int tieId);
 
     /**
      * 保存教师信息

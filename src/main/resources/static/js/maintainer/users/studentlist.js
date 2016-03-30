@@ -1,25 +1,92 @@
 /**
  * Created by lenovo on 2016-02-17.
  */
-$('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
-    var toStudentName = '';
-    var toStudentNumber = '';
-    if (param.studentName != null && param.studentName.trim().length > 0) {
-        toStudentName = param.studentName;
-    }
 
-    if (param.studentNumber != null && param.studentNumber.trim().length > 0) {
-        toStudentNumber = param.studentNumber;
+/**
+ * 输出html
+ * @param data
+ */
+function outputHtml(data) {
+    $('#studentData').empty();
+    var _ = DOMBuilder;
+    for (var i = 0; i < data.result.length; i++) {
+        $('#teacherData').append(_.DOM(
+            _('li')._(
+                _('div.uk-panel.uk-panel-space.uk-panel-box.uk-panel-box-secondary')._([
+                    _('h3.uk-panel-title').H('姓名:' + (data.result[i].studentName == null ? '' : data.result[i].studentName)),
+                    _('ul.uk-list.uk-list-space')._([
+                        _('li').H('账号:' + data.result[i].studentNumber),
+                        _('li').H('班级:' + (data.result[i].gradeName == null ? '' : data.result[i].gradeName)),
+                        _('li').H('角色:' + (data.result[i].authority == null ? '' : data.result[i].authority)),
+                        _('li' + (data.result[i].enabled ? '' : '.uk-text-danger')).H('状态:' + (data.result[i].enabled ? '正常' : '注销')),
+                        _('li.uk-clearfix')._([
+                            _('p.uk-hidden').H(data.result[i].studentNumber),
+                            _('button.uk-button.uk-button-primary.uk-float-right[type=button][onclick=openEditModal(this);]').H('编辑'),
+                            _('button.uk-button.uk-float-left[type=button][onclick=resetPassword(this);]').H('重置')
+                        ]),
+                        _('li.uk-clearfix')._([
+                            _('p.uk-hidden').H(data.result[i].studentNumber),
+                            _('p.uk-hidden').H(data.result[i].authority),
+                            _('button.uk-button.uk-float-right[type=button][onclick=openAuthoritiesModal(this);]').H('权限'),
+                            _('p.uk-hidden').H(data.result[i].enabled ? 'y' : 'n'),
+                            _('button.uk-button.uk-button-danger.uk-float-left[onclick=openStateModal(this);][type=button]').H('状态')
+                        ])
+                    ])
+                ])
+            )
+        ));
     }
-    window.location.href = web_path + "/maintainer/users/studentManager?studentName=" + toStudentName + "&studentNumber=" + toStudentNumber + "&pageNum=" + (pageIndex + 1);
+}
+
+/**
+ * 执行入口
+ */
+function action() {
+    $.post(web_path + '/maintainer/users/studentManagerData', {
+        'param': JSON.stringify(param)
+    }, function (data) {
+        outputHtml(data);
+        initPage(data);
+    });
+}
+
+/**
+ * 分页
+ * @param data
+ */
+function initPage(data) {
+    var pagination = UIkit.pagination('.uk-pagination', {
+        items: data.single.totalData,
+        itemsOnPage: data.single.pageSize,
+        currentPage: data.single.pageNum - 1
+    });
+}
+
+/**
+ * 封装参数
+ * @type {{studentName: (string|*|jQuery), studentNumber: (string|*|jQuery), pageNum: number, pageSize: number, totalData: number}}
+ */
+var param = {
+    'studentName': $('#studentName').val().trim(),
+    'studentNumber': $('#studentNumber').val().trim(),
+    'pageNum': 1,
+    'pageSize': 6,
+    'totalData': 1
+}
+
+/**
+ * 点击分页
+ */
+$('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
+    param.pageNum = pageIndex + 1;
+    action();
 });
 
+/**
+ * 执行
+ */
 $(document).ready(function () {
-    var pagination = UIkit.pagination('.uk-pagination', {
-        items: param.totalData,
-        itemsOnPage: param.pageSize,
-        currentPage: param.pageNum - 1
-    });
+    action();
 });
 /**
  * 打开添加用户模态框
@@ -29,6 +96,39 @@ function openAddModal() {
     var modal = UIkit.modal('#addModal');
     if (!modal.isActive()) {
         modal.show();
+    }
+}
+
+/**
+ * 选择年份
+ * @param obj
+ */
+function selectYear(obj) {
+    if ($(obj).val().trim().length > 0) {
+
+        var html =
+
+        $.post(web_path + "/maintainer/users/gradeData", {
+            'year': $(obj).val().trim()
+        }, function (data) {
+            if (data.state) {
+                var _ = DOMBuilder;
+                $('#gradeData').empty();
+                for (var i = 0; i < data.result.length; i++) {
+                    $('#gradeData').append(
+                        $('<li>').append(
+                            $('<label>').append(
+                                $('<input type="radio" name="grade" >').val(data.result[i].id)
+                            ).append(
+                                $('<span>').text(data.result[i].gradeName)
+                            )
+                        )
+                    );
+                }
+            } else {
+                layer.msg(data.msg);
+            }
+        });
     }
 }
 

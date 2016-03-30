@@ -27,7 +27,7 @@ public interface StudentService {
      * @param tieId
      * @return
      */
-    Result<Record6<Integer, String, String, Byte, String, String>> findByTieIdAndPage(StudentVo studentVo, int tieId);
+    Result<Record6<Integer, String, String, Byte, String, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId);
 
     /**
      * 通过系id查询学生总数
@@ -35,7 +35,7 @@ public interface StudentService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(StudentVo studentVo, int tieId);
+    int findByTieIdAndPageCount(String studentName, String studentNumber, int tieId);
 
     /**
      * 保存学生数据

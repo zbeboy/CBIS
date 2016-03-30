@@ -1,7 +1,9 @@
 package com.school.cbis.web.users;
 
+import com.alibaba.fastjson.JSON;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
+import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Student;
@@ -55,12 +57,14 @@ public class UsersController {
     /**
      * 学生管理界面
      *
-     * @param map
+     * @param modelMap
      * @return
      */
     @RequestMapping("/maintainer/users/studentManager")
-    public String studentManager(ModelMap map, StudentVo studentVo) {
-        List<StudentVo> studentVos = new ArrayList<>();
+    public String studentManager(ModelMap modelMap, String studentName, String studentNumber) {
+        modelMap.addAttribute("studentName", studentName);
+        modelMap.addAttribute("studentNumber", studentNumber);
+
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -69,47 +73,91 @@ public class UsersController {
                 tieId = r.getValue(Tables.TIE.ID);
             }
         }
-        Result<Record6<Integer, String, String, Byte, String, String>> record6s = studentService.findByTieIdAndPage(studentVo, tieId);
+        List<String> list = new ArrayList<>();
+        Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
+        if (record1s.isNotEmpty()) {
+            for (Record r : record1s) {
+                list.add(r.getValue("year").toString());
+            }
+        }
+        modelMap.addAttribute("years",list);
+        return "/maintainer/users/studentlist";
+    }
+
+    @RequestMapping("/maintainer/users/gradeData")
+    @ResponseBody
+    public AjaxData<Grade> gradeData(@RequestParam("year") String year) {
+        AjaxData<Grade> ajaxData = new AjaxData<>();
+        if(StringUtils.hasLength(year)){
+            List<Grade> grades = gradeService.findByYear(year);
+            ajaxData.success().listData(grades);
+        } else {
+            ajaxData.fail().msg("参数异常!");
+        }
+        return ajaxData;
+    }
+
+    /**
+     * 学生数据
+     *
+     * @param param
+     * @return
+     */
+    @RequestMapping("/maintainer/users/studentManagerData")
+    @ResponseBody
+    public AjaxData<StudentVo> studentManagerData(@RequestParam("param") String param) {
+        AjaxData<StudentVo> ajaxData = new AjaxData<>();
+        List<StudentVo> studentVos = new ArrayList<>();
+        Map<String, Object> map = (Map<String, Object>) JSON.parse(param);
+        //通过用户类型获取系表ID
+        Result<Record> records = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (records.isNotEmpty()) {
+            for (Record r : records) {
+                tieId = r.getValue(Tables.TIE.ID);
+            }
+        }
+        Result<Record6<Integer, String, String, Byte, String, String>> record6s = studentService.findByTieIdAndPage(map.get("studentName").toString(),
+                map.get("studentNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
+                tieId);
         if (record6s.isNotEmpty()) {
             studentVos = record6s.into(StudentVo.class);
             for (StudentVo t : studentVos) {
                 if (!StringUtils.isEmpty(t.getAuthority())) {
-                    if (t.getAuthority().equals("ROLE_ADMIN")) {
-                        t.setAuthority("超级管理员");
-                    } else if (t.getAuthority().equals("ROLE_MAI")) {
-                        t.setAuthority("管理员");
-                    } else if (t.getAuthority().equals("ROLE_TEA")) {
-                        t.setAuthority("教师");
-                    } else if (t.getAuthority().equals("ROLE_STU")) {
-                        t.setAuthority("学生");
-                    }
+                    t.setAuthority(wordbook.getRoleMap().get(t.getAuthority()));
                 }
             }
         }
-        if (!StringUtils.isEmpty(studentVo)) {
-            studentVo.setTotalData(studentService.findByTieIdAndPageCount(studentVo, tieId));
-        }
 
-        Result<Record2<Integer,String>> record2s = gradeService.findByTieId(tieId);
-        List<GradeVo> gradeVos = new ArrayList<>();
-        if(record2s.isNotEmpty()){
-            gradeVos = record2s.into(GradeVo.class);
-        }
-
-        map.addAttribute("grades",gradeVos);
-        map.addAttribute("students", studentVos);
-        map.addAttribute("studentVo", studentVo);
-        return "/maintainer/users/studentlist";
+        map.put("totalData", studentService.findByTieIdAndPageCount(map.get("studentName").toString(),
+                map.get("studentNumber").toString(), tieId));
+        ajaxData.success().listData(studentVos).mapData(map);
+        return ajaxData;
     }
 
     /**
      * 教师管理界面
      *
-     * @param map
      * @return
      */
     @RequestMapping("/maintainer/users/teacherManager")
-    public String teacherManager(ModelMap map, TeacherVo teacherVo) {
+    public String teacherManager(String teacherName, String teacherJobNumber, ModelMap modelMap) {
+        modelMap.addAttribute("teacherName", teacherName);
+        modelMap.addAttribute("teacherJobNumber", teacherJobNumber);
+        return "/maintainer/users/teacherlist";
+    }
+
+    /**
+     * 教师数据
+     *
+     * @param param
+     * @return
+     */
+    @RequestMapping("/maintainer/users/teacherManagerData")
+    @ResponseBody
+    public AjaxData<TeacherVo> teacherManagerData(@RequestParam("param") String param) {
+        AjaxData<TeacherVo> ajaxData = new AjaxData<>();
+        Map<String, Object> map = (Map<String, Object>) JSON.parse(param);
         List<TeacherVo> teacherVos = new ArrayList<>();
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -119,29 +167,21 @@ public class UsersController {
                 tieId = r.getValue(Tables.TIE.ID);
             }
         }
-        Result<Record5<Integer, String, String, Byte, String>> record5s = teacherService.findByTieIdAndPage(teacherVo, tieId);
+        Result<Record5<Integer, String, String, Byte, String>> record5s = teacherService.findByTieIdAndPage(map.get("teacherName").toString(),
+                map.get("teacherJobNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
+                tieId);
         if (record5s.isNotEmpty()) {
             teacherVos = record5s.into(TeacherVo.class);
             for (TeacherVo t : teacherVos) {
                 if (!StringUtils.isEmpty(t.getAuthority())) {
-                    if (t.getAuthority().equals("ROLE_ADMIN")) {
-                        t.setAuthority("超级管理员");
-                    } else if (t.getAuthority().equals("ROLE_MAI")) {
-                        t.setAuthority("管理员");
-                    } else if (t.getAuthority().equals("ROLE_TEA")) {
-                        t.setAuthority("教师");
-                    } else if (t.getAuthority().equals("ROLE_STU")) {
-                        t.setAuthority("学生");
-                    }
+                    t.setAuthority(wordbook.getRoleMap().get(t.getAuthority()));
                 }
             }
         }
-        if (!StringUtils.isEmpty(teacherVo)) {
-            teacherVo.setTotalData(teacherService.findByTieIdAndPageCount(teacherVo, tieId));
-        }
-        map.addAttribute("teachers", teacherVos);
-        map.addAttribute("teacherVo", teacherVo);
-        return "/maintainer/users/teacherlist";
+        map.put("totalData", teacherService.findByTieIdAndPageCount(map.get("teacherName").toString(),
+                map.get("teacherJobNumber").toString(), tieId));
+        ajaxData.success().listData(teacherVos).mapData(map);
+        return ajaxData;
     }
 
     /**
@@ -251,7 +291,7 @@ public class UsersController {
      * @return
      */
     @RequestMapping(value = "/maintainer/users/addStudent", method = RequestMethod.POST)
-    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname,@RequestParam("grade") int grade ) {
+    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (records.isNotEmpty()) {

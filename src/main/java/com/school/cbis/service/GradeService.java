@@ -76,10 +76,15 @@ public interface GradeService {
     void deleteById(int id);
 
     /**
-     * 查询根据系id
-     *
-     * @param tieId
+     * 不重复查询年级
      * @return
      */
-    Result<Record2<Integer, String>> findByTieId(int tieId);
+    Result<Record1<String >> findAllYearDistinct(int tieId);
+
+    /**
+     * 通过年级查询班级
+     * @param year
+     * @return
+     */
+    List<Grade> findByYear(String year);
 }

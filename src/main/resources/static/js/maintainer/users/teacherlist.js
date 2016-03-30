@@ -1,25 +1,90 @@
 /**
  * Created by lenovo on 2016-02-17.
  */
-$('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
-    var toTeacherName = '';
-    var toTeacherJobNumber = '';
-    if (param.teacherName != null && param.teacherName.trim().length > 0) {
-        toTeacherName = param.teacherName;
+/**
+ * 输出html
+ * @param data
+ */
+function outputHtml(data) {
+    $('#teacherData').empty();
+    var _ = DOMBuilder;
+    for (var i = 0; i < data.result.length; i++) {
+        $('#teacherData').append(_.DOM(
+            _('li')._(
+                _('div.uk-panel.uk-panel-space.uk-panel-box.uk-panel-box-secondary')._([
+                    _('h3.uk-panel-title').H('姓名:' + (data.result[i].teacherName == null ? '' : data.result[i].teacherName)),
+                    _('ul.uk-list.uk-list-space')._([
+                        _('li').H('账号:' + data.result[i].teacherJobNumber),
+                        _('li').H('角色:' + (data.result[i].authority == null ? '' : data.result[i].authority)),
+                        _('li' + (data.result[i].enabled ? '' : '.uk-text-danger')).H('状态:' + (data.result[i].enabled ? '正常' : '注销')),
+                        _('li.uk-clearfix')._([
+                            _('p.uk-hidden').H(data.result[i].teacherJobNumber),
+                            _('button.uk-button.uk-button-primary.uk-float-right[type=button][onclick=openEditModal(this);]').H('编辑'),
+                            _('button.uk-button.uk-float-left[type=button][onclick=resetPassword(this);]').H('重置')
+                        ]),
+                        _('li.uk-clearfix')._([
+                            _('p.uk-hidden').H(data.result[i].teacherJobNumber),
+                            _('p.uk-hidden').H(data.result[i].authority),
+                            _('button.uk-button.uk-float-right[type=button][onclick=openAuthoritiesModal(this);]').H('权限'),
+                            _('p.uk-hidden').H(data.result[i].enabled ? 'y' : 'n'),
+                            _('button.uk-button.uk-button-danger.uk-float-left[onclick=openStateModal(this);][type=button]').H('状态')
+                        ])
+                    ])
+                ])
+            )
+        ));
     }
+}
 
-    if (param.teacherJobNumber != null && param.teacherJobNumber.trim().length > 0) {
-        toTeacherJobNumber = param.teacherJobNumber;
-    }
-    window.location.href = web_path + "/maintainer/users/teacherManager?teacherName=" + toTeacherName + "&teacherJobNumber=" + toTeacherJobNumber + "&pageNum=" + (pageIndex + 1);
+/**
+ * 执行入口
+ */
+function action() {
+    $.post(web_path + '/maintainer/users/teacherManagerData', {
+        'param': JSON.stringify(param)
+    }, function (data) {
+        outputHtml(data);
+        initPage(data);
+    });
+}
+
+/**
+ * 分页
+ * @param data
+ */
+function initPage(data) {
+    var pagination = UIkit.pagination('.uk-pagination', {
+        items: data.single.totalData,
+        itemsOnPage: data.single.pageSize,
+        currentPage: data.single.pageNum - 1
+    });
+}
+
+/**
+ * 封装参数
+ * @type {{teacherName: (string|*|jQuery), teacherJobNumber: (string|*|jQuery), pageNum: number, pageSize: number, totalData: number}}
+ */
+var param = {
+    'teacherName': $('#teacherName').val().trim(),
+    'teacherJobNumber': $('#teacherJobNumber').val().trim(),
+    'pageNum': 1,
+    'pageSize': 6,
+    'totalData': 1
+}
+
+/**
+ * 点击下一页
+ */
+$('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
+    param.pageNum = pageIndex + 1;
+    action();
 });
 
+/**
+ * 开始执行
+ */
 $(document).ready(function () {
-    var pagination = UIkit.pagination('.uk-pagination', {
-        items: param.totalData,
-        itemsOnPage: param.pageSize,
-        currentPage: param.pageNum - 1
-    });
+    action();
 });
 /**
  * 打开添加用户模态框
