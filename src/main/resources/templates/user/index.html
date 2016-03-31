@@ -57,7 +57,7 @@
     <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-2">
             <div class="uk-slidenav-position" data-uk-slideshow="{autoplay:true,kenburns:true}">
-                <ul class="uk-slideshow uk-overlay-active" th:unless="${#lists.isEmpty(tieElegantData)}">
+                <ul class="uk-slideshow uk-overlay-active"  th:unless="${#lists.isEmpty(tieElegantData)}">
                     <li th:each="te:${tieElegantData}">
                         <img th:src="${te.articlePhotoUrl}" src="images/placeholder_800x400_3.jpg" width="800"
                              height="400" alt=""/>
@@ -82,7 +82,7 @@
                 <p class="uk-article-meta">由 <span th:text="${tieIntroduce.articleWriter}"></span> 撰写于 <span
                         th:text="${tieIntroduce.date}"></span></p>
                 <p th:text="${tieIntroduce.articleContent}"></p>
-                <a class="uk-button uk-button-primary" href="#" style="float:right"
+                <a class="uk-button uk-button-primary" th:if="${tieIntroduce.id != null}" href="#" style="float:right"
                    th:href="@{/user/tie/tieArticleShow}+'?id='+${tieIntroduce.id}">更多</a>
             </article>
         </div>

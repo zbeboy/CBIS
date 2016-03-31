@@ -385,6 +385,71 @@ create table classroom_course_timetable_info(
   foreign key(file_user) references users(username)
 );
 
+create table autonomous_practice_info(
+  id int not null primary key auto_increment,
+  autonomous_practice_title varchar(100) not null,
+  create_time  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  grade_year varchar(20) not null,
+  autonomous_practice_template_id int,
+  start_time datetime not null,
+  end_time datetime not null,
+  users_id varchar(64) not null,
+  tie_id int not null,
+  foreign key(users_id) references users(username),
+  foreign key(tie_id) references tie(id)
+);
+
+create table head_type(
+  id int not null primary key auto_increment,
+  name varchar(30) not null
+);
+
+create table head_type_plugin(
+  id int not null primary key auto_increment,
+  type varchar(25) not null,
+  head_type_id int not null,
+  foreign key(head_type_id) references head_type(id)
+);
+
+create table autonomous_practice_template(
+  id int not null primary key auto_increment,
+  autonomous_practice_template_title varchar(50) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  autonomous_practice_info_id int not null,
+  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
+);
+
+create table autonomous_practice_head(
+  id int not null primary key auto_increment,
+  title varchar(50) not null,
+  title_variable varchar(50) not null,
+  database_table varchar(100) not null,
+  database_table_field varchar(100) not null,
+  authority varchar(30) not null,
+  head_type_plugin_filed varchar(30),
+  is_editing boolean not null default false,
+  is_filtering boolean not null default false,
+  is_sorting boolean not null default false,
+  is_visible boolean not null default false,
+  head_type_pluging_content varchar(2000),
+  is_show_highly_active boolean not null default true,
+  is_show_general boolean not null default true,
+  highly_active_authority varchar(30) not null,
+  general_authority varchar(30) not null,
+  is_required boolean not null default false,
+  head_type_id int not null,
+  autonomous_practice_info_id int not null,
+  foreign key(head_type_id) references head_type(id),
+  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
+);
+
+create table autonomous_practice_content(
+  id int not null primary key auto_increment,
+  cotent varchar(200),
+  autonomous_practice_head_id int not null,
+  foreign key(autonomous_practice_head_id) references autonomous_practice_head(id)
+);
+
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 
@@ -424,3 +489,23 @@ insert into four_items_type(name) values('大纲');
 insert into four_items_type(name) values('计划');
 insert into four_items_type(name) values('日程');
 insert into four_items_type(name) values('ppt');
+
+insert into head_type(name) values('text');
+insert into head_type(name) values('textarea');
+insert into head_type(name) values('radio');
+insert into head_type(name) values('checkbox');
+insert into head_type(name) values('time');
+insert into head_type(name) values('timerange');
+insert into head_type(name) values('control');
+insert into head_type(name) values('email');
+insert into head_type(name) values('number');
+
+insert into head_type_plugin(type,head_type_id) values('长度',1);
+insert into head_type_plugin(type,head_type_id) values('长度',2);
+insert into head_type_plugin(type,head_type_id) values('单选',3);
+insert into head_type_plugin(type,head_type_id) values('单选',4);
+insert into head_type_plugin(type,head_type_id) values('多选',4);
+insert into head_type_plugin(type,head_type_id) values('日期',5);
+insert into head_type_plugin(type,head_type_id) values('日期+时间',5);
+insert into head_type_plugin(type,head_type_id) values('日期',6);
+insert into head_type_plugin(type,head_type_id) values('日期+时间',6);

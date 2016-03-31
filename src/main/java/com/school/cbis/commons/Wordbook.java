@@ -63,13 +63,21 @@ public class Wordbook {
 
     private Map<String ,Integer> fourItemsTypeMap = new HashMap<>();
 
+    //权限
+    public static final String CBIS_ADMIN = "ROLE_ADMIN";
+    public static final String CBIS_MAI = "ROLE_MAI";
+    public static final String CBIS_TM = "ROLE_TM";
+    public static final String CBIS_TEA = "ROLE_TEA";
+    public static final String CBIS_STU = "ROLE_STU";
+
     private Map<String,String> roleMap = new HashMap<>();
 
     public Map<String, String> getRoleMap() {
-        roleMap.put("ROLE_ADMIN","超级管理员");
-        roleMap.put("ROLE_MAI","管理员");
-        roleMap.put("ROLE_TEA","教师");
-        roleMap.put("ROLE_STU","学生");
+        roleMap.put(CBIS_ADMIN,"超级管理员");
+        roleMap.put(CBIS_MAI,"管理员");
+        roleMap.put(CBIS_TM,"管理员");
+        roleMap.put(CBIS_TEA,"教师");
+        roleMap.put(CBIS_STU,"学生");
         return roleMap;
     }
 
