@@ -126,6 +126,8 @@ function selectYear(obj) {
                 layer.msg(data.msg);
             }
         });
+    } else {
+        $('#gradeData').empty();
     }
 }
 
