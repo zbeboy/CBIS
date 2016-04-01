@@ -1,5 +1,6 @@
 package com.school.cbis.web;
 
+import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
@@ -108,6 +109,7 @@ public class BackstageController {
 
     /**
      * 专业管理界面
+     *
      * @param modelMap
      * @return
      */
@@ -152,8 +154,8 @@ public class BackstageController {
         try {
             String realPath = request.getSession().getServletContext().getRealPath("/");
             List<FileData> fileDatas = upload.upload(multipartHttpServletRequest, realPath + "files" + File.separator + multipartHttpServletRequest.getParameter("pathname"), request.getRemoteAddr());
-            Map<String,Object> map = new HashMap<>();
-            map.put("single",fileDatas.get(0));
+            Map<String, Object> map = new HashMap<>();
+            map.put("single", fileDatas.get(0));
             data.success().msg(fileDatas.get(0).getLastPath()).listData(fileDatas).mapData(map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,6 +165,7 @@ public class BackstageController {
 
     /**
      * 用户管理界面
+     *
      * @return
      */
     @RequestMapping("/maintainer/users/usersManager")
@@ -199,6 +202,7 @@ public class BackstageController {
 
     /**
      * 下载公告附件
+     *
      * @param id
      * @param response
      */
@@ -215,5 +219,22 @@ public class BackstageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 自主实习管理
+     *
+     * @return
+     */
+    @RequestMapping("/maintainer/users/autonomicPractice")
+    public String autonomicLearning() {
+        if (usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)) {
+            return "/administrator/autonomicpractice/autonomicpractice";
+        } else if (usersService.isCurrentUserInRole(Wordbook.CBIS_MAI)) {
+
+        } else {
+
+        }
+        return null;
     }
 }

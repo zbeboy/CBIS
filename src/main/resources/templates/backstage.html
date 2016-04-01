@@ -24,9 +24,9 @@
         </div>
     </div>
     <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
-        <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>系管理</button>
+        <button class="uk-button" data-uk-offcanvas="{target:'#tie-id'}"><i class="uk-icon-reorder"></i>系管理</button>
     </div>
-    <div id="my-id" class="uk-offcanvas uk-visible-small">
+    <div id="tie-id" class="uk-offcanvas uk-visible-small">
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
                 <li class="uk-nav-header">系管理</li>
@@ -59,10 +59,10 @@
         </div>
     </div>
     <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
-        <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>个人业务
+        <button class="uk-button" data-uk-offcanvas="{target:'#personal-id'}"><i class="uk-icon-reorder"></i>个人业务
         </button>
     </div>
-    <div id="my-id" class="uk-offcanvas uk-visible-small">
+    <div id="personal-id" class="uk-offcanvas uk-visible-small">
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas">
                 <li class="uk-nav-header">个人业务</li>
@@ -162,6 +162,34 @@
                 <li class="uk-nav-header">用户管理</li>
                 <li id="offcanvasstudentmanager"><a href="#" th:href="@{/maintainer/users/studentManager}">学生管理</a> </li>
                 <li id="offcanvasteachermanager"><a href="#" th:href="@{/maintainer/users/teacherManager}">教师管理</a> </li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 自主实习nav-->
+<div class="uk-width-medium-1-4" th:fragment="practicenav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">自主实习</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navreportingsettings"><a href="#" th:href="@{/maintainer/users/reportingSettings }">填报设置</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#practice-id'}"><i class="uk-icon-reorder"></i>自主实习</button>
+    </div>
+    <div id="practice-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">自主实习</li>
+                <li id="offcanvasreportingsettings"><a href="#" th:href="@{/maintainer/users/reportingSettings}">填报设置</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

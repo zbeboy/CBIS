@@ -494,6 +494,7 @@ insert into head_type(name) values('text');
 insert into head_type(name) values('textarea');
 insert into head_type(name) values('radio');
 insert into head_type(name) values('checkbox');
+insert into head_type(name) values('password');
 insert into head_type(name) values('time');
 insert into head_type(name) values('timerange');
 insert into head_type(name) values('control');

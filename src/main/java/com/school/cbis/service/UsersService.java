@@ -32,16 +32,19 @@ public interface UsersService {
 
     /**
      * 检查是否有权限
+     *
      * @return
      */
     boolean isAuthenticated();
 
     /**
      * 检查当前用户是否有此权限
+     *
      * @param authority
      * @return
      */
     boolean isCurrentUserInRole(String authority);
+
     /**
      * 根据用户名更新用户密码
      *

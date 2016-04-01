@@ -66,7 +66,7 @@ public class Wordbook {
     //权限
     public static final String CBIS_ADMIN = "ROLE_ADMIN";
     public static final String CBIS_MAI = "ROLE_MAI";
-    public static final String CBIS_TM = "ROLE_SEMI";
+    public static final String CBIS_SEMI = "ROLE_SEMI";
     public static final String CBIS_TEA = "ROLE_TEA";
     public static final String CBIS_STU = "ROLE_STU";
 
@@ -75,7 +75,7 @@ public class Wordbook {
     public Map<String, String> getRoleMap() {
         roleMap.put(CBIS_ADMIN,"超级管理员");
         roleMap.put(CBIS_MAI,"管理员");
-        roleMap.put(CBIS_TM,"教管");
+        roleMap.put(CBIS_SEMI,"教管");
         roleMap.put(CBIS_TEA,"教师");
         roleMap.put(CBIS_STU,"学生");
         return roleMap;
