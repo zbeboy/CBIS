@@ -8,11 +8,17 @@ import com.school.cbis.domain.tables.ArticleInfo;
 import com.school.cbis.domain.tables.ArticleSub;
 import com.school.cbis.domain.tables.ArticleType;
 import com.school.cbis.domain.tables.Authorities;
+import com.school.cbis.domain.tables.AutonomousPracticeContent;
+import com.school.cbis.domain.tables.AutonomousPracticeHead;
+import com.school.cbis.domain.tables.AutonomousPracticeInfo;
+import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
+import com.school.cbis.domain.tables.HeadType;
+import com.school.cbis.domain.tables.HeadTypePlugin;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -76,6 +82,26 @@ public class Tables {
 	public static final Authorities AUTHORITIES = com.school.cbis.domain.tables.Authorities.AUTHORITIES;
 
 	/**
+	 * The table cbis.autonomous_practice_content
+	 */
+	public static final AutonomousPracticeContent AUTONOMOUS_PRACTICE_CONTENT = com.school.cbis.domain.tables.AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT;
+
+	/**
+	 * The table cbis.autonomous_practice_head
+	 */
+	public static final AutonomousPracticeHead AUTONOMOUS_PRACTICE_HEAD = com.school.cbis.domain.tables.AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD;
+
+	/**
+	 * The table cbis.autonomous_practice_info
+	 */
+	public static final AutonomousPracticeInfo AUTONOMOUS_PRACTICE_INFO = com.school.cbis.domain.tables.AutonomousPracticeInfo.AUTONOMOUS_PRACTICE_INFO;
+
+	/**
+	 * The table cbis.autonomous_practice_template
+	 */
+	public static final AutonomousPracticeTemplate AUTONOMOUS_PRACTICE_TEMPLATE = com.school.cbis.domain.tables.AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE;
+
+	/**
 	 * The table cbis.bring_in
 	 */
 	public static final BringIn BRING_IN = com.school.cbis.domain.tables.BringIn.BRING_IN;
@@ -99,6 +125,16 @@ public class Tables {
 	 * The table cbis.grade
 	 */
 	public static final Grade GRADE = com.school.cbis.domain.tables.Grade.GRADE;
+
+	/**
+	 * The table cbis.head_type
+	 */
+	public static final HeadType HEAD_TYPE = com.school.cbis.domain.tables.HeadType.HEAD_TYPE;
+
+	/**
+	 * The table cbis.head_type_plugin
+	 */
+	public static final HeadTypePlugin HEAD_TYPE_PLUGIN = com.school.cbis.domain.tables.HeadTypePlugin.HEAD_TYPE_PLUGIN;
 
 	/**
 	 * The table cbis.major

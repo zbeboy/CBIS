@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-02-21.
  */
@@ -27,28 +29,32 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
-    public AuthoritiesRecord findByUsername(String username) {
-        AuthoritiesRecord authoritiesRecord = create.selectFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username)).fetchOne();
-        return authoritiesRecord;
+    public List<AuthoritiesRecord> findByUsername(String username) {
+        List<AuthoritiesRecord> authoritiesRecords = create.selectFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username)).fetch();
+        return authoritiesRecords;
     }
 
     @Override
     public void delete(String username) {
-        create.deleteFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username));
+        create.deleteFrom(Tables.AUTHORITIES).where(Tables.AUTHORITIES.USERNAME.eq(username)).execute();
     }
 
     @Override
-    public void update(AuthoritiesRecord authoritiesRecord) {
-        create.update(Tables.AUTHORITIES)
-                .set(Tables.AUTHORITIES.AUTHORITY, authoritiesRecord.getAuthority())
-                .where(Tables.AUTHORITIES.USERNAME.eq(authoritiesRecord.getUsername())).execute();
+    public void update(List<AuthoritiesRecord> authoritiesRecords) {
+        authoritiesRecords.forEach(a->{
+            create.update(Tables.AUTHORITIES)
+                    .set(Tables.AUTHORITIES.AUTHORITY, a.getAuthority())
+                    .where(Tables.AUTHORITIES.USERNAME.eq(a.getUsername())).execute();
+        });
     }
 
     @Override
-    public void save(AuthoritiesRecord authoritiesRecord) {
-        create.insertInto(Tables.AUTHORITIES)
-                .set(Tables.AUTHORITIES.USERNAME, authoritiesRecord.getUsername())
-                .set(Tables.AUTHORITIES.AUTHORITY, authoritiesRecord.getAuthority())
-                .execute();
+    public void save(List<AuthoritiesRecord> authoritiesRecords) {
+        authoritiesRecords.forEach(a->{
+            create.insertInto(Tables.AUTHORITIES)
+                    .set(Tables.AUTHORITIES.USERNAME, a.getUsername())
+                    .set(Tables.AUTHORITIES.AUTHORITY, a.getAuthority())
+                    .execute();
+        });
     }
 }

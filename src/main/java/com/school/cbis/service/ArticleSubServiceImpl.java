@@ -43,9 +43,9 @@ public class ArticleSubServiceImpl implements ArticleSubService {
                 Tables.ARTICLE_SUB.ARTICLE_INFO_ID).values(
                 null, null, (Integer) null
         ));
-        for (ArticleSub r : articleSubs) {
+        articleSubs.forEach(r->{
             bindStep.bind(r.getSubTitle(), r.getSubContent(), r.getArticleInfoId());
-        }
+        });
         bindStep.execute();
     }
 

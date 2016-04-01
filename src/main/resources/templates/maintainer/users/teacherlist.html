@@ -207,14 +207,22 @@
                 <div class="uk-form-row">
                     <div class="uk-form-controls">
                         <input type="hidden" id="authoritiesNum"/>
-                        <input type="radio" id="form-a-r" name="authoritiesRadio" value="ROLE_ADMIN"/> <label
-                            for="form-a-r">超级管理员</label><br/>
-                        <input type="radio" id="form-a-r1" name="authoritiesRadio" value="ROLE_MAI"/> <label
-                            for="form-a-r1">管理员</label><br/>
-                        <input type="radio" id="form-a-r2" name="authoritiesRadio" value="ROLE_TEA"/> <label
-                            for="form-a-r2">教师</label><br/>
-                        <input type="radio" id="form-a-r3" name="authoritiesRadio" value="ROLE_STU"/> <label
-                            for="form-a-r3">学生</label>
+
+                        <input type="checkbox" id="form-a-r" name="authoritiesCheck" value="ROLE_ADMIN" />
+                        <label for="form-a-r">超级管理员</label><br/>
+
+                        <input type="checkbox" id="form-a-r1" name="authoritiesCheck" value="ROLE_MAI" />
+                        <label for="form-a-r1">管理员</label><br/>
+
+                        <input type="checkbox" id="form-a-r2" name="authoritiesCheck" value="ROLE_SEMI" />
+                        <label for="form-a-r2">教管</label><br/>
+
+                        <input type="checkbox" id="form-a-r3" name="authoritiesCheck" value="ROLE_TEA" />
+                        <label for="form-a-r3">教师</label><br/>
+
+                        <input type="checkbox" id="form-a-r4" name="authoritiesCheck" value="ROLE_STU" />
+                        <label for="form-a-r4">学生</label>
+
                     </div>
                 </div>
             </form>

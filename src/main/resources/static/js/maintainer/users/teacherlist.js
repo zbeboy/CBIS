@@ -9,13 +9,19 @@ function outputHtml(data) {
     $('#teacherData').empty();
     var _ = DOMBuilder;
     for (var i = 0; i < data.result.length; i++) {
+
+        var authorities = new Array();
+        for(var j = 0;j<data.result[i].authorities.length;j++){
+            authorities.push(data.result[i].authorities[j]);
+        }
+
         $('#teacherData').append(_.DOM(
             _('li')._(
                 _('div.uk-panel.uk-panel-space.uk-panel-box.uk-panel-box-secondary')._([
                     _('h3.uk-panel-title').H('姓名:' + (data.result[i].teacherName == null ? '' : data.result[i].teacherName)),
                     _('ul.uk-list.uk-list-space')._([
                         _('li').H('账号:' + data.result[i].teacherJobNumber),
-                        _('li').H('角色:' + (data.result[i].authority == null ? '' : data.result[i].authority)),
+                        _('li').H('角色:' + (authorities.join(","))),
                         _('li' + (data.result[i].enabled ? '' : '.uk-text-danger')).H('状态:' + (data.result[i].enabled ? '正常' : '注销')),
                         _('li.uk-clearfix')._([
                             _('p.uk-hidden').H(data.result[i].teacherJobNumber),
@@ -24,7 +30,7 @@ function outputHtml(data) {
                         ]),
                         _('li.uk-clearfix')._([
                             _('p.uk-hidden').H(data.result[i].teacherJobNumber),
-                            _('p.uk-hidden').H(data.result[i].authority),
+                            _('p.uk-hidden').H(authorities.join(",")),
                             _('button.uk-button.uk-float-right[type=button][onclick=openAuthoritiesModal(this);]').H('权限'),
                             _('p.uk-hidden').H(data.result[i].enabled ? 'y' : 'n'),
                             _('button.uk-button.uk-button-danger.uk-float-left[onclick=openStateModal(this);][type=button]').H('状态')
@@ -198,19 +204,27 @@ function openAuthoritiesModal(obj) {
     var p = $(obj).parent();
     $('#authoritiesNum').val($(p.children()[0]).text());
 
-    var radio = document.getElementsByName('authoritiesRadio');
-    for (var i = 0; i < radio.length; i++) {
-        radio[i].checked = false;
+    var checkBox = document.getElementsByName('authoritiesCheck');
+    for (var i = 0; i < checkBox.length; i++) {
+        checkBox[i].checked = false;
     }
 
-    if ($(obj).prev().text().trim() === '超级管理员') {
-        document.getElementById('form-a-r').checked = true;
-    } else if ($(obj).prev().text().trim() === '管理员') {
-        document.getElementById('form-a-r1').checked = true;
-    } else if ($(obj).prev().text().trim() === '教师') {
-        document.getElementById('form-a-r2').checked = true;
-    } else if ($(obj).prev().text().trim() === '学生') {
-        document.getElementById('form-a-r3').checked = true;
+    var authorities = $(obj).prev().text().trim().split(",");
+    console.log(authorities);
+    console.log(authorities.length);
+
+    for(var i = 0;i<authorities.length;i++){
+        if (authorities[i] === '超级管理员') {
+            document.getElementById('form-a-r').checked = true;
+        } else if (authorities[i] === '管理员') {
+            document.getElementById('form-a-r1').checked = true;
+        } else if(authorities[i] === '教管'){
+            document.getElementById('form-a-r2').checked = true;
+        } else if (authorities[i] === '教师') {
+            document.getElementById('form-a-r3').checked = true;
+        } else if (authorities[i] === '学生') {
+            document.getElementById('form-a-r4').checked = true;
+        }
     }
 
     if (!modal.isActive()) {
@@ -222,10 +236,15 @@ function openAuthoritiesModal(obj) {
  * 权限保存
  */
 function authorities() {
-    var n = $("input[name='authoritiesRadio']:checked").val();
+    var n = new Array();
+    for(var i = 0;i<$("input[name='authoritiesCheck']:checked").length;i++){
+        n.push($($("input[name='authoritiesCheck']:checked")[i]).val().trim());
+    }
+    console.log(n);
+    console.log(n.length);
     $.post(web_path + '/maintainer/users/resetAuthority', {
         'username': $('#authoritiesNum').val(),
-        'authority': n
+        'authority': n.join(",")
     }, function (data) {
         if (data.state) {
             window.location.reload(true);

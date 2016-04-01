@@ -4,7 +4,6 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TeacherDao;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
-import com.school.cbis.vo.users.TeacherVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Result<TeacherRecord> findByTieIdAndTearchName(String teacherName, int tieId) {
+    public Result<TeacherRecord> findByTieIdAndTeacherName(String teacherName, int tieId) {
         Result<TeacherRecord> records = create.selectFrom(Tables.TEACHER).where(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%").and(Tables.TEACHER.TIE_ID.eq(tieId))).fetch();
         return records;
     }
@@ -54,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId) {
+    public Result<Record4<Integer, String, String, Byte>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId) {
         Condition a = Tables.TEACHER.TIE_ID.eq(tieId);
 
 
@@ -70,18 +69,15 @@ public class TeacherServiceImpl implements TeacherService {
             pageNum = 1;
         }
 
-        Result<Record5<Integer, String, String, Byte, String>> record5s = create.select(Tables.TEACHER.ID,
-                Tables.TEACHER.TEACHER_NAME, Tables.TEACHER.TEACHER_JOB_NUMBER, Tables.USERS.ENABLED,
-                Tables.AUTHORITIES.AUTHORITY)
+        Result<Record4<Integer, String, String, Byte>> record4s = create.select(Tables.TEACHER.ID,
+                Tables.TEACHER.TEACHER_NAME, Tables.TEACHER.TEACHER_JOB_NUMBER, Tables.USERS.ENABLED)
                 .from(Tables.TEACHER)
                 .leftJoin(Tables.USERS)
                 .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
-                .leftJoin(Tables.AUTHORITIES)
-                .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
                 .where(a)
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
-        return record5s;
+        return record4s;
     }
 
     @Override
@@ -101,8 +97,6 @@ public class TeacherServiceImpl implements TeacherService {
                 .from(Tables.TEACHER)
                 .leftJoin(Tables.USERS)
                 .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
-                .leftJoin(Tables.AUTHORITIES)
-                .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
                 .where(a)
                 .fetchOne();
         return count.value1();

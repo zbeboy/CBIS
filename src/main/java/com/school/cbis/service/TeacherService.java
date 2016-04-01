@@ -2,8 +2,7 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
-import com.school.cbis.vo.users.TeacherVo;
-import org.jooq.Record5;
+import org.jooq.Record4;
 import org.jooq.Result;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public interface TeacherService {
      * @param tieId
      * @return
      */
-    Result<TeacherRecord> findByTieIdAndTearchName(String teacherName, int tieId);
+    Result<TeacherRecord> findByTieIdAndTeacherName(String teacherName, int tieId);
 
     /**
      * 通过教师工号查询
@@ -43,7 +42,7 @@ public interface TeacherService {
      * @param tieId
      * @return
      */
-    Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId);
+    Result<Record4<Integer, String, String, Byte>> findByTieIdAndPage(String teacherName, String teacherJobNumber, int pageNum, int pageSize, int tieId);
 
     /**
      * 通过系id查询教师总数

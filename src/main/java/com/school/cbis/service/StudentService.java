@@ -1,8 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.vo.users.StudentVo;
-import org.jooq.Record6;
+import org.jooq.Record5;
 import org.jooq.Result;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public interface StudentService {
      * @param tieId
      * @return
      */
-    Result<Record6<Integer, String, String, Byte, String, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId);
+    Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId);
 
     /**
      * 通过系id查询学生总数

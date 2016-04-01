@@ -3,7 +3,6 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.StudentDao;
 import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.vo.users.StudentVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record6<Integer, String, String, Byte, String, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId) {
+    public Result<Record5<Integer, String, String, Byte, String>> findByTieIdAndPage(String studentName, String studentNumber, int pageNum, int pageSize, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
         if (StringUtils.hasLength(studentName)) {
@@ -55,14 +54,12 @@ public class StudentServiceImpl implements StudentService {
             pageNum = 1;
         }
 
-        Result<Record6<Integer, String, String, Byte, String, String>> record6s = create.select(Tables.STUDENT.ID,
+        Result<Record5<Integer, String, String, Byte, String>> record5s = create.select(Tables.STUDENT.ID,
                 Tables.STUDENT.STUDENT_NAME, Tables.STUDENT.STUDENT_NUMBER, Tables.USERS.ENABLED,
-                Tables.AUTHORITIES.AUTHORITY, Tables.GRADE.GRADE_NAME)
+                Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .leftJoin(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
-                .leftJoin(Tables.AUTHORITIES)
-                .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
                 .leftJoin(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
                 .leftJoin(Tables.MAJOR)
@@ -70,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
                 .where(a)
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
-        return record6s;
+        return record5s;
     }
 
     @Override
@@ -89,8 +86,6 @@ public class StudentServiceImpl implements StudentService {
                 .from(Tables.STUDENT)
                 .leftJoin(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
-                .leftJoin(Tables.AUTHORITIES)
-                .on(Tables.USERS.USERNAME.eq(Tables.AUTHORITIES.USERNAME))
                 .leftJoin(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
                 .leftJoin(Tables.MAJOR)

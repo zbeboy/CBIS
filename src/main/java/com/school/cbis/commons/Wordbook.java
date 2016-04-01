@@ -66,7 +66,7 @@ public class Wordbook {
     //权限
     public static final String CBIS_ADMIN = "ROLE_ADMIN";
     public static final String CBIS_MAI = "ROLE_MAI";
-    public static final String CBIS_TM = "ROLE_TM";
+    public static final String CBIS_TM = "ROLE_SEMI";
     public static final String CBIS_TEA = "ROLE_TEA";
     public static final String CBIS_STU = "ROLE_STU";
 
@@ -75,7 +75,7 @@ public class Wordbook {
     public Map<String, String> getRoleMap() {
         roleMap.put(CBIS_ADMIN,"超级管理员");
         roleMap.put(CBIS_MAI,"管理员");
-        roleMap.put(CBIS_TM,"管理员");
+        roleMap.put(CBIS_TM,"教管");
         roleMap.put(CBIS_TEA,"教师");
         roleMap.put(CBIS_STU,"学生");
         return roleMap;
@@ -83,36 +83,33 @@ public class Wordbook {
 
     public Map<String, Integer> getArticleTypeMap() {
         Result<ArticleTypeRecord> articleTypeRecordResult = wordbookService.articleType();
-        for(ArticleTypeRecord r:articleTypeRecordResult){
+        articleTypeRecordResult.forEach(r->{
             articleTypeMap.put(r.getName(),r.getId());
-        }
+        });
         return articleTypeMap;
     }
 
     public Map<String, Integer> getUserTypeMap() {
         Result<UserTypeRecord> userTypeRecordResult = wordbookService.userType();
-
-        for(UserTypeRecord r:userTypeRecordResult){
+        userTypeRecordResult.forEach(r->{
             userTypeMap.put(r.getName(),r.getId());
-        }
+        });
         return userTypeMap;
     }
 
     public Map<String, Integer> getTeachTypeMap() {
         Result<TeachTypeRecord> teachTypeRecordResult = wordbookService.teachType();
-
-        for(TeachTypeRecord r:teachTypeRecordResult){
+        teachTypeRecordResult.forEach(r->{
             teachTypeMap.put(r.getName(),r.getId());
-        }
+        });
         return teachTypeMap;
     }
 
     public Map<String, Integer> getFourItemsTypeMap() {
         Result<FourItemsTypeRecord> fourItemsTypeRecordResult  = wordbookService.fourItemsType();
-
-        for(FourItemsTypeRecord r:fourItemsTypeRecordResult){
+        fourItemsTypeRecordResult.forEach(r->{
             fourItemsTypeMap.put(r.getName(),r.getId());
-        }
+        });
         return fourItemsTypeMap;
     }
 }

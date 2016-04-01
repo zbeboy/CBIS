@@ -149,11 +149,11 @@ public class TieManagerController {
             Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieElegantVo.class);
-                for (TieElegantVo t : list) {
+                list.forEach(t->{
                     if (!StringUtils.isEmpty(t.getIsShow())) {
                         t.setShow(t.getIsShow() == 0 ? false : true);
                     }
-                }
+                });
                 jsGrid.loadData(list, tieElegantService.findByTieIdWithBigTitleAndCount(tieElegantVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
@@ -477,7 +477,7 @@ public class TieManagerController {
     public String tieArticleShow(ModelMap modelMap, @RequestParam("id") int id) {
         Result<Record> records = usersService.findAll(usersService.getUserName());
         if (records.isNotEmpty()) {
-            for (Record r : records) {
+            records.forEach(r->{
                 if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID) == id) {
                     modelMap.addAttribute("navId", "navtieintroduce");
                 } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID) == id) {
@@ -493,7 +493,7 @@ public class TieManagerController {
                 modelMap.addAttribute("tiegoalid", r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID));
                 modelMap.addAttribute("tieitemid", r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID));
                 modelMap.addAttribute("currentId", id);
-            }
+            });
         }
 
         return "/user/tie/tiearticleshow";
@@ -569,11 +569,11 @@ public class TieManagerController {
             Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieNoticeVo.class);
-                for(TieNoticeVo t:list){
+                list.forEach(t->{
                     if(!StringUtils.isEmpty(t.getIsShow())){
                         t.setShow(t.getIsShow() == 0 ? false : true);
                     }
-                }
+                });
                 jsGrid.loadData(list, tieNoticeService.findByTieIdWithBigTitleAndCount(tieNoticeVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);
@@ -717,7 +717,6 @@ public class TieManagerController {
         List<TieNoticeTime> tieNoticeTimes = new ArrayList<>();
 
         if (record2s.isNotEmpty()) {
-
             tieNoticeTimes = record2s.into(TieNoticeTime.class);
         }
 
@@ -743,11 +742,9 @@ public class TieManagerController {
         Result<Record3<Integer, String, Timestamp>> record3s =
                 tieNoticeService.findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(id, bigTitle);
         List<TieNoticeTimeVo> tieNoticeTimeVos = record3s.into(TieNoticeTimeVo.class);
-        for (TieNoticeTimeVo t : tieNoticeTimeVos) {
-
+        tieNoticeTimeVos.forEach(t->{
             t.setDate(t.getDate().split(" ")[0]);
-
-        }
+        });
         ajaxData.success().listData(tieNoticeTimeVos);
         return ajaxData;
     }

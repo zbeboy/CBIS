@@ -8,11 +8,17 @@ import com.school.cbis.domain.tables.ArticleInfo;
 import com.school.cbis.domain.tables.ArticleSub;
 import com.school.cbis.domain.tables.ArticleType;
 import com.school.cbis.domain.tables.Authorities;
+import com.school.cbis.domain.tables.AutonomousPracticeContent;
+import com.school.cbis.domain.tables.AutonomousPracticeHead;
+import com.school.cbis.domain.tables.AutonomousPracticeInfo;
+import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
+import com.school.cbis.domain.tables.HeadType;
+import com.school.cbis.domain.tables.HeadTypePlugin;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -62,7 +68,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = 1902622799;
+	private static final long serialVersionUID = -215571732;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -89,11 +95,17 @@ public class Cbis extends SchemaImpl {
 			ArticleSub.ARTICLE_SUB,
 			ArticleType.ARTICLE_TYPE,
 			Authorities.AUTHORITIES,
+			AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT,
+			AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD,
+			AutonomousPracticeInfo.AUTONOMOUS_PRACTICE_INFO,
+			AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE,
 			BringIn.BRING_IN,
 			ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO,
 			FourItems.FOUR_ITEMS,
 			FourItemsType.FOUR_ITEMS_TYPE,
 			Grade.GRADE,
+			HeadType.HEAD_TYPE,
+			HeadTypePlugin.HEAD_TYPE_PLUGIN,
 			Major.MAJOR,
 			PersistentLogins.PERSISTENT_LOGINS,
 			PlaceFileContent.PLACE_FILE_CONTENT,

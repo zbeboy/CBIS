@@ -206,11 +206,11 @@ public class MajorManagerController {
             Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = majorService.findAllWithIntroduceByPage(majorIntroduceVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(MajorIntroduceVo.class);
-                for (MajorIntroduceVo m : list) {
+                list.forEach(m->{
                     if (!StringUtils.isEmpty(m.getIsShow())) {
                         m.setShow(m.getIsShow() == 0 ? false : true);
                     }
-                }
+                });
                 jsGrid.loadData(list, majorService.findAllWithIntroduceByPageCount(majorIntroduceVo, tieId));
             } else {
                 jsGrid.loadData(list, 0);

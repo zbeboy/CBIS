@@ -1,5 +1,10 @@
 package com.school.cbis.vo.users;
 
+import com.school.cbis.domain.tables.records.AuthoritiesRecord;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-02-17.
  */
@@ -8,7 +13,7 @@ public class TeacherVo {
     private String teacherName;
     private String teacherJobNumber;
     private boolean enabled;
-    private String authority;
+    private List<String> authorities;
     private int pageNum = 1;
     private int pageSize = 6;
     private int totalData;
@@ -45,12 +50,12 @@ public class TeacherVo {
         this.enabled = enabled;
     }
 
-    public String getAuthority() {
-        return authority;
+    public List<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 
     public int getPageNum() {
@@ -84,7 +89,7 @@ public class TeacherVo {
                 ", teacherName='" + teacherName + '\'' +
                 ", teacherJobNumber='" + teacherJobNumber + '\'' +
                 ", enabled=" + enabled +
-                ", authority='" + authority + '\'' +
+                ", authorities=" + authorities +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", totalData=" + totalData +

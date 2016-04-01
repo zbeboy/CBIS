@@ -97,16 +97,16 @@ public class GradeManagerController {
                 tieId = r.getValue(Tables.TIE.ID);
             }
         }
-        Result<TeacherRecord> teachers = teacherService.findByTieIdAndTearchName(search, tieId);
+        Result<TeacherRecord> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
         if (teachers.isNotEmpty()) {
-            for (TeacherRecord teacherRecord : teachers) {
+            teachers.forEach(teacherRecord->{
                 AutoCompleteData data = new AutoCompleteData();
                 data.setValue(teacherRecord.getTeacherJobNumber());
                 data.setTitle(teacherRecord.getTeacherName());
                 data.setUrl("#");
                 data.setText("账号:" + teacherRecord.getTeacherJobNumber());
                 autoCompleteDatas.add(data);
-            }
+            });
         }
         return autoCompleteDatas;
     }

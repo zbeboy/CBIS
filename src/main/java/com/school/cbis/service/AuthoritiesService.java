@@ -2,6 +2,8 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-02-21.
  */
@@ -12,7 +14,7 @@ public interface AuthoritiesService {
      * @param username
      * @return
      */
-    AuthoritiesRecord findByUsername(String username);
+    List<AuthoritiesRecord> findByUsername(String username);
 
     /**
      * 通过用户名删除
@@ -24,14 +26,14 @@ public interface AuthoritiesService {
     /**
      * 更新权限
      *
-     * @param authoritiesRecord
+     * @param authoritiesRecords
      */
-    void update(AuthoritiesRecord authoritiesRecord);
+    void update(List<AuthoritiesRecord> authoritiesRecords);
 
     /**
      * 保存权限
      *
-     * @param authoritiesRecord
+     * @param authoritiesRecords
      */
-    void save(AuthoritiesRecord authoritiesRecord);
+    void save(List<AuthoritiesRecord> authoritiesRecords);
 }

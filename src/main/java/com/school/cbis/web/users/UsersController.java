@@ -119,16 +119,19 @@ public class UsersController {
                 tieId = r.getValue(Tables.TIE.ID);
             }
         }
-        Result<Record6<Integer, String, String, Byte, String, String>> record6s = studentService.findByTieIdAndPage(map.get("studentName").toString(),
+        Result<Record5<Integer, String, String, Byte, String>> record5s = studentService.findByTieIdAndPage(map.get("studentName").toString(),
                 map.get("studentNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
                 tieId);
-        if (record6s.isNotEmpty()) {
-            studentVos = record6s.into(StudentVo.class);
-            for (StudentVo t : studentVos) {
-                if (!StringUtils.isEmpty(t.getAuthority())) {
-                    t.setAuthority(wordbook.getRoleMap().get(t.getAuthority()));
-                }
-            }
+        if (record5s.isNotEmpty()) {
+            studentVos = record5s.into(StudentVo.class);
+            studentVos.forEach(s->{
+                List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(s.getStudentNumber());
+                List<String> authorities = new ArrayList<>();
+                authoritiesRecords.forEach(a->{
+                    authorities.add(wordbook.getRoleMap().get(a.getAuthority()));
+                });
+                s.setAuthorities(authorities);
+            });
         }
 
         map.put("totalData", studentService.findByTieIdAndPageCount(map.get("studentName").toString(),
@@ -169,16 +172,19 @@ public class UsersController {
                 tieId = r.getValue(Tables.TIE.ID);
             }
         }
-        Result<Record5<Integer, String, String, Byte, String>> record5s = teacherService.findByTieIdAndPage(map.get("teacherName").toString(),
+        Result<Record4<Integer, String, String, Byte>> record4s = teacherService.findByTieIdAndPage(map.get("teacherName").toString(),
                 map.get("teacherJobNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
                 tieId);
-        if (record5s.isNotEmpty()) {
-            teacherVos = record5s.into(TeacherVo.class);
-            for (TeacherVo t : teacherVos) {
-                if (!StringUtils.isEmpty(t.getAuthority())) {
-                    t.setAuthority(wordbook.getRoleMap().get(t.getAuthority()));
-                }
-            }
+        if (record4s.isNotEmpty()) {
+            teacherVos = record4s.into(TeacherVo.class);
+            teacherVos.forEach(t->{
+                List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(t.getTeacherJobNumber());
+                List<String> authorities = new ArrayList<>();
+                authoritiesRecords.forEach(a->{
+                    authorities.add(wordbook.getRoleMap().get(a.getAuthority()));
+                });
+                t.setAuthorities(authorities);
+            });
         }
         map.put("totalData", teacherService.findByTieIdAndPageCount(map.get("teacherName").toString(),
                 map.get("teacherJobNumber").toString(), tieId));
@@ -234,18 +240,25 @@ public class UsersController {
      */
     @RequestMapping(value = "/maintainer/users/resetAuthority", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData resetEnable(@RequestParam("username") String username, @RequestParam("authority") String authority) {
+    public AjaxData resetEnable(@RequestParam("username") String username, String  authority) {
         AjaxData ajaxData = new AjaxData();
         if (!StringUtils.isEmpty(username)) {
-            AuthoritiesRecord authoritiesRecord = authoritiesService.findByUsername(username);
-            if (StringUtils.isEmpty(authoritiesRecord)) {
-                authoritiesRecord = new AuthoritiesRecord();
-                authoritiesRecord.setUsername(username);
-                authoritiesRecord.setAuthority(authority);
-                authoritiesService.save(authoritiesRecord);
-            } else {
-                authoritiesRecord.setAuthority(authority);
-                authoritiesService.update(authoritiesRecord);
+
+            List<AuthoritiesRecord> authoritiesRecords = new ArrayList<>();
+            authoritiesService.delete(username);
+
+            if(StringUtils.hasLength(authority)){
+                String[] authorities = authority.split(",");
+
+                if(authorities.length>0){
+                    for(String s:authorities){
+                        AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
+                        authoritiesRecord.setUsername(username);
+                        authoritiesRecord.setAuthority(s);
+                        authoritiesRecords.add(authoritiesRecord);
+                    }
+                    authoritiesService.save(authoritiesRecords);
+                }
             }
             ajaxData.success().msg("更新权限成功!");
         } else {

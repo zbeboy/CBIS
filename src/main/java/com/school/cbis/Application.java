@@ -86,10 +86,10 @@ public class Application extends SpringBootServletInitializer {
                     .and().logout().logoutSuccessUrl("/").permitAll().invalidateHttpSession(true)
                     .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(jdbcTokenRepository(dataSource))
                     .and().authorizeRequests().antMatchers("/administrator/**").hasRole("ADMIN")
-                    .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("ADMIN", "MAI")
-                    .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("ADMIN", "MAI","TM")
-                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "ADMIN", "MAI")
-                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI")
+                    .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("MAI","ADMIN")
+                    .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("SEMI","MAI","ADMIN")
+                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA","SEMI","MAI","ADMIN")
+                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI","SEMI")
                     .and().authorizeRequests().antMatchers("/user/**", "/").permitAll();
         }
 
