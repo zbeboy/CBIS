@@ -86,6 +86,11 @@ public class UsersController {
         return "/maintainer/users/studentlist";
     }
 
+    /**
+     * 班级数据
+     * @param year
+     * @return
+     */
     @RequestMapping("/maintainer/users/gradeData")
     @ResponseBody
     public AjaxData<Grade> gradeData(@RequestParam("year") String year) {
@@ -124,10 +129,10 @@ public class UsersController {
                 tieId);
         if (record5s.isNotEmpty()) {
             studentVos = record5s.into(StudentVo.class);
-            studentVos.forEach(s->{
+            studentVos.forEach(s -> {
                 List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(s.getStudentNumber());
                 List<String> authorities = new ArrayList<>();
-                authoritiesRecords.forEach(a->{
+                authoritiesRecords.forEach(a -> {
                     authorities.add(wordbook.getRoleMap().get(a.getAuthority()));
                 });
                 s.setAuthorities(authorities);
@@ -177,10 +182,10 @@ public class UsersController {
                 tieId);
         if (record4s.isNotEmpty()) {
             teacherVos = record4s.into(TeacherVo.class);
-            teacherVos.forEach(t->{
+            teacherVos.forEach(t -> {
                 List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(t.getTeacherJobNumber());
                 List<String> authorities = new ArrayList<>();
-                authoritiesRecords.forEach(a->{
+                authoritiesRecords.forEach(a -> {
                     authorities.add(wordbook.getRoleMap().get(a.getAuthority()));
                 });
                 t.setAuthorities(authorities);
@@ -240,18 +245,18 @@ public class UsersController {
      */
     @RequestMapping(value = "/maintainer/users/resetAuthority", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxData resetEnable(@RequestParam("username") String username, String  authority) {
+    public AjaxData resetEnable(@RequestParam("username") String username, String authority) {
         AjaxData ajaxData = new AjaxData();
         if (!StringUtils.isEmpty(username)) {
 
             List<AuthoritiesRecord> authoritiesRecords = new ArrayList<>();
             authoritiesService.delete(username);
 
-            if(StringUtils.hasLength(authority)){
+            if (StringUtils.hasLength(authority)) {
                 String[] authorities = authority.split(",");
 
-                if(authorities.length>0){
-                    for(String s:authorities){
+                if (authorities.length > 0) {
+                    for (String s : authorities) {
                         AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
                         authoritiesRecord.setUsername(username);
                         authoritiesRecord.setAuthority(s);
@@ -339,5 +344,20 @@ public class UsersController {
             map.put("error", "该账号已存在!");
         }
         return map;
+    }
+
+    /**
+     * 获取权限数据
+     * @return
+     */
+    @RequestMapping("/maintainer/users/getAuthorities")
+    @ResponseBody
+    public AjaxData getAuthorities(){
+        AjaxData ajaxData = new AjaxData();
+        Map<String,Object> map = new HashMap<>();
+        //权限
+        log.debug("roleList : {}",wordbook.getRoleString());
+        map.put("roleList",wordbook.getRoleString());
+        return ajaxData.success().mapData(map);
     }
 }

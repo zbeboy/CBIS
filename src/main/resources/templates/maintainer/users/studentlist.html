@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" ng-app="">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="generator"
           content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
@@ -199,27 +199,13 @@
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
         <div class="uk-modal-header">
-            <h2>用户状态</h2>
+            <h2>用户权限</h2>
         </div>
         <form class="uk-form uk-form-horizontal">
+            <input type="hidden" id="authoritiesNum"/>
             <div class="uk-form-row">
-                <div class="uk-form-controls">
-                    <input type="hidden" id="authoritiesNum"/>
+                <div class="uk-form-controls" id="authorities">
 
-                    <input type="checkbox" id="form-a-r" name="authoritiesCheck" value="ROLE_ADMIN" />
-                    <label for="form-a-r">超级管理员</label><br/>
-
-                    <input type="checkbox" id="form-a-r1" name="authoritiesCheck" value="ROLE_MAI" />
-                    <label for="form-a-r1">管理员</label><br/>
-
-                    <input type="checkbox" id="form-a-r2" name="authoritiesCheck" value="ROLE_SEMI" />
-                    <label for="form-a-r2">教管</label><br/>
-
-                    <input type="checkbox" id="form-a-r3" name="authoritiesCheck" value="ROLE_TEA" />
-                    <label for="form-a-r3">教师</label><br/>
-
-                    <input type="checkbox" id="form-a-r4" name="authoritiesCheck" value="ROLE_STU" />
-                    <label for="form-a-r4">学生</label>
                 </div>
             </div>
         </form>
@@ -254,7 +240,6 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var param = /*[[${studentVo}]]*/ null;
     var web_path = /*[[#{web_path}]]*/ '';
     /*]]>*/
 </script>

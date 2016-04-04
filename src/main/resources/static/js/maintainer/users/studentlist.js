@@ -8,11 +8,11 @@
  */
 function outputHtml(data) {
     $('#studentData').empty();
+
     var _ = DOMBuilder;
     for (var i = 0; i < data.result.length; i++) {
-
         var authorities = new Array();
-        for(var j = 0;j<data.result[i].authorities.length;j++){
+        for (var j = 0; j < data.result[i].authorities.length; j++) {
             authorities.push(data.result[i].authorities[j]);
         }
 
@@ -89,10 +89,50 @@ $('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
 });
 
 /**
+ * 权限封装对象
+ * @param id
+ * @param value
+ * @param text
+ */
+function authoritiesObj(id, value, text) {
+    this.id = id;
+    this.value = value;
+    this.text = text;
+}
+
+/**
+ * 权限数组
+ * @type {Array}
+ */
+var authoritiesParam = new Array();
+
+/**
+ * 初始化权限
+ */
+function initAuthorities() {
+
+    $.get(web_path + '/maintainer/users/getAuthorities', function (data) {
+        var d = JSON.parse(data.single.roleList);
+        for (var i = 0; i < d.length; i++) {
+            authoritiesParam.push(new authoritiesObj("form-a-r" + i, d[i].authority, d[i].role));
+            $('#authorities').append(
+                $('<input type="checkbox" id="form-a-r' + i + '" name="authoritiesCheck" value="' + d[i].authority + '" />')
+            ).append(
+                $('<label for="form-a-r' + i + '">'+d[i].role+'</label>')
+            ).append(
+                $('<br/>')
+            );
+        }
+    });
+
+}
+
+/**
  * 执行
  */
 $(document).ready(function () {
     action();
+    initAuthorities();
 });
 /**
  * 打开添加用户模态框
@@ -140,9 +180,9 @@ function selectYear(obj) {
 /**
  * 检验是否选择了班级
  */
-function submitAddData(){
+function submitAddData() {
     var n = $("input[name='grade']:checked").val();
-    if(n==undefined){
+    if (n == undefined) {
         layer.msg('请选择一个班级!');
     } else {
         $('#addStudentForm').submit();
@@ -256,20 +296,13 @@ function openAuthoritiesModal(obj) {
     }
 
     var authorities = $(obj).prev().text().trim().split(",");
-    console.log(authorities);
-    console.log(authorities.length);
 
-    for(var i = 0;i<authorities.length;i++){
-        if (authorities[i] === '超级管理员') {
-            document.getElementById('form-a-r').checked = true;
-        } else if (authorities[i] === '管理员') {
-            document.getElementById('form-a-r1').checked = true;
-        } else if(authorities[i] === '教管'){
-            document.getElementById('form-a-r2').checked = true;
-        } else if (authorities[i] === '教师') {
-            document.getElementById('form-a-r3').checked = true;
-        } else if (authorities[i] === '学生') {
-            document.getElementById('form-a-r4').checked = true;
+    for (var i = 0; i < authorities.length; i++) {
+        for(var j = 0;j<authoritiesParam.length;j++){
+            if(authorities[i] === authoritiesParam[j].text){
+                document.getElementById(authoritiesParam[j].id).checked = true;
+                break;
+            }
         }
     }
 
@@ -283,11 +316,9 @@ function openAuthoritiesModal(obj) {
  */
 function authorities() {
     var n = new Array();
-    for(var i = 0;i<$("input[name='authoritiesCheck']:checked").length;i++){
+    for (var i = 0; i < $("input[name='authoritiesCheck']:checked").length; i++) {
         n.push($($("input[name='authoritiesCheck']:checked")[i]).val().trim());
     }
-    console.log(n);
-    console.log(n.length);
     $.post(web_path + '/maintainer/users/resetAuthority', {
         'username': $('#authoritiesNum').val(),
         'authority': n.join(",")
