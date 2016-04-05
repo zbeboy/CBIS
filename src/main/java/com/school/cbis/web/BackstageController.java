@@ -4,16 +4,11 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.pojos.Major;
-import com.school.cbis.domain.tables.pojos.Tie;
-import com.school.cbis.domain.tables.pojos.TieNoticeAffix;
-import com.school.cbis.domain.tables.pojos.Yard;
+import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.major.MajorListVo;
-import org.jooq.Record;
-import org.jooq.Record2;
-import org.jooq.Result;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -222,19 +218,15 @@ public class BackstageController {
     }
 
     /**
-     * 自主实习管理
-     *
+     * 自主实习管理界面
      * @return
      */
-    @RequestMapping("/maintainer/users/autonomicPractice")
-    public String autonomicLearning() {
-        if (usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)) {
-            return "/administrator/autonomicpractice/autonomicpractice";
-        } else if (usersService.isCurrentUserInRole(Wordbook.CBIS_MAI)) {
-
+    @RequestMapping("/student/autonomicpractice/autonomicPracticeManager")
+    public String autonomicPracticeManager(){
+        if(usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)){
+            return "redirect:/administrator/autonomicpractice/reportSetting";
         } else {
-
+            return "redirect:/student/autonomicpractice/autonomicPractice";
         }
-        return null;
     }
 }
