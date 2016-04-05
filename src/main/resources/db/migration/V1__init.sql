@@ -401,7 +401,8 @@ create table autonomous_practice_info(
 
 create table head_type(
   id int not null primary key auto_increment,
-  name varchar(30) not null
+  type_value varchar(30) not null,
+  type_name varchar(30) not null
 );
 
 create table head_type_plugin(
@@ -490,21 +491,20 @@ insert into four_items_type(name) values('计划');
 insert into four_items_type(name) values('日程');
 insert into four_items_type(name) values('ppt');
 
-insert into head_type(name) values('text');
-insert into head_type(name) values('textarea');
-insert into head_type(name) values('radio');
-insert into head_type(name) values('checkbox');
-insert into head_type(name) values('password');
-insert into head_type(name) values('time');
-insert into head_type(name) values('timerange');
-insert into head_type(name) values('control');
-insert into head_type(name) values('email');
-insert into head_type(name) values('number');
+insert into head_type(type_value, type_name) values('text','文本');
+insert into head_type(type_value, type_name) values('textarea','多文本');
+insert into head_type(type_value, type_name) values('radio','单选');
+insert into head_type(type_value, type_name) values('checkbox','复选');
+insert into head_type(type_value, type_name) values('password','密码');
+insert into head_type(type_value, type_name) values('time','时间');
+insert into head_type(type_value, type_name) values('timerange','时间范围');
+insert into head_type(type_value, type_name) values('control','控制');
+insert into head_type(type_value, type_name) values('email','邮箱');
+insert into head_type(type_value, type_name) values('number','数字');
 
 insert into head_type_plugin(type,head_type_id) values('长度',1);
 insert into head_type_plugin(type,head_type_id) values('长度',2);
 insert into head_type_plugin(type,head_type_id) values('单选',3);
-insert into head_type_plugin(type,head_type_id) values('单选',4);
 insert into head_type_plugin(type,head_type_id) values('多选',4);
 insert into head_type_plugin(type,head_type_id) values('日期',5);
 insert into head_type_plugin(type,head_type_id) values('日期+时间',5);

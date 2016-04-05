@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HeadType extends TableImpl<HeadTypeRecord> {
 
-	private static final long serialVersionUID = -10990923;
+	private static final long serialVersionUID = 1130787709;
 
 	/**
 	 * The reference instance of <code>cbis.head_type</code>
@@ -55,9 +55,14 @@ public class HeadType extends TableImpl<HeadTypeRecord> {
 	public final TableField<HeadTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.head_type.name</code>.
+	 * The column <code>cbis.head_type.type_value</code>.
 	 */
-	public final TableField<HeadTypeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+	public final TableField<HeadTypeRecord, String> TYPE_VALUE = createField("type_value", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.head_type.type_name</code>.
+	 */
+	public final TableField<HeadTypeRecord, String> TYPE_NAME = createField("type_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.head_type</code> table reference

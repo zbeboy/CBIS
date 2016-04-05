@@ -76,46 +76,46 @@ public class AutonomicPractice {
             }
         }
         modelMap.addAttribute("years", list);
-        return "/administrator/autonomicpractice/reportsetting";
+        return "/student/autonomicpractice/reportsetting";
     }
 
     @RequestMapping("/administrator/autonomicpractice/autonomicPracticeTitle")
     public String autonomicPracticeTitle(AutonomicPracticeVo autonomicPracticeVo, ModelMap modelMap) {
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
-        }
-        AutonomousPracticeInfo autonomousPracticeInfo = new AutonomousPracticeInfo();
-        autonomousPracticeInfo.setAutonomousPracticeTitle(autonomicPracticeVo.getAutonomousPracticeTitle());
-        String temp = "";
-        for (String s : autonomicPracticeVo.getGradeYear()) {
-            temp += s + ",";
-        }
-        temp = temp.substring(0, temp.lastIndexOf(","));
-        autonomousPracticeInfo.setGradeYear(temp);
-        if (!StringUtils.hasLength(autonomicPracticeVo.getAutonomousPracticeTemplateId())) {
-            autonomousPracticeInfo.setAutonomousPracticeTemplateId(0);
-        } else {
-            autonomousPracticeInfo.setAutonomousPracticeTemplateId(Integer.parseInt(autonomicPracticeVo.getAutonomousPracticeTemplateId()));
-        }
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        ts = Timestamp.valueOf(autonomicPracticeVo.getStartTime() + " 00:00:00");
-        autonomousPracticeInfo.setStartTime(ts);
-        ts = Timestamp.valueOf(autonomicPracticeVo.getEndTime() + " 00:00:00");
-        autonomousPracticeInfo.setEndTime(ts);
-        autonomousPracticeInfo.setUsersId(usersService.getUserName());
-        autonomousPracticeInfo.setTieId(tieId);
-        int id = autonomousPracticeInfoService.save(autonomousPracticeInfo);
-        modelMap.addAttribute("autonomousPracticeInfoId",id);
-        return "/administrator/autonomicpractice/autonomicpracticetitle";
+//        Result<Record> records = usersService.findAll(usersService.getUserName());
+//        int tieId = 0;
+//        if (records.isNotEmpty()) {
+//            for (Record r : records) {
+//                tieId = r.getValue(Tables.TIE.ID);
+//            }
+//        }
+//        AutonomousPracticeInfo autonomousPracticeInfo = new AutonomousPracticeInfo();
+//        autonomousPracticeInfo.setAutonomousPracticeTitle(autonomicPracticeVo.getAutonomousPracticeTitle());
+//        String temp = "";
+//        for (String s : autonomicPracticeVo.getGradeYear()) {
+//            temp += s + ",";
+//        }
+//        temp = temp.substring(0, temp.lastIndexOf(","));
+//        autonomousPracticeInfo.setGradeYear(temp);
+//        if (!StringUtils.hasLength(autonomicPracticeVo.getAutonomousPracticeTemplateId())) {
+//            autonomousPracticeInfo.setAutonomousPracticeTemplateId(0);
+//        } else {
+//            autonomousPracticeInfo.setAutonomousPracticeTemplateId(Integer.parseInt(autonomicPracticeVo.getAutonomousPracticeTemplateId()));
+//        }
+//        Timestamp ts = new Timestamp(System.currentTimeMillis());
+//        ts = Timestamp.valueOf(autonomicPracticeVo.getStartTime() + " 00:00:00");
+//        autonomousPracticeInfo.setStartTime(ts);
+//        ts = Timestamp.valueOf(autonomicPracticeVo.getEndTime() + " 00:00:00");
+//        autonomousPracticeInfo.setEndTime(ts);
+//        autonomousPracticeInfo.setUsersId(usersService.getUserName());
+//        autonomousPracticeInfo.setTieId(tieId);
+//        int id = autonomousPracticeInfoService.save(autonomousPracticeInfo);
+//        modelMap.addAttribute("autonomousPracticeInfoId",id);
+        return "/student/autonomicpractice/autonomicpracticetitle";
     }
 
     @RequestMapping("/administrator/autonomicpractice/autonomicPracticeWork")
     public String autonomicPracticeWork() {
-        return "/administrator/autonomicpractice/autonomicpracticework";
+        return "/student/autonomicpractice/autonomicpracticework";
     }
 }

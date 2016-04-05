@@ -24,24 +24,28 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HeadType implements Serializable {
 
-	private static final long serialVersionUID = -547941972;
+	private static final long serialVersionUID = 764847864;
 
 	private Integer id;
-	private String  name;
+	private String  typeValue;
+	private String  typeName;
 
 	public HeadType() {}
 
 	public HeadType(HeadType value) {
 		this.id = value.id;
-		this.name = value.name;
+		this.typeValue = value.typeValue;
+		this.typeName = value.typeName;
 	}
 
 	public HeadType(
 		Integer id,
-		String  name
+		String  typeValue,
+		String  typeName
 	) {
 		this.id = id;
-		this.name = name;
+		this.typeValue = typeValue;
+		this.typeName = typeName;
 	}
 
 	@NotNull
@@ -55,12 +59,22 @@ public class HeadType implements Serializable {
 
 	@NotNull
 	@Size(max = 30)
-	public String getName() {
-		return this.name;
+	public String getTypeValue() {
+		return this.typeValue;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTypeValue(String typeValue) {
+		this.typeValue = typeValue;
+	}
+
+	@NotNull
+	@Size(max = 30)
+	public String getTypeName() {
+		return this.typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	@Override
@@ -68,7 +82,8 @@ public class HeadType implements Serializable {
 		StringBuilder sb = new StringBuilder("HeadType (");
 
 		sb.append(id);
-		sb.append(", ").append(name);
+		sb.append(", ").append(typeValue);
+		sb.append(", ").append(typeName);
 
 		sb.append(")");
 		return sb.toString();

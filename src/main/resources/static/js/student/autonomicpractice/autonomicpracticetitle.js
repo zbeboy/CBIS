@@ -5,14 +5,13 @@ var tableLine = null;
 
 $(document).ready(function () {
     tableLine = $($('#titleData').children()[0]);
-    $(".chosen-select").chosen();
 });
 
 /**
  * 添加行
  */
-function addLine() {
-    $('#titleData').append("<tr>" + tableLine.html() + "</tr>");
+function addTitle() {
+    $('#titleData').append("<li>" + tableLine.html() + "</li>");
 }
 
 /**
@@ -20,7 +19,7 @@ function addLine() {
  * @param obj
  */
 function deleteLine(obj) {
-    $(obj).parent().parent().remove();
+    $(obj).parent().parent().parent().parent().remove();
 }
 
 /**
@@ -47,9 +46,9 @@ function isVisible(obj) {
 function selectTable(obj) {
     console.log($(obj).val());
     if ($(obj).val().trim().length > 0) {
-        $(obj).parent().next().children().attr('disabled',false);
+        $(obj).parent().next().children().attr('disabled', false);
     } else {
-        $(obj).parent().next().children().attr('disabled',true);
+        $(obj).parent().next().children().attr('disabled', true);
     }
 }
 
@@ -57,14 +56,14 @@ function selectTable(obj) {
  * 选择标题类型
  * @param obj
  */
-function selectType(obj){
+function selectType(obj) {
     console.log($(obj).val());
     if ($(obj).val().trim().length > 0) {
-        $(obj).parent().next().children().attr('disabled',false);
-        $(obj).parent().next().next().children().attr('disabled',false);
+        $(obj).parent().next().children().attr('disabled', false);
+        $(obj).parent().next().next().children().attr('disabled', false);
     } else {
-        $(obj).parent().next().children().attr('disabled',true);
-        $(obj).parent().next().next().children().attr('disabled',true);
+        $(obj).parent().next().children().attr('disabled', true);
+        $(obj).parent().next().next().children().attr('disabled', true);
         $(obj).parent().next().next().children().val('');
     }
 }

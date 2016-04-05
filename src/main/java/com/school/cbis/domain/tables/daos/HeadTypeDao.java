@@ -65,9 +65,16 @@ public class HeadTypeDao extends DAOImpl<HeadTypeRecord, com.school.cbis.domain.
 	}
 
 	/**
-	 * Fetch records that have <code>name IN (values)</code>
+	 * Fetch records that have <code>type_value IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.HeadType> fetchByName(String... values) {
-		return fetch(HeadType.HEAD_TYPE.NAME, values);
+	public List<com.school.cbis.domain.tables.pojos.HeadType> fetchByTypeValue(String... values) {
+		return fetch(HeadType.HEAD_TYPE.TYPE_VALUE, values);
+	}
+
+	/**
+	 * Fetch records that have <code>type_name IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.HeadType> fetchByTypeName(String... values) {
+		return fetch(HeadType.HEAD_TYPE.TYPE_NAME, values);
 	}
 }
