@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HeadTypePlugin extends TableImpl<HeadTypePluginRecord> {
 
-	private static final long serialVersionUID = -960862945;
+	private static final long serialVersionUID = -1602257476;
 
 	/**
 	 * The reference instance of <code>cbis.head_type_plugin</code>
@@ -59,6 +59,11 @@ public class HeadTypePlugin extends TableImpl<HeadTypePluginRecord> {
 	 * The column <code>cbis.head_type_plugin.type</code>.
 	 */
 	public final TableField<HeadTypePluginRecord, String> TYPE = createField("type", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.head_type_plugin.content</code>.
+	 */
+	public final TableField<HeadTypePluginRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR.length(500).nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.head_type_plugin.head_type_id</code>.

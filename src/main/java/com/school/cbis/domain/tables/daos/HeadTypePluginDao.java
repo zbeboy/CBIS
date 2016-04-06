@@ -72,6 +72,13 @@ public class HeadTypePluginDao extends DAOImpl<HeadTypePluginRecord, com.school.
 	}
 
 	/**
+	 * Fetch records that have <code>content IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.HeadTypePlugin> fetchByContent(String... values) {
+		return fetch(HeadTypePlugin.HEAD_TYPE_PLUGIN.CONTENT, values);
+	}
+
+	/**
 	 * Fetch records that have <code>head_type_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.HeadTypePlugin> fetchByHeadTypeId(Integer... values) {

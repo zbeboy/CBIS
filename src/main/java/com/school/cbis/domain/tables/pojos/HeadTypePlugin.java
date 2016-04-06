@@ -24,10 +24,11 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HeadTypePlugin implements Serializable {
 
-	private static final long serialVersionUID = -858758220;
+	private static final long serialVersionUID = -2040554;
 
 	private Integer id;
 	private String  type;
+	private String  content;
 	private Integer headTypeId;
 
 	public HeadTypePlugin() {}
@@ -35,16 +36,19 @@ public class HeadTypePlugin implements Serializable {
 	public HeadTypePlugin(HeadTypePlugin value) {
 		this.id = value.id;
 		this.type = value.type;
+		this.content = value.content;
 		this.headTypeId = value.headTypeId;
 	}
 
 	public HeadTypePlugin(
 		Integer id,
 		String  type,
+		String  content,
 		Integer headTypeId
 	) {
 		this.id = id;
 		this.type = type;
+		this.content = content;
 		this.headTypeId = headTypeId;
 	}
 
@@ -68,6 +72,16 @@ public class HeadTypePlugin implements Serializable {
 	}
 
 	@NotNull
+	@Size(max = 500)
+	public String getContent() {
+		return this.content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	@NotNull
 	public Integer getHeadTypeId() {
 		return this.headTypeId;
 	}
@@ -82,6 +96,7 @@ public class HeadTypePlugin implements Serializable {
 
 		sb.append(id);
 		sb.append(", ").append(type);
+		sb.append(", ").append(content);
 		sb.append(", ").append(headTypeId);
 
 		sb.append(")");

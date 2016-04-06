@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead implements Serializable {
 
-	private static final long serialVersionUID = -1885127479;
+	private static final long serialVersionUID = -750506052;
 
 	private Integer id;
 	private String  title;
@@ -32,12 +32,10 @@ public class AutonomousPracticeHead implements Serializable {
 	private String  databaseTable;
 	private String  databaseTableField;
 	private String  authority;
-	private String  headTypePluginFiled;
 	private Byte    isEditing;
 	private Byte    isFiltering;
 	private Byte    isSorting;
 	private Byte    isVisible;
-	private String  headTypePlugingContent;
 	private Byte    isShowHighlyActive;
 	private Byte    isShowGeneral;
 	private String  highlyActiveAuthority;
@@ -45,6 +43,8 @@ public class AutonomousPracticeHead implements Serializable {
 	private Byte    isRequired;
 	private Integer headTypeId;
 	private Integer autonomousPracticeInfoId;
+	private String  headTypePluginContent;
+	private Integer headTypePluginId;
 
 	public AutonomousPracticeHead() {}
 
@@ -55,12 +55,10 @@ public class AutonomousPracticeHead implements Serializable {
 		this.databaseTable = value.databaseTable;
 		this.databaseTableField = value.databaseTableField;
 		this.authority = value.authority;
-		this.headTypePluginFiled = value.headTypePluginFiled;
 		this.isEditing = value.isEditing;
 		this.isFiltering = value.isFiltering;
 		this.isSorting = value.isSorting;
 		this.isVisible = value.isVisible;
-		this.headTypePlugingContent = value.headTypePlugingContent;
 		this.isShowHighlyActive = value.isShowHighlyActive;
 		this.isShowGeneral = value.isShowGeneral;
 		this.highlyActiveAuthority = value.highlyActiveAuthority;
@@ -68,6 +66,8 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isRequired = value.isRequired;
 		this.headTypeId = value.headTypeId;
 		this.autonomousPracticeInfoId = value.autonomousPracticeInfoId;
+		this.headTypePluginContent = value.headTypePluginContent;
+		this.headTypePluginId = value.headTypePluginId;
 	}
 
 	public AutonomousPracticeHead(
@@ -77,19 +77,19 @@ public class AutonomousPracticeHead implements Serializable {
 		String  databaseTable,
 		String  databaseTableField,
 		String  authority,
-		String  headTypePluginFiled,
 		Byte    isEditing,
 		Byte    isFiltering,
 		Byte    isSorting,
 		Byte    isVisible,
-		String  headTypePlugingContent,
 		Byte    isShowHighlyActive,
 		Byte    isShowGeneral,
 		String  highlyActiveAuthority,
 		String  generalAuthority,
 		Byte    isRequired,
 		Integer headTypeId,
-		Integer autonomousPracticeInfoId
+		Integer autonomousPracticeInfoId,
+		String  headTypePluginContent,
+		Integer headTypePluginId
 	) {
 		this.id = id;
 		this.title = title;
@@ -97,12 +97,10 @@ public class AutonomousPracticeHead implements Serializable {
 		this.databaseTable = databaseTable;
 		this.databaseTableField = databaseTableField;
 		this.authority = authority;
-		this.headTypePluginFiled = headTypePluginFiled;
 		this.isEditing = isEditing;
 		this.isFiltering = isFiltering;
 		this.isSorting = isSorting;
 		this.isVisible = isVisible;
-		this.headTypePlugingContent = headTypePlugingContent;
 		this.isShowHighlyActive = isShowHighlyActive;
 		this.isShowGeneral = isShowGeneral;
 		this.highlyActiveAuthority = highlyActiveAuthority;
@@ -110,6 +108,8 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isRequired = isRequired;
 		this.headTypeId = headTypeId;
 		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+		this.headTypePluginContent = headTypePluginContent;
+		this.headTypePluginId = headTypePluginId;
 	}
 
 	@NotNull
@@ -141,7 +141,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.titleVariable = titleVariable;
 	}
 
-	@NotNull
 	@Size(max = 100)
 	public String getDatabaseTable() {
 		return this.databaseTable;
@@ -151,7 +150,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.databaseTable = databaseTable;
 	}
 
-	@NotNull
 	@Size(max = 100)
 	public String getDatabaseTableField() {
 		return this.databaseTableField;
@@ -169,15 +167,6 @@ public class AutonomousPracticeHead implements Serializable {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
-	}
-
-	@Size(max = 30)
-	public String getHeadTypePluginFiled() {
-		return this.headTypePluginFiled;
-	}
-
-	public void setHeadTypePluginFiled(String headTypePluginFiled) {
-		this.headTypePluginFiled = headTypePluginFiled;
 	}
 
 	@NotNull
@@ -216,15 +205,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isVisible = isVisible;
 	}
 
-	@Size(max = 2000)
-	public String getHeadTypePlugingContent() {
-		return this.headTypePlugingContent;
-	}
-
-	public void setHeadTypePlugingContent(String headTypePlugingContent) {
-		this.headTypePlugingContent = headTypePlugingContent;
-	}
-
 	@NotNull
 	public Byte getIsShowHighlyActive() {
 		return this.isShowHighlyActive;
@@ -243,7 +223,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isShowGeneral = isShowGeneral;
 	}
 
-	@NotNull
 	@Size(max = 30)
 	public String getHighlyActiveAuthority() {
 		return this.highlyActiveAuthority;
@@ -253,7 +232,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.highlyActiveAuthority = highlyActiveAuthority;
 	}
 
-	@NotNull
 	@Size(max = 30)
 	public String getGeneralAuthority() {
 		return this.generalAuthority;
@@ -272,7 +250,6 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isRequired = isRequired;
 	}
 
-	@NotNull
 	public Integer getHeadTypeId() {
 		return this.headTypeId;
 	}
@@ -290,6 +267,23 @@ public class AutonomousPracticeHead implements Serializable {
 		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
 	}
 
+	@Size(max = 500)
+	public String getHeadTypePluginContent() {
+		return this.headTypePluginContent;
+	}
+
+	public void setHeadTypePluginContent(String headTypePluginContent) {
+		this.headTypePluginContent = headTypePluginContent;
+	}
+
+	public Integer getHeadTypePluginId() {
+		return this.headTypePluginId;
+	}
+
+	public void setHeadTypePluginId(Integer headTypePluginId) {
+		this.headTypePluginId = headTypePluginId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("AutonomousPracticeHead (");
@@ -300,12 +294,10 @@ public class AutonomousPracticeHead implements Serializable {
 		sb.append(", ").append(databaseTable);
 		sb.append(", ").append(databaseTableField);
 		sb.append(", ").append(authority);
-		sb.append(", ").append(headTypePluginFiled);
 		sb.append(", ").append(isEditing);
 		sb.append(", ").append(isFiltering);
 		sb.append(", ").append(isSorting);
 		sb.append(", ").append(isVisible);
-		sb.append(", ").append(headTypePlugingContent);
 		sb.append(", ").append(isShowHighlyActive);
 		sb.append(", ").append(isShowGeneral);
 		sb.append(", ").append(highlyActiveAuthority);
@@ -313,6 +305,8 @@ public class AutonomousPracticeHead implements Serializable {
 		sb.append(", ").append(isRequired);
 		sb.append(", ").append(headTypeId);
 		sb.append(", ").append(autonomousPracticeInfoId);
+		sb.append(", ").append(headTypePluginContent);
+		sb.append(", ").append(headTypePluginId);
 
 		sb.append(")");
 		return sb.toString();

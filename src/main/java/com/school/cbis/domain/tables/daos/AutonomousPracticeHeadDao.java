@@ -100,13 +100,6 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
-	 * Fetch records that have <code>head_type_plugin_filed IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePluginFiled(String... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGIN_FILED, values);
-	}
-
-	/**
 	 * Fetch records that have <code>is_editing IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsEditing(Byte... values) {
@@ -132,13 +125,6 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsVisible(Byte... values) {
 		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_VISIBLE, values);
-	}
-
-	/**
-	 * Fetch records that have <code>head_type_pluging_content IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePlugingContent(String... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGING_CONTENT, values);
 	}
 
 	/**
@@ -188,5 +174,19 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByAutonomousPracticeInfoId(Integer... values) {
 		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_INFO_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>head_type_plugin_content IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePluginContent(String... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGIN_CONTENT, values);
+	}
+
+	/**
+	 * Fetch records that have <code>head_type_plugin_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePluginId(Integer... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGIN_ID, values);
 	}
 }

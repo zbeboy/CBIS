@@ -9,6 +9,7 @@ public class RandomUtils {
     private static final int DEF_COUNT = 20;
 
     private RandomUtils() {
+
     }
 
     /**

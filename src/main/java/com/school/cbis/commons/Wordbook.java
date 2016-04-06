@@ -1,5 +1,6 @@
 package com.school.cbis.commons;
 
+import com.school.cbis.data.SelectData;
 import com.school.cbis.domain.tables.records.ArticleTypeRecord;
 import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.TeachTypeRecord;
@@ -11,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by lenovo on 2016-01-12.
@@ -71,14 +70,18 @@ public class Wordbook {
     public static final String CBIS_TEA = "ROLE_TEA";
     public static final String CBIS_STU = "ROLE_STU";
 
-    private Map<String, String> roleMap = new HashMap<>();
+    private static final Map<String, String> roleMap;
 
-    public Map<String, String> getRoleMap() {
+    static{
+        roleMap = new HashMap<>();
         roleMap.put(CBIS_ADMIN, "超级管理员");
         roleMap.put(CBIS_MAI, "管理员");
         roleMap.put(CBIS_SEMI, "教管");
         roleMap.put(CBIS_TEA, "教师");
         roleMap.put(CBIS_STU, "学生");
+    }
+
+    public Map<String, String> getRoleMap() {
         return roleMap;
     }
 
@@ -89,10 +92,10 @@ public class Wordbook {
         set.forEach(m -> {
             builder.append("{");
             builder.append("\"authority\":\"" + m.getKey() + "\",");
-            builder.append("\"role\":\"" + m.getValue()+"\"");
+            builder.append("\"role\":\"" + m.getValue() + "\"");
             builder.append("},");
         });
-        return builder.toString().substring(0,builder.toString().lastIndexOf(",")) + "]";
+        return builder.toString().substring(0, builder.toString().lastIndexOf(",")) + "]";
     }
 
     public Map<String, Integer> getArticleTypeMap() {
