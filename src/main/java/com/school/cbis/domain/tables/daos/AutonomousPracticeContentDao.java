@@ -72,9 +72,23 @@ public class AutonomousPracticeContentDao extends DAOImpl<AutonomousPracticeCont
 	}
 
 	/**
+	 * Fetch records that have <code>row_older IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByRowOlder(Integer... values) {
+		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.ROW_OLDER, values);
+	}
+
+	/**
 	 * Fetch records that have <code>autonomous_practice_head_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByAutonomousPracticeHeadId(Integer... values) {
 		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>student_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByStudentId(Integer... values) {
+		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID, values);
 	}
 }

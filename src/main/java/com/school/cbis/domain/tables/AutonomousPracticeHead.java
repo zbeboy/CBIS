@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadRecord> {
 
-	private static final long serialVersionUID = -1250877794;
+	private static final long serialVersionUID = 957412794;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_head</code>
@@ -81,49 +81,19 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	public final TableField<AutonomousPracticeHeadRecord, String> AUTHORITY = createField("authority", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.autonomous_practice_head.is_editing</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_EDITING = createField("is_editing", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.is_filtering</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_FILTERING = createField("is_filtering", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.is_sorting</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_SORTING = createField("is_sorting", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.is_visible</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_VISIBLE = createField("is_visible", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
-
-	/**
 	 * The column <code>cbis.autonomous_practice_head.is_show_highly_active</code>.
 	 */
 	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_SHOW_HIGHLY_ACTIVE = createField("is_show_highly_active", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>cbis.autonomous_practice_head.is_show_general</code>.
+	 * The column <code>cbis.autonomous_practice_head.is_database</code>.
 	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_SHOW_GENERAL = createField("is_show_general", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
+	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_DATABASE = createField("is_database", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>cbis.autonomous_practice_head.highly_active_authority</code>.
+	 * The column <code>cbis.autonomous_practice_head.content</code>.
 	 */
-	public final TableField<AutonomousPracticeHeadRecord, String> HIGHLY_ACTIVE_AUTHORITY = createField("highly_active_authority", org.jooq.impl.SQLDataType.VARCHAR.length(30), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.general_authority</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, String> GENERAL_AUTHORITY = createField("general_authority", org.jooq.impl.SQLDataType.VARCHAR.length(30), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.is_required</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_REQUIRED = createField("is_required", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
+	public final TableField<AutonomousPracticeHeadRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
 
 	/**
 	 * The column <code>cbis.autonomous_practice_head.head_type_id</code>.
@@ -134,16 +104,6 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	 * The column <code>cbis.autonomous_practice_head.autonomous_practice_info_id</code>.
 	 */
 	public final TableField<AutonomousPracticeHeadRecord, Integer> AUTONOMOUS_PRACTICE_INFO_ID = createField("autonomous_practice_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.head_type_plugin_content</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, String> HEAD_TYPE_PLUGIN_CONTENT = createField("head_type_plugin_content", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_head.head_type_plugin_id</code>.
-	 */
-	public final TableField<AutonomousPracticeHeadRecord, Integer> HEAD_TYPE_PLUGIN_ID = createField("head_type_plugin_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>cbis.autonomous_practice_head</code> table reference
@@ -196,7 +156,7 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	 */
 	@Override
 	public List<ForeignKey<AutonomousPracticeHeadRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<AutonomousPracticeHeadRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_HEAD_IBFK_1);
+		return Arrays.<ForeignKey<AutonomousPracticeHeadRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_HEAD_IBFK_2, Keys.AUTONOMOUS_PRACTICE_HEAD_IBFK_1);
 	}
 
 	/**

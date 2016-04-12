@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate;
+import com.school.cbis.vo.autonomicpractice.TemplateVo;
 import org.jooq.Record4;
 import org.jooq.Result;
 
@@ -14,9 +15,22 @@ public interface AutonomousPracticeTemplateService {
 
     /**
      * 根据系id查询
-     * @param tieId
+     *
      * @return
      */
-    Result<Record4<Integer,String,Integer,Timestamp>> findAllByTieId(int tieId);
+    List<AutonomousPracticeTemplate> findAllByTieId(int tieId);
 
+    /**
+     * 通过系id分页查询
+     * @param templateVo
+     * @return
+     */
+    Result<Record4<Integer,String,Timestamp,String>> findAllAndPage(TemplateVo templateVo,int tieId);
+
+    /**
+     * 通过
+     * @param templateVo
+     * @return
+     */
+    int findAllAndCount(TemplateVo templateVo,int tieId);
 }

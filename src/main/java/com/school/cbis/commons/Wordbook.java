@@ -81,6 +81,9 @@ public class Wordbook {
         roleMap.put(CBIS_STU, "学生");
     }
 
+    private static final String[] AUTONOMOUS_PRACTICE_TITLE_VARIABLE = {"a1","b1","c1","d1","e1","f1","g1","h1","i1","j1","k1","l1","m1",
+    "n1","o1","p1","q1","r1","s1","t1","u1","v1","w1","x1","y1","z1"};
+
     public Map<String, String> getRoleMap() {
         return roleMap;
     }

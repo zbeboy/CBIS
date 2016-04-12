@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeInfo extends TableImpl<AutonomousPracticeInfoRecord> {
 
-	private static final long serialVersionUID = -2098450133;
+	private static final long serialVersionUID = -646484317;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_info</code>
@@ -147,7 +147,7 @@ public class AutonomousPracticeInfo extends TableImpl<AutonomousPracticeInfoReco
 	 */
 	@Override
 	public List<ForeignKey<AutonomousPracticeInfoRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<AutonomousPracticeInfoRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_INFO_IBFK_1, Keys.AUTONOMOUS_PRACTICE_INFO_IBFK_2);
+		return Arrays.<ForeignKey<AutonomousPracticeInfoRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_INFO_IBFK_3, Keys.AUTONOMOUS_PRACTICE_INFO_IBFK_1, Keys.AUTONOMOUS_PRACTICE_INFO_IBFK_2);
 	}
 
 	/**

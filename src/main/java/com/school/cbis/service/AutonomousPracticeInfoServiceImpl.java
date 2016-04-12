@@ -5,14 +5,17 @@ import com.school.cbis.domain.tables.daos.AutonomousPracticeInfoDao;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeTemplateDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.records.AutonomousPracticeInfoRecord;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
+import com.school.cbis.vo.autonomicpractice.ReportSettingVo;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.sql.Timestamp;
 
 /**
  * Created by Administrator on 2016/4/5.
@@ -25,12 +28,132 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
 
     private final DSLContext create;
 
-    private AutonomousPracticeInfoDao autonomousPracticeTemplateDao;
+    private AutonomousPracticeInfoDao autonomousPracticeInfoDao;
 
     @Autowired
     public AutonomousPracticeInfoServiceImpl(DSLContext dslContext, Configuration configuration) {
         this.create = dslContext;
-        this.autonomousPracticeTemplateDao = new AutonomousPracticeInfoDao(configuration);
+        this.autonomousPracticeInfoDao = new AutonomousPracticeInfoDao(configuration);
+    }
+
+    @Override
+    public Result<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> findByTieIdAndPage(ReportSettingVo reportSettingVo,int tieId) {
+
+        Condition a = Tables.AUTONOMOUS_PRACTICE_INFO.TIE_ID.eq(tieId);
+
+        SortField<Timestamp> b = Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.desc();
+
+        SortField<String> c = null;
+
+        if (StringUtils.hasLength(reportSettingVo.getAutonomousPracticeTitle())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE.like("%" + reportSettingVo.getAutonomousPracticeTitle() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getCreateTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.like("%" + reportSettingVo.getCreateTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getGradeYear())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR.like("%" + reportSettingVo.getGradeYear() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getStartTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME.like("%" + reportSettingVo.getStartTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getEndTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.like("%" + reportSettingVo.getEndTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getUsername())) {
+            a = a.and(Tables.USERS.USERNAME.like("%" + reportSettingVo.getUsername() + "%"));
+        }
+        SelectConditionStep<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> e =
+        create.select(Tables.AUTONOMOUS_PRACTICE_INFO.ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE,
+                Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME, Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR,
+                Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME, Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME,Tables.USERS.USERNAME)
+                .from(Tables.AUTONOMOUS_PRACTICE_INFO)
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a);
+
+        if (StringUtils.hasLength(reportSettingVo.getSortField())) {
+            if (reportSettingVo.getSortField().equals("createTime")) {
+                if (reportSettingVo.getSortOrder().equals("desc")) {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.desc();
+                } else {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.asc();
+                }
+            } else if (reportSettingVo.getSortField().equals("startTime")) {
+                if (reportSettingVo.getSortOrder().equals("desc")) {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME.desc();
+                } else {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME.asc();
+                }
+            } else if (reportSettingVo.getSortField().equals("endTime")) {
+                if (reportSettingVo.getSortOrder().equals("desc")) {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.desc();
+                } else {
+                    b = Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.asc();
+                }
+            } else if (reportSettingVo.getSortField().equals("autonomousPracticeTitle")) {
+                if (reportSettingVo.getSortOrder().equals("desc")) {
+                    c = Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE.desc();
+                } else {
+                    c = Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE.asc();
+                }
+            } else if (reportSettingVo.getSortField().equals("username")) {
+                if (reportSettingVo.getSortOrder().equals("desc")) {
+                    c = Tables.USERS.USERNAME.desc();
+                } else {
+                    c = Tables.USERS.USERNAME.asc();
+                }
+            }
+
+            if (!StringUtils.isEmpty(b)) {
+                e.orderBy(b);
+            } else {
+                e.orderBy(c);
+            }
+
+        } else {
+            e.orderBy(b);
+        }
+        return e.limit((reportSettingVo.getPageIndex() - 1) * reportSettingVo.getPageSize(), reportSettingVo.getPageSize()).fetch();
+    }
+
+    @Override
+    public int findByTieIdAndCount(ReportSettingVo reportSettingVo, int tieId) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_INFO.TIE_ID.eq(tieId);
+        if (StringUtils.hasLength(reportSettingVo.getAutonomousPracticeTitle())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE.like("%" + reportSettingVo.getAutonomousPracticeTitle() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getCreateTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.like("%" + reportSettingVo.getCreateTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getGradeYear())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR.like("%" + reportSettingVo.getGradeYear() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getStartTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME.like("%" + reportSettingVo.getStartTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getEndTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.like("%" + reportSettingVo.getEndTime() + "%"));
+        }
+
+        if (StringUtils.hasLength(reportSettingVo.getUsername())) {
+            a = a.and(Tables.USERS.USERNAME.like("%" + reportSettingVo.getUsername() + "%"));
+        }
+        Record1<Integer> count = create.selectCount()
+                .from(Tables.AUTONOMOUS_PRACTICE_INFO)
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a).fetchOne();
+        return count.value1();
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -47,5 +170,10 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
                 .returning(Tables.ARTICLE_INFO.ID)
                 .fetchOne();
         return autonomousPracticeInfoRecord.getId();
+    }
+
+    @Override
+    public void deleteById(int id) {
+        autonomousPracticeInfoDao.deleteById(id);
     }
 }

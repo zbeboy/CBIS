@@ -82,7 +82,7 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <form class="uk-form uk-form-horizontal" th:action="@{/administrator/autonomicpractice/autonomicPracticeTitle}" method="post"
+            <form class="uk-form uk-form-horizontal" th:action="@{/administrator/autonomicpractice/reportSettingSave}" method="post"
                   data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}" id="addAutonomicPracticeForm">
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="autonomousPracticeTitle">标题</label>
@@ -104,9 +104,10 @@
                 </div>
 
                 <div class="uk-form-row">
-                    <label class="uk-form-label" for="autonomousPracticeTemplateId">使用模板(可选)</label>
+                    <label class="uk-form-label" for="autonomousPracticeTemplateId">模板</label>
                     <div class="uk-form-controls">
-                        <select id="autonomousPracticeTemplateId" name="autonomousPracticeTemplateId">
+                        <select id="autonomousPracticeTemplateId" name="autonomousPracticeTemplateId" data-rule="required;checked;" data-tip="模板"
+                                data-msg-required="请选择模板" >
                             <option value="" >请选择</option>
                             <option th:unless="${#lists.isEmpty(autonomousPracticeTemplate)}" th:each="apt:${autonomousPracticeTemplate}" th:value="${apt.id}" th:text="${apt.autonomousPracticeTemplateTitle}" ></option>
                         </select>
@@ -116,18 +117,18 @@
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="startTime">开始填报时间</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="startTime" name="startTime" data-uk-datepicker="{format:'YYYY-MM-DD'}" readonly="readonly" data-rule="开始填报时间: required; date;" />
+                        <input type="text" id="startTime" name="startTime" data-uk-datepicker="{format:'YYYY-MM-DD'}" readonly="readonly" data-rule="开始填报时间: required; date;" data-tip="开始填报时间" />
                     </div>
                 </div>
 
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="endTime">结束填报时间</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="endTime" name="endTime" data-uk-datepicker="{format:'YYYY-MM-DD'}" readonly="readonly" data-rule="结束填报时间: required; date; match[gt, startTime, date]" />
+                        <input type="text" id="endTime" name="endTime" data-uk-datepicker="{format:'YYYY-MM-DD'}" readonly="readonly" data-rule="结束填报时间: required; date; match[gt, startTime, date]" data-tip="结束填报时间" />
                     </div>
                 </div>
                 <div class="uk-text-center uk-margin-top">
-                    <button type="button" class="uk-button uk-button-success uk-button-large" onclick="submitAutonomicPracticeData();" >保存并下一步</button>
+                    <button type="button" class="uk-button uk-button-success uk-button-large" onclick="submitAutonomicPracticeData();" >保存</button>
                 </div>
             </form>
         </div>
@@ -144,7 +145,7 @@
     var web_path = /*[[#{web_path}]]*/ '';
     /*]]>*/
 </script>
-<script th:src="@{/js/student/autonomicpractice/autonomicpractice.js}"
-        src="js/student/autonomicpractice/autonomicpractice.js"></script>
+<script th:src="@{/js/student/autonomicpractice/reportsettingadd.js}"
+        src="js/student/autonomicpractice/reportsettingadd.js"></script>
 </body>
 </html>

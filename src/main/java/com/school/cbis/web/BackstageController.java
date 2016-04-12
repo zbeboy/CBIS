@@ -224,7 +224,7 @@ public class BackstageController {
     @RequestMapping("/student/autonomicpractice/autonomicPracticeManager")
     public String autonomicPracticeManager(){
         if(usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)){
-            return "redirect:/administrator/autonomicpractice/reportSetting";
+            return "redirect:/administrator/autonomicpractice/reportsettingList";
         } else {
             return "redirect:/student/autonomicpractice/autonomicPractice";
         }

@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public class AutonomicPracticeVo {
+public class ReportSettingAddVo {
 
     private String autonomousPracticeTitle;
 
@@ -60,7 +60,7 @@ public class AutonomicPracticeVo {
 
     @Override
     public String toString() {
-        return "AutonomicPracticeVo{" +
+        return "ReportSettingAddVo{" +
                 "autonomousPracticeTitle='" + autonomousPracticeTitle + '\'' +
                 ", gradeYear=" + Arrays.toString(gradeYear) +
                 ", autonomousPracticeTemplateId='" + autonomousPracticeTemplateId + '\'' +

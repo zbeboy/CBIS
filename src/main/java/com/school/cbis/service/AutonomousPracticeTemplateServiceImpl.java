@@ -3,16 +3,15 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeTemplateDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.Record4;
-import org.jooq.Result;
+import com.school.cbis.vo.autonomicpractice.TemplateVo;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -36,16 +35,93 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
         this.autonomousPracticeTemplateDao = new AutonomousPracticeTemplateDao(configuration);
     }
 
+
     @Override
-    public Result<Record4<Integer,String,Integer,Timestamp>> findAllByTieId(int tieId) {
-        Result<Record4<Integer,String,Integer,Timestamp>> record4s = create.select(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID,Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_INFO_ID,
-                Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME)
+    public List<AutonomousPracticeTemplate> findAllByTieId(int tieId) {
+        List<AutonomousPracticeTemplate> autonomousPracticeTemplates = autonomousPracticeTemplateDao.fetchByTieId(tieId);
+        return autonomousPracticeTemplates;
+    }
+
+    @Override
+    public Result<Record4<Integer, String, Timestamp, String>> findAllAndPage(TemplateVo templateVo,int tieId) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId);
+
+        SortField<Timestamp> b = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.desc();
+
+        SortField<String> c = null;
+
+        if (StringUtils.hasLength(templateVo.getAutonomousPracticeTemplateTitle())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.like("%" + templateVo.getAutonomousPracticeTemplateTitle() + "%"));
+        }
+
+        if (StringUtils.hasLength(templateVo.getCreate_time())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreate_time() + "%"));
+        }
+
+        if (StringUtils.hasLength(templateVo.getUsername())) {
+            a = a.and(Tables.USERS.USERNAME.like("%" + templateVo.getUsername() + "%"));
+        }
+
+        SelectConditionStep<Record4<Integer, String, Timestamp, String>> e =
+        create.select(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID,Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
+                Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME,Tables.USERS.USERNAME)
                 .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
-                .join(Tables.AUTONOMOUS_PRACTICE_INFO)
-                .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_INFO_ID.eq(Tables.AUTONOMOUS_PRACTICE_INFO.ID))
-                .where(Tables.AUTONOMOUS_PRACTICE_INFO.TIE_ID.eq(tieId))
-                .orderBy(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.desc())
-                .fetch();
-        return record4s;
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a);
+
+        if (StringUtils.hasLength(templateVo.getSortField())) {
+            if (templateVo.getSortField().equals("create_time")) {
+                if (templateVo.getSortOrder().equals("desc")) {
+                    b = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.desc();
+                } else {
+                    b = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.asc();
+                }
+            } else if (templateVo.getSortField().equals("autonomousPracticeTemplateTitle")) {
+                if (templateVo.getSortOrder().equals("desc")) {
+                    c = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.desc();
+                } else {
+                    c = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.asc();
+                }
+            } else if (templateVo.getSortField().equals("username")) {
+                if (templateVo.getSortOrder().equals("desc")) {
+                    c = Tables.USERS.USERNAME.desc();
+                } else {
+                    c = Tables.USERS.USERNAME.asc();
+                }
+            }
+
+            if (!StringUtils.isEmpty(b)) {
+                e.orderBy(b);
+            } else {
+                e.orderBy(c);
+            }
+        } else {
+            e.orderBy(b);
+        }
+
+        return e.limit((templateVo.getPageIndex() - 1) * templateVo.getPageSize(), templateVo.getPageSize()).fetch();
+    }
+
+    @Override
+    public int findAllAndCount(TemplateVo templateVo, int tieId) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId);
+        if (StringUtils.hasLength(templateVo.getAutonomousPracticeTemplateTitle())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.like("%" + templateVo.getAutonomousPracticeTemplateTitle() + "%"));
+        }
+
+        if (StringUtils.hasLength(templateVo.getCreate_time())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreate_time() + "%"));
+        }
+
+        if (StringUtils.hasLength(templateVo.getUsername())) {
+            a = a.and(Tables.USERS.USERNAME.like("%" + templateVo.getUsername() + "%"));
+        }
+        Record1<Integer> count = create.selectCount()
+                .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a).fetchOne();
+        return count.value1();
     }
 }

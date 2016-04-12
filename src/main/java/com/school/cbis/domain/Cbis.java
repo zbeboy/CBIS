@@ -18,7 +18,6 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
-import com.school.cbis.domain.tables.HeadTypePlugin;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -68,7 +67,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -215571732;
+	private static final long serialVersionUID = -1242919713;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -105,7 +104,6 @@ public class Cbis extends SchemaImpl {
 			FourItemsType.FOUR_ITEMS_TYPE,
 			Grade.GRADE,
 			HeadType.HEAD_TYPE,
-			HeadTypePlugin.HEAD_TYPE_PLUGIN,
 			Major.MAJOR,
 			PersistentLogins.PERSISTENT_LOGINS,
 			PlaceFileContent.PLACE_FILE_CONTENT,

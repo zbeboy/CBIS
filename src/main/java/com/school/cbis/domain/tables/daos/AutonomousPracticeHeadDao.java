@@ -100,34 +100,6 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
-	 * Fetch records that have <code>is_editing IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsEditing(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_EDITING, values);
-	}
-
-	/**
-	 * Fetch records that have <code>is_filtering IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsFiltering(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_FILTERING, values);
-	}
-
-	/**
-	 * Fetch records that have <code>is_sorting IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsSorting(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_SORTING, values);
-	}
-
-	/**
-	 * Fetch records that have <code>is_visible IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsVisible(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_VISIBLE, values);
-	}
-
-	/**
 	 * Fetch records that have <code>is_show_highly_active IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsShowHighlyActive(Byte... values) {
@@ -135,31 +107,17 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
-	 * Fetch records that have <code>is_show_general IN (values)</code>
+	 * Fetch records that have <code>is_database IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsShowGeneral(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_SHOW_GENERAL, values);
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsDatabase(Byte... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE, values);
 	}
 
 	/**
-	 * Fetch records that have <code>highly_active_authority IN (values)</code>
+	 * Fetch records that have <code>content IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHighlyActiveAuthority(String... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HIGHLY_ACTIVE_AUTHORITY, values);
-	}
-
-	/**
-	 * Fetch records that have <code>general_authority IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByGeneralAuthority(String... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.GENERAL_AUTHORITY, values);
-	}
-
-	/**
-	 * Fetch records that have <code>is_required IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsRequired(Byte... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED, values);
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByContent(String... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.CONTENT, values);
 	}
 
 	/**
@@ -174,19 +132,5 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByAutonomousPracticeInfoId(Integer... values) {
 		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_INFO_ID, values);
-	}
-
-	/**
-	 * Fetch records that have <code>head_type_plugin_content IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePluginContent(String... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGIN_CONTENT, values);
-	}
-
-	/**
-	 * Fetch records that have <code>head_type_plugin_id IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypePluginId(Integer... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_PLUGIN_ID, values);
 	}
 }

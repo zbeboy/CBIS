@@ -24,28 +24,36 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContent implements Serializable {
 
-	private static final long serialVersionUID = 2041483756;
+	private static final long serialVersionUID = 1271184760;
 
 	private Integer id;
 	private String  cotent;
+	private Integer rowOlder;
 	private Integer autonomousPracticeHeadId;
+	private Integer studentId;
 
 	public AutonomousPracticeContent() {}
 
 	public AutonomousPracticeContent(AutonomousPracticeContent value) {
 		this.id = value.id;
 		this.cotent = value.cotent;
+		this.rowOlder = value.rowOlder;
 		this.autonomousPracticeHeadId = value.autonomousPracticeHeadId;
+		this.studentId = value.studentId;
 	}
 
 	public AutonomousPracticeContent(
 		Integer id,
 		String  cotent,
-		Integer autonomousPracticeHeadId
+		Integer rowOlder,
+		Integer autonomousPracticeHeadId,
+		Integer studentId
 	) {
 		this.id = id;
 		this.cotent = cotent;
+		this.rowOlder = rowOlder;
 		this.autonomousPracticeHeadId = autonomousPracticeHeadId;
+		this.studentId = studentId;
 	}
 
 	@NotNull
@@ -67,6 +75,15 @@ public class AutonomousPracticeContent implements Serializable {
 	}
 
 	@NotNull
+	public Integer getRowOlder() {
+		return this.rowOlder;
+	}
+
+	public void setRowOlder(Integer rowOlder) {
+		this.rowOlder = rowOlder;
+	}
+
+	@NotNull
 	public Integer getAutonomousPracticeHeadId() {
 		return this.autonomousPracticeHeadId;
 	}
@@ -75,13 +92,24 @@ public class AutonomousPracticeContent implements Serializable {
 		this.autonomousPracticeHeadId = autonomousPracticeHeadId;
 	}
 
+	@NotNull
+	public Integer getStudentId() {
+		return this.studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("AutonomousPracticeContent (");
 
 		sb.append(id);
 		sb.append(", ").append(cotent);
+		sb.append(", ").append(rowOlder);
 		sb.append(", ").append(autonomousPracticeHeadId);
+		sb.append(", ").append(studentId);
 
 		sb.append(")");
 		return sb.toString();

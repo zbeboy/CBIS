@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContent extends TableImpl<AutonomousPracticeContentRecord> {
 
-	private static final long serialVersionUID = 262251195;
+	private static final long serialVersionUID = 1158885233;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_content</code>
@@ -61,9 +61,19 @@ public class AutonomousPracticeContent extends TableImpl<AutonomousPracticeConte
 	public final TableField<AutonomousPracticeContentRecord, String> COTENT = createField("cotent", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
 
 	/**
+	 * The column <code>cbis.autonomous_practice_content.row_older</code>.
+	 */
+	public final TableField<AutonomousPracticeContentRecord, Integer> ROW_OLDER = createField("row_older", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>cbis.autonomous_practice_content.autonomous_practice_head_id</code>.
 	 */
 	public final TableField<AutonomousPracticeContentRecord, Integer> AUTONOMOUS_PRACTICE_HEAD_ID = createField("autonomous_practice_head_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.autonomous_practice_content.student_id</code>.
+	 */
+	public final TableField<AutonomousPracticeContentRecord, Integer> STUDENT_ID = createField("student_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.autonomous_practice_content</code> table reference
@@ -116,7 +126,7 @@ public class AutonomousPracticeContent extends TableImpl<AutonomousPracticeConte
 	 */
 	@Override
 	public List<ForeignKey<AutonomousPracticeContentRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<AutonomousPracticeContentRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_CONTENT_IBFK_1);
+		return Arrays.<ForeignKey<AutonomousPracticeContentRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_CONTENT_IBFK_1, Keys.AUTONOMOUS_PRACTICE_CONTENT_IBFK_2);
 	}
 
 	/**

@@ -177,9 +177,9 @@
             <div class="uk-panel uk-panel-box">
                 <h3 class="uk-panel-title">自主实习</h3>
                 <ul class="uk-nav uk-nav-side" data-uk-nav="">
-                    <li id="navreportingsettings" sec:authorize="hasRole('ADMIN')" ><a href="#" th:href="@{/templates/student/autonomicpractice/autonomicpractice/reportSetting }">填报设置</a> </li>
+                    <li id="navreportingsettings" sec:authorize="hasRole('ADMIN')" ><a href="#" th:href="@{/administrator/autonomicpractice/reportsettingList }">填报设置</a> </li>
                     <li id="navautonomicpractice" sec:authorize="hasAnyRole('STU','TEA','ADMIN','MAI','SEMI')"><a href="#" th:href="@{/student/autonomicpractice/autonomicPractice }">自主实习</a> </li>
-                    <li id="navtemplateedit" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/templates/student/autonomicpractice/autonomicpractice/templateEdit }">模板编辑</a> </li>
+                    <li id="navtemplateedit" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/administrator/autonomicpractice/autonomicpractice/templateList }">模板编辑</a> </li>
                     <li id="navdataanalysis" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/maintainer/autonomicpractice/dataAnalysis }">数据分析</a> </li>
                 </ul>
             </div>
@@ -192,9 +192,9 @@
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
                 <li class="uk-nav-header">自主实习</li>
-                <li id="offcanvasreportingsettings"><a href="#" th:href="@{/templates/student/autonomicpractice/autonomicpractice/reportSetting}">填报设置</a> </li>
+                <li id="offcanvasreportingsettings"><a href="#" th:href="@{/administrator/autonomicpractice/reportsettingList}">填报设置</a> </li>
                 <li id="offcanvasautonomicpractice"><a href="#" th:href="@{/student/autonomicpractice/autonomicPractice }">自主实习</a> </li>
-                <li id="offcanvastemplateedit"><a href="#" th:href="@{/templates/student/autonomicpractice/autonomicpractice/templateEdit }">模板编辑</a> </li>
+                <li id="offcanvastemplateedit"><a href="#" th:href="@{/administrator/autonomicpractice/autonomicpractice/templateList }">模板编辑</a> </li>
                 <li id="offcanvasdataanalysis"><a href="#" th:href="@{/maintainer/autonomicpractice/dataAnalysis }">数据分析</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>

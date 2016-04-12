@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeTemplate extends TableImpl<AutonomousPracticeTemplateRecord> {
 
-	private static final long serialVersionUID = 362370248;
+	private static final long serialVersionUID = -879078431;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_template</code>
@@ -67,9 +67,14 @@ public class AutonomousPracticeTemplate extends TableImpl<AutonomousPracticeTemp
 	public final TableField<AutonomousPracticeTemplateRecord, Timestamp> CREATE_TIME = createField("create_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>cbis.autonomous_practice_template.autonomous_practice_info_id</code>.
+	 * The column <code>cbis.autonomous_practice_template.users_id</code>.
 	 */
-	public final TableField<AutonomousPracticeTemplateRecord, Integer> AUTONOMOUS_PRACTICE_INFO_ID = createField("autonomous_practice_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<AutonomousPracticeTemplateRecord, String> USERS_ID = createField("users_id", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.autonomous_practice_template.tie_id</code>.
+	 */
+	public final TableField<AutonomousPracticeTemplateRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.autonomous_practice_template</code> table reference
@@ -122,7 +127,7 @@ public class AutonomousPracticeTemplate extends TableImpl<AutonomousPracticeTemp
 	 */
 	@Override
 	public List<ForeignKey<AutonomousPracticeTemplateRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<AutonomousPracticeTemplateRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_TEMPLATE_IBFK_1);
+		return Arrays.<ForeignKey<AutonomousPracticeTemplateRecord, ?>>asList(Keys.AUTONOMOUS_PRACTICE_TEMPLATE_IBFK_2, Keys.AUTONOMOUS_PRACTICE_TEMPLATE_IBFK_1);
 	}
 
 	/**

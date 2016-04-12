@@ -385,6 +385,16 @@ create table classroom_course_timetable_info(
   foreign key(file_user) references users(username)
 );
 
+create table autonomous_practice_template(
+  id int not null primary key auto_increment,
+  autonomous_practice_template_title varchar(50) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  users_id varchar(64) not null,
+  tie_id int not null,
+  foreign key(tie_id) references tie(id),
+  foreign key(users_id) references users(username)
+);
+
 create table autonomous_practice_info(
   id int not null primary key auto_increment,
   autonomous_practice_title varchar(100) not null,
@@ -396,29 +406,14 @@ create table autonomous_practice_info(
   users_id varchar(64) not null,
   tie_id int not null,
   foreign key(users_id) references users(username),
-  foreign key(tie_id) references tie(id)
+  foreign key(tie_id) references tie(id),
+  foreign key(autonomous_practice_template_id) references autonomous_practice_template(id)
 );
 
 create table head_type(
   id int not null primary key auto_increment,
   type_value varchar(30) not null,
   type_name varchar(30) not null
-);
-
-create table head_type_plugin(
-  id int not null primary key auto_increment,
-  type varchar(25) not null,
-  content varchar(500) not null,
-  head_type_id int not null,
-  foreign key(head_type_id) references head_type(id)
-);
-
-create table autonomous_practice_template(
-  id int not null primary key auto_increment,
-  autonomous_practice_template_title varchar(50) not null,
-  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  autonomous_practice_info_id int not null,
-  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
 );
 
 create table autonomous_practice_head(
@@ -428,27 +423,23 @@ create table autonomous_practice_head(
   database_table varchar(100),
   database_table_field varchar(100),
   authority varchar(30) not null,
-  is_editing boolean not null default false,
-  is_filtering boolean not null default false,
-  is_sorting boolean not null default false,
-  is_visible boolean not null default false,
   is_show_highly_active boolean not null default true,
-  is_show_general boolean not null default true,
-  highly_active_authority varchar(30),
-  general_authority varchar(30),
-  is_required boolean not null default false,
+  is_database boolean not null default false,
+  content varchar(500),
   head_type_id int,
   autonomous_practice_info_id int not null,
-  head_type_plugin_content varchar(500),
-  head_type_plugin_id int,
-  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
+  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id),
+  foreign key(head_type_id) references head_type(id)
 );
 
 create table autonomous_practice_content(
   id int not null primary key auto_increment,
   cotent varchar(200),
+  row_older int not null,
   autonomous_practice_head_id int not null,
-  foreign key(autonomous_practice_head_id) references autonomous_practice_head(id)
+  student_id int not null,
+  foreign key(autonomous_practice_head_id) references autonomous_practice_head(id),
+  foreign key(student_id) references student(id)
 );
 
 insert into user_type(name) values('学生');
@@ -498,7 +489,6 @@ insert into head_type(type_value, type_name) values('checkbox','复选');
 insert into head_type(type_value, type_name) values('password','密码');
 insert into head_type(type_value, type_name) values('time','时间');
 insert into head_type(type_value, type_name) values('timerange','时间范围');
-insert into head_type(type_value, type_name) values('control','控制');
 insert into head_type(type_value, type_name) values('email','邮箱');
 insert into head_type(type_value, type_name) values('number','数字');
 insert into head_type(type_value, type_name) values('mobile','手机');
@@ -506,20 +496,3 @@ insert into head_type(type_value, type_name) values('telephone','电话');
 insert into head_type(type_value, type_name) values('postcode','邮政编码');
 insert into head_type(type_value, type_name) values('qq','腾讯qq');
 insert into head_type(type_value, type_name) values('ID_card','身份证号');
-
-insert into head_type_plugin(type,content,head_type_id) values('长度','50',1);
-insert into head_type_plugin(type,content,head_type_id) values('长度','50',2);
-insert into head_type_plugin(type,content,head_type_id) values('单选','',3);
-insert into head_type_plugin(type,content,head_type_id) values('多选','',4);
-insert into head_type_plugin(type,content,head_type_id) values('长度','50',5);
-insert into head_type_plugin(type,content,head_type_id) values('日期','',6);
-insert into head_type_plugin(type,content,head_type_id) values('日期+时间','',6);
-insert into head_type_plugin(type,content,head_type_id) values('日期','',7);
-insert into head_type_plugin(type,content,head_type_id) values('日期+时间','',7);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$',9);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^\d{50}$',10);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|70)\\d{8}$',11);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^\d{3}-\d{8}|\d{4}-\d{7}$',12);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^[1-9]\d{5}(?!\d)$',13);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^[1-9][0-9]{4,}$',14);
-insert into head_type_plugin(type,content,head_type_id) values('正则','^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$',15);

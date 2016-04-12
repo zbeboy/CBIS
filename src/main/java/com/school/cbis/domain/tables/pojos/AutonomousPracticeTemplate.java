@@ -25,12 +25,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeTemplate implements Serializable {
 
-	private static final long serialVersionUID = -2143610585;
+	private static final long serialVersionUID = -1460574429;
 
 	private Integer   id;
 	private String    autonomousPracticeTemplateTitle;
 	private Timestamp createTime;
-	private Integer   autonomousPracticeInfoId;
+	private String    usersId;
+	private Integer   tieId;
 
 	public AutonomousPracticeTemplate() {}
 
@@ -38,19 +39,22 @@ public class AutonomousPracticeTemplate implements Serializable {
 		this.id = value.id;
 		this.autonomousPracticeTemplateTitle = value.autonomousPracticeTemplateTitle;
 		this.createTime = value.createTime;
-		this.autonomousPracticeInfoId = value.autonomousPracticeInfoId;
+		this.usersId = value.usersId;
+		this.tieId = value.tieId;
 	}
 
 	public AutonomousPracticeTemplate(
 		Integer   id,
 		String    autonomousPracticeTemplateTitle,
 		Timestamp createTime,
-		Integer   autonomousPracticeInfoId
+		String    usersId,
+		Integer   tieId
 	) {
 		this.id = id;
 		this.autonomousPracticeTemplateTitle = autonomousPracticeTemplateTitle;
 		this.createTime = createTime;
-		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+		this.usersId = usersId;
+		this.tieId = tieId;
 	}
 
 	@NotNull
@@ -82,12 +86,22 @@ public class AutonomousPracticeTemplate implements Serializable {
 	}
 
 	@NotNull
-	public Integer getAutonomousPracticeInfoId() {
-		return this.autonomousPracticeInfoId;
+	@Size(max = 64)
+	public String getUsersId() {
+		return this.usersId;
 	}
 
-	public void setAutonomousPracticeInfoId(Integer autonomousPracticeInfoId) {
-		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+	public void setUsersId(String usersId) {
+		this.usersId = usersId;
+	}
+
+	@NotNull
+	public Integer getTieId() {
+		return this.tieId;
+	}
+
+	public void setTieId(Integer tieId) {
+		this.tieId = tieId;
 	}
 
 	@Override
@@ -97,7 +111,8 @@ public class AutonomousPracticeTemplate implements Serializable {
 		sb.append(id);
 		sb.append(", ").append(autonomousPracticeTemplateTitle);
 		sb.append(", ").append(createTime);
-		sb.append(", ").append(autonomousPracticeInfoId);
+		sb.append(", ").append(usersId);
+		sb.append(", ").append(tieId);
 
 		sb.append(")");
 		return sb.toString();

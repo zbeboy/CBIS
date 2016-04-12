@@ -18,7 +18,6 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
-import com.school.cbis.domain.tables.HeadTypePlugin;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -130,11 +129,6 @@ public class Tables {
 	 * The table cbis.head_type
 	 */
 	public static final HeadType HEAD_TYPE = com.school.cbis.domain.tables.HeadType.HEAD_TYPE;
-
-	/**
-	 * The table cbis.head_type_plugin
-	 */
-	public static final HeadTypePlugin HEAD_TYPE_PLUGIN = com.school.cbis.domain.tables.HeadTypePlugin.HEAD_TYPE_PLUGIN;
 
 	/**
 	 * The table cbis.major

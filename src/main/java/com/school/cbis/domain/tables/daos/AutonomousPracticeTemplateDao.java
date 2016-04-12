@@ -80,9 +80,16 @@ public class AutonomousPracticeTemplateDao extends DAOImpl<AutonomousPracticeTem
 	}
 
 	/**
-	 * Fetch records that have <code>autonomous_practice_info_id IN (values)</code>
+	 * Fetch records that have <code>users_id IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate> fetchByAutonomousPracticeInfoId(Integer... values) {
-		return fetch(AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_INFO_ID, values);
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate> fetchByUsersId(String... values) {
+		return fetch(AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>tie_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate> fetchByTieId(Integer... values) {
+		return fetch(AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID, values);
 	}
 }
