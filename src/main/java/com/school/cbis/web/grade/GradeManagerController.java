@@ -54,7 +54,7 @@ public class GradeManagerController {
      */
     @RequestMapping("/maintainer/grade/gradeData")
     @ResponseBody
-    public Map<String, Object> gradeData(GradeVo gradeVo) {
+    public Map<String, Object> gradeData(GradeVo gradeVo,String templateId) {
         JsGrid<GradeVo> jsGrid = new JsGrid<>(new HashMap<>());
         //通过用户类型获取系表ID
         Result<Record> records = usersService.findAll(usersService.getUserName());
@@ -99,7 +99,7 @@ public class GradeManagerController {
         }
         Result<TeacherRecord> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
         if (teachers.isNotEmpty()) {
-            teachers.forEach(teacherRecord->{
+            teachers.forEach(teacherRecord -> {
                 AutoCompleteData data = new AutoCompleteData();
                 data.setValue(teacherRecord.getTeacherJobNumber());
                 data.setTitle(teacherRecord.getTeacherName());

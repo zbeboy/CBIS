@@ -117,6 +117,8 @@ public class UsersServiceImpl implements UsersService {
                     .on(Tables.TEACHER.TIE_ID.equal(Tables.TIE.ID))
                     .join(Tables.YARD)
                     .on(Tables.TIE.YARD_ID.equal(Tables.YARD.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
                     .where(Tables.TEACHER.TEACHER_JOB_NUMBER.equal(username))
                     .fetch();
             return records;
@@ -131,6 +133,8 @@ public class UsersServiceImpl implements UsersService {
                     .on(Tables.MAJOR.TIE_ID.equal(Tables.TIE.ID))
                     .join(Tables.YARD)
                     .on(Tables.TIE.YARD_ID.equal(Tables.YARD.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                     .where(Tables.STUDENT.STUDENT_NUMBER.equal(username))
                     .fetch();
             return records;

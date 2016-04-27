@@ -13,16 +13,12 @@
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
-    <title>模板列表</title>
+    <title>自主实习</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
-
-    <!-- jsgrid css-->
-    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid/jsgrid.min.css}" />
-    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css" th:href="@{/css/jsgrid/jsgrid-theme.min.css}" />
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -31,6 +27,7 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="/js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
@@ -47,8 +44,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#navtemplateedit').addClass('uk-active');
-            $('#offcanvastemplateedit').addClass('uk-active');
+            $('#navautonomicpractice').addClass('uk-active');
+            $('#offcanvasautonomicpractice').addClass('uk-active');
         });
     </script>
 </head>
@@ -74,7 +71,10 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <div id="jsGrid"></div>
+            <div id="dataShow" >
+
+            </div>
+            <ul class="uk-pagination"></ul>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -89,20 +89,7 @@
     var web_path = /*[[#{web_path}]]*/ '';
     /*]]>*/
 </script>
-
-<!-- jsgrid js-->
-<script src="s/student/db/autonomicpractice/templatedb.js" th:src="@{/js/student/db/autonomicpractice/templatedb.js}" ></script>
-<script src="js/jsgrid.core.js" th:src="@{/js/plugin/jsgrid/jsgrid.core.js}" ></script>
-<script src="js/jsgrid.load-indicator.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-indicator.js}" ></script>
-<script src="js/jsgrid.load-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-strategies.js}" ></script>
-<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.sort-strategies.js}" ></script>
-<script src="js/jsgrid.field.js" th:src="@{/js/plugin/jsgrid/jsgrid.field.js}" ></script>
-<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.text.js}" ></script>
-<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.number.js}" ></script>
-<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.select.js}"></script>
-<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.control.js}" ></script>
-
-<script th:src="@{/js/student/autonomicpractice/templatelist.js}"
-        src="js/student/autonomicpractice/templatelist.js"></script>
+<script th:src="@{/js/student/autonomicpractice/autonomicpracticelist.js}"
+        src="js/student/autonomicpractice/autonomicpracticelist.js"></script>
 </body>
 </html>

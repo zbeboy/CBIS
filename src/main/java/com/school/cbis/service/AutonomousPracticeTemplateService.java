@@ -28,9 +28,21 @@ public interface AutonomousPracticeTemplateService {
     Result<Record4<Integer,String,Timestamp,String>> findAllAndPage(TemplateVo templateVo,int tieId);
 
     /**
-     * 通过
+     * 查询总数
      * @param templateVo
      * @return
      */
     int findAllAndCount(TemplateVo templateVo,int tieId);
+
+    /**
+     * 通过主键删除
+     * @param id
+     */
+    void deleteById(int id);
+
+    /**
+     * 保存
+     * @param autonomousPracticeTemplate
+     */
+    int save(AutonomousPracticeTemplate autonomousPracticeTemplate);
 }

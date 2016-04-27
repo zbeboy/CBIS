@@ -37,6 +37,18 @@ public class JsGrid<T> {
     }
 
     /**
+     * 字符串数据
+     * @param data
+     * @param count
+     * @return
+     */
+    public Map<String, Object> loadData(String data, int count){
+        this.map.put("data", data);
+        this.map.put("itemsCount", count);
+        return this.map;
+    }
+
+    /**
      * 删除数据
      *
      * @param t

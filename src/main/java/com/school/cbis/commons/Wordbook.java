@@ -41,19 +41,19 @@ public class Wordbook {
     public static final String TEACHER_SUMMARY = "教师简介";
     public static final String RECRUIT_MOULD = "招聘模板";
 
-    private Map<String, Integer> articleTypeMap = new HashMap<>();
+    private Map<String, Integer> articleTypeMap;
 
     //用户类型
     public static final String USER_TYPE_TEACHER = "教师";
     public static final String USER_TYPE_STUDENT = "学生";
 
-    private Map<String, Integer> userTypeMap = new HashMap<>();
+    private Map<String, Integer> userTypeMap;
 
     //教学类型
     public static final String TEACH_TYPE_THEORY = "理论";
     public static final String TEACH_TYPE_PRACTICE = "实践";
 
-    private Map<String, Integer> teachTypeMap = new HashMap<>();
+    private Map<String, Integer> teachTypeMap;
 
     //四大件类型
     public static final String FOUR_ITEMS_TYPE_OUTLINE = "大纲";
@@ -61,7 +61,7 @@ public class Wordbook {
     public static final String FOUR_ITEMS_TYPE_SCHEDULE = "日程";
     public static final String FOUR_ITEMS_TYPE_PPT = "ppt";
 
-    private Map<String, Integer> fourItemsTypeMap = new HashMap<>();
+    private Map<String, Integer> fourItemsTypeMap;
 
     //权限
     public static final String CBIS_ADMIN = "ROLE_ADMIN";
@@ -81,9 +81,6 @@ public class Wordbook {
         roleMap.put(CBIS_STU, "学生");
     }
 
-    private static final String[] AUTONOMOUS_PRACTICE_TITLE_VARIABLE = {"a1","b1","c1","d1","e1","f1","g1","h1","i1","j1","k1","l1","m1",
-    "n1","o1","p1","q1","r1","s1","t1","u1","v1","w1","x1","y1","z1"};
-
     public Map<String, String> getRoleMap() {
         return roleMap;
     }
@@ -102,6 +99,7 @@ public class Wordbook {
     }
 
     public Map<String, Integer> getArticleTypeMap() {
+        articleTypeMap = new HashMap<>();
         Result<ArticleTypeRecord> articleTypeRecordResult = wordbookService.articleType();
         articleTypeRecordResult.forEach(r -> {
             articleTypeMap.put(r.getName(), r.getId());
@@ -110,6 +108,7 @@ public class Wordbook {
     }
 
     public Map<String, Integer> getUserTypeMap() {
+        userTypeMap = new HashMap<>();
         Result<UserTypeRecord> userTypeRecordResult = wordbookService.userType();
         userTypeRecordResult.forEach(r -> {
             userTypeMap.put(r.getName(), r.getId());
@@ -118,6 +117,7 @@ public class Wordbook {
     }
 
     public Map<String, Integer> getTeachTypeMap() {
+        teachTypeMap = new HashMap<>();
         Result<TeachTypeRecord> teachTypeRecordResult = wordbookService.teachType();
         teachTypeRecordResult.forEach(r -> {
             teachTypeMap.put(r.getName(), r.getId());
@@ -126,6 +126,7 @@ public class Wordbook {
     }
 
     public Map<String, Integer> getFourItemsTypeMap() {
+        fourItemsTypeMap = new HashMap<>();
         Result<FourItemsTypeRecord> fourItemsTypeRecordResult = wordbookService.fourItemsType();
         fourItemsTypeRecordResult.forEach(r -> {
             fourItemsTypeMap.put(r.getName(), r.getId());

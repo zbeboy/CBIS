@@ -1,8 +1,11 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeInfo;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeListVo;
 import com.school.cbis.vo.autonomicpractice.ReportSettingVo;
+import org.jooq.Record10;
 import org.jooq.Record7;
+import org.jooq.Record9;
 import org.jooq.Result;
 
 import java.sql.Timestamp;
@@ -39,4 +42,18 @@ public interface AutonomousPracticeInfoService {
      * @param id
      */
     void deleteById(int id);
+
+    /**
+     * 自主实习列表所需数据
+     * @param tieId
+     * @return
+     */
+    Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer>> findByTieIdAndPage(int tieId, int pageNum, int pageSize);
+
+    /**
+     * 自主实习列表所需数据总数
+     * @param tieId
+     * @return
+     */
+    int findByTieIdAndPageCount(int tieId);
 }

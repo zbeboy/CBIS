@@ -72,13 +72,6 @@ public class AutonomousPracticeContentDao extends DAOImpl<AutonomousPracticeCont
 	}
 
 	/**
-	 * Fetch records that have <code>row_older IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByRowOlder(Integer... values) {
-		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.ROW_OLDER, values);
-	}
-
-	/**
 	 * Fetch records that have <code>autonomous_practice_head_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByAutonomousPracticeHeadId(Integer... values) {

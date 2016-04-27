@@ -300,6 +300,12 @@ public class UsersController {
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
         usersService.save(users);
+        AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
+        authoritiesRecord.setUsername(username);
+        authoritiesRecord.setAuthority(Wordbook.CBIS_TEA);
+        List<AuthoritiesRecord> authoritiesRecords = new ArrayList<>();
+        authoritiesRecords.add(authoritiesRecord);
+        authoritiesService.save(authoritiesRecords);
         return "redirect:/maintainer/users/teacherManager";
     }
 
@@ -324,6 +330,12 @@ public class UsersController {
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));
         usersService.save(users);
+        AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
+        authoritiesRecord.setUsername(username);
+        authoritiesRecord.setAuthority(Wordbook.CBIS_STU);
+        List<AuthoritiesRecord> authoritiesRecords = new ArrayList<>();
+        authoritiesRecords.add(authoritiesRecord);
+        authoritiesService.save(authoritiesRecords);
         return "redirect:/maintainer/users/studentManager";
     }
 

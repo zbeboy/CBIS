@@ -422,20 +422,20 @@ create table autonomous_practice_head(
   title_variable varchar(50) not null,
   database_table varchar(100),
   database_table_field varchar(100),
-  authority varchar(30) not null,
+  authority varchar(2000) not null,
   is_show_highly_active boolean not null default true,
   is_database boolean not null default false,
-  content varchar(500),
+  content varchar(2000),
+  sort int not null,
   head_type_id int,
-  autonomous_practice_info_id int not null,
-  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id),
+  autonomous_practice_template_id int not null,
+  foreign key(autonomous_practice_template_id) references autonomous_practice_template(id),
   foreign key(head_type_id) references head_type(id)
 );
 
 create table autonomous_practice_content(
   id int not null primary key auto_increment,
-  cotent varchar(200),
-  row_older int not null,
+  cotent varchar(500),
   autonomous_practice_head_id int not null,
   student_id int not null,
   foreign key(autonomous_practice_head_id) references autonomous_practice_head(id),
@@ -484,11 +484,11 @@ insert into four_items_type(name) values('ppt');
 
 insert into head_type(type_value, type_name) values('text','文本');
 insert into head_type(type_value, type_name) values('textarea','多文本');
-insert into head_type(type_value, type_name) values('radio','单选');
+insert into head_type(type_value, type_name) values('select','单选');
 insert into head_type(type_value, type_name) values('checkbox','复选');
-insert into head_type(type_value, type_name) values('password','密码');
+insert into head_type(type_value, type_name) values('switch','开关');
+insert into head_type(type_value, type_name) values('date','日期');
 insert into head_type(type_value, type_name) values('time','时间');
-insert into head_type(type_value, type_name) values('timerange','时间范围');
 insert into head_type(type_value, type_name) values('email','邮箱');
 insert into head_type(type_value, type_name) values('number','数字');
 insert into head_type(type_value, type_name) values('mobile','手机');
@@ -496,3 +496,4 @@ insert into head_type(type_value, type_name) values('telephone','电话');
 insert into head_type(type_value, type_name) values('postcode','邮政编码');
 insert into head_type(type_value, type_name) values('qq','腾讯qq');
 insert into head_type(type_value, type_name) values('ID_card','身份证号');
+insert into head_type(type_value, type_name) values('database','数据库字段');

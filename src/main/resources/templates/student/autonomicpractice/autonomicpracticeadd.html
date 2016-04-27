@@ -13,7 +13,7 @@
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
-    <title>模板列表</title>
+    <title>自主实习</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
@@ -31,6 +31,10 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/datepicker.js" th:src="@{/js/plugin/components/datepicker.js}"></script>
+    <script src="js/components/form-select.js" th:src="@{/js/plugin/components/form-select.js}"></script>
+    <script src="js/components/autocomplete.js" th:src="@{/js/plugin/components/autocomplete.js}"></script>
+    <script src="js/components/timepicker.js" th:src="@{/js/plugin/components/timepicker.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
@@ -47,8 +51,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#navtemplateedit').addClass('uk-active');
-            $('#offcanvastemplateedit').addClass('uk-active');
+            $('#navautonomicpractice').addClass('uk-active');
+            $('#offcanvasautonomicpractice').addClass('uk-active');
         });
     </script>
 </head>
@@ -74,7 +78,13 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <div id="jsGrid"></div>
+            <form class="uk-form uk-form-horizontal" th:if="${isStudent}" id="studentData" th:action="@{/student/autonomicpractice/addAutonomousPracticeContent}">
+
+            </form>
+            <div class="uk-text-center uk-margin" th:if="${isStudent}" >
+                <button class="uk-button uk-button-large uk-button-primary" type="button" onclick="studentSave();" >保存</button>
+            </div>
+            <div id="jsGrid" th:if="${!isStudent}" ></div>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -87,11 +97,19 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path = /*[[#{web_path}]]*/ '';
+    var heads = /*[[${heads}]]*/ null;
+    var isStudent = /*[[${isStudent}]]*/ false;
+    var currentAuthorities = /*[[${currentAuthorities}]]*/ null;
+    var studentInfo =  /*[[${studentInfo}]]*/ null;
+    var isUpdate = /*[[${isUpdate}]]*/ false;
+    var myContents = /*[[${myContents}]]*/ null;
+    var templateId = /*[[${templateId}]]*/ 0;
+    var jsGridField = /*[[${jsGridField}]]*/ null;
     /*]]>*/
 </script>
 
 <!-- jsgrid js-->
-<script src="s/student/db/autonomicpractice/templatedb.js" th:src="@{/js/student/db/autonomicpractice/templatedb.js}" ></script>
+<script src="js/cbis/db/student/autonomicpracticeadddb.js" th:src="@{/js/student/db/autonomicpractice/autonomicpracticeadddb.js}" ></script>
 <script src="js/jsgrid.core.js" th:src="@{/js/plugin/jsgrid/jsgrid.core.js}" ></script>
 <script src="js/jsgrid.load-indicator.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-indicator.js}" ></script>
 <script src="js/jsgrid.load-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-strategies.js}" ></script>
@@ -100,9 +118,9 @@
 <script src="js/fields/jsgrid.field.text.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.text.js}" ></script>
 <script src="js/fields/jsgrid.field.number.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.number.js}" ></script>
 <script src="js/fields/jsgrid.field.select.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.select.js}"></script>
+<script src="js/fields/jsgrid.field.checkbox.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.checkbox.js}"></script>
 <script src="js/fields/jsgrid.field.control.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.control.js}" ></script>
-
-<script th:src="@{/js/student/autonomicpractice/templatelist.js}"
-        src="js/student/autonomicpractice/templatelist.js"></script>
+<script th:src="@{/js/student/autonomicpractice/autonomicpracticeadd.js}"
+        src="js/student/autonomicpractice/autonomicpracticeadd.js"></script>
 </body>
 </html>

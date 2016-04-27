@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead implements Serializable {
 
-	private static final long serialVersionUID = 1375002748;
+	private static final long serialVersionUID = 761953236;
 
 	private Integer id;
 	private String  title;
@@ -35,8 +35,9 @@ public class AutonomousPracticeHead implements Serializable {
 	private Byte    isShowHighlyActive;
 	private Byte    isDatabase;
 	private String  content;
+	private Integer sort;
 	private Integer headTypeId;
-	private Integer autonomousPracticeInfoId;
+	private Integer autonomousPracticeTemplateId;
 
 	public AutonomousPracticeHead() {}
 
@@ -50,8 +51,9 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isShowHighlyActive = value.isShowHighlyActive;
 		this.isDatabase = value.isDatabase;
 		this.content = value.content;
+		this.sort = value.sort;
 		this.headTypeId = value.headTypeId;
-		this.autonomousPracticeInfoId = value.autonomousPracticeInfoId;
+		this.autonomousPracticeTemplateId = value.autonomousPracticeTemplateId;
 	}
 
 	public AutonomousPracticeHead(
@@ -64,8 +66,9 @@ public class AutonomousPracticeHead implements Serializable {
 		Byte    isShowHighlyActive,
 		Byte    isDatabase,
 		String  content,
+		Integer sort,
 		Integer headTypeId,
-		Integer autonomousPracticeInfoId
+		Integer autonomousPracticeTemplateId
 	) {
 		this.id = id;
 		this.title = title;
@@ -76,8 +79,9 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isShowHighlyActive = isShowHighlyActive;
 		this.isDatabase = isDatabase;
 		this.content = content;
+		this.sort = sort;
 		this.headTypeId = headTypeId;
-		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+		this.autonomousPracticeTemplateId = autonomousPracticeTemplateId;
 	}
 
 	@NotNull
@@ -128,7 +132,7 @@ public class AutonomousPracticeHead implements Serializable {
 	}
 
 	@NotNull
-	@Size(max = 30)
+	@Size(max = 2000)
 	public String getAuthority() {
 		return this.authority;
 	}
@@ -155,13 +159,22 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isDatabase = isDatabase;
 	}
 
-	@Size(max = 500)
+	@Size(max = 2000)
 	public String getContent() {
 		return this.content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	@NotNull
+	public Integer getSort() {
+		return this.sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public Integer getHeadTypeId() {
@@ -173,12 +186,12 @@ public class AutonomousPracticeHead implements Serializable {
 	}
 
 	@NotNull
-	public Integer getAutonomousPracticeInfoId() {
-		return this.autonomousPracticeInfoId;
+	public Integer getAutonomousPracticeTemplateId() {
+		return this.autonomousPracticeTemplateId;
 	}
 
-	public void setAutonomousPracticeInfoId(Integer autonomousPracticeInfoId) {
-		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+	public void setAutonomousPracticeTemplateId(Integer autonomousPracticeTemplateId) {
+		this.autonomousPracticeTemplateId = autonomousPracticeTemplateId;
 	}
 
 	@Override
@@ -194,8 +207,9 @@ public class AutonomousPracticeHead implements Serializable {
 		sb.append(", ").append(isShowHighlyActive);
 		sb.append(", ").append(isDatabase);
 		sb.append(", ").append(content);
+		sb.append(", ").append(sort);
 		sb.append(", ").append(headTypeId);
-		sb.append(", ").append(autonomousPracticeInfoId);
+		sb.append(", ").append(autonomousPracticeTemplateId);
 
 		sb.append(")");
 		return sb.toString();

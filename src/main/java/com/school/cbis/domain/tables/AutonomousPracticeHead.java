@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadRecord> {
 
-	private static final long serialVersionUID = 957412794;
+	private static final long serialVersionUID = 2017225640;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_head</code>
@@ -78,7 +78,7 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	/**
 	 * The column <code>cbis.autonomous_practice_head.authority</code>.
 	 */
-	public final TableField<AutonomousPracticeHeadRecord, String> AUTHORITY = createField("authority", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+	public final TableField<AutonomousPracticeHeadRecord, String> AUTHORITY = createField("authority", org.jooq.impl.SQLDataType.VARCHAR.length(2000).nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.autonomous_practice_head.is_show_highly_active</code>.
@@ -93,7 +93,12 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	/**
 	 * The column <code>cbis.autonomous_practice_head.content</code>.
 	 */
-	public final TableField<AutonomousPracticeHeadRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
+	public final TableField<AutonomousPracticeHeadRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR.length(2000), this, "");
+
+	/**
+	 * The column <code>cbis.autonomous_practice_head.sort</code>.
+	 */
+	public final TableField<AutonomousPracticeHeadRecord, Integer> SORT = createField("sort", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.autonomous_practice_head.head_type_id</code>.
@@ -101,9 +106,9 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	public final TableField<AutonomousPracticeHeadRecord, Integer> HEAD_TYPE_ID = createField("head_type_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>cbis.autonomous_practice_head.autonomous_practice_info_id</code>.
+	 * The column <code>cbis.autonomous_practice_head.autonomous_practice_template_id</code>.
 	 */
-	public final TableField<AutonomousPracticeHeadRecord, Integer> AUTONOMOUS_PRACTICE_INFO_ID = createField("autonomous_practice_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<AutonomousPracticeHeadRecord, Integer> AUTONOMOUS_PRACTICE_TEMPLATE_ID = createField("autonomous_practice_template_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.autonomous_practice_head</code> table reference

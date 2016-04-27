@@ -7,7 +7,7 @@ public class TemplateVo {
 
     private int id;
     private String autonomousPracticeTemplateTitle;
-    private String create_time;
+    private String createTime;
     private String username;
     private int pageIndex;
     private int pageSize;
@@ -30,12 +30,12 @@ public class TemplateVo {
         this.autonomousPracticeTemplateTitle = autonomousPracticeTemplateTitle;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getUsername() {
@@ -83,7 +83,7 @@ public class TemplateVo {
         return "TemplateVo{" +
                 "id=" + id +
                 ", autonomousPracticeTemplateTitle='" + autonomousPracticeTemplateTitle + '\'' +
-                ", create_time='" + create_time + '\'' +
+                ", createTime='" + createTime + '\'' +
                 ", username='" + username + '\'' +
                 ", pageIndex=" + pageIndex +
                 ", pageSize=" + pageSize +

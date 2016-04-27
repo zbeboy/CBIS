@@ -24,11 +24,10 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContent implements Serializable {
 
-	private static final long serialVersionUID = 1271184760;
+	private static final long serialVersionUID = -1836824833;
 
 	private Integer id;
 	private String  cotent;
-	private Integer rowOlder;
 	private Integer autonomousPracticeHeadId;
 	private Integer studentId;
 
@@ -37,7 +36,6 @@ public class AutonomousPracticeContent implements Serializable {
 	public AutonomousPracticeContent(AutonomousPracticeContent value) {
 		this.id = value.id;
 		this.cotent = value.cotent;
-		this.rowOlder = value.rowOlder;
 		this.autonomousPracticeHeadId = value.autonomousPracticeHeadId;
 		this.studentId = value.studentId;
 	}
@@ -45,13 +43,11 @@ public class AutonomousPracticeContent implements Serializable {
 	public AutonomousPracticeContent(
 		Integer id,
 		String  cotent,
-		Integer rowOlder,
 		Integer autonomousPracticeHeadId,
 		Integer studentId
 	) {
 		this.id = id;
 		this.cotent = cotent;
-		this.rowOlder = rowOlder;
 		this.autonomousPracticeHeadId = autonomousPracticeHeadId;
 		this.studentId = studentId;
 	}
@@ -65,22 +61,13 @@ public class AutonomousPracticeContent implements Serializable {
 		this.id = id;
 	}
 
-	@Size(max = 200)
+	@Size(max = 500)
 	public String getCotent() {
 		return this.cotent;
 	}
 
 	public void setCotent(String cotent) {
 		this.cotent = cotent;
-	}
-
-	@NotNull
-	public Integer getRowOlder() {
-		return this.rowOlder;
-	}
-
-	public void setRowOlder(Integer rowOlder) {
-		this.rowOlder = rowOlder;
 	}
 
 	@NotNull
@@ -107,7 +94,6 @@ public class AutonomousPracticeContent implements Serializable {
 
 		sb.append(id);
 		sb.append(", ").append(cotent);
-		sb.append(", ").append(rowOlder);
 		sb.append(", ").append(autonomousPracticeHeadId);
 		sb.append(", ").append(studentId);
 

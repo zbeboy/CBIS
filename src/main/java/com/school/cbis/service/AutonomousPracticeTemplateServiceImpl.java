@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeTemplateDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate;
+import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
 import com.school.cbis.vo.autonomicpractice.TemplateVo;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -54,8 +55,8 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
             a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.like("%" + templateVo.getAutonomousPracticeTemplateTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(templateVo.getCreate_time())) {
-            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreate_time() + "%"));
+        if (StringUtils.hasLength(templateVo.getCreateTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreateTime() + "%"));
         }
 
         if (StringUtils.hasLength(templateVo.getUsername())) {
@@ -110,8 +111,8 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
             a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.like("%" + templateVo.getAutonomousPracticeTemplateTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(templateVo.getCreate_time())) {
-            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreate_time() + "%"));
+        if (StringUtils.hasLength(templateVo.getCreateTime())) {
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreateTime() + "%"));
         }
 
         if (StringUtils.hasLength(templateVo.getUsername())) {
@@ -123,5 +124,22 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
                 .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
                 .where(a).fetchOne();
         return count.value1();
+    }
+
+    @Override
+    public void deleteById(int id) {
+        autonomousPracticeTemplateDao.deleteById(id);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Override
+    public int save(AutonomousPracticeTemplate autonomousPracticeTemplate) {
+        AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = create.insertInto(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle())
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID,autonomousPracticeTemplate.getUsersId())
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID,autonomousPracticeTemplate.getTieId())
+                .returning(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID)
+                .fetchOne();
+        return autonomousPracticeTemplateRecord.getId();
     }
 }

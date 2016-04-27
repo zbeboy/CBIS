@@ -135,7 +135,7 @@
                     <label class="uk-form-label" for="add-username">用户账号</label>
                     <div class="uk-form-controls">
                         <input type="text" id="add-username" name="username" placeholder="用户账号"
-                               data-rule="required;length[1~25];remote[/maintainer/users/validUsername]" data-tip="用户编号"
+                               data-rule="required;length[1~25];username;remote[/maintainer/users/validUsername]"  data-rule-username="[/^\w+$/, '请输入任意符号']" data-tip="用户编号"
                                data-msg-required="请填写用户账号"/>
                     </div>
                 </div>

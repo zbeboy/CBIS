@@ -176,4 +176,40 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
     public void deleteById(int id) {
         autonomousPracticeInfoDao.deleteById(id);
     }
+
+    @Override
+    public Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer>> findByTieIdAndPage(int tieId,int pageNum,int pageSize) {
+        if(pageNum<=0){
+            pageNum = 1;
+        }
+        Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer>> record10s =
+        create.select(Tables.AUTONOMOUS_PRACTICE_INFO.ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE,
+                Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME,Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR,
+                Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
+                Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME,Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME,
+                Tables.USERS.USERNAME,Tables.USERS.USER_TYPE_ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_INFO)
+                .join(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID))
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(Tables.AUTONOMOUS_PRACTICE_INFO.TIE_ID.eq(tieId))
+                .orderBy(Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.desc())
+                .limit((pageNum-1)*pageSize,pageSize)
+                .fetch();
+        return record10s;
+    }
+
+    @Override
+    public int findByTieIdAndPageCount(int tieId) {
+        Record1<Integer> count = create.selectCount()
+                .from(Tables.AUTONOMOUS_PRACTICE_INFO)
+                .join(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID))
+                .join(Tables.USERS)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(Tables.AUTONOMOUS_PRACTICE_INFO.TIE_ID.eq(tieId))
+                .fetchOne();
+        return count.value1();
+    }
 }

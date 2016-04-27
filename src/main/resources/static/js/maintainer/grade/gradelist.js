@@ -5,9 +5,9 @@ var gradeModal = null;//添加模态框
 var gradeName = null;//检验班级名
 $(function () {
 
-    var y  = new Date().getFullYear();
-    for (var i = (y-30); i < (y+30); i++) //以今年为准，前30年，后30年
-        document.gradeForm.year.options.add(new Option(" "+ i , i));
+    var y = new Date().getFullYear();
+    for (var i = (y - 30); i < (y + 30); i++) //以今年为准，前30年，后30年
+        document.gradeForm.year.options.add(new Option(" " + i, i));
 
     UIkit.autocomplete("#gradeHeadAuto", {source: web_path + "/maintainer/grade/gradeHead", minLength: 2});
     gradeModal = UIkit.modal("#gradeModal");
@@ -21,7 +21,7 @@ $(function () {
         pageSize: 10,
         pageButtonCount: 5,
         pageLoading: true,
-        deleteConfirm: function(item) {
+        deleteConfirm: function (item) {
             return "该班级 \"" + item.gradeName + "\" 会被移除. 你确定吗?";
         },
         rowClick: function (args) {

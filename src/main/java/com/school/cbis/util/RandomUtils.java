@@ -38,4 +38,22 @@ public class RandomUtils {
     public static String generateResetKey() {
         return RandomStringUtils.randomNumeric(DEF_COUNT);
     }
+
+    /**
+     * Generates a autonomous_practice_head title_variable
+     *
+     * @return the autonomous_practice_head title_variable
+     */
+    public static String generateTitleVariable() {
+        return "v_" + RandomStringUtils.randomAlphanumeric(20);
+    }
+
+    /**
+     * Generates a autonomous_practice_content row_older
+     *
+     * @return the autonomous_practice_content row_older
+     */
+    public static String generateRowOlder() {
+        return RandomStringUtils.randomAlphanumeric(40);
+    }
 }

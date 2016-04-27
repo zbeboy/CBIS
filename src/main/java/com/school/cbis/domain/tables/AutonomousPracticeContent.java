@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContent extends TableImpl<AutonomousPracticeContentRecord> {
 
-	private static final long serialVersionUID = 1158885233;
+	private static final long serialVersionUID = -750629091;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_content</code>
@@ -58,12 +58,7 @@ public class AutonomousPracticeContent extends TableImpl<AutonomousPracticeConte
 	/**
 	 * The column <code>cbis.autonomous_practice_content.cotent</code>.
 	 */
-	public final TableField<AutonomousPracticeContentRecord, String> COTENT = createField("cotent", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
-
-	/**
-	 * The column <code>cbis.autonomous_practice_content.row_older</code>.
-	 */
-	public final TableField<AutonomousPracticeContentRecord, Integer> ROW_OLDER = createField("row_older", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<AutonomousPracticeContentRecord, String> COTENT = createField("cotent", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
 
 	/**
 	 * The column <code>cbis.autonomous_practice_content.autonomous_practice_head_id</code>.

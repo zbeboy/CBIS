@@ -121,6 +121,13 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
+	 * Fetch records that have <code>sort IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchBySort(Integer... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.SORT, values);
+	}
+
+	/**
 	 * Fetch records that have <code>head_type_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByHeadTypeId(Integer... values) {
@@ -128,9 +135,9 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
-	 * Fetch records that have <code>autonomous_practice_info_id IN (values)</code>
+	 * Fetch records that have <code>autonomous_practice_template_id IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByAutonomousPracticeInfoId(Integer... values) {
-		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_INFO_ID, values);
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByAutonomousPracticeTemplateId(Integer... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID, values);
 	}
 }

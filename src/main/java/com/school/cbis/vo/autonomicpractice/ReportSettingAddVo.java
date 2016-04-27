@@ -12,7 +12,7 @@ public class ReportSettingAddVo {
 
     private String[] gradeYear;
 
-    private String autonomousPracticeTemplateId;
+    private int autonomousPracticeTemplateId;
 
     private String startTime;
 
@@ -34,11 +34,11 @@ public class ReportSettingAddVo {
         this.gradeYear = gradeYear;
     }
 
-    public String getAutonomousPracticeTemplateId() {
+    public int getAutonomousPracticeTemplateId() {
         return autonomousPracticeTemplateId;
     }
 
-    public void setAutonomousPracticeTemplateId(String autonomousPracticeTemplateId) {
+    public void setAutonomousPracticeTemplateId(int autonomousPracticeTemplateId) {
         this.autonomousPracticeTemplateId = autonomousPracticeTemplateId;
     }
 
