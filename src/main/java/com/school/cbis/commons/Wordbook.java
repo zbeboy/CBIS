@@ -39,7 +39,6 @@ public class Wordbook {
     public static final String MAJOR_LEAD = "专业带头人";
     public static final String STUDENT_SUMMARY = "学生简介";
     public static final String TEACHER_SUMMARY = "教师简介";
-    public static final String RECRUIT_MOULD = "招聘模板";
 
     private Map<String, Integer> articleTypeMap;
 

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,10 +82,10 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/tie/validTieName", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> validTieName(@RequestParam("tieId") int id,@RequestParam("tieName") String tieName) {
+    public Map<String, Object> validTieName(@RequestParam("tieId") int id, @RequestParam("tieName") String tieName) {
         Map<String, Object> map = new HashMap<>();
         if (!StringUtils.isEmpty(tieName)) {
-            Result<TieRecord> records = tieService.findByTieName(id,tieName);
+            Result<TieRecord> records = tieService.findByTieName(id, tieName);
 
             if (records.isNotEmpty()) {
                 map.put("error", "系名已存在!");
@@ -137,19 +138,17 @@ public class TieManagerController {
     @ResponseBody
     public Map<String, Object> tieElegantData(TieElegantVo tieElegantVo) {
         JsGrid<TieElegantVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<TieElegantVo> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
+            Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieElegantVo.class);
-                list.forEach(t->{
+                list.forEach(t -> {
                     if (!StringUtils.isEmpty(t.getIsShow())) {
                         t.setShow(t.getIsShow() == 0 ? false : true);
                     }
@@ -219,8 +218,8 @@ public class TieManagerController {
         modelMap.addAttribute("articleinfo", articleInfoService.findById(tieElegant.getTieElegantArticleInfoId()));
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(tieElegant.getTieElegantArticleInfoId());
         modelMap.addAttribute("articlesubinfo", articleSubs);
-        modelMap.addAttribute("tieElegant",tieElegant);
-        modelMap.addAttribute("isShow",tieElegant.getIsShow() == 0?false:true);
+        modelMap.addAttribute("tieElegant", tieElegant);
+        modelMap.addAttribute("isShow", tieElegant.getIsShow() == 0 ? false : true);
         return "/maintainer/tie/tieelegantupdate";
     }
 
@@ -250,12 +249,10 @@ public class TieManagerController {
 
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 
-            Result<Record> records = usersService.findAll(usersService.getUserName());
+            Record record = usersService.findAll(usersService.getUserName());
             int tieId = 0;
-            if (records.isNotEmpty()) {
-                for (Record r : records) {
-                    tieId = r.getValue(Tables.TIE.ID);
-                }
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
             }
 
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
@@ -288,12 +285,10 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieElegantTime")
     public String tieElegantTime(ModelMap modelMap, String bigTitle) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
 
         Result<Record2<Integer, String>> record2s = tieElegantTimeService.findByBigTitleAndTieIdAndTimeDistinctId(
@@ -358,13 +353,11 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieIntroduceUpdate")
     public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
-                }
+        if (!ObjectUtils.isEmpty(record)) {
+            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
+                articleInfoId = record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
             }
         }
         if (articleInfoId > 0) {
@@ -387,13 +380,11 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieHeadUpdate")
     public String tieHeadUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
-                }
+        if (!ObjectUtils.isEmpty(record)) {
+            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
+                articleInfoId = record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
             }
         }
         if (articleInfoId > 0) {
@@ -416,13 +407,11 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieTrainGoalUpdate")
     public String backstageTieTrainGoal(ModelMap map) {
         //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
-                }
+        if (!ObjectUtils.isEmpty(record)) {
+            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
+                articleInfoId = record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
             }
         }
         if (articleInfoId > 0) {
@@ -445,13 +434,11 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieItemUpdate")
     public String tieItemUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
-                    articleInfoId = r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
-                }
+        if (!ObjectUtils.isEmpty(record)) {
+            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
+                articleInfoId = record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
             }
         }
         if (articleInfoId > 0) {
@@ -475,25 +462,23 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieArticleShow")
     public String tieArticleShow(ModelMap modelMap, @RequestParam("id") int id) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        if (records.isNotEmpty()) {
-            records.forEach(r->{
-                if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID) == id) {
-                    modelMap.addAttribute("navId", "navtieintroduce");
-                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID) == id) {
-                    modelMap.addAttribute("navId", "navtiehead");
-                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID) == id) {
-                    modelMap.addAttribute("navId", "navtiegoal");
-                } else if ( !StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID)) && r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID) == id) {
-                    modelMap.addAttribute("navId", "navtieitem");
-                }
+        Record record = usersService.findAll(usersService.getUserName());
+        if (!ObjectUtils.isEmpty(record)) {
+            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID)) && record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID) == id) {
+                modelMap.addAttribute("navId", "navtieintroduce");
+            } else if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID)) && record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID) == id) {
+                modelMap.addAttribute("navId", "navtiehead");
+            } else if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID)) && record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID) == id) {
+                modelMap.addAttribute("navId", "navtiegoal");
+            } else if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID)) && record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID) == id) {
+                modelMap.addAttribute("navId", "navtieitem");
+            }
 
-                modelMap.addAttribute("tieintroduceid", r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID));
-                modelMap.addAttribute("tieheadid", r.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID));
-                modelMap.addAttribute("tiegoalid", r.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID));
-                modelMap.addAttribute("tieitemid", r.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID));
-                modelMap.addAttribute("currentId", id);
-            });
+            modelMap.addAttribute("tieintroduceid", record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID));
+            modelMap.addAttribute("tieheadid", record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID));
+            modelMap.addAttribute("tiegoalid", record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID));
+            modelMap.addAttribute("tieitemid", record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID));
+            modelMap.addAttribute("currentId", id);
         }
 
         return "/user/tie/tiearticleshow";
@@ -557,20 +542,18 @@ public class TieManagerController {
     @ResponseBody
     public Map<String, Object> tieNoticeData(TieNoticeVo tieNoticeVo) {
         JsGrid<TieNoticeVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<TieNoticeVo> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record5<Integer, String, String, Timestamp,Byte>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
+            Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieNoticeVo.class);
-                list.forEach(t->{
-                    if(!StringUtils.isEmpty(t.getIsShow())){
+                list.forEach(t -> {
+                    if (!StringUtils.isEmpty(t.getIsShow())) {
                         t.setShow(t.getIsShow() == 0 ? false : true);
                     }
                 });
@@ -638,9 +621,9 @@ public class TieManagerController {
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
         modelMap.addAttribute("articlesubinfo", articleSubs);
         List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
-        modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
-        modelMap.addAttribute("tieNotice",tieNotice);
-        modelMap.addAttribute("isShow",tieNotice.getIsShow() == 0?false:true);
+        modelMap.addAttribute("tieNoticeAffix", tieNoticeAffices);
+        modelMap.addAttribute("tieNotice", tieNotice);
+        modelMap.addAttribute("isShow", tieNotice.getIsShow() == 0 ? false : true);
         return "/maintainer/tie/tienoticeupdate";
     }
 
@@ -670,14 +653,6 @@ public class TieManagerController {
 
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 
-            Result<Record> records = usersService.findAll(usersService.getUserName());
-            int tieId = 0;
-            if (records.isNotEmpty()) {
-                for (Record r : records) {
-                    tieId = r.getValue(Tables.TIE.ID);
-                }
-            }
-
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
                 String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
                 String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
@@ -685,7 +660,7 @@ public class TieManagerController {
             }
 
             List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
-            modelMap.addAttribute("tieNoticeAffix",tieNoticeAffices);
+            modelMap.addAttribute("tieNoticeAffix", tieNoticeAffices);
             modelMap.addAttribute("articleInfo", articleVos.get(0));
             modelMap.addAttribute("articleSub", articleSubs);
 
@@ -701,12 +676,10 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieNoticeTime")
     public String tieNoticeTime(ModelMap modelMap, String bigTitle) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
 
         Result<Record2<Integer, String>> record2s = tieNoticeTimeService.findByBigTitleAndTieIdAndTimeDistinctId(
@@ -742,7 +715,7 @@ public class TieManagerController {
         Result<Record3<Integer, String, Timestamp>> record3s =
                 tieNoticeService.findByTieNoticeTimeIdOrBigTitleWithArticleOrderByDateDesc(id, bigTitle);
         List<TieNoticeTimeVo> tieNoticeTimeVos = record3s.into(TieNoticeTimeVo.class);
-        tieNoticeTimeVos.forEach(t->{
+        tieNoticeTimeVos.forEach(t -> {
             t.setDate(t.getDate().split(" ")[0]);
         });
         ajaxData.success().listData(tieNoticeTimeVos);

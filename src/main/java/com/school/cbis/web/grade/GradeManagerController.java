@@ -17,6 +17,7 @@ import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,15 +55,13 @@ public class GradeManagerController {
      */
     @RequestMapping("/maintainer/grade/gradeData")
     @ResponseBody
-    public Map<String, Object> gradeData(GradeVo gradeVo,String templateId) {
+    public Map<String, Object> gradeData(GradeVo gradeVo, String templateId) {
         JsGrid<GradeVo> jsGrid = new JsGrid<>(new HashMap<>());
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<GradeVo> gradeVos = new ArrayList<>();
         if (tieId > 0) {
@@ -90,12 +89,10 @@ public class GradeManagerController {
     public List<AutoCompleteData> gradeHead(String search) {
         List<AutoCompleteData> autoCompleteDatas = new ArrayList<>();
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Result<TeacherRecord> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
         if (teachers.isNotEmpty()) {

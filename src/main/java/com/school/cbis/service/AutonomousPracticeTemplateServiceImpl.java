@@ -142,4 +142,15 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
                 .fetchOne();
         return autonomousPracticeTemplateRecord.getId();
     }
+
+    @Override
+    public AutonomousPracticeTemplate findById(int id) {
+        AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateDao.findById(id);
+        return autonomousPracticeTemplate;
+    }
+
+    @Override
+    public void update(AutonomousPracticeTemplate autonomousPracticeTemplate) {
+        autonomousPracticeTemplateDao.update(autonomousPracticeTemplate);
+    }
 }

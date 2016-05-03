@@ -5,10 +5,7 @@ import com.school.cbis.domain.tables.daos.AutonomousPracticeHeadDao;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeInfoDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.records.AutonomousPracticeHeadRecord;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.Record11;
-import org.jooq.Result;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,9 +77,9 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
     }
 
     @Override
-    public Result<Record11<Integer, String, String, String, String, String, String, Byte, String, Byte, Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
-        Result<Record11<Integer, String, String, String, String, String, String, Byte, String, Byte, Integer>> record11s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID,Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
-                Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE,Tables.HEAD_TYPE.TYPE_VALUE,
+    public Result<Record12<Integer, String, String, String,String, String, String, String, Byte, String, Byte, Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
+        Result<Record12<Integer, String, String,String, String, String, String, String, Byte, String, Byte, Integer>> record12s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID,Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
+                Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE,Tables.HEAD_TYPE.TYPE_VALUE,Tables.HEAD_TYPE.TYPE_NAME,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE,Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY,Tables.AUTONOMOUS_PRACTICE_HEAD.IS_SHOW_HIGHLY_ACTIVE,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT,Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE,Tables.AUTONOMOUS_PRACTICE_HEAD.SORT)
@@ -92,7 +89,7 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
                 .where(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(autonomousPracticeTemplateId))
                 .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
                 .fetch();
-        return record11s;
+        return record12s;
     }
 
     @Override
@@ -102,5 +99,10 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
                 .and(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE.eq(titleVariable)))
                 .fetchOne();
         return autonomousPracticeHeadRecord;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        autonomousPracticeHeadDao.deleteById(id);
     }
 }

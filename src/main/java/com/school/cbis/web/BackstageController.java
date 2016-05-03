@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,12 +69,10 @@ public class BackstageController {
      */
     @RequestMapping("/maintainer/tie/tieManager")
     public String tieManager(ModelMap map) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Tie tie = tieService.findById(tieId);
         List<Yard> yardList = yardService.findAll();
@@ -112,12 +111,10 @@ public class BackstageController {
     @RequestMapping("/maintainer/grade/gradeManager")
     public String gradeManager(ModelMap modelMap) {
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<Major> majors = majorService.findByTieId(tieId);
         modelMap.addAttribute("majorNames", majors);
@@ -223,7 +220,7 @@ public class BackstageController {
      */
     @RequestMapping("/student/autonomicpractice/autonomicPracticeManager")
     public String autonomicPracticeManager(){
-        if(usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)){
+        if(usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)){//管理员可进入
             return "redirect:/administrator/autonomicpractice/reportsettingList";
         } else {
             return "redirect:/student/autonomicpractice/autonomicPractice";

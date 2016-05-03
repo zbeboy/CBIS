@@ -194,7 +194,7 @@
     var tiegoalid = /*[[${tiegoalid}]]*/ 0;
     var tieitemid = /*[[${tieitemid}]]*/ 0;
     var currentId = /*[[${currentId}]]*/ -1;
-    var web_path  = /*[[#{web_path}]]*/ '';
+    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/user/tie/tiearticleshow.js}"

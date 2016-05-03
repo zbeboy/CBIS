@@ -88,7 +88,7 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
             pageSize = Integer.parseInt(request.getParameter("pageSize"));
         }
         if (StringUtils.hasLength(request.getParameter("autonomousPracticeTemplateId"))) {
-            autonomousPracticeTemplateId = Integer.parseInt(request.getParameter("autonomousPracticeHeadId"));
+            autonomousPracticeTemplateId = Integer.parseInt(request.getParameter("autonomousPracticeTemplateId"));
         }
         if (pageNum <= 0) {
             pageNum = 1;
@@ -147,7 +147,7 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
         int autonomousPracticeTemplateId = 0;
 
         if (StringUtils.hasLength(request.getParameter("autonomousPracticeTemplateId"))) {
-            autonomousPracticeTemplateId = Integer.parseInt(request.getParameter("autonomousPracticeHeadId"));
+            autonomousPracticeTemplateId = Integer.parseInt(request.getParameter("autonomousPracticeTemplateId"));
         }
 
         Byte bytes = 1;

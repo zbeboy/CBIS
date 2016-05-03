@@ -8,6 +8,7 @@ public class AutonomousPracticeHeadAddVo {
     private String title;
     private String titleVariable;
     private String typeValue;
+    private String typeName;
     private String databaseTable;
     private String databaseTableField;
     private String authority;
@@ -46,6 +47,14 @@ public class AutonomousPracticeHeadAddVo {
 
     public void setTypeValue(String typeValue) {
         this.typeValue = typeValue;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getDatabaseTable() {
@@ -111,6 +120,7 @@ public class AutonomousPracticeHeadAddVo {
                 ", title='" + title + '\'' +
                 ", titleVariable='" + titleVariable + '\'' +
                 ", typeValue='" + typeValue + '\'' +
+                ", typeName='" + typeName + '\'' +
                 ", databaseTable='" + databaseTable + '\'' +
                 ", databaseTableField='" + databaseTableField + '\'' +
                 ", authority='" + authority + '\'' +

@@ -16,6 +16,7 @@ package com.school.cbis;
  */
 
 
+import com.school.cbis.service.MyUserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 
@@ -78,6 +81,9 @@ public class Application extends SpringBootServletInitializer {
         @Autowired
         private DataSource dataSource;
 
+        @Autowired
+        private MyUserDetailsServiceImpl myUserDetailsService;
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/files/**").permitAll()
@@ -90,12 +96,13 @@ public class Application extends SpringBootServletInitializer {
                     .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("SEMI","MAI","ADMIN")
                     .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA","SEMI","MAI","ADMIN")
                     .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI","SEMI")
-                    .and().authorizeRequests().antMatchers("/user/**", "/").permitAll();
+                    .and().authorizeRequests().antMatchers("/user/**").permitAll();
         }
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.jdbcAuthentication().dataSource(this.dataSource).passwordEncoder(md5()).and().eraseCredentials(false);
+            auth.userDetailsService(myUserDetailsService).passwordEncoder(md5()).and().eraseCredentials(false);
+//            auth.jdbcAuthentication().dataSource(this.dataSource).passwordEncoder(md5()).and().eraseCredentials(false);
         }
     }
 

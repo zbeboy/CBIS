@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,12 +69,10 @@ public class UsersController {
         modelMap.addAttribute("studentNumber", studentNumber);
 
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<String> list = new ArrayList<>();
         Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
@@ -117,12 +116,10 @@ public class UsersController {
         List<StudentVo> studentVos = new ArrayList<>();
         Map<String, Object> map = (Map<String, Object>) JSON.parse(param);
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Result<Record5<Integer, String, String, Byte, String>> record5s = studentService.findByTieIdAndPage(map.get("studentName").toString(),
                 map.get("studentNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
@@ -170,12 +167,10 @@ public class UsersController {
         Map<String, Object> map = (Map<String, Object>) JSON.parse(param);
         List<TeacherVo> teacherVos = new ArrayList<>();
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Result<Record4<Integer, String, String, Byte>> record4s = teacherService.findByTieIdAndPage(map.get("teacherName").toString(),
                 map.get("teacherJobNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
@@ -281,12 +276,10 @@ public class UsersController {
      */
     @RequestMapping(value = "/maintainer/users/addTeacher", method = RequestMethod.POST)
     public String addTeacher(@RequestParam("username") String username, @RequestParam("realname") String realname) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Teacher teacher = new Teacher();
         teacher.setTeacherJobNumber(username);

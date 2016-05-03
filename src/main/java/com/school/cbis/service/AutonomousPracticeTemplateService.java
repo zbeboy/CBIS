@@ -45,4 +45,17 @@ public interface AutonomousPracticeTemplateService {
      * @param autonomousPracticeTemplate
      */
     int save(AutonomousPracticeTemplate autonomousPracticeTemplate);
+
+    /**
+     * 查询通过id
+     * @param id
+     * @return
+     */
+    AutonomousPracticeTemplate findById(int id);
+
+    /**
+     * 通过id更新
+     * @param autonomousPracticeTemplate
+     */
+    void update(AutonomousPracticeTemplate autonomousPracticeTemplate);
 }

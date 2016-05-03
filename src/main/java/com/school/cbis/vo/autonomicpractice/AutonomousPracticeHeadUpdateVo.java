@@ -1,12 +1,10 @@
 package com.school.cbis.vo.autonomicpractice;
 
-import java.util.Arrays;
-
 /**
- * Created by lenovo on 2016-04-17.
+ * Created by lenovo on 2016-05-02.
  */
-public class AutonomousPracticeHeadListVo {
-    private int id;//模板id
+public class AutonomousPracticeHeadUpdateVo {
+    private int id;//标题id
     private String title;
     private String authority;
     private Byte isDatabase;
@@ -99,8 +97,8 @@ public class AutonomousPracticeHeadListVo {
 
     @Override
     public String toString() {
-        return "AutonomousPracticeHeadListVo{" +
-                "templateId=" + id +
+        return "AutonomousPracticeHeadUpdateVo{" +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", authority='" + authority + '\'' +
                 ", isDatabase=" + isDatabase +

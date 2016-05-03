@@ -51,8 +51,8 @@ public class UsersServiceImpl implements UsersService {
     public String getUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
-        if (principal instanceof UserDetails) {
-            username = StringUtils.trimWhitespace(((UserDetails) principal).getUsername());
+        if (principal instanceof MyUserImpl) {
+            username = StringUtils.trimWhitespace(((MyUserImpl) principal).getUsername());
         }
         return username;
     }
@@ -61,10 +61,20 @@ public class UsersServiceImpl implements UsersService {
     public String getPassword() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String password = null;
-        if (principal instanceof UserDetails) {
-            password = StringUtils.trimWhitespace(((UserDetails) principal).getPassword());
+        if (principal instanceof MyUserImpl) {
+            password = StringUtils.trimWhitespace(((MyUserImpl) principal).getPassword());
         }
         return password;
+    }
+
+    @Override
+    public Integer getUserTypeId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer userTypeId = 0;
+        if (principal instanceof MyUserImpl) {
+            userTypeId = (((MyUserImpl) principal).getUserTypeId());
+        }
+        return userTypeId;
     }
 
     @Override
@@ -106,12 +116,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Result<Record> findAll(String username) {
+    public Record findAll(String username) {
         //获取用户类型
-        Users users = findByUsername(username);
+        Integer userTypeId = getUserTypeId();
 
-        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
-            Result<Record> records = create.select()
+        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == userTypeId) {//教师类型
+            Record record = create.select()
                     .from(Tables.TEACHER)
                     .join(Tables.TIE)
                     .on(Tables.TEACHER.TIE_ID.equal(Tables.TIE.ID))
@@ -120,10 +130,10 @@ public class UsersServiceImpl implements UsersService {
                     .join(Tables.USERS)
                     .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
                     .where(Tables.TEACHER.TEACHER_JOB_NUMBER.equal(username))
-                    .fetch();
-            return records;
-        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
-            Result<Record> records = create.select()
+                    .fetchOne();
+            return record;
+        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == userTypeId) {//学生类型
+            Record record = create.select()
                     .from(Tables.STUDENT)
                     .join(Tables.GRADE)
                     .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -136,8 +146,8 @@ public class UsersServiceImpl implements UsersService {
                     .join(Tables.USERS)
                     .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                     .where(Tables.STUDENT.STUDENT_NUMBER.equal(username))
-                    .fetch();
-            return records;
+                    .fetchOne();
+            return record;
         }
 
         return null;

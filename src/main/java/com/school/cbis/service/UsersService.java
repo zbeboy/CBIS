@@ -23,6 +23,12 @@ public interface UsersService {
     String getPassword();
 
     /**
+     * 获取用户类型
+     * @return
+     */
+    Integer getUserTypeId();
+
+    /**
      * 根据用户名获取Users表完整信息
      *
      * @param username
@@ -58,7 +64,7 @@ public interface UsersService {
      * @param username
      * @return 用户完整有效信息
      */
-    Result<Record> findAll(String username);
+    Record findAll(String username);
 
     /**
      * 保存用户

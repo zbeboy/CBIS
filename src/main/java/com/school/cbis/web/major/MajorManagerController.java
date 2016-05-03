@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,12 +66,10 @@ public class MajorManagerController {
     public Map<String, Object> majorData(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>(new HashMap<>());
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorVo> majorVos = new ArrayList<>();
         if (tieId > 0) {
@@ -98,12 +97,10 @@ public class MajorManagerController {
     public MajorVo saveMajor(MajorVo majorVo) {
         JsGrid<MajorVo> jsGrid = new JsGrid<>();
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
             if (StringUtils.hasLength(majorVo.getMajorName())) {
@@ -163,12 +160,10 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorIntroduce")
     public String majorIntroduce(ModelMap modelMap) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorListVo> majorListVos = new ArrayList<>();
         MajorListVo majorListVo = new MajorListVo();
@@ -194,12 +189,10 @@ public class MajorManagerController {
     @ResponseBody
     public Map<String, Object> majorIntroduceData(MajorIntroduceVo majorIntroduceVo) {
         JsGrid<MajorIntroduceVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorIntroduceVo> list = new ArrayList<>();
         if (tieId > 0) {
@@ -238,12 +231,14 @@ public class MajorManagerController {
             modelMap.addAttribute("articleinfo", articleInfo);
             articleSubs = articleSubService.findByArticleInfoId(major.getMajorIntroduceArticleInfoId());
             modelMap.addAttribute("articlesubinfo", articleSubs);
+            modelMap.addAttribute("major", major);
+            modelMap.addAttribute("isShow", major.getIsShow() == 0 ? false : true);
         } else {
             modelMap.addAttribute("articleinfo", articleInfo);
             modelMap.addAttribute("articlesubinfo", articleSubs);
+            modelMap.addAttribute("major", major);
+            modelMap.addAttribute("isShow", false);
         }
-        modelMap.addAttribute("major", major);
-        modelMap.addAttribute("isShow", major.getIsShow() == 0 ? false : true);
         return "/maintainer/major/majorintroduceupdate";
     }
 
@@ -278,12 +273,10 @@ public class MajorManagerController {
             modelMap.addAttribute("currentMajorName", major.getMajorName());
         }
 
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
 
         List<MajorListVo> majorListVos = new ArrayList<>();
@@ -330,12 +323,10 @@ public class MajorManagerController {
             modelMap.addAttribute("currentMajorName", major.getMajorName());
         }
 
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
 
         List<MajorListVo> majorListVos = new ArrayList<>();
@@ -394,12 +385,10 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorHead")
     public String majorHead(ModelMap modelMap) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorListVo> majorListVos = new ArrayList<>();
         MajorListVo majorListVo = new MajorListVo();
@@ -425,12 +414,10 @@ public class MajorManagerController {
     @ResponseBody
     public Map<String, Object> majorHeadData(MajorHeadVo majorHeadVo) {
         JsGrid<MajorHeadVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorHeadVo> list = new ArrayList<>();
 
@@ -480,12 +467,10 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorTrainingGoal")
     public String majorTrainingGoal(ModelMap modelMap) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorListVo> majorListVos = new ArrayList<>();
         MajorListVo majorListVo = new MajorListVo();
@@ -511,12 +496,10 @@ public class MajorManagerController {
     @ResponseBody
     public Map<String, Object> majorTrainingGoalData(MajorTrainingGoalVo majorTrainingGoalVo) {
         JsGrid<MajorTrainingGoalVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorTrainingGoalVo> list = new ArrayList<>();
 
@@ -566,12 +549,10 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorTrait")
     public String majorTrait(ModelMap modelMap) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorListVo> majorListVos = new ArrayList<>();
         MajorListVo majorListVo = new MajorListVo();
@@ -597,12 +578,10 @@ public class MajorManagerController {
     @ResponseBody
     public Map<String, Object> majorTraitData(MajorTraitVo majorTraitVo) {
         JsGrid<MajorTraitVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<MajorTraitVo> list = new ArrayList<>();
 

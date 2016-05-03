@@ -459,7 +459,6 @@ insert into article_type(name) values('学生简介');
 insert into article_type(name) values('教师简介');
 insert into article_type(name) values('系风采');
 insert into article_type(name) values('系公告');
-insert into article_type(name) values('招聘模板');
 insert into article_type(name) values('系主任');
 
 insert into article_info(id,article_writer,article_type_id) values(1,'10000',1);

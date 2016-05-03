@@ -1166,7 +1166,7 @@ function studentSave() {
         console.log($('#studentData').serialize());
         $.post(web_path + '/student/autonomicpractice/addAutonomicPractice', $('#studentData').serialize(), function (data) {
             if (data.state) {
-               // window.location.href = web_path + '/student/autonomicpractice/autonomicPractice';
+                window.location.href = web_path + '/student/autonomicpractice/autonomicPractice';
             } else {
                 layer.msg(data.msg);
             }
@@ -1196,7 +1196,7 @@ function initJsGrid(){
         pageNextText: "下一页",
         pageFirstText: "首页",
         pageLastText: "尾页",
-        //controller: db,
+        controller: db,
         fields:JSON.parse(jsGridField)
     });
 }

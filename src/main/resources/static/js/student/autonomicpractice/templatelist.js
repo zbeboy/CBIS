@@ -15,7 +15,7 @@ $(function () {
         pageButtonCount: 5,
         pageLoading: true,
         deleteConfirm: function(item) {
-            return "该模板 \"" + item.bigTitle + "\" 会被移除. 你确定吗?";
+            return "该模板 \"" + item.autonomousPracticeTemplateTitle + "\" 会被移除. 你确定吗?";
         },
         rowClick: function (args) {
             showDetailsDialog('Edit', args.item);

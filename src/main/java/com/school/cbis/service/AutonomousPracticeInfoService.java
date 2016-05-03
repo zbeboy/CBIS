@@ -56,4 +56,23 @@ public interface AutonomousPracticeInfoService {
      * @return
      */
     int findByTieIdAndPageCount(int tieId);
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    AutonomousPracticeInfo findById(int id);
+
+    /**
+     * 更新
+     * @param autonomousPracticeInfo
+     */
+    void update(AutonomousPracticeInfo autonomousPracticeInfo);
+
+    /**
+     * 根据模板id删除
+     * @param autonomousPracticeTemplateId
+     */
+    void deleteByAutonomousPracticeTemplateId(int autonomousPracticeTemplateId);
 }

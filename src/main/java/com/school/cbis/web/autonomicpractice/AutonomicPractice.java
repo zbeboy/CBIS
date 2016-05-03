@@ -1,10 +1,7 @@
 package com.school.cbis.web.autonomicpractice;
 
 import com.school.cbis.commons.Wordbook;
-import com.school.cbis.data.AjaxData;
-import com.school.cbis.data.JsGridData;
-import com.school.cbis.data.PaginationData;
-import com.school.cbis.data.SelectData;
+import com.school.cbis.data.*;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
@@ -19,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,12 +93,10 @@ public class AutonomicPractice {
     @ResponseBody
     public Map<String, Object> reportSettingData(ReportSettingVo reportSettingVo) {
         JsGrid<ReportSettingVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<ReportSettingVo> list = new ArrayList<>();
         if (tieId > 0) {
@@ -140,12 +137,10 @@ public class AutonomicPractice {
     @RequestMapping("/administrator/autonomicpractice/reportSettingAdd")
     public String reportSettingAdd(ModelMap modelMap) {
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<AutonomousPracticeTemplate> autonomousPracticeTemplates = autonomousPracticeTemplateService.findAllByTieId(tieId);
         if (!autonomousPracticeTemplates.isEmpty()) {
@@ -169,15 +164,13 @@ public class AutonomicPractice {
      * @param reportSettingAddVo
      * @return
      */
-    @RequestMapping("/administrator/autonomicpractice/reportSettingSave")
+    @RequestMapping("/administrator/autonomicpractice/addReportSetting")
     public String reportSettingSave(ReportSettingAddVo reportSettingAddVo) {
         //通过用户类型获取系表ID
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
         }
         AutonomousPracticeInfo autonomousPracticeInfo = new AutonomousPracticeInfo();
         autonomousPracticeInfo.setAutonomousPracticeTitle(reportSettingAddVo.getAutonomousPracticeTitle());
@@ -199,21 +192,105 @@ public class AutonomicPractice {
         return "redirect:/administrator/autonomicpractice/reportsettingList";
     }
 
+    /**
+     * 填报设置更新界面
+     * @param id
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/reportSettingUpdate")
+    public String reportSettingUpdate(@RequestParam("id") int id,ModelMap modelMap){
+        //通过用户类型获取系表ID
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(id);
+        List<AutonomousPracticeTemplate> autonomousPracticeTemplates = autonomousPracticeTemplateService.findAllByTieId(tieId);
+        if (!autonomousPracticeTemplates.isEmpty()) {
+            modelMap.addAttribute("autonomousPracticeTemplate", autonomousPracticeTemplates);
+        }
+
+        if(!ObjectUtils.isEmpty(autonomousPracticeInfo)){
+            List<CheckboxData> list = new ArrayList<>();
+            String[] isCheckedYears = autonomousPracticeInfo.getGradeYear().split(",");
+            Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
+            if (record1s.isNotEmpty()) {
+                for (Record r : record1s) {
+                    CheckboxData checkboxData = new CheckboxData();
+                    checkboxData.setValue(r.getValue("year").toString());
+                    checkboxData.setChecked(false);
+                    for(String s:isCheckedYears){
+                        if(r.getValue("year").toString().equals(s)){
+                            checkboxData.setChecked(true);
+                            break;
+                        }
+                    }
+                    list.add(checkboxData);
+                }
+            }
+            modelMap.addAttribute("years", list);
+        }
+        modelMap.addAttribute("autonomousPracticeInfo",autonomousPracticeInfo);
+        return "/student/autonomicpractice/reportsettingupdate";
+    }
+
+    /**
+     * 更新填报设置信息
+     * @param reportSettingAddVo
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/updateReportSetting")
+    public String updateReportSetting(ReportSettingAddVo reportSettingAddVo){
+        //通过用户类型获取系表ID
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(reportSettingAddVo.getId());
+        autonomousPracticeInfo.setAutonomousPracticeTitle(reportSettingAddVo.getAutonomousPracticeTitle());
+        String temp = "";
+        for (String s : reportSettingAddVo.getGradeYear()) {
+            temp += s + ",";
+        }
+        temp = temp.substring(0, temp.lastIndexOf(","));
+        autonomousPracticeInfo.setGradeYear(temp);
+        autonomousPracticeInfo.setAutonomousPracticeTemplateId(reportSettingAddVo.getAutonomousPracticeTemplateId());
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        ts = Timestamp.valueOf(reportSettingAddVo.getStartTime() + " 00:00:00");
+        autonomousPracticeInfo.setStartTime(ts);
+        ts = Timestamp.valueOf(reportSettingAddVo.getEndTime() + " 23:59:59");
+        autonomousPracticeInfo.setEndTime(ts);
+        autonomousPracticeInfo.setUsersId(usersService.getUserName());
+        autonomousPracticeInfo.setTieId(tieId);
+        autonomousPracticeInfoService.update(autonomousPracticeInfo);
+        return "redirect:/administrator/autonomicpractice/reportsettingList";
+    }
+
+    /**
+     * 模板编辑列表
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/templateList")
     public String templateList() {
         return "/student/autonomicpractice/templatelist";
     }
 
+    /**
+     * 模板编辑列表数据
+     * @param templateVo
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/templateData")
     @ResponseBody
     public Map<String, Object> templateData(TemplateVo templateVo) {
         JsGrid<TemplateVo> jsGrid = new JsGrid<>(new HashMap<>());
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                tieId = r.getValue(Tables.TIE.ID);
-            }
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
         }
         List<TemplateVo> list = new ArrayList<>();
         if (tieId > 0) {
@@ -246,10 +323,16 @@ public class AutonomicPractice {
             autonomousPracticeContentService.deleteByAutonomousPracticeHeadId(m.getId());
         });
         autonomousPracticeHeadService.deleteByAutonomousPracticeTemplateId(templateVo.getId());
+        autonomousPracticeInfoService.deleteByAutonomousPracticeTemplateId(templateVo.getId());
         autonomousPracticeTemplateService.deleteById(templateVo.getId());
         return jsGrid.deleteItem(templateVo);
     }
 
+    /**
+     * 模板添加界面
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/templateAdd")
     public String templateAdd(ModelMap modelMap) {
         modelMap.addAttribute("headType", headTypeService.findAll());
@@ -271,16 +354,55 @@ public class AutonomicPractice {
         return "/student/autonomicpractice/templateadd";
     }
 
+    /**
+     * 模板更新界面
+     * @param id
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/templateUpdate")
+    public String templateUpdate(@RequestParam("id") int id, ModelMap modelMap){
+        AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateService.findById(id);
+        modelMap.addAttribute("headType", headTypeService.findAll());
+        List<SelectData> selectDatas = new ArrayList<>();
+        selectDatas.add(new SelectData(1, "student", "学生表"));
+        modelMap.addAttribute("databaseTables", selectDatas);
+
+        List<SelectData> tableFields = new ArrayList<>();
+        tableFields.add(new SelectData(1, "student_number", "学生号"));
+        tableFields.add(new SelectData(1, "student_name", "学生姓名"));
+        tableFields.add(new SelectData(1, "grade_name", "学生班级"));
+        tableFields.add(new SelectData(1, "student_phone", "学生电话"));
+        tableFields.add(new SelectData(1, "student_email", "学生邮箱"));
+        tableFields.add(new SelectData(1, "student_birthday", "学生生日"));
+        tableFields.add(new SelectData(1, "student_sex", "学生性别"));
+        tableFields.add(new SelectData(1, "student_identity_card", "学生身份证号"));
+        tableFields.add(new SelectData(1, "student_address", "学生地址"));
+        modelMap.addAttribute("tableFileds", tableFields);
+        modelMap.addAttribute("autonomousPracticeTemplate",autonomousPracticeTemplate);
+        Result<Record12<Integer,String,String,String,String,String,String,String,Byte,String,Byte,Integer>> record12s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(id);
+        List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
+        if(record12s.isNotEmpty()){
+            autonomousPracticeHeadAddVos = record12s.into(AutonomousPracticeHeadAddVo.class);
+        }
+        modelMap.addAttribute("autonomousPracticeHeads",autonomousPracticeHeadAddVos);
+        modelMap.addAttribute("templateId",id);
+        return "/student/autonomicpractice/templateupdate";
+    }
+
+    /**
+     * 添加模板
+     * @param templateName
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/addAutonomicPracticeTemplate")
     @ResponseBody
     public AjaxData addAutonomicPracticeTemplate(@RequestParam("templateName") String templateName) {
         if (StringUtils.hasLength(templateName)) {
-            Result<Record> records = usersService.findAll(usersService.getUserName());
+            Record record = usersService.findAll(usersService.getUserName());
             int tieId = 0;
-            if (records.isNotEmpty()) {
-                for (Record r : records) {
-                    tieId = r.getValue(Tables.TIE.ID);
-                }
+            if(!ObjectUtils.isEmpty(record)){
+                tieId = record.getValue(Tables.TIE.ID);
             }
             AutonomousPracticeTemplate autonomousPracticeTemplate = new AutonomousPracticeTemplate();
             autonomousPracticeTemplate.setAutonomousPracticeTemplateTitle(templateName);
@@ -293,11 +415,36 @@ public class AutonomicPractice {
         }
     }
 
+    /**
+     * 更新模板
+     * @param templateId
+     * @param templateName
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/updateAutonomicPracticeTemplate")
+    @ResponseBody
+    public AjaxData<AutonomousPracticeHead> updateAutonomicPracticeTemplate(@RequestParam("id")int templateId,@RequestParam("templateName") String templateName){
+        if (StringUtils.hasLength(templateName)) {
+            AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateService.findById(templateId);
+            autonomousPracticeTemplate.setAutonomousPracticeTemplateTitle(templateName);
+            autonomousPracticeTemplateService.update(autonomousPracticeTemplate);
+            List<AutonomousPracticeHead> autonomousPracticeHeads = autonomousPracticeHeadService.findByAutonomousPracticeTemplateId(templateId);
+            return new AjaxData().success().obj(templateId).listData(autonomousPracticeHeads);
+        } else {
+            return new AjaxData().fail().msg("请填写模板名!");
+        }
+    }
+
+    /**
+     * 添加自主实习标题
+     * @param autonomousPracticeHeadListVo
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/addAutonomicPracticeHead")
     @ResponseBody
     public AjaxData addAutonomicPracticeHead(AutonomousPracticeHeadListVo autonomousPracticeHeadListVo) {
         log.debug("autonomousPracticeHeadListVo : {}", autonomousPracticeHeadListVo);
-        if (autonomousPracticeHeadListVo.getTemplateId() > 0) {
+        if (autonomousPracticeHeadListVo.getId() > 0) {
             AutonomousPracticeHead autonomousPracticeHead = new AutonomousPracticeHead();
             autonomousPracticeHead.setTitle(autonomousPracticeHeadListVo.getTitle());
             autonomousPracticeHead.setTitleVariable(RandomUtils.generateTitleVariable());
@@ -310,8 +457,7 @@ public class AutonomicPractice {
             autonomousPracticeHead.setDatabaseTableField(autonomousPracticeHeadListVo.getDatabaseFieldSelect());
             autonomousPracticeHead.setAuthority(autonomousPracticeHeadListVo.getAuthority());
             autonomousPracticeHead.setIsShowHighlyActive(autonomousPracticeHeadListVo.getIsShowHighlyActive());
-            autonomousPracticeHead.setAutonomousPracticeTemplateId(autonomousPracticeHeadListVo.getTemplateId());
-            autonomousPracticeHeadListVo.setSelectContentInput(autonomousPracticeHeadListVo.getSelectContentInput().replaceAll("[,]","_"));
+            autonomousPracticeHead.setAutonomousPracticeTemplateId(autonomousPracticeHeadListVo.getId());
             autonomousPracticeHead.setContent(autonomousPracticeHeadListVo.getSelectContentInput());
             autonomousPracticeHead.setIsDatabase(autonomousPracticeHeadListVo.getIsDatabase());
             autonomousPracticeHead.setSort(autonomousPracticeHeadListVo.getSort());
@@ -323,6 +469,58 @@ public class AutonomicPractice {
         }
     }
 
+    /**
+     * 更新自主实习标题
+     * @param autonomousPracticeHeadUpdateVo
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/updateAutonomicPracticeHead")
+    @ResponseBody
+    public AjaxData updateAutonomicPracticeHead(AutonomousPracticeHeadUpdateVo autonomousPracticeHeadUpdateVo) {
+        log.debug("autonomousPracticeHeadListVo : {}", autonomousPracticeHeadUpdateVo);
+        if (autonomousPracticeHeadUpdateVo.getId() > 0) {
+            AutonomousPracticeHead autonomousPracticeHead = autonomousPracticeHeadService.findById(autonomousPracticeHeadUpdateVo.getId());
+            autonomousPracticeHead.setTitle(autonomousPracticeHeadUpdateVo.getTitle());
+            autonomousPracticeHead.setHeadTypeId(autonomousPracticeHeadUpdateVo.getHeadTypeSelect());
+            if (autonomousPracticeHeadUpdateVo.getIsDatabase() == 1) {
+                autonomousPracticeHead.setDatabaseTable("student");
+            } else {
+                autonomousPracticeHead.setDatabaseTable("");
+            }
+            autonomousPracticeHead.setDatabaseTableField(autonomousPracticeHeadUpdateVo.getDatabaseFieldSelect());
+            autonomousPracticeHead.setAuthority(autonomousPracticeHeadUpdateVo.getAuthority());
+            autonomousPracticeHead.setIsShowHighlyActive(autonomousPracticeHeadUpdateVo.getIsShowHighlyActive());
+            autonomousPracticeHead.setContent(autonomousPracticeHeadUpdateVo.getSelectContentInput());
+            autonomousPracticeHead.setIsDatabase(autonomousPracticeHeadUpdateVo.getIsDatabase());
+            autonomousPracticeHeadService.update(autonomousPracticeHead);
+            return new AjaxData().success().obj(autonomousPracticeHead);
+        } else {
+            return new AjaxData().fail().msg("参数异常!");
+        }
+    }
+
+    /**
+     * 删除自主实习标题
+     * @param headId
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/deleteAutonomicPracticeHead")
+    @ResponseBody
+    public AjaxData deleteAutonomicPracticeHead(@RequestParam("id") int headId) {
+        if (headId > 0) {
+            autonomousPracticeContentService.deleteByAutonomousPracticeHeadId(headId);
+            autonomousPracticeHeadService.deleteById(headId);
+            return new AjaxData().success().msg("删除标题成功!").obj(headId);
+        } else {
+            return new AjaxData().fail().msg("参数异常!");
+        }
+    }
+
+    /**
+     * 更新标题是否显示在高效工作区
+     * @param id
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlyShow")
     @ResponseBody
     public AjaxData updateAutonomicPracticeHeadHighlyShow(@RequestParam("id") int id) {
@@ -338,6 +536,11 @@ public class AutonomicPractice {
         return new AjaxData().success();
     }
 
+    /**
+     * 更新高效工作区标题显示顺序
+     * @param sort
+     * @return
+     */
     @RequestMapping("/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlySort")
     @ResponseBody
     public AjaxData updateAutonomicPracticeHeadHighlySort(@RequestParam("sort") String sort) {
@@ -360,18 +563,16 @@ public class AutonomicPractice {
     @RequestMapping("/student/autonomicpractice/autonomicPracticeData")
     @ResponseBody
     public AjaxData<AutonomicPracticeListVo> autonomicPractice(int pageNum, int pageSize) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
+        Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         boolean isStudent = false;
         String studentYear = null;
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == r.getValue(Tables.USERS.USER_TYPE_ID)) {
-                    isStudent = true;
-                    studentYear = r.getValue(Tables.GRADE.YEAR);
-                }
-                tieId = r.getValue(Tables.TIE.ID);
+        if(!ObjectUtils.isEmpty(record)){
+            if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == record.getValue(Tables.USERS.USER_TYPE_ID)) {
+                isStudent = true;
+                studentYear = record.getValue(Tables.GRADE.YEAR);
             }
+            tieId = record.getValue(Tables.TIE.ID);
         }
         Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer>> record10s
                 = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
@@ -426,43 +627,41 @@ public class AutonomicPractice {
 
     @RequestMapping("/student/autonomicpractice/autonomicPracticeAdd")
     public String autonomicPracticeAdd(ModelMap modelMap, @RequestParam("id") int id) {
-        Result<Record> records = usersService.findAll(usersService.getUserName());
-        if (records.isNotEmpty()) {
-            for (Record r : records) {
-                if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == r.getValue(Tables.USERS.USER_TYPE_ID)) {
-                    modelMap.addAttribute("isStudent", true);
-                    AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
-                    autonomicPracticeStudentInfoVo.setId(r.getValue(Tables.STUDENT.ID));
-                    autonomicPracticeStudentInfoVo.setStudentNumber(r.getValue(Tables.STUDENT.STUDENT_NUMBER));
-                    autonomicPracticeStudentInfoVo.setStudentName(r.getValue(Tables.STUDENT.STUDENT_NAME));
-                    autonomicPracticeStudentInfoVo.setStudentPhone(r.getValue(Tables.STUDENT.STUDENT_PHONE));
-                    autonomicPracticeStudentInfoVo.setStudentEmail(r.getValue(Tables.STUDENT.STUDENT_EMAIL));
-                    autonomicPracticeStudentInfoVo.setStudentBirthday(r.getValue(Tables.STUDENT.STUDENT_BIRTHDAY));
-                    autonomicPracticeStudentInfoVo.setStudentSex(r.getValue(Tables.STUDENT.STUDENT_SEX));
-                    autonomicPracticeStudentInfoVo.setStudentIdentityCard(r.getValue(Tables.STUDENT.STUDENT_IDENTITY_CARD));
-                    autonomicPracticeStudentInfoVo.setStudentAddress(r.getValue(Tables.STUDENT.STUDENT_ADDRESS));
-                    autonomicPracticeStudentInfoVo.setGradeName(r.getValue(Tables.GRADE.GRADE_NAME));
-                    modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
+        Record record = usersService.findAll(usersService.getUserName());
+        if (!ObjectUtils.isEmpty(record)) {
+            if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == record.getValue(Tables.USERS.USER_TYPE_ID)) {
+                modelMap.addAttribute("isStudent", true);
+                AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
+                autonomicPracticeStudentInfoVo.setId(record.getValue(Tables.STUDENT.ID));
+                autonomicPracticeStudentInfoVo.setStudentNumber(record.getValue(Tables.STUDENT.STUDENT_NUMBER));
+                autonomicPracticeStudentInfoVo.setStudentName(record.getValue(Tables.STUDENT.STUDENT_NAME));
+                autonomicPracticeStudentInfoVo.setStudentPhone(record.getValue(Tables.STUDENT.STUDENT_PHONE));
+                autonomicPracticeStudentInfoVo.setStudentEmail(record.getValue(Tables.STUDENT.STUDENT_EMAIL));
+                autonomicPracticeStudentInfoVo.setStudentBirthday(record.getValue(Tables.STUDENT.STUDENT_BIRTHDAY));
+                autonomicPracticeStudentInfoVo.setStudentSex(record.getValue(Tables.STUDENT.STUDENT_SEX));
+                autonomicPracticeStudentInfoVo.setStudentIdentityCard(record.getValue(Tables.STUDENT.STUDENT_IDENTITY_CARD));
+                autonomicPracticeStudentInfoVo.setStudentAddress(record.getValue(Tables.STUDENT.STUDENT_ADDRESS));
+                autonomicPracticeStudentInfoVo.setGradeName(record.getValue(Tables.GRADE.GRADE_NAME));
+                modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
 
-                    Result<Record4<Integer, String, Integer, Integer>> record4s = autonomousPracticeContentService.findByAutonomousPracticeTemplateIdAndStudentId(id, r.getValue(Tables.STUDENT.ID));
-                    if (record4s.isNotEmpty()) {
-                        List<AutonomousPracticeContent> autonomousPracticeContents = record4s.into(AutonomousPracticeContent.class);
-                        modelMap.addAttribute("isUpdate", true);
-                        modelMap.addAttribute("myContents", autonomousPracticeContents);
-                    } else {
-                        modelMap.addAttribute("isUpdate", false);
-                    }
+                Result<Record4<Integer, String, Integer, Integer>> record4s = autonomousPracticeContentService.findByAutonomousPracticeTemplateIdAndStudentId(id, record.getValue(Tables.STUDENT.ID));
+                if (record4s.isNotEmpty()) {
+                    List<AutonomousPracticeContent> autonomousPracticeContents = record4s.into(AutonomousPracticeContent.class);
+                    modelMap.addAttribute("isUpdate", true);
+                    modelMap.addAttribute("myContents", autonomousPracticeContents);
                 } else {
-                    modelMap.addAttribute("isStudent", false);
+                    modelMap.addAttribute("isUpdate", false);
                 }
+            } else {
+                modelMap.addAttribute("isStudent", false);
             }
         }
-        Result<Record11<Integer, String, String, String, String, String, String, Byte, String, Byte, Integer>> record11s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(id);
+        Result<Record12<Integer, String, String,String, String, String, String, String, Byte, String, Byte, Integer>> record12s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(id);
         List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
         List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
         List<String> strings = new ArrayList<>();
-        if (record11s.isNotEmpty()) {
-            autonomousPracticeHeadAddVos = record11s.into(AutonomousPracticeHeadAddVo.class);
+        if (record12s.isNotEmpty()) {
+            autonomousPracticeHeadAddVos = record12s.into(AutonomousPracticeHeadAddVo.class);
             int width = 100 / autonomousPracticeHeadAddVos.size();
             JsGridData jsGridData = new JsGridData();
             for (AutonomousPracticeHeadAddVo addVo : autonomousPracticeHeadAddVos) {
@@ -548,10 +747,10 @@ public class AutonomicPractice {
     public AjaxData addAutonomicPractice(HttpServletRequest request) {
         if (StringUtils.hasLength(request.getParameter("templateId"))) {
             int templateId = Integer.parseInt(request.getParameter("templateId"));
-            Result<Record11<Integer, String, String, String, String, String, String, Byte, String, Byte, Integer>> record11s =
+            Result<Record12<Integer, String,String, String, String, String, String, String, Byte, String, Byte, Integer>> record12s =
                     autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(templateId);
-            if (record11s.isNotEmpty()) {
-                List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = record11s.into(AutonomousPracticeHeadAddVo.class);
+            if (record12s.isNotEmpty()) {
+                List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = record12s.into(AutonomousPracticeHeadAddVo.class);
                 List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
                 int studentId = Integer.parseInt(request.getParameter("studentId"));
                 for (AutonomousPracticeHeadAddVo ap : autonomousPracticeHeadAddVos) {

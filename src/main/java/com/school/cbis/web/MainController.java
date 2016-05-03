@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -63,13 +64,11 @@ public class MainController {
         int tieId = 0;
         int tieIntroduceArticleInfoId = 0;//系简介
         if (!StringUtils.isEmpty(usersService.getUserName())) {
-            Result<Record> records = usersService.findAll(usersService.getUserName());
-            if (records.isNotEmpty()) {
-                for (Record r : records) {
-                    tieId = r.getValue(Tables.TIE.ID);
-                    if (!StringUtils.isEmpty(r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
-                        tieIntroduceArticleInfoId = r.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
-                    }
+            Record record = usersService.findAll(usersService.getUserName());
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
+                if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
+                    tieIntroduceArticleInfoId = record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
                 }
             }
         } else {
@@ -77,7 +76,7 @@ public class MainController {
 
             //系简介
             Tie tie = tieService.findById(tieId);
-            if (!StringUtils.isEmpty(tie)&&!StringUtils.isEmpty(tie.getTieIntroduceArticleInfoId())) {
+            if (!StringUtils.isEmpty(tie) && !StringUtils.isEmpty(tie.getTieIntroduceArticleInfoId())) {
                 tieIntroduceArticleInfoId = tie.getTieIntroduceArticleInfoId();
             }
         }
@@ -102,7 +101,7 @@ public class MainController {
         List<TieNotice> tieNotices = tieNoticeService.findByShow(Byte.parseByte("1"));
         List<ArticleInfo> tieNoticeData = new ArrayList<>();
         if (!tieNotices.isEmpty()) {
-            for(TieNotice t:tieNotices){
+            for (TieNotice t : tieNotices) {
                 ArticleInfo articleInfo = articleInfoService.findById(t.getTieNoticeArticleInfoId());
                 tieNoticeData.add(articleInfo);
             }
@@ -136,13 +135,13 @@ public class MainController {
         //专业简介
         List<Major> majors = majorService.findByShow(Byte.parseByte("1"));
         List<MajorIndexVo> majorIndexVos = new ArrayList<>();
-        if(!majors.isEmpty()){
-            for(Major m:majors){
+        if (!majors.isEmpty()) {
+            for (Major m : majors) {
                 MajorIndexVo majorIndexVo = new MajorIndexVo();
                 ArticleInfo articleInfo1 = articleInfoService.findById(m.getMajorIntroduceArticleInfoId());
                 majorIndexVo.setMajorId(m.getId());
                 majorIndexVo.setMajorName(m.getMajorName());
-                if(!StringUtils.isEmpty(m.getMajorIntroduceArticleInfoId())){
+                if (!StringUtils.isEmpty(m.getMajorIntroduceArticleInfoId())) {
                     majorIndexVo.setArticleInfoId(m.getMajorIntroduceArticleInfoId());
                     majorIndexVo.setArticleContent(articleInfo1.getArticleContent());
                 }

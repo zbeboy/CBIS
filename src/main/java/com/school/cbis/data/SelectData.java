@@ -11,6 +11,8 @@ public class SelectData {
 
     private String text;
 
+    private boolean selected;
+
     public SelectData(){
 
     }
@@ -45,12 +47,21 @@ public class SelectData {
         this.text = text;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     @Override
     public String toString() {
         return "SelectData{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
                 ", text='" + text + '\'' +
+                ", selected=" + selected +
                 '}';
     }
 }

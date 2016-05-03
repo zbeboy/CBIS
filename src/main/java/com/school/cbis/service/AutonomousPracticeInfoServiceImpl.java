@@ -212,4 +212,20 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
                 .fetchOne();
         return count.value1();
     }
+
+    @Override
+    public AutonomousPracticeInfo findById(int id) {
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoDao.findById(id);
+        return autonomousPracticeInfo;
+    }
+
+    @Override
+    public void update(AutonomousPracticeInfo autonomousPracticeInfo) {
+        autonomousPracticeInfoDao.update(autonomousPracticeInfo);
+    }
+
+    @Override
+    public void deleteByAutonomousPracticeTemplateId(int autonomousPracticeTemplateId) {
+        create.deleteFrom(Tables.AUTONOMOUS_PRACTICE_INFO).where(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(autonomousPracticeTemplateId)).execute();
+    }
 }

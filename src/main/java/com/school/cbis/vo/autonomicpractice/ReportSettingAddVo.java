@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by Administrator on 2016/4/5.
  */
 public class ReportSettingAddVo {
+    private int id;
 
     private String autonomousPracticeTitle;
 
@@ -17,6 +18,14 @@ public class ReportSettingAddVo {
     private String startTime;
 
     private String endTime;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAutonomousPracticeTitle() {
         return autonomousPracticeTitle;
@@ -61,11 +70,12 @@ public class ReportSettingAddVo {
     @Override
     public String toString() {
         return "ReportSettingAddVo{" +
-                "autonomousPracticeTitle='" + autonomousPracticeTitle + '\'' +
+                "id=" + id +
+                ", autonomousPracticeTitle='" + autonomousPracticeTitle + '\'' +
                 ", gradeYear=" + Arrays.toString(gradeYear) +
-                ", autonomousPracticeTemplateId='" + autonomousPracticeTemplateId + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+                ", autonomousPracticeTemplateId=" + autonomousPracticeTemplateId +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 '}';
     }
 }

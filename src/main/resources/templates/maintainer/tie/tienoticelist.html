@@ -87,7 +87,7 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var web_path  = /*[[#{web_path}]]*/ '';
+    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
     /*]]>*/
 </script>
 <!-- jsgrid js-->

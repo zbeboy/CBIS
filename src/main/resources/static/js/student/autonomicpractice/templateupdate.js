@@ -1,4 +1,8 @@
 /**
+ * Created by lenovo on 2016-04-29.
+ */
+
+/**
  * Created by lenovo on 2016-04-13.
  */
 
@@ -62,13 +66,22 @@ function saveTemplateInfo() {
     if ($('#autonomousPracticeTemplateTitle').val().trim().length <= 0) {
         layer.msg('请填写模板名!');
     } else {
-        $.post(web_path + "/administrator/autonomicpractice/addAutonomicPracticeTemplate", {
+        $.post(web_path + "/administrator/autonomicpractice/updateAutonomicPracticeTemplate", {
+            'id': $('#templateId').val(),
             'templateName': $('#autonomousPracticeTemplateTitle').val().trim()
         }, function (data) {
             if (data.state) {
                 $('#templateInfo').addClass('uk-hidden');
                 $('#templdateData').removeClass('uk-hidden');
                 templateId = data.obj;
+                for (var i = 0; i < data.result.length; i++) {
+                    outputToTable(data.result[i]);
+                    if (data.result[i].isShowHighlyActive == 1) {
+                        outputToPanel(data.result[i]);
+                    } else {
+                        outputToPanelForCheckbox(data.result[i]);
+                    }
+                }
             } else {
                 layer.msg(data.msg);
             }
@@ -330,20 +343,20 @@ function editTitle(obj) {
  * 删除标题
  * @param obj
  */
-function deleteTitle(obj){
+function deleteTitle(obj) {
     layer.confirm('您确定要删除该标题吗?', {
-        btn: ['确定','取消'] //按钮
-    }, function(){
+        btn: ['确定', '取消'] //按钮
+    }, function () {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
-        $.post(web_path + '/administrator/autonomicpractice/deleteAutonomicPracticeHead',{
-            'id':id
-        },function(data){
-            if(data.state){
+        $.post(web_path + '/administrator/autonomicpractice/deleteAutonomicPracticeHead', {
+            'id': id
+        }, function (data) {
+            if (data.state) {
                 var d = $('#panelData').children();
-                for(var i = 0;i< d.length;i++){
-                    if(Number($(d[i]).attr('data')) == data.obj){
+                for (var i = 0; i < d.length; i++) {
+                    if (Number($(d[i]).attr('data')) == data.obj) {
                         $(d[i]).remove();
                         break;
                     }
@@ -421,10 +434,10 @@ function outputToPanel(data) {
  * 移除panel中的title
  * @param data
  */
-function removePanelTitle(data){
+function removePanelTitle(data) {
     var p = $('#panelData').children();
-    for(var i = 0;i< p.length;i++){
-        if(Number($(p[i]).attr('data')) == data.id){
+    for (var i = 0; i < p.length; i++) {
+        if (Number($(p[i]).attr('data')) == data.id) {
             $(p[i]).remove();
             break;
         }
@@ -562,7 +575,7 @@ function saveAddTitle() {
 
     var url = '/administrator/autonomicpractice/addAutonomicPracticeHead';
     var id = templateId;
-    if(isEditTitle){
+    if (isEditTitle) {
         url = '/administrator/autonomicpractice/updateAutonomicPracticeHead';
         id = editTitleId;
     }
@@ -625,11 +638,7 @@ function saveHighlyTitleSort() {
  * 取消全部
  */
 function cancelAll() {
-    $.post(web_path + '/administrator/autonomicpractice/deleteTemplate', {
-        'id': templateId
-    }, function (data) {
-        window.location.href = web_path + '/administrator/autonomicpractice/templateList';
-    });
+    window.location.href = web_path + '/administrator/autonomicpractice/templateList';
 }
 
 /**
@@ -723,4 +732,3 @@ $(document).ready(function () {
     initHeadTypeSelect();
     addTemplate = $('#dataTitle').html();
 });
-
