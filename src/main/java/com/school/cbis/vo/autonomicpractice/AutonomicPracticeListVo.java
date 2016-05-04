@@ -1,4 +1,4 @@
-package com.school.cbis.vo.test;
+package com.school.cbis.vo.autonomicpractice;
 
 import java.sql.Timestamp;
 
