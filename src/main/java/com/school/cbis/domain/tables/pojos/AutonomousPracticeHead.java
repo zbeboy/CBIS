@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead implements Serializable {
 
-	private static final long serialVersionUID = 761953236;
+	private static final long serialVersionUID = 2008554823;
 
 	private Integer id;
 	private String  title;
@@ -34,6 +34,7 @@ public class AutonomousPracticeHead implements Serializable {
 	private String  authority;
 	private Byte    isShowHighlyActive;
 	private Byte    isDatabase;
+	private Byte    isRequired;
 	private String  content;
 	private Integer sort;
 	private Integer headTypeId;
@@ -50,6 +51,7 @@ public class AutonomousPracticeHead implements Serializable {
 		this.authority = value.authority;
 		this.isShowHighlyActive = value.isShowHighlyActive;
 		this.isDatabase = value.isDatabase;
+		this.isRequired = value.isRequired;
 		this.content = value.content;
 		this.sort = value.sort;
 		this.headTypeId = value.headTypeId;
@@ -65,6 +67,7 @@ public class AutonomousPracticeHead implements Serializable {
 		String  authority,
 		Byte    isShowHighlyActive,
 		Byte    isDatabase,
+		Byte    isRequired,
 		String  content,
 		Integer sort,
 		Integer headTypeId,
@@ -78,6 +81,7 @@ public class AutonomousPracticeHead implements Serializable {
 		this.authority = authority;
 		this.isShowHighlyActive = isShowHighlyActive;
 		this.isDatabase = isDatabase;
+		this.isRequired = isRequired;
 		this.content = content;
 		this.sort = sort;
 		this.headTypeId = headTypeId;
@@ -159,6 +163,15 @@ public class AutonomousPracticeHead implements Serializable {
 		this.isDatabase = isDatabase;
 	}
 
+	@NotNull
+	public Byte getIsRequired() {
+		return this.isRequired;
+	}
+
+	public void setIsRequired(Byte isRequired) {
+		this.isRequired = isRequired;
+	}
+
 	@Size(max = 2000)
 	public String getContent() {
 		return this.content;
@@ -206,6 +219,7 @@ public class AutonomousPracticeHead implements Serializable {
 		sb.append(", ").append(authority);
 		sb.append(", ").append(isShowHighlyActive);
 		sb.append(", ").append(isDatabase);
+		sb.append(", ").append(isRequired);
 		sb.append(", ").append(content);
 		sb.append(", ").append(sort);
 		sb.append(", ").append(headTypeId);

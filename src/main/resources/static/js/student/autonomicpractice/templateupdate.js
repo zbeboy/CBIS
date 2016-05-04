@@ -60,33 +60,59 @@ function headSelect(obj) {
 }
 
 /**
- * 保存模板名
+ * 检验模板名
+ * @param id
+ * @param templateName
  */
-function saveTemplateInfo() {
-    if ($('#autonomousPracticeTemplateTitle').val().trim().length <= 0) {
+function validateUpdateAutonomicPracticeTemplateTitle(id,templateName){
+    if (templateName.length <= 0) {
         layer.msg('请填写模板名!');
     } else {
-        $.post(web_path + "/administrator/autonomicpractice/updateAutonomicPracticeTemplate", {
-            'id': $('#templateId').val(),
-            'templateName': $('#autonomousPracticeTemplateTitle').val().trim()
-        }, function (data) {
-            if (data.state) {
-                $('#templateInfo').addClass('uk-hidden');
-                $('#templdateData').removeClass('uk-hidden');
-                templateId = data.obj;
-                for (var i = 0; i < data.result.length; i++) {
-                    outputToTable(data.result[i]);
-                    if (data.result[i].isShowHighlyActive == 1) {
-                        outputToPanel(data.result[i]);
-                    } else {
-                        outputToPanelForCheckbox(data.result[i]);
-                    }
-                }
+        $.post(web_path + "/administrator/autonomicpractice/validateUpdateAutonomicPracticeTemplateTitle",{
+            'id':id,
+            'templateName':templateName
+        },function(data){
+            if(data.state){
+                sendTemplateInfo(id,templateName);
             } else {
                 layer.msg(data.msg);
             }
         });
     }
+}
+
+/**
+ * 发送模板名
+ * @param templateName
+ */
+function sendTemplateInfo(id,templateName){
+    $.post(web_path + "/administrator/autonomicpractice/updateAutonomicPracticeTemplate", {
+        'id': id,
+        'templateName': templateName
+    }, function (data) {
+        if (data.state) {
+            $('#templateInfo').addClass('uk-hidden');
+            $('#templdateData').removeClass('uk-hidden');
+            templateId = data.obj;
+            for (var i = 0; i < data.result.length; i++) {
+                outputToTable(data.result[i]);
+                if (data.result[i].isShowHighlyActive == 1) {
+                    outputToPanel(data.result[i]);
+                } else {
+                    outputToPanelForCheckbox(data.result[i]);
+                }
+            }
+        } else {
+            layer.msg(data.msg);
+        }
+    });
+}
+
+/**
+ * 保存模板名
+ */
+function saveTemplateInfo() {
+    validateUpdateAutonomicPracticeTemplateTitle($('#templateId').val(),$('#autonomousPracticeTemplateTitle').val().trim());
 }
 
 /**
@@ -209,10 +235,11 @@ function outputToTable(data) {
             $('<h3 class="uk-panel-title">').text(data.title)
             )
             .append(
-                $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-3">').append($('<li class="uk-hidden">').text(data.id))
+                $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4">').append($('<li class="uk-hidden">').text(data.id))
                     .append($('<li>').text('标题类型:' + headTypes))
                     .append($('<li>').text('数据库表:' + data.databaseTable))
                     .append($('<li>').text('数据库表字段:' + data.databaseTableField))
+                    .append($('<li>').text('是否必填:' + (data.isRequired == 1?'是':'否')))
             )
             .append(
                 $('<p class="uk-text-break">').text('所需权限:' + data.authority)
@@ -250,6 +277,7 @@ function outputToEditTable(data) {
     $(p[3]).text('选择内容:' + data.content);
     $(u[2]).text('数据库表:' + data.databaseTable);
     $(u[3]).text('数据库表字段:' + data.databaseTableField);
+    $(u[4]).text('是否必填:' + (data.isRequired == 1?'是':'否'));
 }
 
 /**
@@ -274,6 +302,7 @@ function editTitle(obj) {
     var selectContentInput = $(p[3]).text();
     var databaseTableSelect = $(u[2]).text();
     var databaseFieldSelect = $(u[3]).text();
+    var isRequired =  $(u[4]).text();
 
     $('#title').val(title);// 标题
 
@@ -337,6 +366,13 @@ function editTitle(obj) {
 
     var dfs = databaseFieldSelect.split(":")[1];//数据库字段
     editDatabaseSelect(dtsId, dfs);
+
+    var ir = isRequired.split(":")[1];
+    if(ir === '是'){//是否必填
+        $('#isRequired').attr('checked',true);
+    } else {
+        $('#isRequired').attr('checked',false);
+    }
 }
 
 /**
@@ -495,6 +531,7 @@ function saveAddTitle() {
 
     var headTypeSelect = Number($('#databaseHeadType').val().trim());
     var isShowHighlyActive = 1;
+    var isRequired = 1;
     var selectContentInput = new Array();
     var databaseTableSelect = 0;
     var databaseFieldSelect = '';
@@ -506,6 +543,12 @@ function saveAddTitle() {
                 break;
             }
         }
+    }
+
+    if($("input[name='isRequired']:checked").val() === 'on' ){//是否必填
+        isRequired = 1;
+    } else {
+        isRequired = 0;
     }
 
     if (isDatabase == 0) {
@@ -590,6 +633,7 @@ function saveAddTitle() {
         'databaseTableSelect': databaseTableSelect,
         'databaseFieldSelect': databaseFieldSelect,
         'isShowHighlyActive': isShowHighlyActive,
+        'isRequired':isRequired,
         'sort': sort
 
     }, function (data) {

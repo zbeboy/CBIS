@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadRecord> {
 
-	private static final long serialVersionUID = 2017225640;
+	private static final long serialVersionUID = -341944616;
 
 	/**
 	 * The reference instance of <code>cbis.autonomous_practice_head</code>
@@ -89,6 +89,11 @@ public class AutonomousPracticeHead extends TableImpl<AutonomousPracticeHeadReco
 	 * The column <code>cbis.autonomous_practice_head.is_database</code>.
 	 */
 	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_DATABASE = createField("is_database", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>cbis.autonomous_practice_head.is_required</code>.
+	 */
+	public final TableField<AutonomousPracticeHeadRecord, Byte> IS_REQUIRED = createField("is_required", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.autonomous_practice_head.content</code>.

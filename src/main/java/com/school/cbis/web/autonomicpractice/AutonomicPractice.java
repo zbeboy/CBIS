@@ -6,6 +6,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.domain.tables.records.AutonomousPracticeContentRecord;
+import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.util.RandomUtils;
@@ -330,27 +331,10 @@ public class AutonomicPractice {
 
     /**
      * 模板添加界面
-     * @param modelMap
      * @return
      */
     @RequestMapping("/administrator/autonomicpractice/templateAdd")
-    public String templateAdd(ModelMap modelMap) {
-        modelMap.addAttribute("headType", headTypeService.findAll());
-        List<SelectData> selectDatas = new ArrayList<>();
-        selectDatas.add(new SelectData(1, "student", "学生表"));
-        modelMap.addAttribute("databaseTables", selectDatas);
-
-        List<SelectData> tableFields = new ArrayList<>();
-        tableFields.add(new SelectData(1, "student_number", "学生号"));
-        tableFields.add(new SelectData(1, "student_name", "学生姓名"));
-        tableFields.add(new SelectData(1, "grade_name", "学生班级"));
-        tableFields.add(new SelectData(1, "student_phone", "学生电话"));
-        tableFields.add(new SelectData(1, "student_email", "学生邮箱"));
-        tableFields.add(new SelectData(1, "student_birthday", "学生生日"));
-        tableFields.add(new SelectData(1, "student_sex", "学生性别"));
-        tableFields.add(new SelectData(1, "student_identity_card", "学生身份证号"));
-        tableFields.add(new SelectData(1, "student_address", "学生地址"));
-        modelMap.addAttribute("tableFileds", tableFields);
+    public String templateAdd() {
         return "/student/autonomicpractice/templateadd";
     }
 
@@ -388,6 +372,88 @@ public class AutonomicPractice {
         modelMap.addAttribute("autonomousPracticeHeads",autonomousPracticeHeadAddVos);
         modelMap.addAttribute("templateId",id);
         return "/student/autonomicpractice/templateupdate";
+    }
+
+    /**
+     * 初始化模板数据
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/initTemplateData")
+    @ResponseBody
+    public AjaxData initTemplateData(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("headType", headTypeService.findAll());
+        List<SelectData> selectDatas = new ArrayList<>();
+        selectDatas.add(new SelectData(1, "student", "学生表"));
+        map.put("databaseTables", selectDatas);
+        List<SelectData> tableFields = new ArrayList<>();
+        tableFields.add(new SelectData(1, "student_number", "学生号"));
+        tableFields.add(new SelectData(1, "student_name", "学生姓名"));
+        tableFields.add(new SelectData(1, "grade_name", "学生班级"));
+        tableFields.add(new SelectData(1, "student_phone", "学生电话"));
+        tableFields.add(new SelectData(1, "student_email", "学生邮箱"));
+        tableFields.add(new SelectData(1, "student_birthday", "学生生日"));
+        tableFields.add(new SelectData(1, "student_sex", "学生性别"));
+        tableFields.add(new SelectData(1, "student_identity_card", "学生身份证号"));
+        tableFields.add(new SelectData(1, "student_address", "学生地址"));
+        map.put("tableFileds", tableFields);
+        //权限
+        log.debug("roleList : {}",wordbook.getRoleString());
+        map.put("roleList",wordbook.getRoleString());
+        return new AjaxData().success().mapData(map);
+    }
+
+    /**
+     * 检验添加模板名是否重复
+     * @param templateName
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/validateAddAutonomicPracticeTemplateTitle")
+    @ResponseBody
+    public AjaxData validateAddAutonomicPracticeTemplateTitle(@RequestParam("templateName") String templateName){
+        if(StringUtils.hasLength(templateName)){
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if(!ObjectUtils.isEmpty(record)){
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = autonomousPracticeTemplateService.findByAutonomousPracticeTemplateTitleAndTieIdEq(templateName,tieId);
+            if(ObjectUtils.isEmpty(autonomousPracticeTemplateRecord)){
+                return new AjaxData().success().msg("可以使用!");
+            } else {
+                return new AjaxData().fail().msg("模板已存在!");
+            }
+
+        } else {
+            return new AjaxData().fail().msg("请填写模板名!");
+        }
+    }
+
+    /**
+     * 检验更新模板名是否重复
+     * @param templateId
+     * @param templateName
+     * @return
+     */
+    @RequestMapping("/administrator/autonomicpractice/validateUpdateAutonomicPracticeTemplateTitle")
+    @ResponseBody
+    public AjaxData validateUpdateAutonomicPracticeTemplateTitle(@RequestParam("id")int templateId,@RequestParam("templateName") String templateName){
+        if(StringUtils.hasLength(templateName)){
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if(!ObjectUtils.isEmpty(record)){
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = autonomousPracticeTemplateService.findByAutonomousPracticeTemplateTitleAndTieIdAndNeId(templateId,templateName,tieId);
+            if(ObjectUtils.isEmpty(autonomousPracticeTemplateRecord)){
+                return new AjaxData().success().msg("可以使用!");
+            } else {
+                return new AjaxData().fail().msg("模板已存在!");
+            }
+
+        } else {
+            return new AjaxData().fail().msg("请填写模板名!");
+        }
     }
 
     /**
@@ -457,6 +523,7 @@ public class AutonomicPractice {
             autonomousPracticeHead.setDatabaseTableField(autonomousPracticeHeadListVo.getDatabaseFieldSelect());
             autonomousPracticeHead.setAuthority(autonomousPracticeHeadListVo.getAuthority());
             autonomousPracticeHead.setIsShowHighlyActive(autonomousPracticeHeadListVo.getIsShowHighlyActive());
+            autonomousPracticeHead.setIsRequired(autonomousPracticeHeadListVo.getIsRequired());
             autonomousPracticeHead.setAutonomousPracticeTemplateId(autonomousPracticeHeadListVo.getId());
             autonomousPracticeHead.setContent(autonomousPracticeHeadListVo.getSelectContentInput());
             autonomousPracticeHead.setIsDatabase(autonomousPracticeHeadListVo.getIsDatabase());
@@ -492,6 +559,7 @@ public class AutonomicPractice {
             autonomousPracticeHead.setIsShowHighlyActive(autonomousPracticeHeadUpdateVo.getIsShowHighlyActive());
             autonomousPracticeHead.setContent(autonomousPracticeHeadUpdateVo.getSelectContentInput());
             autonomousPracticeHead.setIsDatabase(autonomousPracticeHeadUpdateVo.getIsDatabase());
+            autonomousPracticeHead.setIsRequired(autonomousPracticeHeadUpdateVo.getIsRequired());
             autonomousPracticeHeadService.update(autonomousPracticeHead);
             return new AjaxData().success().obj(autonomousPracticeHead);
         } else {

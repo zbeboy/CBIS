@@ -117,6 +117,12 @@
                                 </div>
                             </div>
                             <div class="uk-form-row">
+                                <span class="uk-form-label">是否必填</span>
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input type="checkbox" id="isRequired" name="isRequired" checked="checked" /> <label for="isRequired">必填</label>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
                                 <div class="uk-form-controls">
                                     <input type="radio" id="myTitle" value="0" name="isDatabase" checked="checked"
                                            onclick="titleWay('myTitle');"/> <label for="myTitle">自定义标题</label>
@@ -149,7 +155,6 @@
                                             数据库表
                                             <select id="databaseTableSelect" name="databaseTableSelect" disabled="disabled" onchange="databaseSelect(this);" >
                                                 <option value="" >请选择</option>
-                                                <option th:unless="${#lists.isEmpty(databaseTables)}" th:each="dt:${databaseTables}" th:value="${dt.id}" th:text="${dt.text}" >Option 01</option>
                                             </select>
                                         </div>
                                         <div class="uk-width-1-2 uk-text-muted" id="databaseField">
@@ -195,8 +200,6 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
-    var headType = /*[[${headType}]]*/ null;
-    var tableFileds = /*[[${tableFileds}]]*/ null;
     /*]]>*/
 </script>
 

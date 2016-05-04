@@ -425,6 +425,7 @@ create table autonomous_practice_head(
   authority varchar(2000) not null,
   is_show_highly_active boolean not null default true,
   is_database boolean not null default false,
+  is_required boolean not null default true,
   content varchar(2000),
   sort int not null,
   head_type_id int,

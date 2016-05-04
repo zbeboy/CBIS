@@ -153,4 +153,21 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
     public void update(AutonomousPracticeTemplate autonomousPracticeTemplate) {
         autonomousPracticeTemplateDao.update(autonomousPracticeTemplate);
     }
+
+    @Override
+    public AutonomousPracticeTemplateRecord findByAutonomousPracticeTemplateTitleAndTieIdEq(String autonomousPracticeTemplateTitle, int tieId) {
+        AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = create.selectFrom(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .where(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.eq(autonomousPracticeTemplateTitle).and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId))).fetchOne();
+        return autonomousPracticeTemplateRecord;
+    }
+
+    @Override
+    public AutonomousPracticeTemplateRecord findByAutonomousPracticeTemplateTitleAndTieIdAndNeId(int id, String autonomousPracticeTemplateTitle, int tieId) {
+        AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = create.selectFrom(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                .where(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.eq(autonomousPracticeTemplateTitle).and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId))
+                .and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID.ne(id))).fetchOne();
+        return autonomousPracticeTemplateRecord;
+    }
+
+
 }

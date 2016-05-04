@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeTemplate;
+import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
 import com.school.cbis.vo.autonomicpractice.TemplateVo;
 import org.jooq.Record4;
 import org.jooq.Result;
@@ -58,4 +59,21 @@ public interface AutonomousPracticeTemplateService {
      * @param autonomousPracticeTemplate
      */
     void update(AutonomousPracticeTemplate autonomousPracticeTemplate);
+
+    /**
+     * 查找等于该模板名的模板
+     * @param autonomousPracticeTemplateTitle
+     * @param tieId
+     * @return
+     */
+    AutonomousPracticeTemplateRecord findByAutonomousPracticeTemplateTitleAndTieIdEq(String autonomousPracticeTemplateTitle, int tieId);
+
+    /**
+     * 更新时检验模板名
+     * @param id
+     * @param autonomousPracticeTemplateTitle
+     * @param tieId
+     * @return
+     */
+    AutonomousPracticeTemplateRecord findByAutonomousPracticeTemplateTitleAndTieIdAndNeId(int id,String autonomousPracticeTemplateTitle,int tieId);
 }

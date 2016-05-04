@@ -114,6 +114,13 @@ public class AutonomousPracticeHeadDao extends DAOImpl<AutonomousPracticeHeadRec
 	}
 
 	/**
+	 * Fetch records that have <code>is_required IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByIsRequired(Byte... values) {
+		return fetch(AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED, values);
+	}
+
+	/**
 	 * Fetch records that have <code>content IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeHead> fetchByContent(String... values) {

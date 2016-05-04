@@ -13,6 +13,7 @@ public class AutonomousPracticeHeadUpdateVo {
     private int databaseTableSelect;
     private String databaseFieldSelect;
     private Byte isShowHighlyActive;
+    private Byte isRequired;
     private int sort;
 
     public int getId() {
@@ -87,6 +88,14 @@ public class AutonomousPracticeHeadUpdateVo {
         this.isShowHighlyActive = isShowHighlyActive;
     }
 
+    public Byte getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(Byte isRequired) {
+        this.isRequired = isRequired;
+    }
+
     public int getSort() {
         return sort;
     }
@@ -107,6 +116,7 @@ public class AutonomousPracticeHeadUpdateVo {
                 ", databaseTableSelect=" + databaseTableSelect +
                 ", databaseFieldSelect='" + databaseFieldSelect + '\'' +
                 ", isShowHighlyActive=" + isShowHighlyActive +
+                ", isRequired=" + isRequired +
                 ", sort=" + sort +
                 '}';
     }
