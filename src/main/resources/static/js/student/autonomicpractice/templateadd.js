@@ -1,8 +1,6 @@
 /**
  * Created by lenovo on 2016-04-13.
  */
-
-
 /**
  * 显示到table
  * @param data
@@ -103,29 +101,6 @@ function outputToEditTable(data) {
     $(u[3]).text('数据库表字段:' + data.databaseTableField);
     $(u[4]).text('是否必填:' + (data.isRequired == 1 ? '是' : '否'));
 }
-
-
-/**
- * 选择显示哪些标题
- * @param obj
- */
-function highTitleSelect(obj, id) {
-    $.post(web_path + '/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlyShow', {
-        'id': id
-    }, function (data) {
-        if (data.state) {
-            for (var i = 0; i < $(obj).children().length; i++) {
-                if ($($(obj).children()[i]).hasClass('uk-panel-box-primary')) {
-                    $($(obj).children()[i]).removeClass('uk-panel-box-primary');
-                } else {
-                    $($(obj).children()[i]).addClass('uk-panel-box-primary');
-                }
-            }
-        }
-
-    });
-}
-
 
 var databaseTables = null;//数据库表下拉菜单数据
 var headType = null;//标题类型数据
@@ -480,7 +455,7 @@ function saveAddTitle() {
             return;
         } else {
             if (currentHeadTypeIsRadioOrCheckbox) {
-                if ($($('.selectContentInput')[0]).val().trim().length <= 0) {
+                if ($('.selectContentInput').length <=0 || $($('.selectContentInput')[0]).val().trim().length <= 0) {
                     layer.msg('请为单选或多选添加选项!');
                     return;
                 } else {
@@ -494,7 +469,7 @@ function saveAddTitle() {
                     }
                 }
             } else if (currentHeadTypeIsSwitch) {
-                if ($($('.selectContentInput')[0]).val().trim().length <= 0 || $($('.selectContentInput')[1]).val().trim().length <= 0) {
+                if ($('.selectContentInput').length <=0 || $($('.selectContentInput')[0]).val().trim().length <= 0 || $($('.selectContentInput')[1]).val().trim().length <= 0) {
                     layer.msg('请为开关添加选项!');
                     return;
                 } else {
@@ -580,6 +555,27 @@ function cancelAddTitle() {
     $('#dataTitle').empty();
     $('#dataTitle').append(addTemplate);
     initParam();
+}
+
+/**
+ * 选择显示哪些标题
+ * @param obj
+ */
+function highTitleSelect(obj, id) {
+    $.post(web_path + '/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlyShow', {
+        'id': id
+    }, function (data) {
+        if (data.state) {
+            for (var i = 0; i < $(obj).children().length; i++) {
+                if ($($(obj).children()[i]).hasClass('uk-panel-box-primary')) {
+                    $($(obj).children()[i]).removeClass('uk-panel-box-primary');
+                } else {
+                    $($(obj).children()[i]).addClass('uk-panel-box-primary');
+                }
+            }
+        }
+
+    });
 }
 
 /**
