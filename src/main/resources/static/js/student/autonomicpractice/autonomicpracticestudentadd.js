@@ -1136,8 +1136,8 @@ function outputHtml() {
                     if (headContent == null) {
                         headContent = '';
                     }
-                    if(updateContent == null){
-                        updateContent = '';
+                    if(updateContent == null || updateContent == ''){
+                        updateContent = headContent;//修复存储失败时，数据库字段内容为空
                     }
 
                     $('#studentData').append(outputFieldHtml(heads[i].typeValue, heads[i].title, heads[i].titleVariable, headContent, updateContent, heads[i].databaseTableField));
