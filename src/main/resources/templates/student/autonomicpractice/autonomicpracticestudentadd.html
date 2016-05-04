@@ -20,10 +20,6 @@
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
 
-    <!-- jsgrid css-->
-    <link rel="stylesheet" type="text/css" href="css/jsgrid.min.css" th:href="@{/css/jsgrid/jsgrid.min.css}" />
-    <link rel="stylesheet" type="text/css" href="css/jsgrid-theme.min.css" th:href="@{/css/jsgrid/jsgrid-theme.min.css}" />
-
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
     <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
@@ -78,13 +74,12 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <form class="uk-form uk-form-horizontal" th:if="${isStudent}" id="studentData" th:action="@{/student/autonomicpractice/addAutonomousPracticeContent}">
+            <form class="uk-form uk-form-horizontal" id="studentData" th:action="@{/student/autonomicpractice/addAutonomousPracticeContent}">
 
             </form>
-            <div class="uk-text-center uk-margin" th:if="${isStudent}" >
+            <div class="uk-text-center uk-margin" >
                 <button class="uk-button uk-button-large uk-button-primary" type="button" onclick="studentSave();" >保存</button>
             </div>
-            <div id="jsGrid" th:if="${!isStudent}" ></div>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -97,30 +92,15 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
-    var heads = /*[[${heads}]]*/ null;
-    var isStudent = /*[[${isStudent}]]*/ false;
-    var currentAuthorities = /*[[${currentAuthorities}]]*/ null;
-    var studentInfo =  /*[[${studentInfo}]]*/ null;
-    var isUpdate = /*[[${isUpdate}]]*/ false;
-    var myContents = /*[[${myContents}]]*/ null;
-    var templateId = /*[[${templateId}]]*/ 0;
-    var jsGridField = /*[[${jsGridField}]]*/ null;
+    var heads = /*[[${heads}]]*/ null; //对应该模板下的标题信息
+    var currentAuthorities = /*[[${currentAuthorities}]]*/ null; //当前用户的权限
+    var studentInfo =  /*[[${studentInfo}]]*/ null; //当前用户的个人信息
+    var isUpdate = /*[[${isUpdate}]]*/ false; //是否处于更新状态
+    var myContents = /*[[${autonomousPracticeContents}]]*/ null; //若处于更新状态，该字段则是用户曾经填写过的内容
+    var templateId = /*[[${templateId}]]*/ 0; //模板id
     /*]]>*/
 </script>
-
-<!-- jsgrid js-->
-<script src="js/cbis/db/student/autonomicpracticeadddb.js" th:src="@{/js/student/db/autonomicpractice/autonomicpracticeadddb.js}" ></script>
-<script src="js/jsgrid.core.js" th:src="@{/js/plugin/jsgrid/jsgrid.core.js}" ></script>
-<script src="js/jsgrid.load-indicator.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-indicator.js}" ></script>
-<script src="js/jsgrid.load-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-strategies.js}" ></script>
-<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.sort-strategies.js}" ></script>
-<script src="js/jsgrid.field.js" th:src="@{/js/plugin/jsgrid/jsgrid.field.js}" ></script>
-<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.text.js}" ></script>
-<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.number.js}" ></script>
-<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.select.js}"></script>
-<script src="js/fields/jsgrid.field.checkbox.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.checkbox.js}"></script>
-<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.control.js}" ></script>
-<script th:src="@{/js/student/autonomicpractice/autonomicpracticeadd.js}"
-        src="js/student/autonomicpractice/autonomicpracticeadd.js"></script>
+<script th:src="@{/js/student/autonomicpractice/autonomicpracticestudentadd.js}"
+        src="js/student/autonomicpractice/autonomicpracticestudentadd.js"></script>
 </body>
 </html>

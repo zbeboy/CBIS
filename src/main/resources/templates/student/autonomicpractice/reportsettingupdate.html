@@ -111,7 +111,8 @@
                         <select id="autonomousPracticeTemplateId" name="autonomousPracticeTemplateId" data-rule="required;checked;" data-tip="模板"
                                 data-msg-required="请选择模板" >
                             <option value="" >请选择</option>
-                            <option th:unless="${#lists.isEmpty(autonomousPracticeTemplate)}" th:each="apt:${autonomousPracticeTemplate}" th:value="${apt.id}" th:selected="${apt.id==autonomousPracticeInfo.autonomousPracticeTemplateId}?'selected':''" th:text="${apt.autonomousPracticeTemplateTitle}" ></option>
+                            <option selected="selected" th:value="${autonomousPracticeTemplateSelected.value}" th:text="${autonomousPracticeTemplateSelected.text}"></option>
+                            <option th:unless="${#lists.isEmpty(autonomousPracticeTemplate)}" th:each="apt:${autonomousPracticeTemplate}" th:value="${apt.id}"  th:text="${apt.autonomousPracticeTemplateTitle}" ></option>
                         </select>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ public class AutonomousPracticeHeadAddVo {
     private String content;
     private Byte isDatabase;
     private int sort;
+    private Byte isRequired;
 
     public int getId() {
         return id;
@@ -113,6 +114,14 @@ public class AutonomousPracticeHeadAddVo {
         this.sort = sort;
     }
 
+    public Byte getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(Byte isRequired) {
+        this.isRequired = isRequired;
+    }
+
     @Override
     public String toString() {
         return "AutonomousPracticeHeadAddVo{" +
@@ -128,6 +137,7 @@ public class AutonomousPracticeHeadAddVo {
                 ", content='" + content + '\'' +
                 ", isDatabase=" + isDatabase +
                 ", sort=" + sort +
+                ", isRequired=" + isRequired +
                 '}';
     }
 }

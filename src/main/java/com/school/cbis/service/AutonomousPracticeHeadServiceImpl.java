@@ -77,19 +77,20 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
     }
 
     @Override
-    public Result<Record12<Integer, String, String, String,String, String, String, String, Byte, String, Byte, Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
-        Result<Record12<Integer, String, String,String, String, String, String, String, Byte, String, Byte, Integer>> record12s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID,Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
+    public Result<Record13<Integer, String, String, String,String, String, String, String, Byte, String, Byte, Integer,Byte>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
+        Result<Record13<Integer, String, String,String, String, String, String, String, Byte, String, Byte, Integer,Byte>> record13s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID,Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE,Tables.HEAD_TYPE.TYPE_VALUE,Tables.HEAD_TYPE.TYPE_NAME,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE,Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY,Tables.AUTONOMOUS_PRACTICE_HEAD.IS_SHOW_HIGHLY_ACTIVE,
-                Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT,Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE,Tables.AUTONOMOUS_PRACTICE_HEAD.SORT)
+                Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT,Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE,Tables.AUTONOMOUS_PRACTICE_HEAD.SORT,
+                Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED)
                 .from(Tables.AUTONOMOUS_PRACTICE_HEAD)
                 .join(Tables.HEAD_TYPE)
                 .on(Tables.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_ID.eq(Tables.HEAD_TYPE.ID))
                 .where(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(autonomousPracticeTemplateId))
                 .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
                 .fetch();
-        return record12s;
+        return record13s;
     }
 
     @Override

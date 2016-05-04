@@ -27,12 +27,12 @@ $(function () {
         controller: db,
         fields: [
             {name: "id", title: "id", type: "number", visible: false},
-            {name: "autonomousPracticeTitle", title: "标题", type: "text", width: 80},
-            {name: "createTime", title: "创建时间", type: "text", width: 80},
-            {name: "gradeYear", title: "可填报年级", type: "text", width: 80},
-            {name: "startTime", title: "开始填报时间", type: "text",width: 80},
-            {name: "endTime", title: "结束填报时间", type: "text",width: 80},
-            {name: "username", title: "创建者", type: "text",width: 80},
+            {name: "autonomousPracticeTitle", title: "标题", type: "text", width: 40},
+            {name: "createTime", title: "创建时间", type: "text", width: 50},
+            {name: "gradeYear", title: "可填报年级", type: "text", width: 50},
+            {name: "startTime", title: "开始时间", type: "text",width: 50},
+            {name: "endTime", title: "结束时间", type: "text",width: 50},
+            {name: "username", title: "创建者", type: "text",width: 40},
             {
                 type: "control",
                 modeSwitchButton: false,

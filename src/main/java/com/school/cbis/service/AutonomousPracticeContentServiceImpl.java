@@ -53,7 +53,7 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
 
     @Override
     public Result<Record4<Integer, String, Integer, Integer>> findByAutonomousPracticeTemplateIdAndStudentId(int autonomousPracticeTemplateId, int studentId) {
-        Result<Record4<Integer, String, Integer, Integer>> record4s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT,
+        Result<Record4<Integer, String, Integer, Integer>> record4s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT,
                 Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_HEAD)
                 .join(Tables.AUTONOMOUS_PRACTICE_CONTENT)
@@ -110,9 +110,9 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                     AutonomousPracticeHeadRecord autonomousPracticeHeadRecord =
                             autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdAndTitleVariable(autonomousPracticeTemplateId, m.getKey());
                     if (conditionCount > 0) {
-                        b = b.or(Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT.le(m.getValue()[0]));
+                        b = b.or(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le(m.getValue()[0]));
                     } else {
-                        b = Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT.le(m.getValue()[0]);
+                        b = Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le(m.getValue()[0]);
                     }
                     headIds.add(autonomousPracticeHeadRecord.getId());
                     conditionCount++;
@@ -167,9 +167,9 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                     AutonomousPracticeHeadRecord autonomousPracticeHeadRecord =
                             autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdAndTitleVariable(autonomousPracticeTemplateId, m.getKey());
                     if (conditionCount > 0) {
-                        b = b.or(Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT.le(m.getValue()[0]));
+                        b = b.or(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le(m.getValue()[0]));
                     } else {
-                        b = Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT.le(m.getValue()[0]);
+                        b = Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le(m.getValue()[0]);
                     }
                     headIds.add(autonomousPracticeHeadRecord.getId());
                     conditionCount++;
@@ -198,7 +198,7 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
 
     @Override
     public Result<Record3<String, String, String>> findByAutonomousPracticeTemplateIdAndStudentIdWithAuthority(int autonomousPracticeTemplateId, int studentId) {
-        Result<Record3<String, String, String>> record3s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.COTENT,
+        Result<Record3<String, String, String>> record3s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT,
                  Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY)
                 .from(Tables.AUTONOMOUS_PRACTICE_HEAD)
@@ -209,5 +209,10 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                 .where(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(autonomousPracticeTemplateId).and(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(studentId)))
                 .fetch();
         return record3s;
+    }
+
+    @Override
+    public void update(AutonomousPracticeContent autonomousPracticeContent) {
+        autonomousPracticeContentDao.update(autonomousPracticeContent);
     }
 }

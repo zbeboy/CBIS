@@ -64,4 +64,10 @@ public interface AutonomousPracticeContentService {
      * @return
      */
     Result<Record3<String, String, String>> findByAutonomousPracticeTemplateIdAndStudentIdWithAuthority(int autonomousPracticeTemplateId, int studentId);
+
+    /**
+     * 根据id更新
+     * @param autonomousPracticeContent
+     */
+    void update(AutonomousPracticeContent autonomousPracticeContent);
 }

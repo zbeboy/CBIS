@@ -17,10 +17,11 @@ public class SelectData {
 
     }
 
-    public SelectData(int id, String value, String text) {
+    public SelectData(int id, String value, String text, boolean selected) {
         this.id = id;
         this.value = value;
         this.text = text;
+        this.selected = selected;
     }
 
     public int getId() {

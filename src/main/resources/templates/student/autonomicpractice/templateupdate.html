@@ -71,7 +71,7 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <input type="hidden" id="templateId" name="templateId" th:value="${templateId}" />
+            <input type="hidden" id="templateId" name="templateId" th:value="${autonomousPracticeTemplate.id}" />
             <form class="uk-form uk-form-horizontal" id="templateInfo">
                 <fieldset>
                     <legend>模板信息</legend>
@@ -216,8 +216,6 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
-    var headType = /*[[${headType}]]*/ null;
-    var tableFileds = /*[[${tableFileds}]]*/ null;
     /*]]>*/
 </script>
 

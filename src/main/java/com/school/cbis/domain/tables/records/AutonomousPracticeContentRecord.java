@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<AutonomousPracticeContentRecord> implements Record4<Integer, String, Integer, Integer> {
 
-	private static final long serialVersionUID = -1962921182;
+	private static final long serialVersionUID = 361167134;
 
 	/**
 	 * Setter for <code>cbis.autonomous_practice_content.id</code>.
@@ -48,17 +48,17 @@ public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<Autonom
 	}
 
 	/**
-	 * Setter for <code>cbis.autonomous_practice_content.cotent</code>.
+	 * Setter for <code>cbis.autonomous_practice_content.content</code>.
 	 */
-	public void setCotent(String value) {
+	public void setContent(String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>cbis.autonomous_practice_content.cotent</code>.
+	 * Getter for <code>cbis.autonomous_practice_content.content</code>.
 	 */
 	@Size(max = 500)
-	public String getCotent() {
+	public String getContent() {
 		return (String) getValue(1);
 	}
 
@@ -137,7 +137,7 @@ public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<Autonom
 	 */
 	@Override
 	public Field<String> field2() {
-		return AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.COTENT;
+		return AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.CONTENT;
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<Autonom
 	 */
 	@Override
 	public String value2() {
-		return getCotent();
+		return getContent();
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<Autonom
 	 */
 	@Override
 	public AutonomousPracticeContentRecord value2(String value) {
-		setCotent(value);
+		setContent(value);
 		return this;
 	}
 
@@ -250,11 +250,11 @@ public class AutonomousPracticeContentRecord extends UpdatableRecordImpl<Autonom
 	/**
 	 * Create a detached, initialised AutonomousPracticeContentRecord
 	 */
-	public AutonomousPracticeContentRecord(Integer id, String cotent, Integer autonomousPracticeHeadId, Integer studentId) {
+	public AutonomousPracticeContentRecord(Integer id, String content, Integer autonomousPracticeHeadId, Integer studentId) {
 		super(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT);
 
 		setValue(0, id);
-		setValue(1, cotent);
+		setValue(1, content);
 		setValue(2, autonomousPracticeHeadId);
 		setValue(3, studentId);
 	}

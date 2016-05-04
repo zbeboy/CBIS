@@ -4,6 +4,7 @@ import com.school.cbis.domain.tables.pojos.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.records.AutonomousPracticeHeadRecord;
 import org.jooq.Record11;
 import org.jooq.Record12;
+import org.jooq.Record13;
 import org.jooq.Result;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public interface AutonomousPracticeHeadService {
      * @param autonomousPracticeTemplateId
      * @return
      */
-    Result<Record12<Integer,String,String,String,String,String,String,String,Byte,String,Byte,Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId);
+    Result<Record13<Integer, String, String, String,String, String, String, String, Byte, String, Byte, Integer,Byte>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId);
 
     /**
      * 通过模板id和变量名查询

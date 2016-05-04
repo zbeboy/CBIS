@@ -44,7 +44,7 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
     }
 
     @Override
-    public Result<Record4<Integer, String, Timestamp, String>> findAllAndPage(TemplateVo templateVo,int tieId) {
+    public Result<Record4<Integer, String, Timestamp, String>> findAllAndPage(TemplateVo templateVo, int tieId) {
         Condition a = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId);
 
         SortField<Timestamp> b = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.desc();
@@ -64,15 +64,15 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
         }
 
         SelectConditionStep<Record4<Integer, String, Timestamp, String>> e =
-        create.select(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID,Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
-                Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME,Tables.USERS.USERNAME)
-                .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
-                .join(Tables.USERS)
-                .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
-                .where(a);
-
+                create.select(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID, Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
+                        Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME, Tables.USERS.USERNAME)
+                        .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
+                        .join(Tables.USERS)
+                        .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
+                        .where(a);
+        log.debug(" templateVo : {}", templateVo);
         if (StringUtils.hasLength(templateVo.getSortField())) {
-            if (templateVo.getSortField().equals("create_time")) {
+            if (templateVo.getSortField().equals("createTime")) {
                 if (templateVo.getSortOrder().equals("desc")) {
                     b = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.desc();
                 } else {
@@ -92,10 +92,10 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
                 }
             }
 
-            if (!StringUtils.isEmpty(b)) {
-                e.orderBy(b);
-            } else {
+            if (!StringUtils.isEmpty(c)) {
                 e.orderBy(c);
+            } else {
+                e.orderBy(b);
             }
         } else {
             e.orderBy(b);
@@ -135,9 +135,9 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
     @Override
     public int save(AutonomousPracticeTemplate autonomousPracticeTemplate) {
         AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = create.insertInto(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
-                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle())
-                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID,autonomousPracticeTemplate.getUsersId())
-                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID,autonomousPracticeTemplate.getTieId())
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE, autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle())
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID, autonomousPracticeTemplate.getUsersId())
+                .set(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID, autonomousPracticeTemplate.getTieId())
                 .returning(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID)
                 .fetchOne();
         return autonomousPracticeTemplateRecord.getId();
@@ -165,7 +165,7 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
     public AutonomousPracticeTemplateRecord findByAutonomousPracticeTemplateTitleAndTieIdAndNeId(int id, String autonomousPracticeTemplateTitle, int tieId) {
         AutonomousPracticeTemplateRecord autonomousPracticeTemplateRecord = create.selectFrom(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
                 .where(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.eq(autonomousPracticeTemplateTitle).and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.TIE_ID.eq(tieId))
-                .and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID.ne(id))).fetchOne();
+                        .and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID.ne(id))).fetchOne();
         return autonomousPracticeTemplateRecord;
     }
 

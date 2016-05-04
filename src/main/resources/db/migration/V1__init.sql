@@ -436,7 +436,7 @@ create table autonomous_practice_head(
 
 create table autonomous_practice_content(
   id int not null primary key auto_increment,
-  cotent varchar(500),
+  content varchar(500),
   autonomous_practice_head_id int not null,
   student_id int not null,
   foreign key(autonomous_practice_head_id) references autonomous_practice_head(id),

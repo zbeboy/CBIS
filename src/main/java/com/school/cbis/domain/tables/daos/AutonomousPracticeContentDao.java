@@ -65,10 +65,10 @@ public class AutonomousPracticeContentDao extends DAOImpl<AutonomousPracticeCont
 	}
 
 	/**
-	 * Fetch records that have <code>cotent IN (values)</code>
+	 * Fetch records that have <code>content IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByCotent(String... values) {
-		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.COTENT, values);
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByContent(String... values) {
+		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.CONTENT, values);
 	}
 
 	/**
