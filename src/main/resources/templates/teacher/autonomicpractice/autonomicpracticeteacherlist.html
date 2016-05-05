@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>自主实习</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/datepicker.js" th:src="@{/js/plugin/components/datepicker.js}"></script>
+    <script src="js/components/form-select.js" th:src="@{/js/plugin/components/form-select.js}"></script>
+    <script src="js/components/autocomplete.js" th:src="@{/js/plugin/components/autocomplete.js}"></script>
+    <script src="js/components/timepicker.js" th:src="@{/js/plugin/components/timepicker.js}"></script>
+    <script src="../src/js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#navautonomicpractice').addClass('uk-active');
+            $('#offcanvasautonomicpractice').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>毕业实习</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::practicenav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <form class="uk-form uk-margin">
+                <div class=" uk-text-right">
+                    <select class="uk-margin-small-top">
+                        <option>请选择标题</option>
+                        <option>Option 01</option>
+                        <option>Option 02</option>
+                    </select>
+                    <input type="text" placeholder="内容" id="content"
+                           name="content" class="uk-margin-small-top"/>
+                    <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
+                </div>
+            </form>
+            <div id="tableData">
+
+
+                <div class="uk-panel uk-panel-divider">
+                    <form class="uk-form">
+                        <ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4">
+                            <li>
+                                Text input
+                            </li>
+                            <li>
+                                <input type="text" id="form-h-it" placeholder="Text input"/>
+                            </li>
+                            <li>
+                                Password input
+                            </li>
+                            <li>
+                                <input type="password" id="form-h-ip" placeholder="Password input"/>
+                            </li>
+                            <li>
+                                Select field
+                            </li>
+                            <li>
+                                <select id="form-h-s">
+                                    <option>Option 01</option>
+                                    <option>Option 02</option>
+                                </select>
+                            </li>
+                            <li>
+                                Textarea
+                            </li>
+                            <li>
+                                <textarea id="form-h-t" cols="30" rows="5" placeholder="Textarea text"></textarea>
+                            </li>
+                            <li>
+                                Radio input
+                            </li>
+                            <li>
+                                <input type="radio" id="form-h-r" name="radio"/> <label for="form-h-r">Radio
+                                input</label><br/>
+                                <input type="radio" id="form-h-r1" name="radio"/> <label for="form-h-r1">1</label>
+                                <label><input type="radio" name="radio"/> 2</label>
+                                <label><input type="radio" name="radio"/> 3</label>
+                            </li>
+                            <li>
+                                Checkbox input
+                            </li>
+                            <li>
+                                <input type="checkbox" id="form-h-c"/> <label for="form-h-c">Checkbox
+                                input</label><br/>
+                                <input type="checkbox" id="form-h-c1"/> <label for="form-h-c1">1</label>
+                                <label><input type="checkbox"/> 2</label>
+                                <label><input type="checkbox"/> 3</label>
+                            </li>
+                            <li>
+                                Mixed controls
+                            </li>
+                            <li>
+                                <input type="checkbox" id="form-h-mix4"/> <label for="form-h-mix4">Checkbox
+                                input</label>
+                                <input type="number" id="form-h-mix5" min="0" max="10" value="5"
+                                       class="uk-form-width-mini uk-form-small"/> <label for="form-h-mix5">Number
+                                input</label>
+                                <select id="form-h-mix6" class="uk-form-small">
+                                    <option selected="selected">Option 01</option>
+                                    <option>Option 02</option>
+                                </select>
+                                <label for="form-h-mix6">Select field</label>
+                            </li>
+                        </ul>
+                        <div class="uk-text-center uk-margin-top">
+                            <button type="button" class="uk-button uk-button-primary">保存</button>
+                            <span class="uk-float-right"><a href="#">查看详情</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <ul class="uk-pagination" data-uk-pagination="{items:100, itemsOnPage:5,edges:2}"></ul>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
+    var autonomousPracticeInfoId = /*[[${autonomousPracticeInfoId}]]*/ 0; //此次自主实习Id
+    /*]]>*/
+</script>
+<script th:src="@{/js/teacher/autonomicpractice/autonomicpracticeteacherlist.js}"
+        src="js/teacher/autonomicpractice/autonomicpracticeteacherlist.js"></script>
+</body>
+</html>

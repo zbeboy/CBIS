@@ -84,4 +84,11 @@ public class AutonomousPracticeContentDao extends DAOImpl<AutonomousPracticeCont
 	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByStudentId(Integer... values) {
 		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID, values);
 	}
+
+	/**
+	 * Fetch records that have <code>autonomous_practice_info_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.AutonomousPracticeContent> fetchByAutonomousPracticeInfoId(Integer... values) {
+		return fetch(AutonomousPracticeContent.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID, values);
+	}
 }

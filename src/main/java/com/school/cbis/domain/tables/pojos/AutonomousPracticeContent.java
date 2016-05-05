@@ -24,12 +24,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AutonomousPracticeContent implements Serializable {
 
-	private static final long serialVersionUID = 2087547425;
+	private static final long serialVersionUID = -1709689745;
 
 	private Integer id;
 	private String  content;
 	private Integer autonomousPracticeHeadId;
 	private Integer studentId;
+	private Integer autonomousPracticeInfoId;
 
 	public AutonomousPracticeContent() {}
 
@@ -38,18 +39,21 @@ public class AutonomousPracticeContent implements Serializable {
 		this.content = value.content;
 		this.autonomousPracticeHeadId = value.autonomousPracticeHeadId;
 		this.studentId = value.studentId;
+		this.autonomousPracticeInfoId = value.autonomousPracticeInfoId;
 	}
 
 	public AutonomousPracticeContent(
 		Integer id,
 		String  content,
 		Integer autonomousPracticeHeadId,
-		Integer studentId
+		Integer studentId,
+		Integer autonomousPracticeInfoId
 	) {
 		this.id = id;
 		this.content = content;
 		this.autonomousPracticeHeadId = autonomousPracticeHeadId;
 		this.studentId = studentId;
+		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
 	}
 
 	@NotNull
@@ -88,6 +92,15 @@ public class AutonomousPracticeContent implements Serializable {
 		this.studentId = studentId;
 	}
 
+	@NotNull
+	public Integer getAutonomousPracticeInfoId() {
+		return this.autonomousPracticeInfoId;
+	}
+
+	public void setAutonomousPracticeInfoId(Integer autonomousPracticeInfoId) {
+		this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("AutonomousPracticeContent (");
@@ -96,6 +109,7 @@ public class AutonomousPracticeContent implements Serializable {
 		sb.append(", ").append(content);
 		sb.append(", ").append(autonomousPracticeHeadId);
 		sb.append(", ").append(studentId);
+		sb.append(", ").append(autonomousPracticeInfoId);
 
 		sb.append(")");
 		return sb.toString();

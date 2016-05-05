@@ -439,8 +439,10 @@ create table autonomous_practice_content(
   content varchar(500),
   autonomous_practice_head_id int not null,
   student_id int not null,
+  autonomous_practice_info_id int not null,
   foreign key(autonomous_practice_head_id) references autonomous_practice_head(id),
-  foreign key(student_id) references student(id)
+  foreign key(student_id) references student(id),
+  foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
 );
 
 insert into user_type(name) values('学生');

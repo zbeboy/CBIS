@@ -1116,7 +1116,7 @@ function useTitle(headsAuthority) {
  */
 function outputHtml() {
     $('#studentData').empty();
-    $('#studentData').append($('<input id="templateId" type="hidden" name="templateId" />').val(templateId))
+    $('#studentData').append($('<input id="autonomousPracticeInfoId" type="hidden" name="autonomousPracticeInfoId" />').val(autonomousPracticeInfoId))
     $('#studentData').append($('<input id="studentId" type="hidden" name="studentId" />').val(studentInfo.id))
     if (heads != null) {
         for (var i = 0; i < heads.length; i++) {
