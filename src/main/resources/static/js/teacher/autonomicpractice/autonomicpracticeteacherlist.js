@@ -5,6 +5,7 @@
 var autonomicPracticeTeacherVos = null;
 var studentIds = null;
 var currentAuthorities = null;
+var searchHeads = null;
 
 function outputHtml() {
     $('#tableData').empty();
@@ -80,6 +81,7 @@ function action() {
             autonomicPracticeTeacherVos = data.result;
             studentIds = data.single.studentIds;
             currentAuthorities = data.single.currentAuthorities;
+            searchHeads = data.single.searchHeads;
             outputHtml();
         }
     }, 'json');

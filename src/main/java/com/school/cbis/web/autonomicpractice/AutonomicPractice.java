@@ -882,6 +882,8 @@ public class AutonomicPractice {
         //查询对应该自主实习下的模板 要显示在高效工作区的标题
         List<AutonomicPracticeTeacherVo> autonomicPracticeTeacherVos = new ArrayList<>();
         List<Integer> studentIds = new ArrayList<>();
+        int count = 0;
+        List<SelectData> selectDatas = new ArrayList<>();
         Byte b = 1;
         for(Record r:record1s){//分页要查询的学生
             //该学生对应的所有标题
@@ -902,8 +904,16 @@ public class AutonomicPractice {
                 autonomicPracticeTeacherVo.setIsDatabase(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE));
                 autonomicPracticeTeacherVo.setIsRequired(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED));
                 autonomicPracticeTeacherVos.add(autonomicPracticeTeacherVo);
-            }
 
+                if(count == 0){
+                    SelectData selectData = new SelectData();
+                    selectData.setValue(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID)+"");
+                    selectData.setText(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
+                    selectDatas.add(selectData);
+                }
+
+            }
+            count ++;
             studentIds.add(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
         }
         Map<String,Object> map = new HashMap<>();
@@ -915,6 +925,7 @@ public class AutonomicPractice {
             authoritiesList.add(authorities);
         }
         map.put("currentAuthorities", authoritiesList);
+        map.put("searchHeads",selectDatas);
         return new AjaxData<AutonomicPracticeTeacherVo>().success().listData(autonomicPracticeTeacherVos).mapData(map);
     }
     /**
