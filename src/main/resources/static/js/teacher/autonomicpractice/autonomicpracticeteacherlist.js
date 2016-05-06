@@ -73,6 +73,8 @@ function useTitle(headsAuthority) {
 }
 
 function initSearch(){
+    $('#searchHead').empty();
+    $('#searchHead').append($('<option value="0">').text('请选择标题'));
     for(var i = 0;i<searchHeads.length;i++){
         if(searchHeads[i].value == autonomicPracticeTeacherListVo.autonomousPracticeHeadId){
             $('#searchHead').append($('<option value="'+searchHeads[i].value+'" selected="selected" >').text(searchHeads[i].text));
