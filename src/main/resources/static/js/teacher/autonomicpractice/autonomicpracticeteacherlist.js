@@ -2,10 +2,12 @@
  * Created by Administrator on 2016/5/5.
  */
 
+var csrfToken = $("meta[name='_csrf']").attr("content");
+
 var autonomicPracticeTeacherVos = null;
 var studentIds = null;
 var currentAuthorities = null;
-var searchHeads = null;
+var searchHeads =  null;
 
 function outputHtml() {
     $('#tableData').empty();
@@ -28,13 +30,16 @@ function outputHtml() {
                 }
             }
         }
+        s = s + "<li style='display: none' ><input value='"+autonomicPracticeTeacherListVo.autonomousPracticeInfoId+"' name='autonomousPracticeInfoId' /></li> ";
+        s = s + "<li style='display: none' ><input value='"+studentIds[i]+"' name='studentId' /></li> ";
+        s = s + "<li style='display: none' ><input value='"+csrfToken+"' name='_csrf' /></li> ";
         s = '<div class="uk-panel uk-panel-divider">' +
-            '<form class="uk-form">' +
+            '<form class="uk-form" action="'+web_path+'/teacher/autonomicpractice/addAutonomicPracticeTeacherList" method="post" >' +
             '<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4">' +
             s +
             '</ul>' +
             ' <div class="uk-text-center uk-margin-top">' +
-            '<button type="button" class="uk-button uk-button-primary">保存</button>' +
+            '<button type="submit" class="uk-button uk-button-primary">保存</button>' +
             '<span class="uk-float-right"><a href="#">查看详情</a></span>' +
             '</div>' +
             '</form>' +
@@ -67,25 +72,61 @@ function useTitle(headsAuthority) {
     return isRight;
 }
 
-var param = {
-    'autonomousPracticeInfoId': autonomousPracticeInfoId,
-    'pageNum': 0,
-    'pageSize': 5,
-    'autonomousPracticeHeadId': 0,
-    'content': ''
+function initSearch(){
+    for(var i = 0;i<searchHeads.length;i++){
+        if(searchHeads[i].value == autonomicPracticeTeacherListVo.autonomousPracticeHeadId){
+            $('#searchHead').append($('<option value="'+searchHeads[i].value+'" selected="selected" >').text(searchHeads[i].text));
+        } else {
+            $('#searchHead').append($('<option value="'+searchHeads[i].value+'" >').text(searchHeads[i].text));
+        }
+    }
+
+    $('#searchContent').val((autonomicPracticeTeacherListVo.content==null?'':autonomicPracticeTeacherListVo.content));
+    $('#searchAutonomousPracticeInfoId').val(autonomicPracticeTeacherListVo.autonomousPracticeInfoId);
 }
 
-function action() {
-    $.post(web_path + '/teacher/autonomicpractice/autonomicPracticeTeacherData', param, function (data) {
-        if (data.state) {
-            autonomicPracticeTeacherVos = data.result;
-            studentIds = data.single.studentIds;
-            currentAuthorities = data.single.currentAuthorities;
-            searchHeads = data.single.searchHeads;
-            outputHtml();
-        }
-    }, 'json');
+function createPage(){
+    var pagination = UIkit.pagination('.uk-pagination', {
+        items: param.totalData,
+        itemsOnPage: param.pageSize,
+        currentPage: param.pageNum,
+        edges:2
+    });
 }
+
+var param = {
+    'autonomousPracticeInfoId':autonomicPracticeTeacherListVo.autonomousPracticeInfoId,
+    'pageNum':autonomicPracticeTeacherListVo.pageNum,
+    'pageSize':autonomicPracticeTeacherListVo.pageSize,
+    'totalData':autonomicPracticeTeacherListVo.totalData,
+    'autonomousPracticeHeadId':autonomicPracticeTeacherListVo.autonomousPracticeHeadId,
+    'content':autonomicPracticeTeacherListVo.content
+}
+
+function action(){
+    $.post(web_path + '/teacher/autonomicpractice/autonomicPracticeTeacherData',param,function(data){
+       if(data.state){
+           autonomicPracticeTeacherVos = data.single.autonomicPracticeTeacherVos;
+           studentIds = data.single.studentIds;
+           currentAuthorities = data.single.currentAuthorities;
+           searchHeads = data.single.searchHeads;
+           param = data.single.autonomicPracticeTeacherListVo;
+           outputHtml();
+           initSearch();
+           createPage();
+       } else {
+           layer.msg(data.msg);
+       }
+    },'json');
+}
+
+/**
+ * 点击分页
+ */
+$('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
+    param.pageNum = pageIndex + 1;
+    action();
+});
 
 $(document).ready(function () {
     action();

@@ -44,7 +44,8 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
         Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT,
                 Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
-                .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId).and(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(studentId))).fetch();
+                .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId).and(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(studentId)))
+                .fetch();
         return record5s;
     }
 
@@ -77,7 +78,7 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
         }
 
         if(StringUtils.hasLength(autonomicPracticeTeacherListVo.getContent())){
-            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le("%"+autonomicPracticeTeacherListVo.getContent()+"%"));
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.like("%"+autonomicPracticeTeacherListVo.getContent()+"%"));
         }
 
         if (pageNum <= 0) {
@@ -85,7 +86,10 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
         }
         Result<Record1<Integer>> record1s = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.AUTONOMOUS_PRACTICE_HEAD)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID.eq(Tables.AUTONOMOUS_PRACTICE_HEAD.ID))
                 .where(a)
+                .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record1s;
@@ -100,13 +104,13 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
         }
 
         if(StringUtils.hasLength(autonomicPracticeTeacherListVo.getContent())){
-            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.le("%"+autonomicPracticeTeacherListVo.getContent()+"%"));
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.like("%"+autonomicPracticeTeacherListVo.getContent()+"%"));
         }
-        Record1<Integer> count = create.selectCount()
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
                 .where(a)
-                .fetchOne();
-        return count.value1();
+                .fetch();
+        return count.size();
     }
 
     @Override

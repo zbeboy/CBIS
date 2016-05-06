@@ -21,7 +21,6 @@ public interface AutonomousPracticeContentService {
 
     /**
      * 通过自主实习信息表主键与学生id查询
-     *
      * @param autonomousPracticeInfoId
      * @param studentId
      * @return
@@ -45,7 +44,6 @@ public interface AutonomousPracticeContentService {
 
     /**
      * distinct studentid查询并分页所有数据 并可根据headId 与content模糊搜索
-     *
      * @param autonomicPracticeTeacherListVo
      * @return
      */
@@ -53,7 +51,6 @@ public interface AutonomousPracticeContentService {
 
     /**
      * distinct studentid查询并分页所有数据总数
-     *
      * @param autonomicPracticeTeacherListVo
      * @return
      */
@@ -61,9 +58,9 @@ public interface AutonomousPracticeContentService {
 
     /**
      * 查询对应该自主实习下该学生的 标题以及对应内容信息
-     *
      * @param autonomousPracticeInfoId
      * @param studentId
+     * @param isShowHighlyActive
      * @return
      */
     Result<Record> findByAutonomousPracticeInfoIdAndStudentIdAndIsShowHighlyActive(int autonomousPracticeInfoId, int studentId, Byte isShowHighlyActive);

@@ -2,10 +2,7 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.records.AutonomousPracticeHeadRecord;
-import org.jooq.Record11;
-import org.jooq.Record12;
-import org.jooq.Record13;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.util.List;
 
@@ -66,4 +63,11 @@ public interface AutonomousPracticeHeadService {
      * @param id
      */
     void deleteById(int id);
+
+    /**
+     * 根据标题信息表主键查询
+     * @param autonomousPracticeInfoId
+     * @return headId title
+     */
+    Result<Record2<Integer,String>> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId);
 }

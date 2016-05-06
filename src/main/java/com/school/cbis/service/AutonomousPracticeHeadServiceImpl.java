@@ -106,4 +106,16 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
     public void deleteById(int id) {
         autonomousPracticeHeadDao.deleteById(id);
     }
+
+    @Override
+    public Result<Record2<Integer, String>> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId) {
+        Result<Record2<Integer, String>> record2s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID,Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE)
+                .from(Tables.AUTONOMOUS_PRACTICE_INFO)
+                .join(Tables.AUTONOMOUS_PRACTICE_HEAD)
+                .on(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID))
+                .where(Tables.AUTONOMOUS_PRACTICE_INFO.ID.eq(autonomousPracticeInfoId))
+                .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
+                .fetch();
+        return record2s;
+    }
 }
