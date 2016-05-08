@@ -2,8 +2,6 @@
  * Created by Administrator on 2016/5/5.
  */
 
-var csrfToken = $("meta[name='_csrf']").attr("content");
-
 var autonomicPracticeTeacherVos = null;
 var studentIds = null;
 var currentAuthorities = null;
@@ -18,13 +16,13 @@ function outputHtml() {
                 s = s + '<li>' + autonomicPracticeTeacherVos[j].title + "</li>";
                 if (autonomicPracticeTeacherVos[j].isDatabase == 1) {//是数据库字段
                     var headContent = autonomicPracticeTeacherVos[j].headContent;
-                    var updateContent = autonomicPracticeTeacherVos[j].content;
+                    var updateContent = autonomicPracticeTeacherVos[j].content==null?'':autonomicPracticeTeacherVos[j].content;
 
                     var temp = outputFieldHtml(autonomicPracticeTeacherVos[j].typeValue, autonomicPracticeTeacherVos[j].title, autonomicPracticeTeacherVos[j].titleVariable, headContent, updateContent, autonomicPracticeTeacherVos[j].databaseTableField);
                     s = s + '<li>' + temp + '</li>';
                 } else {
                     var headContent = autonomicPracticeTeacherVos[j].headContent;
-                    var updateContent = autonomicPracticeTeacherVos[j].content;
+                    var updateContent = autonomicPracticeTeacherVos[j].content==null?'':autonomicPracticeTeacherVos[j].content;
                     var temp = outputFieldHtml(autonomicPracticeTeacherVos[j].typeValue, autonomicPracticeTeacherVos[j].title, autonomicPracticeTeacherVos[j].titleVariable, headContent, updateContent, '');
                     s = s + '<li>' + temp + '</li>';
                 }
@@ -32,15 +30,14 @@ function outputHtml() {
         }
         s = s + "<li style='display: none' ><input value='"+autonomicPracticeTeacherListVo.autonomousPracticeInfoId+"' name='autonomousPracticeInfoId' /></li> ";
         s = s + "<li style='display: none' ><input value='"+studentIds[i]+"' name='studentId' /></li> ";
-        s = s + "<li style='display: none' ><input value='"+csrfToken+"' name='_csrf' /></li> ";
         s = '<div class="uk-panel uk-panel-divider">' +
-            '<form class="uk-form" action="'+web_path+'/teacher/autonomicpractice/addAutonomicPracticeTeacherList" method="post" >' +
+            '<form class="uk-form" method="post" >' +
             '<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4">' +
             s +
             '</ul>' +
             ' <div class="uk-text-center uk-margin-top">' +
-            '<button type="submit" class="uk-button uk-button-primary">保存</button>' +
-            '<span class="uk-float-right"><a href="#">查看详情</a></span>' +
+            '<button type="button" onclick="saveStudent(this);" class="uk-button uk-button-primary">保存</button>' +
+            '<span class="uk-float-right"><a href="'+web_path+'/teacher/autonomicpractice/autonomicPracticeTeacherSingle?autonomousPracticeInfoId='+autonomicPracticeTeacherListVo.autonomousPracticeInfoId+'&studentId='+studentIds[i]+'">编辑详情</a></span>' +
             '</div>' +
             '</form>' +
             '</div>';
@@ -115,7 +112,9 @@ function action(){
            param = data.single.autonomicPracticeTeacherListVo;
            outputHtml();
            initSearch();
-           createPage();
+           if(autonomicPracticeTeacherVos.length>0){
+               createPage();
+           }
        } else {
            layer.msg(data.msg);
        }
@@ -133,6 +132,19 @@ $('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
 $(document).ready(function () {
     action();
 });
+
+/**
+ * 保存学生信息
+ * @param obj
+ */
+function saveStudent(obj){
+    var p = $(obj).parent().parent();
+    $.post(web_path + '/teacher/autonomicpractice/addAutonomicPracticeTeacherList',p.serialize(),
+    function(data){
+       layer.msg(data.msg);
+    },'json');
+    console.log(p.serialize());
+}
 
 
 /**
@@ -265,7 +277,7 @@ function addHeadTypeSwitch(title, title_variable, headContent, updateContent) {
  */
 function addHeadTypePassword(title, title_variable, content) {
     var HEADTYPE_PASSWORD =
-        "<input type='password' class='uk-form-width-large' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' value='" + content + "' />";
+        "<input type='password' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' value='" + content + "' />";
     return HEADTYPE_PASSWORD;
 }
 
@@ -278,7 +290,7 @@ function addHeadTypePassword(title, title_variable, content) {
  */
 function addHeadTypeDate(title, title_variable, content) {
     var HEADTYPE_DATE =
-        "<input type='text' class='uk-form-width-large' readonly='readonly' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' data-uk-datepicker='{format:\"YYYY-MM-DD\"}' />";
+        "<input type='text' readonly='readonly' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' data-uk-datepicker='{format:\"YYYY-MM-DD\"}' />";
     return HEADTYPE_DATE;
 }
 
@@ -291,7 +303,7 @@ function addHeadTypeDate(title, title_variable, content) {
  */
 function addHeadTypeTime(title, title_variable, content) {
     var HEADTYPE_TIME =
-        "<input type='text' class='uk-form-width-large' readonly='readonly' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' data-uk-timepicker='' />";
+        "<input type='text' readonly='readonly' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' data-uk-timepicker='' />";
     return HEADTYPE_TIME;
 }
 
@@ -304,7 +316,7 @@ function addHeadTypeTime(title, title_variable, content) {
  */
 function addHeadTypeEmail(title, title_variable, content) {
     var HEADTYPE_EMAIL =
-        "<input type='email' class='uk-form-width-large' value='" + content + "' pattern='^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />"
+        "<input type='email' value='" + content + "' pattern='^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />"
     return HEADTYPE_EMAIL;
 
 }
@@ -319,7 +331,7 @@ function addHeadTypeEmail(title, title_variable, content) {
 function addHeadTypeNumber(title, title_variable, content) {
 
     var HEADTYPE_NUMBER =
-        "<input type='number' class='uk-form-width-large' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='number' value='" + content + "' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_NUMBER;
 
 }
@@ -333,7 +345,7 @@ function addHeadTypeNumber(title, title_variable, content) {
  */
 function addHeadTypeMobile(title, title_variable, content) {
     var HEADTYPE_MOBILE =
-        "<input type='number' class='uk-form-width-large' value='" + content + "' pattern='^1\d{10}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='number' value='" + content + "' pattern='^1\d{10}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_MOBILE;
 
 }
@@ -348,7 +360,7 @@ function addHeadTypeMobile(title, title_variable, content) {
 function addHeadTypeTelephone(title, title_variable, content) {
 
     var HEADTYPE_TEL =
-        "<input type='text' class='uk-form-width-large' value='" + content + "' pattern='^0\d{2,3}-?\d{7,8}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='text' value='" + content + "' pattern='^0\d{2,3}-?\d{7,8}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_TEL;
 
 
@@ -364,7 +376,7 @@ function addHeadTypeTelephone(title, title_variable, content) {
 function addHeadTypePostcode(title, title_variable, content) {
 
     var HEADTYPE_POSTCODE =
-        "<input type='number' class='uk-form-width-large' value='" + content + "' pattern='^[1-9][0-9]{5}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='number' value='" + content + "' pattern='^[1-9][0-9]{5}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_POSTCODE;
 
 }
@@ -379,7 +391,7 @@ function addHeadTypePostcode(title, title_variable, content) {
 function addHeadTypeQq(title, title_variable, content) {
 
     var HEADTYPE_QQ =
-        "<input type='number' class='uk-form-width-large' value='" + content + "' pattern='^[1-9]\d{4,15}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='number' value='" + content + "' pattern='^[1-9]\d{4,15}$' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_QQ;
 }
 
@@ -392,7 +404,7 @@ function addHeadTypeQq(title, title_variable, content) {
  */
 function addHeadTypeIDCard(title, title_variable, content) {
     var HEADTYPE_ID_card =
-        "<input type='text' class='uk-form-width-large' value='" + content + "' pattern='(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
+        "<input type='text' value='" + content + "' pattern='(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' />";
     return HEADTYPE_ID_card;
 }
 
@@ -434,7 +446,7 @@ function addDatabaseStudentSex(title, title_variable, updateContent) {
 function addHeadTypeReadonlyText(title, title_variable, updateContent) {
 
     var HEADTYPE_TEXT =
-        "<input type='text' readonly='readonly' class='uk-form-width-large' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' value='" + updateContent + "' />";
+        "<input type='text' readonly='readonly' id='" + title_variable + "' name='" + title_variable + "' placeholder='" + title + "' value='" + updateContent + "' />";
     return HEADTYPE_TEXT;
 }
 

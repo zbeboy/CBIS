@@ -180,7 +180,7 @@
                     <li id="navreportingsettings" sec:authorize="hasRole('ADMIN')" ><a href="#" th:href="@{/administrator/autonomicpractice/reportsettingList }">填报设置</a> </li>
                     <li id="navautonomicpractice" sec:authorize="hasAnyRole('STU','TEA','ADMIN','MAI','SEMI')"><a href="#" th:href="@{/student/autonomicpractice/autonomicPractice }">自主实习</a> </li>
                     <li id="navtemplateedit" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/administrator/autonomicpractice/templateList }">模板编辑</a> </li>
-                    <li id="navdataanalysis" sec:authorize="hasAnyRole('ADMIN','MAI','SEMI')"><a href="#" th:href="@{/maintainer/autonomicpractice/dataAnalysis }">数据分析</a> </li>
+                    <li id="navdataanalysis" sec:authorize="hasAnyRole('ADMIN','MAI','SEMI')"><a href="#" th:href="@{/semi/autonomicpractice/dataAnalysis }">数据分析</a> </li>
                 </ul>
             </div>
         </div>
@@ -195,7 +195,7 @@
                 <li id="offcanvasreportingsettings" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/administrator/autonomicpractice/reportsettingList}">填报设置</a> </li>
                 <li id="offcanvasautonomicpractice" sec:authorize="hasAnyRole('STU','TEA','ADMIN','MAI','SEMI')"><a href="#" th:href="@{/student/autonomicpractice/autonomicPractice }">自主实习</a> </li>
                 <li id="offcanvastemplateedit" sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/administrator/autonomicpractice/templateList }">模板编辑</a> </li>
-                <li id="offcanvasdataanalysis" sec:authorize="hasAnyRole('ADMIN','MAI','SEMI')"><a href="#" th:href="@{/maintainer/autonomicpractice/dataAnalysis }">数据分析</a> </li>
+                <li id="offcanvasdataanalysis" sec:authorize="hasAnyRole('ADMIN','MAI','SEMI')"><a href="#" th:href="@{/semi/autonomicpractice/dataAnalysis }">数据分析</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

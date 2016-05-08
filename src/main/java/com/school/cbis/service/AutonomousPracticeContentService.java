@@ -1,6 +1,9 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeContent;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
 import com.school.cbis.vo.autonomicpractice.AutonomicPracticeTeacherListVo;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -54,7 +57,7 @@ public interface AutonomousPracticeContentService {
      * @param autonomicPracticeTeacherListVo
      * @return
      */
-    int findByAutonomousPracticeInfoIdDistinctStudentIdAndPageAndPageCount(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo);
+    int findByAutonomousPracticeInfoIdDistinctStudentIdAndPageCount(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo);
 
     /**
      * 查询对应该自主实习下该学生的 标题以及对应内容信息
@@ -71,4 +74,51 @@ public interface AutonomousPracticeContentService {
      * @param autonomousPracticeContent
      */
     void update(AutonomousPracticeContent autonomousPracticeContent);
+
+    /**
+     * 按照学生年级统计人数
+     * @param autonomousPracticeInfoId
+     * @param year
+     * @return
+     */
+    int findByAutonomousPracticeInfoIdDistinctStudentIdAndYearCount(int autonomousPracticeInfoId ,String year);
+
+
+    /**
+     * 按照学生年级 查询学生id
+     * @param autonomicPracticeStudentInfoInYearVo
+     * @return
+     */
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo);
+
+    /**
+     * 按照学生班级统计人数
+     * @param autonomousPracticeInfoId
+     * @param gradeId
+     * @return
+     */
+    int findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdCount(int autonomousPracticeInfoId ,int gradeId);
+
+    /**
+     * 按照学生专业统计人数
+     * @param autonomousPracticeInfoId
+     * @param majorId
+     * @return
+     */
+    int findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdCount(int autonomousPracticeInfoId ,int majorId);
+
+    /**
+     * 按照学生专业 查询学生id
+     * @param autonomicPracticeStudentInfoInMajorVo
+     * @return
+     */
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo);
+
+    /**
+     * 按照学生班级 查询学生id
+     * @param autonomicPracticeStudentInfoInGradeVo
+     * @return
+     */
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo);
+
 }

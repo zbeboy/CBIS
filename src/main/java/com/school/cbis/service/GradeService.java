@@ -3,10 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
-import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record6;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.util.List;
 
@@ -90,4 +87,28 @@ public interface GradeService {
      * @return
      */
     List<Grade> findByYear(String year);
+
+    /**
+     * 通过年级各系id查询班级
+     * @param year
+     * @param tieId
+     * @return
+     */
+    Result<Record> findByYearAndTieId(String year, int tieId);
+
+    /**
+     * distinct查询该系下，该年级所有专业
+     * @param year
+     * @param tieId
+     * @return
+     */
+    Result<Record2<Integer,String>> findByYearDistinctMajorId(String year,int tieId);
+
+    /**
+     * 根据majorId 查询所有班级
+     * @param majorId
+     * @param year
+     * @return
+     */
+    Result<Record2<Integer,String>> findByMajorIdAndYear(int majorId,String year);
 }

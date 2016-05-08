@@ -184,4 +184,35 @@ public class GradeServiceImpl implements GradeService {
         List<Grade> grades = gradeDao.fetchByYear(year);
         return grades;
     }
+
+    @Override
+    public Result<Record> findByYearAndTieId(String year, int tieId) {
+        Result<Record> records = create.select()
+                .from(Tables.GRADE)
+                .join(Tables.MAJOR)
+                .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
+                .where(Tables.GRADE.YEAR.eq(year).and(Tables.MAJOR.TIE_ID.eq(tieId)))
+                .fetch();
+        return records;
+    }
+
+    @Override
+    public Result<Record2<Integer,String >> findByYearDistinctMajorId(String year, int tieId) {
+        Result<Record2<Integer,String>> record2s = create.selectDistinct(Tables.MAJOR.ID,Tables.MAJOR.MAJOR_NAME)
+                .from(Tables.GRADE)
+                .join(Tables.MAJOR)
+                .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
+                .where(Tables.MAJOR.TIE_ID.eq(tieId).and(Tables.GRADE.YEAR.eq(year)))
+                .fetch();
+        return record2s;
+    }
+
+    @Override
+    public Result<Record2<Integer, String>> findByMajorIdAndYear(int majorId,String year) {
+        Result<Record2<Integer,String>> record2s = create.select(Tables.GRADE.ID,Tables.GRADE.GRADE_NAME)
+                .from(Tables.GRADE)
+                .where(Tables.GRADE.MAJOR_ID.eq(majorId).and(Tables.GRADE.YEAR.eq(year)))
+                .fetch();
+        return record2s;
+    }
 }

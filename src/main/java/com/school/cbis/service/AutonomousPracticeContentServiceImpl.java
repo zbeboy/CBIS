@@ -3,6 +3,9 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeContentDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeContent;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
+import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
 import com.school.cbis.vo.autonomicpractice.AutonomicPracticeTeacherListVo;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -68,6 +71,92 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
+    public int findByAutonomousPracticeInfoIdDistinctStudentIdAndYearCount(int autonomousPracticeInfoId, String year) {
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .join(Tables.GRADE)
+                .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
+                .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId)
+                .and(Tables.GRADE.YEAR.eq(year)))
+                .fetch();
+        return count.size();
+    }
+
+    @Override
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInYearVo.getId())
+                .and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()));
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .join(Tables.GRADE)
+                .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
+                .where(a)
+                .fetch();
+        return count;
+    }
+
+    @Override
+    public int findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdCount(int autonomousPracticeInfoId, int gradeId) {
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId)
+                        .and(Tables.STUDENT.GRADE_ID.eq(gradeId)))
+                .fetch();
+        return count.size();
+    }
+
+    @Override
+    public int findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdCount(int autonomousPracticeInfoId, int majorId) {
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .join(Tables.GRADE)
+                .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
+                .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId)
+                        .and(Tables.GRADE.MAJOR_ID.eq(majorId)))
+                .fetch();
+        return count.size();
+    }
+
+    @Override
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInMajorVo.getId())
+                .and(Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .join(Tables.GRADE)
+                .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
+                .where(a)
+                .fetch();
+        return count;
+    }
+
+    @Override
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo) {
+        log.debug("AutonomicPracticeStudentInfoInGradeVo : "+autonomicPracticeStudentInfoInGradeVo.getYear());
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInGradeVo.getId())
+                .and(Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
+        Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.STUDENT)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(Tables.STUDENT.ID))
+                .join(Tables.GRADE)
+                .on(Tables.STUDENT.GRADE_ID.eq(Tables.GRADE.ID))
+                .where(a)
+                .fetch();
+        return count;
+    }
+
+    @Override
     public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndPage(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo) {
         int pageNum = autonomicPracticeTeacherListVo.getPageNum();
         int pageSize = autonomicPracticeTeacherListVo.getPageSize();
@@ -89,14 +178,13 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                 .join(Tables.AUTONOMOUS_PRACTICE_HEAD)
                 .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID.eq(Tables.AUTONOMOUS_PRACTICE_HEAD.ID))
                 .where(a)
-                .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
                 .limit((pageNum - 1) * pageSize, pageSize)
                 .fetch();
         return record1s;
     }
 
     @Override
-    public int findByAutonomousPracticeInfoIdDistinctStudentIdAndPageAndPageCount(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo) {
+    public int findByAutonomousPracticeInfoIdDistinctStudentIdAndPageCount(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo) {
         Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeTeacherListVo.getAutonomousPracticeInfoId());
 
         if(autonomicPracticeTeacherListVo.getAutonomousPracticeHeadId() > 0){

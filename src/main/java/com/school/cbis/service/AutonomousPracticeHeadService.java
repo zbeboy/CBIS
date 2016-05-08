@@ -70,4 +70,12 @@ public interface AutonomousPracticeHeadService {
      * @return headId title
      */
     Result<Record2<Integer,String>> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId);
+
+    /**
+     * 查询该模板对应的高效工作区标题
+     * @param autonomousPracticeTemplateId
+     * @param isShowHighlyActive
+     * @return
+     */
+    Result<Record> findByAutonomousPracticeTemplateIdAndIsShowHighlyActive(int autonomousPracticeTemplateId,Byte isShowHighlyActive);
 }

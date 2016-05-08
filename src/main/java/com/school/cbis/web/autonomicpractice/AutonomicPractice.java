@@ -7,6 +7,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.domain.tables.records.AutonomousPracticeContentRecord;
+import com.school.cbis.domain.tables.records.AutonomousPracticeHeadRecord;
 import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
@@ -645,7 +646,7 @@ public class AutonomicPractice {
      */
     @RequestMapping("/student/autonomicpractice/autonomicPracticeData")
     @ResponseBody
-    public AjaxData<AutonomicPracticeListVo> autonomicPractice(int pageNum, int pageSize) {
+    public AjaxData<AutonomicPracticeListVo> autonomicPracticeData(int pageNum, int pageSize) {
         //获取当前用户信息
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -835,13 +836,14 @@ public class AutonomicPractice {
      * @return
      */
     @RequestMapping("/teacher/autonomicpractice/autonomicPracticeTeacherList")
-    public String autonomicPracticeTeacherList(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo,ModelMap modelMap){
+    public String autonomicPracticeTeacherList(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo, ModelMap modelMap) {
         modelMap.put("autonomicPracticeTeacherListVo", autonomicPracticeTeacherListVo);
         return "/teacher/autonomicpractice/autonomicpracticeteacherlist";
     }
 
     /**
      * 教师自主实习列表数据
+     *
      * @param autonomicPracticeTeacherListVo
      * @return
      */
@@ -856,49 +858,85 @@ public class AutonomicPractice {
         List<AutonomicPracticeTeacherVo> autonomicPracticeTeacherVos = new ArrayList<>();
         List<Integer> studentIds = new ArrayList<>();
 
-        List<SelectData> selectDatas = new ArrayList<>();//标题搜索用
-        Result<Record2<Integer,String >> record2s = autonomousPracticeHeadService.findByAutonomousPracticeInfoId(autonomicPracticeTeacherListVo.getAutonomousPracticeInfoId());
-        for(Record r:record2s){
-            SelectData selectData = new SelectData();
-            selectData.setValue(r.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID)+"");
-            selectData.setText(r.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
-            selectDatas.add(selectData);
-        }
+        //当前用户所有权限
+        List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
 
+        //isShowHighlyActive
         Byte b = 1;
+        int count = 0;
+        List<SelectData> selectDatas = new ArrayList<>();//标题搜索用
+
+        //查询出此次自主实习的所有高效工作区标题
+        Result<Record> autonomousPracticeHeadRecords = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdAndIsShowHighlyActive(autonomousPracticeInfo.getAutonomousPracticeTemplateId(), b);
+
         for (Record r : record1s) {//分页要查询的学生
+
             //该学生对应的所有标题
             Result<Record> records = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentIdAndIsShowHighlyActive(autonomousPracticeInfo.getId(), r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID), b);
-            for (Record h : records) {
-                AutonomicPracticeTeacherVo autonomicPracticeTeacherVo = new AutonomicPracticeTeacherVo();
-                autonomicPracticeTeacherVo.setAutonomousPracticeInfoId(autonomousPracticeInfo.getId());
-                autonomicPracticeTeacherVo.setStudentId(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
-                autonomicPracticeTeacherVo.setTitle(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
-                autonomicPracticeTeacherVo.setTitleVariable(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE));
-                autonomicPracticeTeacherVo.setTypeName(h.getValue(Tables.HEAD_TYPE.TYPE_NAME));
-                autonomicPracticeTeacherVo.setTypeValue(h.getValue(Tables.HEAD_TYPE.TYPE_VALUE));
-                autonomicPracticeTeacherVo.setDatabaseTable(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE));
-                autonomicPracticeTeacherVo.setDatabaseTableField(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD));
-                autonomicPracticeTeacherVo.setAuthority(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY));
-                autonomicPracticeTeacherVo.setHeadContent(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT));
-                autonomicPracticeTeacherVo.setContent(h.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT));
-                autonomicPracticeTeacherVo.setIsDatabase(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE));
-                autonomicPracticeTeacherVo.setIsRequired(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED));
-                autonomicPracticeTeacherVos.add(autonomicPracticeTeacherVo);
+
+            for (Record ah : autonomousPracticeHeadRecords) {
+                if (useTitle(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY), authoritiesRecords)) {//当前用户有权限使用
+                    boolean hasContent = false;
+                    for (Record h : records) {//该标题已经被当前学生填写过
+                        if (ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID) == h.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID)) {
+                            AutonomicPracticeTeacherVo autonomicPracticeTeacherVo = new AutonomicPracticeTeacherVo();
+                            autonomicPracticeTeacherVo.setAutonomousPracticeInfoId(autonomousPracticeInfo.getId());
+                            autonomicPracticeTeacherVo.setStudentId(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+                            autonomicPracticeTeacherVo.setTitle(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
+                            autonomicPracticeTeacherVo.setTitleVariable(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE));
+                            autonomicPracticeTeacherVo.setTypeName(h.getValue(Tables.HEAD_TYPE.TYPE_NAME));
+                            autonomicPracticeTeacherVo.setTypeValue(h.getValue(Tables.HEAD_TYPE.TYPE_VALUE));
+                            autonomicPracticeTeacherVo.setDatabaseTable(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE));
+                            autonomicPracticeTeacherVo.setDatabaseTableField(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD));
+                            autonomicPracticeTeacherVo.setAuthority(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY));
+                            autonomicPracticeTeacherVo.setHeadContent(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT));
+                            autonomicPracticeTeacherVo.setContent(h.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT));
+                            autonomicPracticeTeacherVo.setIsDatabase(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE));
+                            autonomicPracticeTeacherVo.setIsRequired(h.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED));
+                            autonomicPracticeTeacherVos.add(autonomicPracticeTeacherVo);
+                            hasContent = true;
+                            break;
+                        }
+                    }
+
+                    if (!hasContent) {//未被填写过
+                        AutonomicPracticeTeacherVo autonomicPracticeTeacherVo = new AutonomicPracticeTeacherVo();
+                        autonomicPracticeTeacherVo.setAutonomousPracticeInfoId(autonomousPracticeInfo.getId());
+                        autonomicPracticeTeacherVo.setStudentId(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+                        autonomicPracticeTeacherVo.setTitle(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
+                        autonomicPracticeTeacherVo.setTitleVariable(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE));
+                        autonomicPracticeTeacherVo.setTypeName(ah.getValue(Tables.HEAD_TYPE.TYPE_NAME));
+                        autonomicPracticeTeacherVo.setTypeValue(ah.getValue(Tables.HEAD_TYPE.TYPE_VALUE));
+                        autonomicPracticeTeacherVo.setDatabaseTable(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE));
+                        autonomicPracticeTeacherVo.setDatabaseTableField(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD));
+                        autonomicPracticeTeacherVo.setAuthority(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY));
+                        autonomicPracticeTeacherVo.setHeadContent(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT));
+                        autonomicPracticeTeacherVo.setIsDatabase(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE));
+                        autonomicPracticeTeacherVo.setIsRequired(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED));
+                        autonomicPracticeTeacherVos.add(autonomicPracticeTeacherVo);
+                    }
+                    if (count == 0) {
+                        SelectData selectData = new SelectData();
+                        selectData.setValue(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID) + "");
+                        selectData.setText(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
+                        selectDatas.add(selectData);
+                    }
+
+                }
             }
+            count++;
             studentIds.add(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
         }
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("autonomicPracticeTeacherVos", autonomicPracticeTeacherVos);
         map.put("studentIds", studentIds);
-        List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
+
         List<Authorities> authoritiesList = new ArrayList<>();
         for (AuthoritiesRecord r : authoritiesRecords) {//视图层无法解析 AuthoritiesRecord对象 ，只能转化一下了
             Authorities authorities = new Authorities(r.getUsername(), r.getAuthority());
             authoritiesList.add(authorities);
         }
-        autonomicPracticeTeacherListVo.setTotalData(autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndPageAndPageCount(autonomicPracticeTeacherListVo));
-        log.debug(" totalData : {}",autonomicPracticeTeacherListVo.getTotalData());
+        autonomicPracticeTeacherListVo.setTotalData(autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndPageCount(autonomicPracticeTeacherListVo));
         map.put("currentAuthorities", authoritiesList);
         map.put("searchHeads", selectDatas);
         map.put("autonomicPracticeTeacherListVo", autonomicPracticeTeacherListVo);
@@ -912,16 +950,371 @@ public class AutonomicPractice {
      * @return
      */
     @RequestMapping("/teacher/autonomicpractice/addAutonomicPracticeTeacherList")
-    public String addAutonomicPracticeTeacherList(HttpServletRequest request) {
+    @ResponseBody
+    public AjaxData addAutonomicPracticeTeacherList(HttpServletRequest request) {
         if (StringUtils.hasLength(request.getParameter("autonomousPracticeInfoId")) && StringUtils.hasLength(request.getParameter("studentId"))) {
             int autonomousPracticeInfoId = Integer.parseInt(request.getParameter("autonomousPracticeInfoId"));
             int studentId = Integer.parseInt(request.getParameter("studentId"));
             saveOrUpdateAutonomousPracticeContent(autonomousPracticeInfoId, studentId, request);
-            return "redirect:/teacher/autonomicpractice/autonomicPracticeTeacherList?autonomousPracticeInfoId=" + request.getParameter("autonomousPracticeInfoId");//教师以上权限自主实习界面
+            return new AjaxData().success().msg("保存成功!");
         } else {
-            return "redirect:/student/autonomicpractice/autonomicPractice";
+            return new AjaxData().fail().msg("参数异常!");
         }
 
+    }
+
+    /**
+     * 教师编辑详情
+     *
+     * @param modelMap
+     * @param id        自主实习信息表主键
+     * @param studentId 学生id
+     * @return
+     */
+    @RequestMapping("/teacher/autonomicpractice/autonomicPracticeTeacherSingle")
+    public String autonomicPracticeTeacherSingle(ModelMap modelMap, @RequestParam("autonomousPracticeInfoId") int id, @RequestParam("studentId") int studentId) {
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(id);
+
+        //当前填报学生的个人信息，用于数据库字段
+        Record student = studentService.findById(studentId);
+        AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
+        autonomicPracticeStudentInfoVo.setId(student.getValue(Tables.STUDENT.ID));
+        autonomicPracticeStudentInfoVo.setStudentNumber(student.getValue(Tables.STUDENT.STUDENT_NUMBER));
+        autonomicPracticeStudentInfoVo.setStudentName(student.getValue(Tables.STUDENT.STUDENT_NAME));
+        autonomicPracticeStudentInfoVo.setStudentPhone(student.getValue(Tables.STUDENT.STUDENT_PHONE));
+        autonomicPracticeStudentInfoVo.setStudentEmail(student.getValue(Tables.STUDENT.STUDENT_EMAIL));
+        autonomicPracticeStudentInfoVo.setStudentBirthday(student.getValue(Tables.STUDENT.STUDENT_BIRTHDAY));
+        autonomicPracticeStudentInfoVo.setStudentSex(student.getValue(Tables.STUDENT.STUDENT_SEX));
+        autonomicPracticeStudentInfoVo.setStudentIdentityCard(student.getValue(Tables.STUDENT.STUDENT_IDENTITY_CARD));
+        autonomicPracticeStudentInfoVo.setStudentAddress(student.getValue(Tables.STUDENT.STUDENT_ADDRESS));
+        autonomicPracticeStudentInfoVo.setGradeName(student.getValue(Tables.GRADE.GRADE_NAME));
+        modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
+
+        //当前填报学生是否已经填报过，若已填报过，则这次视为更新操作
+        Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), studentId);
+        if (record5s.isNotEmpty()) {
+            List<AutonomousPracticeContent> autonomousPracticeContents = record5s.into(AutonomousPracticeContent.class);
+            modelMap.addAttribute("isUpdate", true);
+            modelMap.addAttribute("autonomousPracticeContents", autonomousPracticeContents);
+        } else {
+            modelMap.addAttribute("isUpdate", false);
+        }
+        //标题信息以及当前用户权限信息
+        Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> record13s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
+        List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
+
+        if (record13s.isNotEmpty()) {
+            autonomousPracticeHeadAddVos = record13s.into(AutonomousPracticeHeadAddVo.class);
+        }
+
+        List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
+        List<Authorities> authoritiesList = new ArrayList<>();
+        for (AuthoritiesRecord r : authoritiesRecords) {//视图层无法解析 AuthoritiesRecord对象 ，只能转化一下了
+            Authorities authorities = new Authorities(r.getUsername(), r.getAuthority());
+            authoritiesList.add(authorities);
+        }
+
+        modelMap.addAttribute("heads", autonomousPracticeHeadAddVos);
+        modelMap.addAttribute("currentAuthorities", authoritiesList);
+        modelMap.addAttribute("autonomousPracticeInfoId", autonomousPracticeInfo.getId());
+
+        return "/teacher/autonomicpractice/autonomicpracticeteachersingle";
+    }
+
+    /**
+     * 自主实习数据分析
+     *
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/dataAnalysis")
+    public String dataAnalysis() {
+        return "/semi/autonomicpractice/dataanalysis";
+    }
+
+    /**
+     * 自主实习数据分析 列表页数据
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/dataAnalysisData")
+    @ResponseBody
+    public AjaxData<AutonomicPracticeListVo> dataAnalysisData(int pageNum, int pageSize) {
+        //获取当前用户信息
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+
+        //处理数据
+        Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer>> record10s
+                = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
+        if (record10s.isNotEmpty()) {
+            List<AutonomicPracticeListVo> autonomicPracticeListVos = record10s.into(AutonomicPracticeListVo.class);
+            for (AutonomicPracticeListVo autonomicPracticeListVo : autonomicPracticeListVos) {
+                //根据用户类型获取用户姓名
+                if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == autonomicPracticeListVo.getUserTypeId()) {
+                    List<Student> students = studentService.findByStudentNumber(autonomicPracticeListVo.getUsername());
+                    if (!students.isEmpty()) {
+                        autonomicPracticeListVo.setRealName(students.get(0).getStudentName());
+                    }
+                } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == autonomicPracticeListVo.getUserTypeId()) {
+                    List<Teacher> teachers = teacherService.findByTeacherJobNumber(autonomicPracticeListVo.getUsername());
+                    if (!teachers.isEmpty()) {
+                        autonomicPracticeListVo.setRealName(teachers.get(0).getTeacherName());
+                    }
+                }
+                autonomicPracticeListVo.setStartTimeString(autonomicPracticeListVo.getStartTime().toString());
+                autonomicPracticeListVo.setEndTimeString(autonomicPracticeListVo.getEndTime().toString());
+            }
+            //分页参数
+            PaginationData paginationData = new PaginationData();
+            paginationData.setPageSize(pageSize);
+            paginationData.setPageNum(pageNum);
+            paginationData.setTotalDatas(autonomousPracticeInfoService.findByTieIdAndPageCount(tieId));
+
+            return new AjaxData<AutonomicPracticeListVo>().success().listData(autonomicPracticeListVos).paginationData(paginationData);
+        } else {
+            return new AjaxData<AutonomicPracticeListVo>().fail().msg("无数据!");
+        }
+    }
+
+    /**
+     * 自主实习统计页
+     *
+     * @param autonomousPracticeInfoId
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeCount")
+    public String autonomicPracticeCount(@RequestParam("id") int autonomousPracticeInfoId, ModelMap modelMap) {
+        //有哪些年级
+        //学生表这些年级学生总数
+        //此次自主实习中该年级已提交学生数
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomousPracticeInfoId);
+        String[] gradeYears = autonomousPracticeInfo.getGradeYear().split(",");
+        List<AutonomicPracticeCountVo> autonomicPracticeCountVos = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(autonomousPracticeInfo)) {
+            for (String s : gradeYears) {
+                AutonomicPracticeCountVo autonomicPracticeCountVo = new AutonomicPracticeCountVo();
+                autonomicPracticeCountVo.setAutonomousPracticeInfoId(autonomousPracticeInfo.getId());
+                autonomicPracticeCountVo.setYear(s);
+                autonomicPracticeCountVo.setAutonomousPracticeCount(autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndYearCount(autonomousPracticeInfo.getId(), s));
+                autonomicPracticeCountVo.setYearCount(studentService.findByYearAndTieIdCount(s, autonomousPracticeInfo.getTieId()));
+                autonomicPracticeCountVo.setAutonomousPracticeCountNo(autonomicPracticeCountVo.getYearCount() - autonomicPracticeCountVo.getAutonomousPracticeCount());
+                autonomicPracticeCountVos.add(autonomicPracticeCountVo);
+            }
+        }
+        modelMap.addAttribute("autonomicPracticeCountVos", autonomicPracticeCountVos);
+        return "/semi/autonomicpractice/autonomicpracticecount";
+    }
+
+    /**
+     * 以年级统计人员名单
+     *
+     * @param autonomicPracticeStudentInfoInYearVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInYear")
+    public String autonomicPracticeStudentInfoInYear(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, ModelMap modelMap) {
+        modelMap.addAttribute("autonomicPracticeStudentInfoInYearVo",autonomicPracticeStudentInfoInYearVo);
+        return "/semi/autonomicpractice/autonomicpracticestudentinfoinyear";
+    }
+
+    /**
+     * 以年级统计人员名单 数据
+     * @param autonomicPracticeStudentInfoInYearVo
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInYearData")
+    @ResponseBody
+    public AjaxData autonomicPracticeStudentInfoInYearData(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo){
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomicPracticeStudentInfoInYearVo.getId());
+        List<AutonomicPracticeStudentInfoInYearDataVo> havePayStudent = new ArrayList<>();
+        List<AutonomicPracticeStudentInfoInYearDataVo> haveNoPayStudent = new ArrayList<>();
+
+        List<Integer> havePayIds = new ArrayList<>();
+        Result<Record1<Integer>> record1s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(autonomicPracticeStudentInfoInYearVo);
+        if (record1s.isNotEmpty()) {
+            for (Record r : record1s) {
+                havePayIds.add(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+            }
+        }
+
+        Result<Record4<Integer,String,String,String>> havePayRecords = studentService.findByYearAndTieIdInStudentId(autonomicPracticeStudentInfoInYearVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (havePayRecords.isNotEmpty()) {
+            havePayStudent = havePayRecords.into(AutonomicPracticeStudentInfoInYearDataVo.class);
+        }
+
+        Result<Record4<Integer,String,String,String>> haveNoPayRecords = studentService.findByYearAndTieIdNotInStudentId(autonomicPracticeStudentInfoInYearVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (haveNoPayRecords.isNotEmpty()) {//未提交人从这里分页
+            haveNoPayStudent = haveNoPayRecords.into(AutonomicPracticeStudentInfoInYearDataVo.class);
+        }
+        autonomicPracticeStudentInfoInYearVo.setHavePayTotalData(studentService.findByYearAndTieIdInStudentIdCount(autonomicPracticeStudentInfoInYearVo, autonomousPracticeInfo.getTieId(), havePayIds));
+        autonomicPracticeStudentInfoInYearVo.setHaveNoPayTotalData(studentService.findByYearAndTieIdNotInStudentIdCount(autonomicPracticeStudentInfoInYearVo,autonomousPracticeInfo.getTieId(), havePayIds));
+        Map<String,Object> map = new HashMap<>();
+        map.put("havePayStudent", havePayStudent);
+        map.put("haveNoPayStudent", haveNoPayStudent);
+        map.put("autonomicPracticeStudentInfoInYearVo",autonomicPracticeStudentInfoInYearVo);
+        return new AjaxData().success().mapData(map);
+    }
+
+    /**
+     * 自主实习专业统计页
+     * @param autonomousPracticeInfoId
+     * @param year
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeInMajorCount")
+    public String autonomicPracticeInMajorCount(@RequestParam("id") int autonomousPracticeInfoId,@RequestParam("year") String year, ModelMap modelMap){
+        //查询出该 年级下所有专业id
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomousPracticeInfoId);
+        Result<Record2<Integer,String>> record2s = gradeService.findByYearDistinctMajorId(year,autonomousPracticeInfo.getTieId());
+        List<AutonomicPracticeInMajorCountVo> autonomicPracticeInMajorCountVos = new ArrayList<>();
+        for(Record r:record2s){
+            AutonomicPracticeInMajorCountVo autonomicPracticeInMajorCountVo = new AutonomicPracticeInMajorCountVo();
+            autonomicPracticeInMajorCountVo.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
+            autonomicPracticeInMajorCountVo.setYear(year);
+            autonomicPracticeInMajorCountVo.setMajorId(r.getValue(Tables.MAJOR.ID));
+            autonomicPracticeInMajorCountVo.setMajorName(r.getValue(Tables.MAJOR.MAJOR_NAME));
+            autonomicPracticeInMajorCountVo.setMajorCount(studentService.findByMajorIdCount(r.getValue(Tables.MAJOR.ID),year));//该专业该年级人数
+            autonomicPracticeInMajorCountVo.setAutonomousPracticeCount(autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdCount(autonomousPracticeInfoId,r.getValue(Tables.MAJOR.ID)));//已交人数
+            autonomicPracticeInMajorCountVo.setAutonomousPracticeCountNo(autonomicPracticeInMajorCountVo.getMajorCount()-autonomicPracticeInMajorCountVo.getAutonomousPracticeCount());
+            autonomicPracticeInMajorCountVos.add(autonomicPracticeInMajorCountVo);
+        }
+        modelMap.addAttribute("autonomicPracticeInMajorCountVos",autonomicPracticeInMajorCountVos);
+        return "/semi/autonomicpractice/autonomicpracticeinmajorcount";
+    }
+
+    /**
+     * 以专业统计人员名单
+     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor")
+    public String autonomicPracticeStudentInfoInMajor(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo,ModelMap modelMap){
+        modelMap.addAttribute("autonomicPracticeStudentInfoInMajorVo",autonomicPracticeStudentInfoInMajorVo);
+        return "/semi/autonomicpractice/autonomicpracticestudentinfoinmajor";
+    }
+
+    /**
+     * 以专业统计人员名单 数据
+     * @param autonomicPracticeStudentInfoInMajorVo
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInMajorData")
+    @ResponseBody
+    public AjaxData autonomicPracticeStudentInfoInMajorData(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo){
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomicPracticeStudentInfoInMajorVo.getId());
+        List<AutonomicPracticeStudentInfoInMajorDataVo> havePayStudent = new ArrayList<>();
+        List<AutonomicPracticeStudentInfoInMajorDataVo> haveNoPayStudent = new ArrayList<>();
+
+        List<Integer> havePayIds = new ArrayList<>();
+        Result<Record1<Integer>> record1s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(autonomicPracticeStudentInfoInMajorVo);
+        if (record1s.isNotEmpty()) {
+            for (Record r : record1s) {
+                havePayIds.add(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+            }
+        }
+
+        Result<Record4<Integer,String,String,String>> havePayRecords = studentService.findByMajorIdAndTieIdAndYearInStudentId(autonomicPracticeStudentInfoInMajorVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (havePayRecords.isNotEmpty()) {
+            havePayStudent = havePayRecords.into(AutonomicPracticeStudentInfoInMajorDataVo.class);
+        }
+
+        Result<Record4<Integer,String,String,String>> haveNoPayRecords = studentService.findByMajorIdAndTieIdAndYearNotInStudentId(autonomicPracticeStudentInfoInMajorVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (haveNoPayRecords.isNotEmpty()) {//未提交人从这里分页
+            haveNoPayStudent = haveNoPayRecords.into(AutonomicPracticeStudentInfoInMajorDataVo.class);
+        }
+        autonomicPracticeStudentInfoInMajorVo.setHavePayTotalData(studentService.findByMajorIdAndTieIdAndYearInStudentIdCount(autonomicPracticeStudentInfoInMajorVo, autonomousPracticeInfo.getTieId(), havePayIds));
+        autonomicPracticeStudentInfoInMajorVo.setHaveNoPayTotalData(studentService.findByMajorIdAndTieIdAndYearNotInStudentIdCount(autonomicPracticeStudentInfoInMajorVo,autonomousPracticeInfo.getTieId(), havePayIds));
+        Map<String,Object> map = new HashMap<>();
+        map.put("havePayStudent", havePayStudent);
+        map.put("haveNoPayStudent", haveNoPayStudent);
+        map.put("autonomicPracticeStudentInfoInMajorVo",autonomicPracticeStudentInfoInMajorVo);
+        return new AjaxData().success().mapData(map);
+    }
+
+    /**
+     * 自主实习班级统计页
+     * @param autonomousPracticeInfoId
+     * @param majorId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeInGradeCount")
+    public String autonomicPracticeInGradeCount(@RequestParam("id") int autonomousPracticeInfoId,@RequestParam("majorId") int majorId,@RequestParam("year") String year, ModelMap modelMap){
+        //查询出该 专业下所有班级id
+        Result<Record2<Integer,String>> record2s = gradeService.findByMajorIdAndYear(majorId,year);
+        List<AutonomicPracticeInGradeCountVo> autonomicPracticeInGradeCountVos = new ArrayList<>();
+        for(Record r:record2s){
+            AutonomicPracticeInGradeCountVo autonomicPracticeInGradeCountVo = new AutonomicPracticeInGradeCountVo();
+            autonomicPracticeInGradeCountVo.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
+            autonomicPracticeInGradeCountVo.setMajorId(majorId);
+            autonomicPracticeInGradeCountVo.setYear(year);
+            autonomicPracticeInGradeCountVo.setGradeId(r.getValue(Tables.GRADE.ID));
+            autonomicPracticeInGradeCountVo.setGradeName(r.getValue(Tables.GRADE.GRADE_NAME));
+            autonomicPracticeInGradeCountVo.setGradeCount(studentService.findByGradeIdCount(r.getValue(Tables.GRADE.ID)));
+            autonomicPracticeInGradeCountVo.setAutonomousPracticeCount(autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdCount(autonomousPracticeInfoId,r.getValue(Tables.GRADE.ID)));
+            autonomicPracticeInGradeCountVo.setAutonomousPracticeCountNo(autonomicPracticeInGradeCountVo.getGradeCount()-autonomicPracticeInGradeCountVo.getAutonomousPracticeCount());
+            autonomicPracticeInGradeCountVos.add(autonomicPracticeInGradeCountVo);
+        }
+        modelMap.addAttribute("autonomicPracticeInGradeCountVos",autonomicPracticeInGradeCountVos);
+        return "/semi/autonomicpractice/autonomicpracticeingradecount";
+    }
+
+    /**
+     * 以班级统计人员名单
+     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInGrade")
+    public String autonomicPracticeStudentInfoInMajor(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo,ModelMap modelMap){
+        modelMap.addAttribute("autonomicPracticeStudentInfoInGradeVo",autonomicPracticeStudentInfoInGradeVo);
+        return "/semi/autonomicpractice/autonomicpracticestudentinfoingrade";
+    }
+
+    /**
+     * 以班级统计人员名单 数据
+     * @param autonomicPracticeStudentInfoInGradeVo
+     * @return
+     */
+    @RequestMapping("/semi/autonomicpractice/autonomicPracticeStudentInfoInGradeData")
+    @ResponseBody
+    public AjaxData autonomicPracticeStudentInfoInMajorData(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo){
+        AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomicPracticeStudentInfoInGradeVo.getId());
+        List<AutonomicPracticeStudentInfoInGradeDataVo> havePayStudent = new ArrayList<>();
+        List<AutonomicPracticeStudentInfoInGradeDataVo> haveNoPayStudent = new ArrayList<>();
+
+        List<Integer> havePayIds = new ArrayList<>();
+        Result<Record1<Integer>> record1s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(autonomicPracticeStudentInfoInGradeVo);
+        if (record1s.isNotEmpty()) {
+            for (Record r : record1s) {
+                havePayIds.add(r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+            }
+        }
+
+        Result<Record4<Integer,String,String,String>> havePayRecords = studentService.findByGradeIdIdAndTieIdAndYearInStudentId(autonomicPracticeStudentInfoInGradeVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (havePayRecords.isNotEmpty()) {
+            havePayStudent = havePayRecords.into(AutonomicPracticeStudentInfoInGradeDataVo.class);
+        }
+
+        Result<Record4<Integer,String,String,String>> haveNoPayRecords = studentService.findByGradeIdAndTieIdAndYearNotInStudentId(autonomicPracticeStudentInfoInGradeVo, autonomousPracticeInfo.getTieId(), havePayIds);
+        if (haveNoPayRecords.isNotEmpty()) {//未提交人从这里分页
+            haveNoPayStudent = haveNoPayRecords.into(AutonomicPracticeStudentInfoInGradeDataVo.class);
+        }
+        autonomicPracticeStudentInfoInGradeVo.setHavePayTotalData(studentService.findByGradeIdIdAndTieIdAndYearInStudentIdCount(autonomicPracticeStudentInfoInGradeVo, autonomousPracticeInfo.getTieId(), havePayIds));
+        autonomicPracticeStudentInfoInGradeVo.setHaveNoPayTotalData(studentService.findByGradeIdAndTieIdAndYearNotInStudentIdCount(autonomicPracticeStudentInfoInGradeVo,autonomousPracticeInfo.getTieId(), havePayIds));
+        Map<String,Object> map = new HashMap<>();
+        map.put("havePayStudent", havePayStudent);
+        map.put("haveNoPayStudent", haveNoPayStudent);
+        map.put("autonomicPracticeStudentInfoInGradeVo",autonomicPracticeStudentInfoInGradeVo);
+        return new AjaxData().success().mapData(map);
     }
 
     /**
@@ -1009,22 +1402,24 @@ public class AutonomicPractice {
                                 break;
                             }
                         }
-                    }
+                    }//没有权限也不用更新了，有就可以了
                 }
             } else {//保存操作
-                //要先删除以前的数据
+                //要先删除以前的数据  删除后分页就不对了，只能在学生插入或更新信息时全部插入标题到content表中了
                 for (Record ap : record13s) {
                     autonomousPracticeContentService.deleteByAutonomousPracticeHeadIdAndStudentId(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID), studentId);
                 }
                 //进行保存
                 for (Record ap : record13s) {
+                    //不检查是否必填了，由前端检验了
+                    AutonomousPracticeContent autonomousPracticeContent = new AutonomousPracticeContent();
+                    autonomousPracticeContent.setAutonomousPracticeHeadId(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID));
+                    autonomousPracticeContent.setStudentId(studentId);
+                    autonomousPracticeContent.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
                     if (useTitle(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY), authoritiesRecords)) {
-                        //不检查是否必填了，由前端检验了
-                        AutonomousPracticeContent autonomousPracticeContent = new AutonomousPracticeContent();
                         assembleAutonomousPracticeContent(ap, autonomousPracticeContent, request);
-                        autonomousPracticeContent.setAutonomousPracticeHeadId(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID));
-                        autonomousPracticeContent.setStudentId(studentId);
-                        autonomousPracticeContent.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
+                        autonomousPracticeContentService.save(autonomousPracticeContent);
+                    } else {
                         autonomousPracticeContentService.save(autonomousPracticeContent);
                     }
                 }
