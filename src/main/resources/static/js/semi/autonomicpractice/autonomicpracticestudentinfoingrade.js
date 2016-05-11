@@ -15,12 +15,15 @@ var pagingParam = {
 
 function outputHavePayHtml(){
     $('#tableHavePayData').empty();
-    var dataPayLength = pagingParam.havePayPageSize;
-    if(pagingParam.havePayPageSize>pagingParam.havePayStudent.length){
+    var dataPayLength = 0;
+
+    if((pagingParam.havePayPageNum-1)*pagingParam.havePayPageSize+pagingParam.havePayPageSize>pagingParam.havePayStudent.length){
         dataPayLength = pagingParam.havePayStudent.length;
+    } else {
+        dataPayLength = (pagingParam.havePayPageNum-1)*pagingParam.havePayPageSize+pagingParam.havePayPageSize;
     }
 
-    for (var i = (pagingParam.havePayPageNum-1)*pagingParam.havePayPageSize; i < (pagingParam.havePayPageNum-1)*pagingParam.havePayPageSize+dataPayLength; i++) {
+    for (var i = (pagingParam.havePayPageNum-1)*pagingParam.havePayPageSize; i < dataPayLength; i++) {
         $('#tableHavePayData').append($('<div class="uk-panel uk-panel-divider">').append(
             $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-6">')
                 .append($('<li>').text('学号:'))
@@ -35,12 +38,14 @@ function outputHavePayHtml(){
 
 function outputHaveNoPayHtml() {
     $('#tableHaveNoPayData').empty();
-    var dataNoPayLength = pagingParam.haveNoPayPageSize;
-    if(pagingParam.haveNoPayPageSize>pagingParam.haveNoPayStudent.length){
+    var dataNoPayLength = 0
+    if((pagingParam.haveNoPayPageNum - 1)*pagingParam.haveNoPayPageSize+pagingParam.haveNoPayPageSize>pagingParam.haveNoPayStudent.length){
         dataNoPayLength = pagingParam.haveNoPayStudent.length;
+    } else {
+        dataNoPayLength = (pagingParam.haveNoPayPageNum - 1)*pagingParam.haveNoPayPageSize+pagingParam.haveNoPayPageSize;
     }
 
-    for (var i = (pagingParam.haveNoPayPageNum - 1)*pagingParam.haveNoPayPageSize; i < (pagingParam.haveNoPayPageNum - 1)*pagingParam.haveNoPayPageSize+dataNoPayLength; i++) {
+    for (var i = (pagingParam.haveNoPayPageNum - 1)*pagingParam.haveNoPayPageSize; i < dataNoPayLength; i++) {
         $('#tableHaveNoPayData').append($('<div class="uk-panel uk-panel-divider">').append(
             $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-6">')
                 .append($('<li>').text('学号:'))
@@ -76,9 +81,21 @@ function havePaySearch(){
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInGrade?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 
+function refreshHavePaySearch(){
+    autonomousPracticeParam.type = 0;
+    autonomousPracticeParam.studentNumber = '';
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInGrade?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
+}
+
 function haveNoPaySearch(){
     autonomousPracticeParam.type = 1;
     autonomousPracticeParam.studentNumber = $('#searchHaveNoPayContent').val().trim();
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInGrade?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
+}
+
+function refreshHaveNoPaySearch(){
+    autonomousPracticeParam.type = 1;
+    autonomousPracticeParam.studentNumber = '';
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInGrade?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 

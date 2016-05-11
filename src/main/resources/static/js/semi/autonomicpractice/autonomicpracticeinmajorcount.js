@@ -25,12 +25,6 @@ function scanStudent(obj) {
     autonomousPracticeParam.majorName = majorName;
     autonomousPracticeParam.studentNumber = '';
     autonomousPracticeParam.type = 0;
-    autonomousPracticeParam.havePayPageNum = 0;
-    autonomousPracticeParam.havePayPageSize = 20;
-    autonomousPracticeParam.havePayTotalData = 0;
-    autonomousPracticeParam.haveNoPayPageNum = 0;
-    autonomousPracticeParam.haveNoPayPageSize = 20;
-    autonomousPracticeParam.haveNoPayTotalData = 0;
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam=' + JSON.stringify(autonomousPracticeParam);
 }
 

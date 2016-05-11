@@ -164,7 +164,6 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
@@ -189,7 +188,6 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
@@ -263,7 +261,6 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
@@ -288,7 +285,6 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
