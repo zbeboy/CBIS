@@ -1322,19 +1322,23 @@ function getDataFromDatabase(databaseTableField) {
  */
 function studentSave() {
     if (validationAll()) {
-        console.log($('#studentData').serialize());
         $.post(web_path + '/student/autonomicpractice/addAutonomicPractice', $('#studentData').serialize(), function (data) {
             if (data.state) {
-                window.location.href = web_path + '/student/autonomicpractice/autonomicPractice';
+                layer.msg(data.msg);
             } else {
                 layer.msg(data.msg);
             }
-        });
+        },'json');
     }
 }
 
+/**
+ * 返回
+ */
+function back(){
+    window.location.href = web_path + '/teacher/autonomicpractice/autonomicPracticeTeacherList?autonomousPracticeInfoId='+autonomousPracticeInfoId;
+}
+
 $(document).ready(function () {
-
     outputHtml();//输出学生界面
-
 });

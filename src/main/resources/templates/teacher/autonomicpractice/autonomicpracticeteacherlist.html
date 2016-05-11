@@ -75,17 +75,19 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <form class="uk-form uk-margin" th:action="@{/teacher/autonomicpractice/autonomicPracticeTeacherList}" method="get" >
+            <a href="#" th:text="${autonomicPracticeTeacherListVo.autonomousPracticeTitle}"  th:href="@{/student/autonomicpractice/autonomicPractice}" ></a>
+            <form class="uk-form uk-margin" th:action="@{/teacher/autonomicpractice/autonomicPracticeTeacherList}" method="get" id="searchForm">
                 <div class="uk-grid">
-                    <div class="uk-width-1-3 uk-text-left">
+                    <div class="uk-width-1-4 uk-text-left">
                     </div>
-                    <div class="uk-width-2-3 uk-text-right">
+                    <div class="uk-width-3-4 uk-text-right">
                         <select class="uk-margin-small-top" id="searchHead" name="autonomousPracticeHeadId" >
                         </select>
                         <input type="text" placeholder="内容" id="searchContent"
                                name="content" class="uk-margin-small-top"/>
                         <input type="hidden" id="searchAutonomousPracticeInfoId" name="autonomousPracticeInfoId" />
                         <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
+                        <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" >重置</button>
                     </div>
                 </div>
             </form>

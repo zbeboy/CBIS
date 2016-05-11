@@ -284,3 +284,12 @@ function authorities() {
         }
     }, 'json');
 }
+
+/**
+ * 搜索重置
+ */
+function refresh(){
+    $('#teacherName').val('');
+    $('#teacherJobNumber').val('');
+    $('#searchForm').submit();
+}

@@ -1,10 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.domain.tables.records.StudentRecord;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
+import com.school.cbis.vo.autonomicpractice.AutonomousPracticeParamVo;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Record5;
@@ -72,38 +69,38 @@ public interface StudentService {
 
     /**
      * 查询自主实习已提交学生信息
-     * @param autonomicPracticeStudentInfoInYearVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByYearAndTieIdInStudentId(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByYearAndTieIdInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
 
     /**
      * 查询自主实习未提交学生信息
-     * @param autonomicPracticeStudentInfoInYearVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByYearAndTieIdNotInStudentId(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo,int tieId,List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByYearAndTieIdNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 
     /**
      * 查询自主实习已提交学生信息总数
-     * @param autonomicPracticeStudentInfoInYearVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByYearAndTieIdInStudentIdCount(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId);
+    int findByYearAndTieIdInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
     /**
      * 查询自主实习未提交学生信息总数
-     * @param autonomicPracticeStudentInfoInYearVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByYearAndTieIdNotInStudentIdCount(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo,int tieId,List<Integer> studentId);
+    int findByYearAndTieIdNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 
     /**
      * 查询该专业 该年级下有多少学生
@@ -115,38 +112,38 @@ public interface StudentService {
 
     /**
      * 查询自主实习已提交学生信息  专业用
-     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByMajorIdAndTieIdAndYearInStudentId(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByMajorIdAndTieIdAndYearInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
 
     /**
      * 查询自主实习未提交学生信息 专业用
-     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByMajorIdAndTieIdAndYearNotInStudentId(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo,int tieId,List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByMajorIdAndTieIdAndYearNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 
     /**
      * 查询自主实习已提交学生信息总数 专业用
-     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByMajorIdAndTieIdAndYearInStudentIdCount(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId);
+    int findByMajorIdAndTieIdAndYearInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
     /**
      * 查询自主实习未提交学生信息总数 专业用
-     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByMajorIdAndTieIdAndYearNotInStudentIdCount(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo,int tieId,List<Integer> studentId);
+    int findByMajorIdAndTieIdAndYearNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 
     /**
      * 查询该班级下有多少学生
@@ -157,36 +154,36 @@ public interface StudentService {
 
     /**
      * 查询自主实习已提交学生信息  班级用
-     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByGradeIdIdAndTieIdAndYearInStudentId(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByGradeIdIdAndTieIdAndYearInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
 
     /**
      * 查询自主实习未提交学生信息 班级用
-     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    Result<Record4<Integer,String,String,String>> findByGradeIdAndTieIdAndYearNotInStudentId(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo,int tieId,List<Integer> studentId);
+    Result<Record4<Integer,String,String,String>> findByGradeIdAndTieIdAndYearNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 
     /**
      * 查询自主实习已提交学生信息总数 班级用
-     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByGradeIdIdAndTieIdAndYearInStudentIdCount(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId);
+    int findByGradeIdIdAndTieIdAndYearInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId);
     /**
      * 查询自主实习未提交学生信息总数 班级用
-     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param autonomousPracticeParamVo
      * @param tieId
      * @param studentId
      * @return
      */
-    int findByGradeIdAndTieIdAndYearNotInStudentIdCount(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo,int tieId,List<Integer> studentId);
+    int findByGradeIdAndTieIdAndYearNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
 }

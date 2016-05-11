@@ -84,6 +84,12 @@ function initSearch(){
     $('#searchAutonomousPracticeInfoId').val(autonomicPracticeTeacherListVo.autonomousPracticeInfoId);
 }
 
+function refresh(){
+    $('#searchHead').val(0);
+    $('#searchContent').val('');
+    $('#searchForm').submit();
+}
+
 function createPage(){
     var pagination = UIkit.pagination('.uk-pagination', {
         items: param.totalData,

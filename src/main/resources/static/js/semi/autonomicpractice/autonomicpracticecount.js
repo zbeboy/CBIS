@@ -26,13 +26,30 @@ function countAll() {
 }
 
 /**
+ * 初始化导航
+ */
+function initSubNav(){
+    $('#subNavData').append(
+        $('<li class="uk-active">').append($('<a>').attr('href',web_path+"/semi/autonomicpractice/dataAnalysis").text(autonomousPracticeParam.autonomousPracticeTitle))
+    );
+}
+
+/**
  * 查看人员名单
  * @param obj
  */
 function scanStudent(obj) {
     var year = $($(obj).parent().children()[0]).val();
-    var autonomousPracticeInfoId = $($(obj).parent().children()[1]).val();
-    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInYear?id=' + autonomousPracticeInfoId + "&year=" + year;
+    autonomousPracticeParam.year = year;
+    autonomousPracticeParam.studentNumber = '';
+    autonomousPracticeParam.type = 0;
+    autonomousPracticeParam.havePayPageNum = 0;
+    autonomousPracticeParam.havePayPageSize = 20;
+    autonomousPracticeParam.havePayTotalData = 0;
+    autonomousPracticeParam.haveNoPayPageNum = 0;
+    autonomousPracticeParam.haveNoPayPageSize = 20;
+    autonomousPracticeParam.haveNoPayTotalData = 0;
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInYear?autonomousPracticeParam=' + JSON.stringify(autonomousPracticeParam);
 }
 
 /**
@@ -41,10 +58,11 @@ function scanStudent(obj) {
  */
 function scanMajor(obj){
     var year = $($(obj).parent().children()[0]).val();
-    var autonomousPracticeInfoId = $($(obj).parent().children()[1]).val();
-    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeInMajorCount?id=' + autonomousPracticeInfoId + "&year=" + year;
+    autonomousPracticeParam.year = year;
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeInMajorCount?autonomousPracticeParam=' + JSON.stringify(autonomousPracticeParam);
 }
 
 $(document).ready(function () {
     countAll();
+    initSubNav();
 });

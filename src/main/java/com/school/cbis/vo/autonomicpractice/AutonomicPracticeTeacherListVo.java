@@ -5,6 +5,7 @@ package com.school.cbis.vo.autonomicpractice;
  */
 public class AutonomicPracticeTeacherListVo {
     private int autonomousPracticeInfoId;
+    private String autonomousPracticeTitle;
     private int pageNum;
     private int pageSize = 5;
     private int totalData;
@@ -17,6 +18,14 @@ public class AutonomicPracticeTeacherListVo {
 
     public void setAutonomousPracticeInfoId(int autonomousPracticeInfoId) {
         this.autonomousPracticeInfoId = autonomousPracticeInfoId;
+    }
+
+    public String getAutonomousPracticeTitle() {
+        return autonomousPracticeTitle;
+    }
+
+    public void setAutonomousPracticeTitle(String autonomousPracticeTitle) {
+        this.autonomousPracticeTitle = autonomousPracticeTitle;
     }
 
     public int getPageNum() {
@@ -63,6 +72,7 @@ public class AutonomicPracticeTeacherListVo {
     public String toString() {
         return "AutonomicPracticeTeacherListVo{" +
                 "autonomousPracticeInfoId=" + autonomousPracticeInfoId +
+                ", autonomousPracticeTitle='" + autonomousPracticeTitle + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", totalData=" + totalData +

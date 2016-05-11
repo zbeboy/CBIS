@@ -3,9 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.StudentDao;
 import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
+import com.school.cbis.vo.autonomicpractice.AutonomousPracticeParamVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,13 +145,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record4<Integer,String,String,String>> findByYearAndTieIdInStudentId(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId));
-        if(autonomicPracticeStudentInfoInYearVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInYearVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInYearVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer,String,String,String>> findByYearAndTieIdInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInYearVo.getHavePayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInYearVo.getHavePayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -172,13 +170,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record4<Integer,String,String,String>> findByYearAndTieIdNotInStudentId(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId));
-        if(autonomicPracticeStudentInfoInYearVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInYearVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInYearVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer,String,String,String>> findByYearAndTieIdNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInYearVo.getHaveNoPayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInYearVo.getHaveNoPayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -197,10 +195,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int findByYearAndTieIdInStudentIdCount(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId));
-        if(autonomicPracticeStudentInfoInYearVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInYearVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInYearVo.getStudentNumber()+"%"));
+    public int findByYearAndTieIdInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
         Record1<Integer> count = create.selectCount()
                 .from(Tables.STUDENT)
@@ -216,10 +214,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int findByYearAndTieIdNotInStudentIdCount(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId));
-        if(autonomicPracticeStudentInfoInYearVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInYearVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInYearVo.getStudentNumber()+"%"));
+    public int findByYearAndTieIdNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
        Record1<Integer> count =  create.selectCount()
                 .from(Tables.STUDENT)
@@ -246,13 +244,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, String>> findByMajorIdAndTieIdAndYearInStudentId(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
-        if(autonomicPracticeStudentInfoInMajorVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInMajorVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInMajorVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer, String, String, String>> findByMajorIdAndTieIdAndYearInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInMajorVo.getHavePayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInMajorVo.getHavePayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -271,13 +269,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, String>> findByMajorIdAndTieIdAndYearNotInStudentId(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
-        if(autonomicPracticeStudentInfoInMajorVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInMajorVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInMajorVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer, String, String, String>> findByMajorIdAndTieIdAndYearNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInMajorVo.getHaveNoPayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInMajorVo.getHaveNoPayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -296,10 +294,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int findByMajorIdAndTieIdAndYearInStudentIdCount(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
-        if(autonomicPracticeStudentInfoInMajorVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInMajorVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInMajorVo.getStudentNumber()+"%"));
+    public int findByMajorIdAndTieIdAndYearInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
         Record1<Integer> count = create.selectCount()
                 .from(Tables.STUDENT)
@@ -315,10 +313,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int findByMajorIdAndTieIdAndYearNotInStudentIdCount(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
-        if(autonomicPracticeStudentInfoInMajorVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInMajorVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInMajorVo.getStudentNumber()+"%"));
+    public int findByMajorIdAndTieIdAndYearNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
         Record1<Integer> count =  create.selectCount()
                 .from(Tables.STUDENT)
@@ -345,13 +343,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Result<Record4<Integer, String, String, String>> findByGradeIdIdAndTieIdAndYearInStudentId(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
-        if(autonomicPracticeStudentInfoInGradeVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInGradeVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInGradeVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer, String, String, String>> findByGradeIdIdAndTieIdAndYearInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInGradeVo.getHavePayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInGradeVo.getHavePayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -364,19 +362,18 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
 
     @Override
-    public Result<Record4<Integer, String, String, String>> findByGradeIdAndTieIdAndYearNotInStudentId(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
-        if(autonomicPracticeStudentInfoInGradeVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInGradeVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInGradeVo.getStudentNumber()+"%"));
+    public Result<Record4<Integer, String, String, String>> findByGradeIdAndTieIdAndYearNotInStudentId(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomicPracticeStudentInfoInGradeVo.getHaveNoPayPageNum();
-        int pageSize = autonomicPracticeStudentInfoInGradeVo.getHaveNoPayPageSize();
+        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
+        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
         if(pageNum<=0){
             pageNum = 1;
         }
@@ -389,16 +386,15 @@ public class StudentServiceImpl implements StudentService {
                 .join(Tables.USERS)
                 .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a)
-                .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
         return records;
     }
 
     @Override
-    public int findByGradeIdIdAndTieIdAndYearInStudentIdCount(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
-        if(autonomicPracticeStudentInfoInGradeVo.getType() == 0&&StringUtils.hasLength(autonomicPracticeStudentInfoInGradeVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInGradeVo.getStudentNumber()+"%"));
+    public int findByGradeIdIdAndTieIdAndYearInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.in(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
         Record1<Integer> count = create.selectCount()
                 .from(Tables.STUDENT)
@@ -414,10 +410,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int findByGradeIdAndTieIdAndYearNotInStudentIdCount(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo, int tieId, List<Integer> studentId) {
-        Condition a = Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
-        if(autonomicPracticeStudentInfoInGradeVo.getType() == 1 && StringUtils.hasLength(autonomicPracticeStudentInfoInGradeVo.getStudentNumber())){
-            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomicPracticeStudentInfoInGradeVo.getStudentNumber()+"%"));
+    public int findByGradeIdAndTieIdAndYearNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo, int tieId, List<Integer> studentId) {
+        Condition a = Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
+        if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
+            a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
         Record1<Integer> count =  create.selectCount()
                 .from(Tables.STUDENT)

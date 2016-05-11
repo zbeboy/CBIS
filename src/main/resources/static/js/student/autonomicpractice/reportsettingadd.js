@@ -9,3 +9,10 @@ function submitAutonomicPracticeData(){
         $('#addAutonomicPracticeForm').submit();
     }
 }
+
+/**
+ * 返回
+ */
+function back(){
+    window.location.href = web_path + '/administrator/autonomicpractice/reportsettingList';
+}

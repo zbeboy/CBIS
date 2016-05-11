@@ -3,10 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeContentDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeContent;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeTeacherListVo;
+import com.school.cbis.vo.autonomicpractice.*;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,9 +82,9 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
-    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo) {
-        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInYearVo.getId())
-                .and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInYearVo.getYear()));
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeParamVo.getAutonomousPracticeInfoId())
+                .and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()));
         Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
                 .join(Tables.STUDENT)
@@ -126,9 +123,9 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
-    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo) {
-        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInMajorVo.getId())
-                .and(Tables.GRADE.MAJOR_ID.eq(autonomicPracticeStudentInfoInMajorVo.getMajorId()).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInMajorVo.getYear())));
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeParamVo.getAutonomousPracticeInfoId())
+                .and(Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
         Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
                 .join(Tables.STUDENT)
@@ -141,10 +138,9 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
-    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo) {
-        log.debug("AutonomicPracticeStudentInfoInGradeVo : "+autonomicPracticeStudentInfoInGradeVo.getYear());
-        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeStudentInfoInGradeVo.getId())
-                .and(Tables.GRADE.ID.eq(autonomicPracticeStudentInfoInGradeVo.getGradeId()).and(Tables.GRADE.YEAR.eq(autonomicPracticeStudentInfoInGradeVo.getYear())));
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeParamVo.getAutonomousPracticeInfoId())
+                .and(Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
         Result<Record1<Integer>> count = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
                 .join(Tables.STUDENT)

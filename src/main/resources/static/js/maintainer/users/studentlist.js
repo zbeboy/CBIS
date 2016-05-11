@@ -330,3 +330,12 @@ function authorities() {
         }
     }, 'json');
 }
+
+/**
+ * 搜索重置
+ */
+function refresh(){
+    $('#studentName').val('');
+    $('#studentNumber').val('');
+    $('#searchForm').submit();
+}

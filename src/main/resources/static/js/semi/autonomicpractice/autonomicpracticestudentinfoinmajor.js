@@ -33,29 +33,15 @@ function outputHtml(data) {
 
 }
 
-var param = {
-    'id': autonomicPracticeStudentInfoInMajorVo.id,
-    'majorId': autonomicPracticeStudentInfoInMajorVo.majorId,
-    'year':autonomicPracticeStudentInfoInMajorVo.year,
-    'type': autonomicPracticeStudentInfoInMajorVo.type,
-    'studentNumber': autonomicPracticeStudentInfoInMajorVo.studentNumber,
-    'havePayPageNum': 0,
-    'havePayPageSize': 20,
-    'havePayTotalData': 0,
-    'haveNoPayPageNum': 0,
-    'haveNoPayPageSize': 20,
-    'haveNoPayTotalData': 0
-}
-
 function initSearch(){
-    if(param.type == 0){
-        $('#searchHavePayStudentNumber').val(param.studentNumber);
+    if(autonomousPracticeParam.type == 0){
+        $('#searchHavePayStudentNumber').val(autonomousPracticeParam.studentNumber);
         $('#havePayBar').removeClass('uk-active').addClass('uk-active');
         $('#havePay').removeClass('uk-active').addClass('uk-active');
         $('#haveNoPayBar').removeClass('uk-active');
         $('#haveNoPay').removeClass('uk-active');
-    } else if(param.type == 1){
-        $('#searchHaveNoPayContent').val(param.studentNumber);
+    } else if(autonomousPracticeParam.type == 1){
+        $('#searchHaveNoPayContent').val(autonomousPracticeParam.studentNumber);
         $('#haveNoPayBar').removeClass('uk-active').addClass('uk-active');
         $('#haveNoPay').removeClass('uk-active').addClass('uk-active');
         $('#havePayBar').removeClass('uk-active');
@@ -63,11 +49,23 @@ function initSearch(){
     }
 }
 
+function havePaySearch(){
+    autonomousPracticeParam.type = 0;
+    autonomousPracticeParam.studentNumber = $('#searchHavePayStudentNumber').val().trim();
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
+}
+
+function haveNoPaySearch(){
+    autonomousPracticeParam.type = 1;
+    autonomousPracticeParam.studentNumber = $('#searchHaveNoPayContent').val().trim();
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
+}
+
 function action() {
-    $.post(web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajorData', param,
+    $.post(web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajorData', autonomousPracticeParam,
         function (data) {
             outputHtml(data);
-            param = data.single.autonomicPracticeStudentInfoInMajorVo;
+            autonomousPracticeParam = data.single.autonomousPracticeParam;
             createPage(data);
             initSearch();
         }, 'json');
@@ -76,18 +74,18 @@ function action() {
 function createPage(data){
     if(data.single.havePayStudent.length>0){
         UIkit.pagination('#havePayPagination', {
-            items: param.havePayTotalData,
-            itemsOnPage: param.havePayPageSize,
-            currentPage: param.havePayPageNum,
+            items: autonomousPracticeParam.havePayTotalData,
+            itemsOnPage: autonomousPracticeParam.havePayPageSize,
+            currentPage: autonomousPracticeParam.havePayPageNum,
             edges:2
         });
     }
 
     if(data.single.haveNoPayStudent.length>0){
         UIkit.pagination('#haveNoPayPagination', {
-            items: param.haveNoPayTotalData,
-            itemsOnPage: param.haveNoPayPageSize,
-            currentPage: param.haveNoPayPageNum,
+            items: autonomousPracticeParam.haveNoPayTotalData,
+            itemsOnPage: autonomousPracticeParam.haveNoPayPageSize,
+            currentPage: autonomousPracticeParam.haveNoPayPageNum,
             edges:2
         });
     }
@@ -97,7 +95,7 @@ function createPage(data){
  * 点击分页
  */
 $('#havePayPagination').on('select.uk.pagination', function (e, pageIndex) {
-    param.havePayPageNum = pageIndex + 1;
+    autonomousPracticeParam.havePayPageNum = pageIndex + 1;
     action();
 });
 
@@ -105,10 +103,28 @@ $('#havePayPagination').on('select.uk.pagination', function (e, pageIndex) {
  * 点击分页
  */
 $('#haveNoPayPagination').on('select.uk.pagination', function (e, pageIndex) {
-    param.haveNoPayPageNum = pageIndex + 1;
+    autonomousPracticeParam.haveNoPayPageNum = pageIndex + 1;
     action();
 });
 
+/**
+ * 初始化导航
+ */
+function initSubNav() {
+    $('#subNavData').append(
+        $('<li>').append($('<a>').attr('href', web_path + "/semi/autonomicpractice/dataAnalysis").text(autonomousPracticeParam.autonomousPracticeTitle))
+    );
+
+    $('#subNavData').append(
+        $('<li>').append($('<a>').attr('href', web_path + "/semi/autonomicpractice/autonomicPracticeCount?autonomousPracticeParam="+JSON.stringify(autonomousPracticeParam)).text(autonomousPracticeParam.year))
+    );
+
+    $('#subNavData').append(
+        $('<li class="uk-active">').append($('<a>').attr('href', web_path + "/semi/autonomicpractice/autonomicPracticeInMajorCount?autonomousPracticeParam=" + JSON.stringify(autonomousPracticeParam) ).text(autonomousPracticeParam.majorName))
+    );
+}
+
 $(document).ready(function(){
     action();
+    initSubNav();
 });

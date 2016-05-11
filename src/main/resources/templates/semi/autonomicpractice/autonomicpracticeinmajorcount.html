@@ -70,9 +70,12 @@
 
         </div>
         <div class="uk-width-medium-3-4">
+            <ul class="uk-subnav uk-subnav-line" id="subNavData">
+
+            </ul>
             <div id="dataShow" th:unless="${#lists.isEmpty(autonomicPracticeInMajorCountVos)}" >
                 <div class="uk-panel uk-panel-box" th:each="ap:${autonomicPracticeInMajorCountVos}" >
-                    <h3 class="uk-panel-title" th:text="${ap.year}" ></h3>
+                    <h3 class="uk-panel-title" th:text="${autonomousPracticeParam.year}" ></h3>
                     <ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4">
                         <li>专业:</li>
                         <li th:text="${ap.majorName}" ></li>
@@ -85,8 +88,7 @@
                     </ul>
                     <div class="uk-text-right uk-margin">
                         <input type="hidden" th:value="${ap.majorId}" />
-                        <input type="hidden" th:value="${ap.autonomousPracticeInfoId}" />
-                        <input type="hidden" th:value="${ap.year}" />
+                        <input type="hidden" th:value="${ap.majorName}" />
                         <button class="uk-button" type="button" onclick="scanStudent(this);" >查看人员名单</button>
                         <button class="uk-button" type="button" onclick="scanGrade(this);" >查看各班级情况</button>
                     </div>
@@ -104,6 +106,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
+    var autonomousPracticeParam = /*[[${autonomousPracticeParam}]]*/ null;
     /*]]>*/
 </script>
 <script th:src="@{/js/semi/autonomicpractice/autonomicpracticeinmajorcount.js}"

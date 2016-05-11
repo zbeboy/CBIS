@@ -1,6 +1,9 @@
 /**
  * Created by lenovo on 2016-05-07.
  */
+
+var tieId = 0;//系id 为后面查询使用
+
 /**
  * 输出列表
  * @param data
@@ -18,9 +21,10 @@ function outputHtml(data) {
                 .append($('<li>').text('结束时间:' + data.result[i].endTimeString))
             )
             .append($('<p>').text('允许填报年级:' + data.result[i].gradeYear))
-            .append($('<div class="uk-text-right uk-margin" >').append($('<button class="uk-button" data-id="' + data.result[i].id + '" type="button" onclick="startAP(this);" >').text('查看统计')))
+            .append($('<div class="uk-text-right uk-margin" >').append($('<button class="uk-button" data-year="'+data.result[i].gradeYear+'" data-title="'+data.result[i].autonomousPracticeTitle+'"  data-id="' + data.result[i].id + '" type="button" onclick="startAP(this);" >').text('查看统计')))
         );
     }
+    tieId = data.obj;
 }
 
 //初始化参数
@@ -68,10 +72,40 @@ $(document).ready(function () {
 });
 
 /**
- * 开始填报
+ * 层级参数
+ * @type {{autonomousPracticeInfoId: number, autonomousPracticeTitle: string, year: string, majorId: number, majorName: string, gradeId: number, gradeName: number}}
+ */
+var autonomousPracticeParam = {
+    'autonomousPracticeInfoId':0,//自主实习信息表id
+    'autonomousPracticeTitle':'',//自主实习信息表标题
+    'tieId':0,//系id
+    'year':'',//年级
+    'majorId':0,//专业id
+    'majorName':'',//专业名
+    'gradeId':0,//班级id
+    'gradeName':0,//班级名
+    'gradeYear':'',//允许填报的年级
+    'type':0,//0是已提交 1未提交
+    'studentNumber':'',//搜索用
+    'havePayPageNum':0,//提交列表中
+    'havePayPageSize':20,//提交列表中
+    'havePayTotalData':0,//提交列表中
+    'haveNoPayPageNum':0,//未提交列表中
+    'haveNoPayPageSize':20,//未提交列表中
+    'haveNoPayTotalData':0//未提交列表中
+}
+
+/**
+ * 开始
  * @param obj
  */
 function startAP(obj) {
     var id = $(obj).attr('data-id');
-    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeCount?id=' + id;
+    var title = $(obj).attr('data-title');
+    var gradeYear = $(obj).attr('data-year');
+    autonomousPracticeParam.autonomousPracticeInfoId = id;
+    autonomousPracticeParam.tieId = tieId;
+    autonomousPracticeParam.autonomousPracticeTitle = title;
+    autonomousPracticeParam.gradeYear = gradeYear;
+    window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeCount?autonomousPracticeParam=' + JSON.stringify(autonomousPracticeParam);
 }

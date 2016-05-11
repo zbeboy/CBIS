@@ -1,10 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeContent;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInGradeVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInMajorVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeStudentInfoInYearVo;
-import com.school.cbis.vo.autonomicpractice.AutonomicPracticeTeacherListVo;
+import com.school.cbis.vo.autonomicpractice.*;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record5;
@@ -86,10 +83,10 @@ public interface AutonomousPracticeContentService {
 
     /**
      * 按照学生年级 查询学生id
-     * @param autonomicPracticeStudentInfoInYearVo
+     * @param autonomousPracticeParamVo
      * @return
      */
-    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomicPracticeStudentInfoInYearVo autonomicPracticeStudentInfoInYearVo);
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo);
 
     /**
      * 按照学生班级统计人数
@@ -109,16 +106,16 @@ public interface AutonomousPracticeContentService {
 
     /**
      * 按照学生专业 查询学生id
-     * @param autonomicPracticeStudentInfoInMajorVo
+     * @param autonomousPracticeParamVo
      * @return
      */
-    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomicPracticeStudentInfoInMajorVo autonomicPracticeStudentInfoInMajorVo);
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndMajorIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo);
 
     /**
      * 按照学生班级 查询学生id
-     * @param autonomicPracticeStudentInfoInGradeVo
+     * @param autonomousPracticeParamVo
      * @return
      */
-    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomicPracticeStudentInfoInGradeVo autonomicPracticeStudentInfoInGradeVo);
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo);
 
 }
