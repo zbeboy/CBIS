@@ -16,10 +16,10 @@ public class AutonomousPracticeParamVo {
     private int type;//0是已提交 1未提交
     private String studentNumber;
     private int havePayPageNum;
-    private int havePayPageSize = 1;
+    private int havePayPageSize = 20;
     private int havePayTotalData;
     private int haveNoPayPageNum;
-    private int haveNoPayPageSize = 1;
+    private int haveNoPayPageSize = 20;
     private int haveNoPayTotalData;
 
     public int getAutonomousPracticeInfoId() {
