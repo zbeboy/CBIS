@@ -72,7 +72,7 @@ $(document).ready(function () {
 });
 
 /**
- * 层级参数
+ * 层级参数 全局配置
  * @type {{autonomousPracticeInfoId: number, autonomousPracticeTitle: string, year: string, majorId: number, majorName: string, gradeId: number, gradeName: number}}
  */
 var autonomousPracticeParam = {

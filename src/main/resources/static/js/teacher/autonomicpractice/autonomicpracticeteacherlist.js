@@ -2,11 +2,14 @@
  * Created by Administrator on 2016/5/5.
  */
 
-var autonomicPracticeTeacherVos = null;
-var studentIds = null;
-var currentAuthorities = null;
-var searchHeads =  null;
+var autonomicPracticeTeacherVos = null;//每个学生的标题信息
+var studentIds = null;//统计出来的当前页的学生id
+var currentAuthorities = null;//当前用户权限
+var searchHeads =  null;//用于搜索的标题信息
 
+/**
+ * 输出数据
+ */
 function outputHtml() {
     $('#tableData').empty();
     for (var i = 0; i < studentIds.length; i++) {
@@ -69,27 +72,172 @@ function useTitle(headsAuthority) {
     return isRight;
 }
 
+/**
+ * 初始化搜索下拉框
+ */
 function initSearch(){
     $('#searchHead').empty();
     $('#searchHead').append($('<option value="0">').text('请选择标题'));
+
+    var selected = -1;//当前被选中的序号
+
     for(var i = 0;i<searchHeads.length;i++){
-        if(searchHeads[i].value == autonomicPracticeTeacherListVo.autonomousPracticeHeadId){
+        if(Number(searchHeads[i].value) == autonomicPracticeTeacherListVo.autonomousPracticeHeadId){
             $('#searchHead').append($('<option value="'+searchHeads[i].value+'" selected="selected" >').text(searchHeads[i].text));
+            selected = i;
         } else {
             $('#searchHead').append($('<option value="'+searchHeads[i].value+'" >').text(searchHeads[i].text));
         }
     }
 
+    //处理被选中选
+    if(selected != -1){
+        $('#initSearchTitle').append(outputSearchHead(searchHeads[selected].typeValue,'content',searchHeads[selected].content,autonomicPracticeTeacherListVo.content,searchHeads[selected].databaseTableField));
+    }
+    $('#content').addClass('uk-margin-small-top');//修改样式
     $('#searchContent').val((autonomicPracticeTeacherListVo.content==null?'':autonomicPracticeTeacherListVo.content));
     $('#searchAutonomousPracticeInfoId').val(autonomicPracticeTeacherListVo.autonomousPracticeInfoId);
 }
 
+//所选搜索标题改变时
+function changeSearchTitle(){
+    var selected = -1;//当前被选中的序号
+    for(var i = 0;i<searchHeads.length;i++){
+        if(Number(searchHeads[i].value) == Number($('#searchHead').val())){
+            selected = i;
+            break;
+        }
+    }
+
+    //处理被选中选
+    if(selected != -1){
+        $('#initSearchTitle').append(outputSearchHead(searchHeads[selected].typeValue,'content',searchHeads[selected].content,'',searchHeads[selected].databaseTableField));
+    }
+    $('#content').addClass('uk-margin-small-top');
+}
+
+//处理搜索中标题
+function outputSearchHead(typeValue,title_variable,headContent,updateContent,databaseTableField){
+    if(typeValue === 'select'){
+        $('#initSearchTitle').empty();
+        return addHeadTypeRadio('',title_variable,headContent,updateContent);
+    }
+
+    if(typeValue === 'switch'){
+        $('#initSearchTitle').empty();
+        return addHeadTypeRadio('',title_variable,headContent,updateContent);//开关变单选
+    }
+
+    if (typeValue === 'text') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeText('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'date') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeDate('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'time') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeTime('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'email') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeEmail('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'number') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeNumber('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'mobile') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeMobile('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'telephone') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeTelephone('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'postcode') {
+        $('#initSearchTitle').empty();
+        return addHeadTypePostcode('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'qq') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeQq('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'ID_card') {
+        $('#initSearchTitle').empty();
+        return addHeadTypeIDCard('', title_variable, updateContent);
+    }
+
+    if (typeValue === 'database') {
+        if (databaseTableField === 'student_number') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeText('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_name') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeText('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'grade_name') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeText('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_phone') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeMobile('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_email') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeEmail('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_birthday') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeDate('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_sex') {
+            $('#initSearchTitle').empty();
+            return addDatabaseStudentSex('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_identity_card') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeIDCard('', title_variable, updateContent);
+        }
+
+        if (databaseTableField === 'student_address') {
+            $('#initSearchTitle').empty();
+            return addHeadTypeText('', title_variable, updateContent);
+        }
+    }
+}
+
+/**
+ * 重置搜索
+ */
 function refresh(){
     $('#searchHead').val(0);
     $('#searchContent').val('');
     $('#searchForm').submit();
 }
 
+/**
+ * 创建分页
+ */
 function createPage(){
     var pagination = UIkit.pagination('.uk-pagination', {
         items: param.totalData,
@@ -99,6 +247,10 @@ function createPage(){
     });
 }
 
+/**
+ * 全局带分页参数
+ * @type {{autonomousPracticeInfoId: (*|Document.autonomousPracticeInfoId|number), pageNum: (*|number), pageSize: *, totalData: (*|number), autonomousPracticeHeadId: (*|Document.autonomousPracticeHeadId), content: *}}
+ */
 var param = {
     'autonomousPracticeInfoId':autonomicPracticeTeacherListVo.autonomousPracticeInfoId,
     'pageNum':autonomicPracticeTeacherListVo.pageNum,
@@ -108,6 +260,9 @@ var param = {
     'content':autonomicPracticeTeacherListVo.content
 }
 
+/**
+ * 执行入口
+ */
 function action(){
     $.post(web_path + '/teacher/autonomicpractice/autonomicPracticeTeacherData',param,function(data){
        if(data.state){
@@ -147,7 +302,11 @@ function saveStudent(obj){
     var p = $(obj).parent().parent();
     $.post(web_path + '/teacher/autonomicpractice/addAutonomicPracticeTeacherList',p.serialize(),
     function(data){
-       layer.msg(data.msg);
+        if(data.state){
+            window.location.reload(true);
+        } else {
+            layer.msg(data.msg);
+        }
     },'json');
     console.log(p.serialize());
 }

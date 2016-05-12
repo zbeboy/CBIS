@@ -81,10 +81,13 @@
                     <div class="uk-width-1-4 uk-text-left">
                     </div>
                     <div class="uk-width-3-4 uk-text-right">
-                        <select class="uk-margin-small-top" id="searchHead" name="autonomousPracticeHeadId" >
+                        <select class="uk-margin-small-top" id="searchHead" name="autonomousPracticeHeadId" onchange="changeSearchTitle();"  >
                         </select>
-                        <input type="text" placeholder="内容" id="searchContent"
-                               name="content" class="uk-margin-small-top"/>
+                        <span id="initSearchTitle" >
+                            <input type="text" placeholder="内容" id="searchContent"
+                                   name="content" class="uk-margin-small-top"/>
+                        </span>
+
                         <input type="hidden" id="searchAutonomousPracticeInfoId" name="autonomousPracticeInfoId" />
                         <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
                         <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" >重置</button>

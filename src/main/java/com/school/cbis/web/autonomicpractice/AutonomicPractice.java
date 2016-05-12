@@ -869,7 +869,7 @@ public class AutonomicPractice {
         //isShowHighlyActive
         Byte b = 1;
         int count = 0;
-        List<SelectData> selectDatas = new ArrayList<>();//标题搜索用
+        List<AutonomicPracticeHeadTypeVo> selectDatas = new ArrayList<>();//标题搜索用
 
         //查询出此次自主实习的所有高效工作区标题
         Result<Record> autonomousPracticeHeadRecords = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdAndIsShowHighlyActive(autonomousPracticeInfo.getAutonomousPracticeTemplateId(), b);
@@ -921,9 +921,13 @@ public class AutonomicPractice {
                         autonomicPracticeTeacherVos.add(autonomicPracticeTeacherVo);
                     }
                     if (count == 0) {
-                        SelectData selectData = new SelectData();
+                        AutonomicPracticeHeadTypeVo selectData = new AutonomicPracticeHeadTypeVo();
                         selectData.setValue(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID) + "");
                         selectData.setText(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE));
+                        selectData.setTypeValue(ah.getValue(Tables.HEAD_TYPE.TYPE_VALUE));
+                        selectData.setTypeName(ah.getValue(Tables.HEAD_TYPE.TYPE_NAME));
+                        selectData.setContent(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT));
+                        selectData.setDatabaseTableField(ah.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD));
                         selectDatas.add(selectData);
                     }
 

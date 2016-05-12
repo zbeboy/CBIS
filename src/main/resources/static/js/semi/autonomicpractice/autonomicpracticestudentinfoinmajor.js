@@ -14,6 +14,9 @@ var pagingParam = {
     'haveNoPayStudent':[]//数据
 }
 
+/**
+ * 输出已提交界面数据
+ */
 function outputHavePayHtml(){
     $('#tableHavePayData').empty();
     var dataPayLength = 0;
@@ -37,6 +40,9 @@ function outputHavePayHtml(){
     }
 }
 
+/**
+ * 输出未提交界面数据
+ */
 function outputHaveNoPayHtml() {
     $('#tableHaveNoPayData').empty();
     var dataNoPayLength = 0
@@ -60,6 +66,9 @@ function outputHaveNoPayHtml() {
 
 }
 
+/**
+ * 初始化搜索
+ */
 function initSearch(){
     if(autonomousPracticeParam.type == 0){
         $('#searchHavePayStudentNumber').val(autonomousPracticeParam.studentNumber);
@@ -76,30 +85,45 @@ function initSearch(){
     }
 }
 
+/**
+ * 已提交界面搜索
+ */
 function havePaySearch(){
     autonomousPracticeParam.type = 0;
     autonomousPracticeParam.studentNumber = $('#searchHavePayStudentNumber').val().trim();
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 
+/**
+ * 重置已提交界面搜索
+ */
 function refreshHavePaySearch(){
     autonomousPracticeParam.type = 0;
     autonomousPracticeParam.studentNumber = '';
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 
+/**
+ * 未提交界面搜索
+ */
 function haveNoPaySearch(){
     autonomousPracticeParam.type = 1;
     autonomousPracticeParam.studentNumber = $('#searchHaveNoPayContent').val().trim();
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 
+/**
+ * 重置未提交界面搜索
+ */
 function refreshHaveNoPaySearch(){
     autonomousPracticeParam.type = 1;
     autonomousPracticeParam.studentNumber = '';
     window.location.href = web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajor?autonomousPracticeParam='+JSON.stringify(autonomousPracticeParam);
 }
 
+/**
+ * 执行入口
+ */
 function action() {
     $.post(web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInMajorData', autonomousPracticeParam,
         function (data) {
@@ -113,6 +137,10 @@ function action() {
         }, 'json');
 }
 
+/**
+ * 创建分页
+ * @param data
+ */
 function createPage(data){
     if(data.single.havePayStudent.length>0){
         UIkit.pagination('#havePayPagination', {
