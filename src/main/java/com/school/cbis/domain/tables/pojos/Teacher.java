@@ -5,7 +5,6 @@ package com.school.cbis.domain.tables.pojos;
 
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
@@ -25,20 +24,12 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teacher implements Serializable {
 
-	private static final long serialVersionUID = -1654338397;
+	private static final long serialVersionUID = -785185249;
 
 	private Integer id;
 	private Integer tieId;
 	private String  teacherJobNumber;
-	private String  teacherName;
-	private String  teacherPhone;
-	private String  teacherEmail;
-	private Date    teacherBirthday;
-	private String  teacherHeadPhoto;
-	private String  teacherSex;
 	private Integer teacherIntroduceArticleInfoId;
-	private String  teacherIdentityCard;
-	private String  teacherAddress;
 
 	public Teacher() {}
 
@@ -46,43 +37,19 @@ public class Teacher implements Serializable {
 		this.id = value.id;
 		this.tieId = value.tieId;
 		this.teacherJobNumber = value.teacherJobNumber;
-		this.teacherName = value.teacherName;
-		this.teacherPhone = value.teacherPhone;
-		this.teacherEmail = value.teacherEmail;
-		this.teacherBirthday = value.teacherBirthday;
-		this.teacherHeadPhoto = value.teacherHeadPhoto;
-		this.teacherSex = value.teacherSex;
 		this.teacherIntroduceArticleInfoId = value.teacherIntroduceArticleInfoId;
-		this.teacherIdentityCard = value.teacherIdentityCard;
-		this.teacherAddress = value.teacherAddress;
 	}
 
 	public Teacher(
 		Integer id,
 		Integer tieId,
 		String  teacherJobNumber,
-		String  teacherName,
-		String  teacherPhone,
-		String  teacherEmail,
-		Date    teacherBirthday,
-		String  teacherHeadPhoto,
-		String  teacherSex,
-		Integer teacherIntroduceArticleInfoId,
-		String  teacherIdentityCard,
-		String  teacherAddress
+		Integer teacherIntroduceArticleInfoId
 	) {
 		this.id = id;
 		this.tieId = tieId;
 		this.teacherJobNumber = teacherJobNumber;
-		this.teacherName = teacherName;
-		this.teacherPhone = teacherPhone;
-		this.teacherEmail = teacherEmail;
-		this.teacherBirthday = teacherBirthday;
-		this.teacherHeadPhoto = teacherHeadPhoto;
-		this.teacherSex = teacherSex;
 		this.teacherIntroduceArticleInfoId = teacherIntroduceArticleInfoId;
-		this.teacherIdentityCard = teacherIdentityCard;
-		this.teacherAddress = teacherAddress;
 	}
 
 	@NotNull
@@ -113,84 +80,12 @@ public class Teacher implements Serializable {
 		this.teacherJobNumber = teacherJobNumber;
 	}
 
-	@NotNull
-	@Size(max = 20)
-	public String getTeacherName() {
-		return this.teacherName;
-	}
-
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
-	}
-
-	@Size(max = 15)
-	public String getTeacherPhone() {
-		return this.teacherPhone;
-	}
-
-	public void setTeacherPhone(String teacherPhone) {
-		this.teacherPhone = teacherPhone;
-	}
-
-	@Size(max = 100)
-	public String getTeacherEmail() {
-		return this.teacherEmail;
-	}
-
-	public void setTeacherEmail(String teacherEmail) {
-		this.teacherEmail = teacherEmail;
-	}
-
-	public Date getTeacherBirthday() {
-		return this.teacherBirthday;
-	}
-
-	public void setTeacherBirthday(Date teacherBirthday) {
-		this.teacherBirthday = teacherBirthday;
-	}
-
-	@Size(max = 800)
-	public String getTeacherHeadPhoto() {
-		return this.teacherHeadPhoto;
-	}
-
-	public void setTeacherHeadPhoto(String teacherHeadPhoto) {
-		this.teacherHeadPhoto = teacherHeadPhoto;
-	}
-
-	@Size(max = 2)
-	public String getTeacherSex() {
-		return this.teacherSex;
-	}
-
-	public void setTeacherSex(String teacherSex) {
-		this.teacherSex = teacherSex;
-	}
-
 	public Integer getTeacherIntroduceArticleInfoId() {
 		return this.teacherIntroduceArticleInfoId;
 	}
 
 	public void setTeacherIntroduceArticleInfoId(Integer teacherIntroduceArticleInfoId) {
 		this.teacherIntroduceArticleInfoId = teacherIntroduceArticleInfoId;
-	}
-
-	@Size(max = 20)
-	public String getTeacherIdentityCard() {
-		return this.teacherIdentityCard;
-	}
-
-	public void setTeacherIdentityCard(String teacherIdentityCard) {
-		this.teacherIdentityCard = teacherIdentityCard;
-	}
-
-	@Size(max = 200)
-	public String getTeacherAddress() {
-		return this.teacherAddress;
-	}
-
-	public void setTeacherAddress(String teacherAddress) {
-		this.teacherAddress = teacherAddress;
 	}
 
 	@Override
@@ -200,15 +95,7 @@ public class Teacher implements Serializable {
 		sb.append(id);
 		sb.append(", ").append(tieId);
 		sb.append(", ").append(teacherJobNumber);
-		sb.append(", ").append(teacherName);
-		sb.append(", ").append(teacherPhone);
-		sb.append(", ").append(teacherEmail);
-		sb.append(", ").append(teacherBirthday);
-		sb.append(", ").append(teacherHeadPhoto);
-		sb.append(", ").append(teacherSex);
 		sb.append(", ").append(teacherIntroduceArticleInfoId);
-		sb.append(", ").append(teacherIdentityCard);
-		sb.append(", ").append(teacherAddress);
 
 		sb.append(")");
 		return sb.toString();

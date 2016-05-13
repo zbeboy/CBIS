@@ -8,6 +8,28 @@ create table users(
   password varchar(500) not null,
   enabled boolean not null,
   user_type_id int not null,
+  real_name varchar(30) comment '真实姓名',
+  mobile varchar(15) unique comment '手机',
+  email varchar(500) unique comment '邮箱',
+  birthday date comment '生日',
+  head_img varchar(500) comment '头像' ,
+  sex varchar(2) comment '性别' ,
+  identity_card varchar(20) comment '身份证号',
+  family_residence varchar(600) comment '家庭居住地' ,
+  post varchar(100) comment '职务',
+  political_landscape varchar(10) comment '政治面貌' ,
+  religious_belief varchar(500) comment '宗教信仰',
+  nation varchar(200) comment '民族',
+  is_check_mobile boolean not null default false comment '已验证手机',
+  is_check_email boolean not null default false  comment '已验证邮箱',
+  mobile_check_key varchar(20) comment '手机验证码',
+  email_check_key varchar(20) comment '邮箱验证码',
+  password_reset_key varchar(20) comment '密码重置key',
+  mobile_check_key_validity_period datetime  comment '手机验证有效期',
+  email_check_key_validity_period datetime comment '邮箱验证有效期',
+  password_reset_key__validity_period datetime comment '密码重置key有效期',
+  lang_key varchar(5) comment 'message source',
+  persona_introduction varchar(200) comment '个人介绍',
   foreign key(user_type_id) references user_type(id)
 );
 
@@ -93,32 +115,29 @@ create table grade(
 create table student(
   id int not null primary key auto_increment,
   student_number varchar(25) not null,
-  student_name varchar(20) not null,
   grade_id int not null,
-  student_phone varchar(15),
-  student_email varchar(100),
-  student_birthday date,
-  student_head_photo varchar(800),
-  student_sex varchar(2),
-  student_identity_card varchar(20),
-  student_address varchar(200),
+  dormitory_number varchar(50) comment '宿舍号',
+  parent_name varchar(10) comment '家长姓名',
+  parent_contact_phone varchar(15) comment '家长联系电话',
+  place_origin varchar(500) comment '生源地',
+  problem_situation varchar(500) comment '问题情况',
   student_introduce_article_info_id int,
   foreign key(grade_id) references grade(id)
+);
+
+create table student_poor(
+  id int not null primary key auto_increment,
+  title varchar(200) comment '是每年系统自动生成一条记录?(如:2015-2016学年贫困程度)',
+  content varchar(100),
+  student_id int not null,
+  foreign key(student_id) references student(id)
 );
 
 create table teacher(
   id int not null primary key auto_increment,
   tie_id int not null,
   teacher_job_number varchar(25) not null,
-  teacher_name varchar(20) not null,
-  teacher_phone varchar(15),
-  teacher_email varchar(100),
-  teacher_birthday date,
-  teacher_head_photo varchar(800),
-  teacher_sex varchar(2),
   teacher_introduce_article_info_id int,
-  teacher_identity_card varchar(20),
-  teacher_address varchar(200),
   foreign key(tie_id) references tie(id)
 );
 
@@ -448,7 +467,8 @@ create table autonomous_practice_content(
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 
-insert into users values('10000','e10adc3949ba59abbe56e057f20f883e',true,2);
+insert into users(username, password, enabled, user_type_id, real_name, mobile, email, birthday, head_img, sex, identity_card, family_residence, post, political_landscape, religious_belief, nation, is_check_mobile, is_check_email, mobile_check_key, email_check_key, password_reset_key, mobile_check_key_validity_period, email_check_key_validity_period, password_reset_key__validity_period,lang_key, persona_introduction)
+values('10000','e10adc3949ba59abbe56e057f20f883e',true,2,'zbeboy','13987614709','863052317@qq.com','1994-01-07',null,'男','530181199401073015','昆明市','普通学生','预备党员','无','汉',true,true,null,null,null,null,null,null,'zh_cn','系统管理员');
 insert into authorities values('10000','ROLE_ADMIN');
 
 insert into article_type(name) values('系简介');
@@ -472,7 +492,7 @@ insert into tie(tie_name,yard_id) values('信息工程系',1);
 
 insert into major(tie_id,major_name) values(1,'计算机科学与技术');
 
-insert into teacher(tie_id,teacher_job_number,teacher_name) values(1,'10000','10000');
+insert into teacher(tie_id,teacher_job_number) values(1,'10000');
 
 insert into grade(major_id,year,grade_name,grade_head) values(1,'2012','计科1211','10000');
 

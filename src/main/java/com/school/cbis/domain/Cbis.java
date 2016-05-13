@@ -26,6 +26,7 @@ import com.school.cbis.domain.tables.PlaceFileTitle;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
+import com.school.cbis.domain.tables.StudentPoor;
 import com.school.cbis.domain.tables.SystemInform;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
@@ -67,7 +68,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -1242919713;
+	private static final long serialVersionUID = -1641207071;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -112,6 +113,7 @@ public class Cbis extends SchemaImpl {
 			SchemaVersion.SCHEMA_VERSION,
 			Student.STUDENT,
 			StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO,
+			StudentPoor.STUDENT_POOR,
 			SystemInform.SYSTEM_INFORM,
 			Teacher.TEACHER,
 			TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO,

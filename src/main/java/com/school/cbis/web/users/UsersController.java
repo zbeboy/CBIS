@@ -283,12 +283,15 @@ public class UsersController {
         }
         Teacher teacher = new Teacher();
         teacher.setTeacherJobNumber(username);
-        teacher.setTeacherName(realname);
         teacher.setTieId(tieId);
         teacherService.save(teacher);
         Users users = new Users();
         users.setUsername(username);
         users.setPassword(MD5Utils.md5(username));
+        users.setRealName(realname);
+        Byte bs = 0;
+        users.setIsCheckEmail(bs);
+        users.setIsCheckMobile(bs);
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
@@ -313,12 +316,15 @@ public class UsersController {
     public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade) {
         Student student = new Student();
         student.setStudentNumber(username);
-        student.setStudentName(realname);
         student.setGradeId(grade);
         studentService.save(student);
         Users users = new Users();
         users.setUsername(username);
         users.setPassword(MD5Utils.md5(username));
+        Byte bs = 0;
+        users.setIsCheckEmail(bs);
+        users.setIsCheckMobile(bs);
+        users.setRealName(realname);
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));

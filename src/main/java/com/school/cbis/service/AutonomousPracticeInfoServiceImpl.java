@@ -178,16 +178,17 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
     }
 
     @Override
-    public Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer>> findByTieIdAndPage(int tieId,int pageNum,int pageSize) {
+    public Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer,String>> findByTieIdAndPage(int tieId,int pageNum,int pageSize) {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer>> record10s =
+        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer,Integer,String>> record11s =
         create.select(Tables.AUTONOMOUS_PRACTICE_INFO.ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE,
                 Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME,Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR,
                 Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
                 Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME,Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME,
-                Tables.USERS.USERNAME,Tables.USERS.USER_TYPE_ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID)
+                Tables.USERS.USERNAME,Tables.USERS.USER_TYPE_ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID,
+                Tables.USERS.REAL_NAME)
                 .from(Tables.AUTONOMOUS_PRACTICE_INFO)
                 .join(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
                 .on(Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID))
@@ -197,7 +198,7 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
                 .orderBy(Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME.desc())
                 .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
-        return record10s;
+        return record11s;
     }
 
     @Override

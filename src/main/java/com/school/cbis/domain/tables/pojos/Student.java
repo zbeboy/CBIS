@@ -5,7 +5,6 @@ package com.school.cbis.domain.tables.pojos;
 
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
@@ -25,19 +24,16 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student implements Serializable {
 
-	private static final long serialVersionUID = -1219227907;
+	private static final long serialVersionUID = -1646445627;
 
 	private Integer id;
 	private String  studentNumber;
-	private String  studentName;
 	private Integer gradeId;
-	private String  studentPhone;
-	private String  studentEmail;
-	private Date    studentBirthday;
-	private String  studentHeadPhoto;
-	private String  studentSex;
-	private String  studentIdentityCard;
-	private String  studentAddress;
+	private String  dormitoryNumber;
+	private String  parentName;
+	private String  parentContactPhone;
+	private String  placeOrigin;
+	private String  problemSituation;
 	private Integer studentIntroduceArticleInfoId;
 
 	public Student() {}
@@ -45,43 +41,34 @@ public class Student implements Serializable {
 	public Student(Student value) {
 		this.id = value.id;
 		this.studentNumber = value.studentNumber;
-		this.studentName = value.studentName;
 		this.gradeId = value.gradeId;
-		this.studentPhone = value.studentPhone;
-		this.studentEmail = value.studentEmail;
-		this.studentBirthday = value.studentBirthday;
-		this.studentHeadPhoto = value.studentHeadPhoto;
-		this.studentSex = value.studentSex;
-		this.studentIdentityCard = value.studentIdentityCard;
-		this.studentAddress = value.studentAddress;
+		this.dormitoryNumber = value.dormitoryNumber;
+		this.parentName = value.parentName;
+		this.parentContactPhone = value.parentContactPhone;
+		this.placeOrigin = value.placeOrigin;
+		this.problemSituation = value.problemSituation;
 		this.studentIntroduceArticleInfoId = value.studentIntroduceArticleInfoId;
 	}
 
 	public Student(
 		Integer id,
 		String  studentNumber,
-		String  studentName,
 		Integer gradeId,
-		String  studentPhone,
-		String  studentEmail,
-		Date    studentBirthday,
-		String  studentHeadPhoto,
-		String  studentSex,
-		String  studentIdentityCard,
-		String  studentAddress,
+		String  dormitoryNumber,
+		String  parentName,
+		String  parentContactPhone,
+		String  placeOrigin,
+		String  problemSituation,
 		Integer studentIntroduceArticleInfoId
 	) {
 		this.id = id;
 		this.studentNumber = studentNumber;
-		this.studentName = studentName;
 		this.gradeId = gradeId;
-		this.studentPhone = studentPhone;
-		this.studentEmail = studentEmail;
-		this.studentBirthday = studentBirthday;
-		this.studentHeadPhoto = studentHeadPhoto;
-		this.studentSex = studentSex;
-		this.studentIdentityCard = studentIdentityCard;
-		this.studentAddress = studentAddress;
+		this.dormitoryNumber = dormitoryNumber;
+		this.parentName = parentName;
+		this.parentContactPhone = parentContactPhone;
+		this.placeOrigin = placeOrigin;
+		this.problemSituation = problemSituation;
 		this.studentIntroduceArticleInfoId = studentIntroduceArticleInfoId;
 	}
 
@@ -105,16 +92,6 @@ public class Student implements Serializable {
 	}
 
 	@NotNull
-	@Size(max = 20)
-	public String getStudentName() {
-		return this.studentName;
-	}
-
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-
-	@NotNull
 	public Integer getGradeId() {
 		return this.gradeId;
 	}
@@ -123,66 +100,49 @@ public class Student implements Serializable {
 		this.gradeId = gradeId;
 	}
 
+	@Size(max = 50)
+	public String getDormitoryNumber() {
+		return this.dormitoryNumber;
+	}
+
+	public void setDormitoryNumber(String dormitoryNumber) {
+		this.dormitoryNumber = dormitoryNumber;
+	}
+
+	@Size(max = 10)
+	public String getParentName() {
+		return this.parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
 	@Size(max = 15)
-	public String getStudentPhone() {
-		return this.studentPhone;
+	public String getParentContactPhone() {
+		return this.parentContactPhone;
 	}
 
-	public void setStudentPhone(String studentPhone) {
-		this.studentPhone = studentPhone;
+	public void setParentContactPhone(String parentContactPhone) {
+		this.parentContactPhone = parentContactPhone;
 	}
 
-	@Size(max = 100)
-	public String getStudentEmail() {
-		return this.studentEmail;
+	@Size(max = 500)
+	public String getPlaceOrigin() {
+		return this.placeOrigin;
 	}
 
-	public void setStudentEmail(String studentEmail) {
-		this.studentEmail = studentEmail;
+	public void setPlaceOrigin(String placeOrigin) {
+		this.placeOrigin = placeOrigin;
 	}
 
-	public Date getStudentBirthday() {
-		return this.studentBirthday;
+	@Size(max = 500)
+	public String getProblemSituation() {
+		return this.problemSituation;
 	}
 
-	public void setStudentBirthday(Date studentBirthday) {
-		this.studentBirthday = studentBirthday;
-	}
-
-	@Size(max = 800)
-	public String getStudentHeadPhoto() {
-		return this.studentHeadPhoto;
-	}
-
-	public void setStudentHeadPhoto(String studentHeadPhoto) {
-		this.studentHeadPhoto = studentHeadPhoto;
-	}
-
-	@Size(max = 2)
-	public String getStudentSex() {
-		return this.studentSex;
-	}
-
-	public void setStudentSex(String studentSex) {
-		this.studentSex = studentSex;
-	}
-
-	@Size(max = 20)
-	public String getStudentIdentityCard() {
-		return this.studentIdentityCard;
-	}
-
-	public void setStudentIdentityCard(String studentIdentityCard) {
-		this.studentIdentityCard = studentIdentityCard;
-	}
-
-	@Size(max = 200)
-	public String getStudentAddress() {
-		return this.studentAddress;
-	}
-
-	public void setStudentAddress(String studentAddress) {
-		this.studentAddress = studentAddress;
+	public void setProblemSituation(String problemSituation) {
+		this.problemSituation = problemSituation;
 	}
 
 	public Integer getStudentIntroduceArticleInfoId() {
@@ -199,15 +159,12 @@ public class Student implements Serializable {
 
 		sb.append(id);
 		sb.append(", ").append(studentNumber);
-		sb.append(", ").append(studentName);
 		sb.append(", ").append(gradeId);
-		sb.append(", ").append(studentPhone);
-		sb.append(", ").append(studentEmail);
-		sb.append(", ").append(studentBirthday);
-		sb.append(", ").append(studentHeadPhoto);
-		sb.append(", ").append(studentSex);
-		sb.append(", ").append(studentIdentityCard);
-		sb.append(", ").append(studentAddress);
+		sb.append(", ").append(dormitoryNumber);
+		sb.append(", ").append(parentName);
+		sb.append(", ").append(parentContactPhone);
+		sb.append(", ").append(placeOrigin);
+		sb.append(", ").append(problemSituation);
 		sb.append(", ").append(studentIntroduceArticleInfoId);
 
 		sb.append(")");

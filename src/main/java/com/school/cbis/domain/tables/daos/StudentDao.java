@@ -7,7 +7,6 @@ package com.school.cbis.domain.tables.daos;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.records.StudentRecord;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -73,13 +72,6 @@ public class StudentDao extends DAOImpl<StudentRecord, com.school.cbis.domain.ta
 	}
 
 	/**
-	 * Fetch records that have <code>student_name IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentName(String... values) {
-		return fetch(Student.STUDENT.STUDENT_NAME, values);
-	}
-
-	/**
 	 * Fetch records that have <code>grade_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.Student> fetchByGradeId(Integer... values) {
@@ -87,52 +79,38 @@ public class StudentDao extends DAOImpl<StudentRecord, com.school.cbis.domain.ta
 	}
 
 	/**
-	 * Fetch records that have <code>student_phone IN (values)</code>
+	 * Fetch records that have <code>dormitory_number IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentPhone(String... values) {
-		return fetch(Student.STUDENT.STUDENT_PHONE, values);
+	public List<com.school.cbis.domain.tables.pojos.Student> fetchByDormitoryNumber(String... values) {
+		return fetch(Student.STUDENT.DORMITORY_NUMBER, values);
 	}
 
 	/**
-	 * Fetch records that have <code>student_email IN (values)</code>
+	 * Fetch records that have <code>parent_name IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentEmail(String... values) {
-		return fetch(Student.STUDENT.STUDENT_EMAIL, values);
+	public List<com.school.cbis.domain.tables.pojos.Student> fetchByParentName(String... values) {
+		return fetch(Student.STUDENT.PARENT_NAME, values);
 	}
 
 	/**
-	 * Fetch records that have <code>student_birthday IN (values)</code>
+	 * Fetch records that have <code>parent_contact_phone IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentBirthday(Date... values) {
-		return fetch(Student.STUDENT.STUDENT_BIRTHDAY, values);
+	public List<com.school.cbis.domain.tables.pojos.Student> fetchByParentContactPhone(String... values) {
+		return fetch(Student.STUDENT.PARENT_CONTACT_PHONE, values);
 	}
 
 	/**
-	 * Fetch records that have <code>student_head_photo IN (values)</code>
+	 * Fetch records that have <code>place_origin IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentHeadPhoto(String... values) {
-		return fetch(Student.STUDENT.STUDENT_HEAD_PHOTO, values);
+	public List<com.school.cbis.domain.tables.pojos.Student> fetchByPlaceOrigin(String... values) {
+		return fetch(Student.STUDENT.PLACE_ORIGIN, values);
 	}
 
 	/**
-	 * Fetch records that have <code>student_sex IN (values)</code>
+	 * Fetch records that have <code>problem_situation IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentSex(String... values) {
-		return fetch(Student.STUDENT.STUDENT_SEX, values);
-	}
-
-	/**
-	 * Fetch records that have <code>student_identity_card IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentIdentityCard(String... values) {
-		return fetch(Student.STUDENT.STUDENT_IDENTITY_CARD, values);
-	}
-
-	/**
-	 * Fetch records that have <code>student_address IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentAddress(String... values) {
-		return fetch(Student.STUDENT.STUDENT_ADDRESS, values);
+	public List<com.school.cbis.domain.tables.pojos.Student> fetchByProblemSituation(String... values) {
+		return fetch(Student.STUDENT.PROBLEM_SITUATION, values);
 	}
 
 	/**

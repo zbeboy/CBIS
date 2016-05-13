@@ -232,20 +232,9 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieElegantShow")
     public String tieElegantShow(@RequestParam("id") int id, ModelMap modelMap) {
-        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
-        if (record7s.isNotEmpty()) {
-            List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
-            if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
-                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
-                if (!teachers.isEmpty()) {
-                    articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
-                }
-            } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
-                List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
-                if (!students.isEmpty()) {
-                    articleVos.get(0).setUserRealName(students.get(0).getStudentName());
-                }
-            }
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        if (record8s.isNotEmpty()) {
+            List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
 
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 
@@ -494,21 +483,9 @@ public class TieManagerController {
     @ResponseBody
     public Map<String, Object> tieArticleShowData(@RequestParam("id") int id) {
         Map<String, Object> map = new HashMap<>();
-        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
-        if (record7s.isNotEmpty()) {
-            List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
-            if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
-                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
-                if (!teachers.isEmpty()) {
-                    articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
-                }
-            } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
-                List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
-                if (!students.isEmpty()) {
-                    articleVos.get(0).setUserRealName(students.get(0).getStudentName());
-                }
-            }
-
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        if (record8s.isNotEmpty()) {
+            List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 
             if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
@@ -636,20 +613,9 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieNoticeShow")
     public String tieNoticeShow(@RequestParam("id") int id, ModelMap modelMap) {
-        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = articleInfoService.findByIdWithUsers(id);
-        if (record7s.isNotEmpty()) {
-            List<ArticleVo> articleVos = record7s.into(ArticleVo.class);
-            if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
-                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleVos.get(0).getUsername());
-                if (!teachers.isEmpty()) {
-                    articleVos.get(0).setUserRealName(teachers.get(0).getTeacherName());
-                }
-            } else if (articleVos.get(0).getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT)) {
-                List<Student> students = studentService.findByStudentNumber(articleVos.get(0).getUsername());
-                if (!students.isEmpty()) {
-                    articleVos.get(0).setUserRealName(students.get(0).getStudentName());
-                }
-            }
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        if (record8s.isNotEmpty()) {
+            List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
 
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
 

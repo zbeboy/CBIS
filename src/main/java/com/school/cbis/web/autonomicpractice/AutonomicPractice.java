@@ -664,10 +664,10 @@ public class AutonomicPractice {
         }
 
         //处理数据
-        Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer>> record10s
+        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer,String>> record11s
                 = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
-        if (record10s.isNotEmpty()) {
-            List<AutonomicPracticeListVo> autonomicPracticeListVos = record10s.into(AutonomicPracticeListVo.class);
+        if (record11s.isNotEmpty()) {
+            List<AutonomicPracticeListVo> autonomicPracticeListVos = record11s.into(AutonomicPracticeListVo.class);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             for (AutonomicPracticeListVo autonomicPracticeListVo : autonomicPracticeListVos) {
                 if (isStudent) {//是学生
@@ -689,18 +689,6 @@ public class AutonomicPractice {
                         autonomicPracticeListVo.setOk(true);
                     } else {
                         autonomicPracticeListVo.setOk(false);
-                    }
-                }
-                //根据用户类型获取用户姓名
-                if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == autonomicPracticeListVo.getUserTypeId()) {
-                    List<Student> students = studentService.findByStudentNumber(autonomicPracticeListVo.getUsername());
-                    if (!students.isEmpty()) {
-                        autonomicPracticeListVo.setRealName(students.get(0).getStudentName());
-                    }
-                } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == autonomicPracticeListVo.getUserTypeId()) {
-                    List<Teacher> teachers = teacherService.findByTeacherJobNumber(autonomicPracticeListVo.getUsername());
-                    if (!teachers.isEmpty()) {
-                        autonomicPracticeListVo.setRealName(teachers.get(0).getTeacherName());
                     }
                 }
 
@@ -733,12 +721,10 @@ public class AutonomicPractice {
 
         //获取当前用户信息
         Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
         boolean isStudent = false;//本人是否为学生
         String studentYear = null;//本人年级
         int studentId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
             if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == record.getValue(Tables.USERS.USER_TYPE_ID)) {
                 isStudent = true;
                 studentYear = record.getValue(Tables.GRADE.YEAR);
@@ -747,13 +733,13 @@ public class AutonomicPractice {
                 AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
                 autonomicPracticeStudentInfoVo.setId(record.getValue(Tables.STUDENT.ID));
                 autonomicPracticeStudentInfoVo.setStudentNumber(record.getValue(Tables.STUDENT.STUDENT_NUMBER));
-                autonomicPracticeStudentInfoVo.setStudentName(record.getValue(Tables.STUDENT.STUDENT_NAME));
-                autonomicPracticeStudentInfoVo.setStudentPhone(record.getValue(Tables.STUDENT.STUDENT_PHONE));
-                autonomicPracticeStudentInfoVo.setStudentEmail(record.getValue(Tables.STUDENT.STUDENT_EMAIL));
-                autonomicPracticeStudentInfoVo.setStudentBirthday(record.getValue(Tables.STUDENT.STUDENT_BIRTHDAY));
-                autonomicPracticeStudentInfoVo.setStudentSex(record.getValue(Tables.STUDENT.STUDENT_SEX));
-                autonomicPracticeStudentInfoVo.setStudentIdentityCard(record.getValue(Tables.STUDENT.STUDENT_IDENTITY_CARD));
-                autonomicPracticeStudentInfoVo.setStudentAddress(record.getValue(Tables.STUDENT.STUDENT_ADDRESS));
+                autonomicPracticeStudentInfoVo.setStudentName(record.getValue(Tables.USERS.REAL_NAME));
+                autonomicPracticeStudentInfoVo.setStudentPhone(record.getValue(Tables.USERS.MOBILE));
+                autonomicPracticeStudentInfoVo.setStudentEmail(record.getValue(Tables.USERS.EMAIL));
+                autonomicPracticeStudentInfoVo.setStudentBirthday(record.getValue(Tables.USERS.BIRTHDAY));
+                autonomicPracticeStudentInfoVo.setStudentSex(record.getValue(Tables.USERS.SEX));
+                autonomicPracticeStudentInfoVo.setStudentIdentityCard(record.getValue(Tables.USERS.IDENTITY_CARD));
+                autonomicPracticeStudentInfoVo.setStudentAddress(record.getValue(Tables.USERS.FAMILY_RESIDENCE));
                 autonomicPracticeStudentInfoVo.setGradeName(record.getValue(Tables.GRADE.GRADE_NAME));
                 modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
             }
@@ -989,13 +975,13 @@ public class AutonomicPractice {
         AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
         autonomicPracticeStudentInfoVo.setId(student.getValue(Tables.STUDENT.ID));
         autonomicPracticeStudentInfoVo.setStudentNumber(student.getValue(Tables.STUDENT.STUDENT_NUMBER));
-        autonomicPracticeStudentInfoVo.setStudentName(student.getValue(Tables.STUDENT.STUDENT_NAME));
-        autonomicPracticeStudentInfoVo.setStudentPhone(student.getValue(Tables.STUDENT.STUDENT_PHONE));
-        autonomicPracticeStudentInfoVo.setStudentEmail(student.getValue(Tables.STUDENT.STUDENT_EMAIL));
-        autonomicPracticeStudentInfoVo.setStudentBirthday(student.getValue(Tables.STUDENT.STUDENT_BIRTHDAY));
-        autonomicPracticeStudentInfoVo.setStudentSex(student.getValue(Tables.STUDENT.STUDENT_SEX));
-        autonomicPracticeStudentInfoVo.setStudentIdentityCard(student.getValue(Tables.STUDENT.STUDENT_IDENTITY_CARD));
-        autonomicPracticeStudentInfoVo.setStudentAddress(student.getValue(Tables.STUDENT.STUDENT_ADDRESS));
+        autonomicPracticeStudentInfoVo.setStudentName(student.getValue(Tables.USERS.REAL_NAME));
+        autonomicPracticeStudentInfoVo.setStudentPhone(student.getValue(Tables.USERS.MOBILE));
+        autonomicPracticeStudentInfoVo.setStudentEmail(student.getValue(Tables.USERS.EMAIL));
+        autonomicPracticeStudentInfoVo.setStudentBirthday(student.getValue(Tables.USERS.BIRTHDAY));
+        autonomicPracticeStudentInfoVo.setStudentSex(student.getValue(Tables.USERS.SEX));
+        autonomicPracticeStudentInfoVo.setStudentIdentityCard(student.getValue(Tables.USERS.IDENTITY_CARD));
+        autonomicPracticeStudentInfoVo.setStudentAddress(student.getValue(Tables.USERS.FAMILY_RESIDENCE));
         autonomicPracticeStudentInfoVo.setGradeName(student.getValue(Tables.GRADE.GRADE_NAME));
         modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
 
@@ -1058,23 +1044,11 @@ public class AutonomicPractice {
         }
 
         //处理数据
-        Result<Record10<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer>> record10s
+        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer,String>> record11s
                 = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
-        if (record10s.isNotEmpty()) {
-            List<AutonomicPracticeListVo> autonomicPracticeListVos = record10s.into(AutonomicPracticeListVo.class);
+        if (record11s.isNotEmpty()) {
+            List<AutonomicPracticeListVo> autonomicPracticeListVos = record11s.into(AutonomicPracticeListVo.class);
             for (AutonomicPracticeListVo autonomicPracticeListVo : autonomicPracticeListVos) {
-                //根据用户类型获取用户姓名
-                if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == autonomicPracticeListVo.getUserTypeId()) {
-                    List<Student> students = studentService.findByStudentNumber(autonomicPracticeListVo.getUsername());
-                    if (!students.isEmpty()) {
-                        autonomicPracticeListVo.setRealName(students.get(0).getStudentName());
-                    }
-                } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == autonomicPracticeListVo.getUserTypeId()) {
-                    List<Teacher> teachers = teacherService.findByTeacherJobNumber(autonomicPracticeListVo.getUsername());
-                    if (!teachers.isEmpty()) {
-                        autonomicPracticeListVo.setRealName(teachers.get(0).getTeacherName());
-                    }
-                }
                 autonomicPracticeListVo.setStartTimeString(autonomicPracticeListVo.getStartTime().toString());
                 autonomicPracticeListVo.setEndTimeString(autonomicPracticeListVo.getEndTime().toString());
             }

@@ -5,10 +5,7 @@ import com.school.cbis.domain.tables.daos.ArticleInfoDao;
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
 import com.school.cbis.domain.tables.records.ArticleInfoRecord;
 
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.Record7;
-import org.jooq.Result;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,14 +66,14 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     }
 
     @Override
-    public Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> findByIdWithUsers(int id) {
-        Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> record7s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.USERS.USER_TYPE_ID,
-                Tables.ARTICLE_INFO.DATE, Tables.ARTICLE_INFO.ARTICLE_PHOTO_URL, Tables.ARTICLE_INFO.ARTICLE_CONTENT)
+    public Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> findByIdWithUsers(int id) {
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = create.select(Tables.ARTICLE_INFO.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.USERS.USER_TYPE_ID,
+                Tables.ARTICLE_INFO.DATE, Tables.ARTICLE_INFO.ARTICLE_PHOTO_URL, Tables.ARTICLE_INFO.ARTICLE_CONTENT,Tables.USERS.REAL_NAME)
                 .from(Tables.ARTICLE_INFO)
                 .leftJoin(Tables.USERS)
                 .on(Tables.ARTICLE_INFO.ARTICLE_WRITER.eq(Tables.USERS.USERNAME))
                 .where(Tables.ARTICLE_INFO.ID.eq(id))
                 .orderBy(Tables.ARTICLE_INFO.DATE.desc()).fetch();
-        return record7s;
+        return record8s;
     }
 }

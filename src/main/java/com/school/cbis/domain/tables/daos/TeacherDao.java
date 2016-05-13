@@ -7,7 +7,6 @@ package com.school.cbis.domain.tables.daos;
 import com.school.cbis.domain.tables.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -80,65 +79,9 @@ public class TeacherDao extends DAOImpl<TeacherRecord, com.school.cbis.domain.ta
 	}
 
 	/**
-	 * Fetch records that have <code>teacher_name IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherName(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_NAME, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_phone IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherPhone(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_PHONE, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_email IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherEmail(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_EMAIL, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_birthday IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherBirthday(Date... values) {
-		return fetch(Teacher.TEACHER.TEACHER_BIRTHDAY, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_head_photo IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherHeadPhoto(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_HEAD_PHOTO, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_sex IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherSex(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_SEX, values);
-	}
-
-	/**
 	 * Fetch records that have <code>teacher_introduce_article_info_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherIntroduceArticleInfoId(Integer... values) {
 		return fetch(Teacher.TEACHER.TEACHER_INTRODUCE_ARTICLE_INFO_ID, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_identity_card IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherIdentityCard(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_IDENTITY_CARD, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teacher_address IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherAddress(String... values) {
-		return fetch(Teacher.TEACHER.TEACHER_ADDRESS, values);
 	}
 }

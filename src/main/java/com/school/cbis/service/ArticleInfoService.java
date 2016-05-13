@@ -2,6 +2,7 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
 import org.jooq.Record7;
+import org.jooq.Record8;
 import org.jooq.Result;
 
 import java.sql.Timestamp;
@@ -46,6 +47,6 @@ public interface ArticleInfoService {
      * @param id
      * @return
      */
-    Result<Record7<Integer, String, String, Integer, Timestamp, String, String>> findByIdWithUsers(int id);
+    Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> findByIdWithUsers(int id);
 
 }

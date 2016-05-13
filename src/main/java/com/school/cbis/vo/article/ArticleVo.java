@@ -11,7 +11,7 @@ public class ArticleVo {
 
     private String username;
 
-    private String userRealName;
+    private String realName;
 
     private int userTypeId;
 
@@ -37,12 +37,12 @@ public class ArticleVo {
         this.bigTitle = bigTitle;
     }
 
-    public String getUserRealName() {
-        return userRealName;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setUserRealName(String userRealName) {
-        this.userRealName = userRealName;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getUsername() {
@@ -91,7 +91,7 @@ public class ArticleVo {
                 "id=" + id +
                 ", bigTitle='" + bigTitle + '\'' +
                 ", username='" + username + '\'' +
-                ", userRealName='" + userRealName + '\'' +
+                ", realName='" + realName + '\'' +
                 ", userTypeId=" + userTypeId +
                 ", date='" + date + '\'' +
                 ", articlePhotoUrl='" + articlePhotoUrl + '\'' +

@@ -8,6 +8,8 @@ import com.school.cbis.domain.Cbis;
 import com.school.cbis.domain.Keys;
 import com.school.cbis.domain.tables.records.UsersRecord;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-	private static final long serialVersionUID = 1309617113;
+	private static final long serialVersionUID = -1388471825;
 
 	/**
 	 * The reference instance of <code>cbis.users</code>
@@ -68,6 +70,116 @@ public class Users extends TableImpl<UsersRecord> {
 	 * The column <code>cbis.users.user_type_id</code>.
 	 */
 	public final TableField<UsersRecord, Integer> USER_TYPE_ID = createField("user_type_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.users.real_name</code>. 真实姓名
+	 */
+	public final TableField<UsersRecord, String> REAL_NAME = createField("real_name", org.jooq.impl.SQLDataType.VARCHAR.length(30), this, "真实姓名");
+
+	/**
+	 * The column <code>cbis.users.mobile</code>. 手机
+	 */
+	public final TableField<UsersRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "手机");
+
+	/**
+	 * The column <code>cbis.users.email</code>. 邮箱
+	 */
+	public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "邮箱");
+
+	/**
+	 * The column <code>cbis.users.birthday</code>. 生日
+	 */
+	public final TableField<UsersRecord, Date> BIRTHDAY = createField("birthday", org.jooq.impl.SQLDataType.DATE, this, "生日");
+
+	/**
+	 * The column <code>cbis.users.head_img</code>. 头像
+	 */
+	public final TableField<UsersRecord, String> HEAD_IMG = createField("head_img", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "头像");
+
+	/**
+	 * The column <code>cbis.users.sex</code>. 性别
+	 */
+	public final TableField<UsersRecord, String> SEX = createField("sex", org.jooq.impl.SQLDataType.VARCHAR.length(2), this, "性别");
+
+	/**
+	 * The column <code>cbis.users.identity_card</code>. 身份证号
+	 */
+	public final TableField<UsersRecord, String> IDENTITY_CARD = createField("identity_card", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "身份证号");
+
+	/**
+	 * The column <code>cbis.users.family_residence</code>. 家庭居住地
+	 */
+	public final TableField<UsersRecord, String> FAMILY_RESIDENCE = createField("family_residence", org.jooq.impl.SQLDataType.VARCHAR.length(600), this, "家庭居住地");
+
+	/**
+	 * The column <code>cbis.users.post</code>. 职务
+	 */
+	public final TableField<UsersRecord, String> POST = createField("post", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "职务");
+
+	/**
+	 * The column <code>cbis.users.political_landscape</code>. 政治面貌
+	 */
+	public final TableField<UsersRecord, String> POLITICAL_LANDSCAPE = createField("political_landscape", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "政治面貌");
+
+	/**
+	 * The column <code>cbis.users.religious_belief</code>. 宗教信仰
+	 */
+	public final TableField<UsersRecord, String> RELIGIOUS_BELIEF = createField("religious_belief", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "宗教信仰");
+
+	/**
+	 * The column <code>cbis.users.nation</code>. 民族
+	 */
+	public final TableField<UsersRecord, String> NATION = createField("nation", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "民族");
+
+	/**
+	 * The column <code>cbis.users.is_check_mobile</code>. 已验证手机
+	 */
+	public final TableField<UsersRecord, Byte> IS_CHECK_MOBILE = createField("is_check_mobile", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "已验证手机");
+
+	/**
+	 * The column <code>cbis.users.is_check_email</code>. 已验证邮箱
+	 */
+	public final TableField<UsersRecord, Byte> IS_CHECK_EMAIL = createField("is_check_email", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "已验证邮箱");
+
+	/**
+	 * The column <code>cbis.users.mobile_check_key</code>. 手机验证码
+	 */
+	public final TableField<UsersRecord, String> MOBILE_CHECK_KEY = createField("mobile_check_key", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "手机验证码");
+
+	/**
+	 * The column <code>cbis.users.email_check_key</code>. 邮箱验证码
+	 */
+	public final TableField<UsersRecord, String> EMAIL_CHECK_KEY = createField("email_check_key", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "邮箱验证码");
+
+	/**
+	 * The column <code>cbis.users.password_reset_key</code>. 密码重置key
+	 */
+	public final TableField<UsersRecord, String> PASSWORD_RESET_KEY = createField("password_reset_key", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "密码重置key");
+
+	/**
+	 * The column <code>cbis.users.mobile_check_key_validity_period</code>. 手机验证有效期
+	 */
+	public final TableField<UsersRecord, Timestamp> MOBILE_CHECK_KEY_VALIDITY_PERIOD = createField("mobile_check_key_validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "手机验证有效期");
+
+	/**
+	 * The column <code>cbis.users.email_check_key_validity_period</code>. 邮箱验证有效期
+	 */
+	public final TableField<UsersRecord, Timestamp> EMAIL_CHECK_KEY_VALIDITY_PERIOD = createField("email_check_key_validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "邮箱验证有效期");
+
+	/**
+	 * The column <code>cbis.users.password_reset_key__validity_period</code>. 密码重置key有效期
+	 */
+	public final TableField<UsersRecord, Timestamp> PASSWORD_RESET_KEY__VALIDITY_PERIOD = createField("password_reset_key__validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "密码重置key有效期");
+
+	/**
+	 * The column <code>cbis.users.lang_key</code>. message source
+	 */
+	public final TableField<UsersRecord, String> LANG_KEY = createField("lang_key", org.jooq.impl.SQLDataType.VARCHAR.length(5), this, "message source");
+
+	/**
+	 * The column <code>cbis.users.persona_introduction</code>. 个人介绍
+	 */
+	public final TableField<UsersRecord, String> PERSONA_INTRODUCTION = createField("persona_introduction", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "个人介绍");
 
 	/**
 	 * Create a <code>cbis.users</code> table reference
@@ -104,7 +216,7 @@ public class Users extends TableImpl<UsersRecord> {
 	 */
 	@Override
 	public List<UniqueKey<UsersRecord>> getKeys() {
-		return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_USERS_PRIMARY);
+		return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_USERS_PRIMARY, Keys.KEY_USERS_MOBILE, Keys.KEY_USERS_EMAIL);
 	}
 
 	/**

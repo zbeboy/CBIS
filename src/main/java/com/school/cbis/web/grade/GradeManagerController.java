@@ -11,9 +11,8 @@ import com.school.cbis.service.GradeService;
 import com.school.cbis.service.TeacherService;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.grade.GradeVo;
-import org.jooq.Record;
-import org.jooq.Record6;
-import org.jooq.Result;
+import org.apache.poi.ss.formula.functions.T;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -94,14 +93,14 @@ public class GradeManagerController {
         if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        Result<TeacherRecord> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
+        Result<Record5<Integer,Integer,Integer,String,String>> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
         if (teachers.isNotEmpty()) {
             teachers.forEach(teacherRecord -> {
                 AutoCompleteData data = new AutoCompleteData();
-                data.setValue(teacherRecord.getTeacherJobNumber());
-                data.setTitle(teacherRecord.getTeacherName());
+                data.setValue(teacherRecord.getValue(Tables.TEACHER.TEACHER_JOB_NUMBER));
+                data.setTitle(teacherRecord.getValue(Tables.USERS.REAL_NAME));
                 data.setUrl("#");
-                data.setText("账号:" + teacherRecord.getTeacherJobNumber());
+                data.setText("账号:" + teacherRecord.getValue(Tables.TEACHER.TEACHER_JOB_NUMBER));
                 autoCompleteDatas.add(data);
             });
         }

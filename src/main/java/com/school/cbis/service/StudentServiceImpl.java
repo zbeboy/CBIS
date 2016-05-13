@@ -45,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
         if (StringUtils.hasLength(studentName)) {
-            a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentName + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + studentName + "%"));
         }
 
         if (StringUtils.hasLength(studentNumber)) {
@@ -56,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Result<Record5<Integer, String, String, Byte, String>> record5s = create.select(Tables.STUDENT.ID,
-                Tables.STUDENT.STUDENT_NAME, Tables.STUDENT.STUDENT_NUMBER, Tables.USERS.ENABLED,
+                Tables.USERS.REAL_NAME, Tables.STUDENT.STUDENT_NUMBER, Tables.USERS.ENABLED,
                 Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .leftJoin(Tables.USERS)
@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
         if (StringUtils.hasLength(studentName)) {
-            a = a.and(Tables.STUDENT.STUDENT_NAME.like("%" + studentName + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + studentName + "%"));
         }
 
         if (StringUtils.hasLength(studentNumber)) {
@@ -155,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -179,7 +179,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -252,7 +252,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -276,7 +276,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -349,7 +349,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -373,7 +373,7 @@ public class StudentServiceImpl implements StudentService {
         if(pageNum<=0){
             pageNum = 1;
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.STUDENT.STUDENT_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))

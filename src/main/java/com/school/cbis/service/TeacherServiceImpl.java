@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TeacherDao;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
+import org.apache.poi.ss.formula.functions.T;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +36,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Result<TeacherRecord> findByTieIdAndTeacherName(String teacherName, int tieId) {
-        Result<TeacherRecord> records = create.selectFrom(Tables.TEACHER).where(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%").and(Tables.TEACHER.TIE_ID.eq(tieId))).fetch();
+    public  Result<Record5<Integer,Integer,Integer,String,String>> findByTieIdAndTeacherName(String teacherName, int tieId) {
+        Result<Record5<Integer,Integer,Integer,String,String>> records = create.select(Tables.TEACHER.ID,Tables.TEACHER.TEACHER_INTRODUCE_ARTICLE_INFO_ID,Tables.TEACHER.TIE_ID,Tables.TEACHER.TEACHER_JOB_NUMBER,Tables.USERS.REAL_NAME)
+                .from(Tables.TEACHER)
+                .join(Tables.USERS)
+                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                .where(Tables.USERS.REAL_NAME.like("%" + teacherName + "%").and(Tables.TEACHER.TIE_ID.eq(tieId))).fetch();
         return records;
     }
 
@@ -58,7 +63,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 
         if (StringUtils.hasLength(teacherName)) {
-            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + teacherName + "%"));
         }
 
         if (StringUtils.hasLength(teacherJobNumber)) {
@@ -70,7 +75,7 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         Result<Record4<Integer, String, String, Byte>> record4s = create.select(Tables.TEACHER.ID,
-                Tables.TEACHER.TEACHER_NAME, Tables.TEACHER.TEACHER_JOB_NUMBER, Tables.USERS.ENABLED)
+                Tables.USERS.REAL_NAME, Tables.TEACHER.TEACHER_JOB_NUMBER, Tables.USERS.ENABLED)
                 .from(Tables.TEACHER)
                 .leftJoin(Tables.USERS)
                 .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
@@ -86,7 +91,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 
         if (StringUtils.hasLength(teacherName)) {
-            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + teacherName + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + teacherName + "%"));
         }
 
         if (StringUtils.hasLength(teacherJobNumber)) {

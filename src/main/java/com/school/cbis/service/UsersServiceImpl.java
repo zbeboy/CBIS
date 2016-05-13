@@ -78,6 +78,16 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Users getUserInfoBySession() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users users = null;
+        if (principal instanceof MyUserImpl) {
+            users = (((MyUserImpl) principal).getUsers());
+        }
+        return users;
+    }
+
+    @Override
     public Users findByUsername(String username) {
         Users users = usersDao.fetchOneByUsername(username);
         return users;

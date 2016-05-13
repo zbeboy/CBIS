@@ -8,7 +8,6 @@ import com.school.cbis.domain.Cbis;
 import com.school.cbis.domain.Keys;
 import com.school.cbis.domain.tables.records.StudentRecord;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student extends TableImpl<StudentRecord> {
 
-	private static final long serialVersionUID = -1823059301;
+	private static final long serialVersionUID = 1403105085;
 
 	/**
 	 * The reference instance of <code>cbis.student</code>
@@ -62,49 +61,34 @@ public class Student extends TableImpl<StudentRecord> {
 	public final TableField<StudentRecord, String> STUDENT_NUMBER = createField("student_number", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.student.student_name</code>.
-	 */
-	public final TableField<StudentRecord, String> STUDENT_NAME = createField("student_name", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
-
-	/**
 	 * The column <code>cbis.student.grade_id</code>.
 	 */
 	public final TableField<StudentRecord, Integer> GRADE_ID = createField("grade_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.student.student_phone</code>.
+	 * The column <code>cbis.student.dormitory_number</code>. 宿舍号
 	 */
-	public final TableField<StudentRecord, String> STUDENT_PHONE = createField("student_phone", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+	public final TableField<StudentRecord, String> DORMITORY_NUMBER = createField("dormitory_number", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "宿舍号");
 
 	/**
-	 * The column <code>cbis.student.student_email</code>.
+	 * The column <code>cbis.student.parent_name</code>. 家长姓名
 	 */
-	public final TableField<StudentRecord, String> STUDENT_EMAIL = createField("student_email", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+	public final TableField<StudentRecord, String> PARENT_NAME = createField("parent_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "家长姓名");
 
 	/**
-	 * The column <code>cbis.student.student_birthday</code>.
+	 * The column <code>cbis.student.parent_contact_phone</code>. 家长联系电话
 	 */
-	public final TableField<StudentRecord, Date> STUDENT_BIRTHDAY = createField("student_birthday", org.jooq.impl.SQLDataType.DATE, this, "");
+	public final TableField<StudentRecord, String> PARENT_CONTACT_PHONE = createField("parent_contact_phone", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "家长联系电话");
 
 	/**
-	 * The column <code>cbis.student.student_head_photo</code>.
+	 * The column <code>cbis.student.place_origin</code>. 生源地
 	 */
-	public final TableField<StudentRecord, String> STUDENT_HEAD_PHOTO = createField("student_head_photo", org.jooq.impl.SQLDataType.VARCHAR.length(800), this, "");
+	public final TableField<StudentRecord, String> PLACE_ORIGIN = createField("place_origin", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "生源地");
 
 	/**
-	 * The column <code>cbis.student.student_sex</code>.
+	 * The column <code>cbis.student.problem_situation</code>. 问题情况
 	 */
-	public final TableField<StudentRecord, String> STUDENT_SEX = createField("student_sex", org.jooq.impl.SQLDataType.VARCHAR.length(2), this, "");
-
-	/**
-	 * The column <code>cbis.student.student_identity_card</code>.
-	 */
-	public final TableField<StudentRecord, String> STUDENT_IDENTITY_CARD = createField("student_identity_card", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
-
-	/**
-	 * The column <code>cbis.student.student_address</code>.
-	 */
-	public final TableField<StudentRecord, String> STUDENT_ADDRESS = createField("student_address", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
+	public final TableField<StudentRecord, String> PROBLEM_SITUATION = createField("problem_situation", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "问题情况");
 
 	/**
 	 * The column <code>cbis.student.student_introduce_article_info_id</code>.

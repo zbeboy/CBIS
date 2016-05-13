@@ -29,6 +29,12 @@ public interface UsersService {
     Integer getUserTypeId();
 
     /**
+     * 从session中获取用户完整信息
+     * @return
+     */
+    Users getUserInfoBySession();
+
+    /**
      * 根据用户名获取Users表完整信息
      *
      * @param username

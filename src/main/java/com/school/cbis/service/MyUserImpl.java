@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.Tables;
+import com.school.cbis.domain.tables.pojos.Users;
 import org.jooq.Record;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +24,7 @@ public class MyUserImpl implements UserDetails, CredentialsContainer {
     // ================================================================================================
     private String password;
     private Integer userTypeId;
+    private Users users;
     private final String username;
     private final Set<GrantedAuthority> authorities;
     private final boolean accountNonExpired;
@@ -36,9 +38,9 @@ public class MyUserImpl implements UserDetails, CredentialsContainer {
     /**
      * Calls the more complex constructor with all boolean arguments set to {@code true}.
      */
-    public MyUserImpl(String username, String password,Integer userTypeId,
+    public MyUserImpl(String username, String password,Integer userTypeId,Users users,
                 Collection<? extends GrantedAuthority> authorities) {
-        this(username, password,userTypeId, true, true, true, true, authorities);
+        this(username, password,userTypeId,users, true, true, true, true, authorities);
     }
 
     /**
@@ -60,7 +62,7 @@ public class MyUserImpl implements UserDetails, CredentialsContainer {
      * @throws IllegalArgumentException if a <code>null</code> value was passed either as
      * a parameter or as an element in the <code>GrantedAuthority</code> collection
      */
-    public MyUserImpl(String username, String password,Integer userTypeId, boolean enabled,
+    public MyUserImpl(String username, String password,Integer userTypeId,Users users, boolean enabled,
                 boolean accountNonExpired, boolean credentialsNonExpired,
                 boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 
@@ -72,6 +74,7 @@ public class MyUserImpl implements UserDetails, CredentialsContainer {
         this.username = username;
         this.password = password;
         this.userTypeId = userTypeId;
+        this.users = users;
         this.enabled = enabled;
         this.accountNonExpired = accountNonExpired;
         this.credentialsNonExpired = credentialsNonExpired;
@@ -96,6 +99,10 @@ public class MyUserImpl implements UserDetails, CredentialsContainer {
 
     public Integer getUserTypeId() {
         return userTypeId;
+    }
+
+    public Users getUsers() {
+        return users;
     }
 
     public boolean isEnabled() {

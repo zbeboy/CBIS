@@ -26,6 +26,7 @@ import com.school.cbis.domain.tables.PlaceFileTitle;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
+import com.school.cbis.domain.tables.StudentPoor;
 import com.school.cbis.domain.tables.SystemInform;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
@@ -64,6 +65,7 @@ import com.school.cbis.domain.tables.records.PlaceFileInfoRecord;
 import com.school.cbis.domain.tables.records.PlaceFileTitleRecord;
 import com.school.cbis.domain.tables.records.SchemaVersionRecord;
 import com.school.cbis.domain.tables.records.StudentCourseTimetableInfoRecord;
+import com.school.cbis.domain.tables.records.StudentPoorRecord;
 import com.school.cbis.domain.tables.records.StudentRecord;
 import com.school.cbis.domain.tables.records.SystemInformRecord;
 import com.school.cbis.domain.tables.records.TeachCourseInfoRecord;
@@ -128,6 +130,7 @@ public class Keys {
 	public static final Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = Identities0.IDENTITY_PLACE_FILE_TITLE;
 	public static final Identity<StudentRecord, Integer> IDENTITY_STUDENT = Identities0.IDENTITY_STUDENT;
 	public static final Identity<StudentCourseTimetableInfoRecord, Integer> IDENTITY_STUDENT_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_STUDENT_COURSE_TIMETABLE_INFO;
+	public static final Identity<StudentPoorRecord, Integer> IDENTITY_STUDENT_POOR = Identities0.IDENTITY_STUDENT_POOR;
 	public static final Identity<SystemInformRecord, Integer> IDENTITY_SYSTEM_INFORM = Identities0.IDENTITY_SYSTEM_INFORM;
 	public static final Identity<TeacherRecord, Integer> IDENTITY_TEACHER = Identities0.IDENTITY_TEACHER;
 	public static final Identity<TeacherCourseTimetableInfoRecord, Integer> IDENTITY_TEACHER_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_TEACHER_COURSE_TIMETABLE_INFO;
@@ -170,6 +173,7 @@ public class Keys {
 	public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = UniqueKeys0.KEY_SCHEMA_VERSION_PRIMARY;
 	public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = UniqueKeys0.KEY_STUDENT_PRIMARY;
 	public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY;
+	public static final UniqueKey<StudentPoorRecord> KEY_STUDENT_POOR_PRIMARY = UniqueKeys0.KEY_STUDENT_POOR_PRIMARY;
 	public static final UniqueKey<SystemInformRecord> KEY_SYSTEM_INFORM_PRIMARY = UniqueKeys0.KEY_SYSTEM_INFORM_PRIMARY;
 	public static final UniqueKey<TeacherRecord> KEY_TEACHER_PRIMARY = UniqueKeys0.KEY_TEACHER_PRIMARY;
 	public static final UniqueKey<TeacherCourseTimetableInfoRecord> KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY;
@@ -185,6 +189,8 @@ public class Keys {
 	public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_AFFIX_PRIMARY;
 	public static final UniqueKey<TieNoticeTimeRecord> KEY_TIE_NOTICE_TIME_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_TIME_PRIMARY;
 	public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
+	public static final UniqueKey<UsersRecord> KEY_USERS_MOBILE = UniqueKeys0.KEY_USERS_MOBILE;
+	public static final UniqueKey<UsersRecord> KEY_USERS_EMAIL = UniqueKeys0.KEY_USERS_EMAIL;
 	public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = UniqueKeys0.KEY_USER_TYPE_PRIMARY;
 	public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = UniqueKeys0.KEY_YARD_PRIMARY;
 
@@ -224,6 +230,7 @@ public class Keys {
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, UsersRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_3 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_3;
+	public static final ForeignKey<StudentPoorRecord, StudentRecord> STUDENT_POOR_IBFK_1 = ForeignKeys0.STUDENT_POOR_IBFK_1;
 	public static final ForeignKey<TeacherRecord, TieRecord> TEACHER_IBFK_1 = ForeignKeys0.TEACHER_IBFK_1;
 	public static final ForeignKey<TeacherCourseTimetableInfoRecord, TieRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.TEACHER_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<TeacherCourseTimetableInfoRecord, TeachTypeRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.TEACHER_COURSE_TIMETABLE_INFO_IBFK_2;
@@ -266,6 +273,7 @@ public class Keys {
 		public static Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = createIdentity(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
 		public static Identity<StudentRecord, Integer> IDENTITY_STUDENT = createIdentity(Student.STUDENT, Student.STUDENT.ID);
 		public static Identity<StudentCourseTimetableInfoRecord, Integer> IDENTITY_STUDENT_COURSE_TIMETABLE_INFO = createIdentity(StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.ID);
+		public static Identity<StudentPoorRecord, Integer> IDENTITY_STUDENT_POOR = createIdentity(StudentPoor.STUDENT_POOR, StudentPoor.STUDENT_POOR.ID);
 		public static Identity<SystemInformRecord, Integer> IDENTITY_SYSTEM_INFORM = createIdentity(SystemInform.SYSTEM_INFORM, SystemInform.SYSTEM_INFORM.ID);
 		public static Identity<TeacherRecord, Integer> IDENTITY_TEACHER = createIdentity(Teacher.TEACHER, Teacher.TEACHER.ID);
 		public static Identity<TeacherCourseTimetableInfoRecord, Integer> IDENTITY_TEACHER_COURSE_TIMETABLE_INFO = createIdentity(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.ID);
@@ -306,6 +314,7 @@ public class Keys {
 		public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = createUniqueKey(SchemaVersion.SCHEMA_VERSION, SchemaVersion.SCHEMA_VERSION.VERSION);
 		public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = createUniqueKey(Student.STUDENT, Student.STUDENT.ID);
 		public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.ID);
+		public static final UniqueKey<StudentPoorRecord> KEY_STUDENT_POOR_PRIMARY = createUniqueKey(StudentPoor.STUDENT_POOR, StudentPoor.STUDENT_POOR.ID);
 		public static final UniqueKey<SystemInformRecord> KEY_SYSTEM_INFORM_PRIMARY = createUniqueKey(SystemInform.SYSTEM_INFORM, SystemInform.SYSTEM_INFORM.ID);
 		public static final UniqueKey<TeacherRecord> KEY_TEACHER_PRIMARY = createUniqueKey(Teacher.TEACHER, Teacher.TEACHER.ID);
 		public static final UniqueKey<TeacherCourseTimetableInfoRecord> KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.ID);
@@ -321,6 +330,8 @@ public class Keys {
 		public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = createUniqueKey(TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.ID);
 		public static final UniqueKey<TieNoticeTimeRecord> KEY_TIE_NOTICE_TIME_PRIMARY = createUniqueKey(TieNoticeTime.TIE_NOTICE_TIME, TieNoticeTime.TIE_NOTICE_TIME.ID);
 		public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, Users.USERS.USERNAME);
+		public static final UniqueKey<UsersRecord> KEY_USERS_MOBILE = createUniqueKey(Users.USERS, Users.USERS.MOBILE);
+		public static final UniqueKey<UsersRecord> KEY_USERS_EMAIL = createUniqueKey(Users.USERS, Users.USERS.EMAIL);
 		public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = createUniqueKey(Yard.YARD, Yard.YARD.ID);
 	}
@@ -358,6 +369,7 @@ public class Keys {
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, UsersRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.FILE_USER);
+		public static final ForeignKey<StudentPoorRecord, StudentRecord> STUDENT_POOR_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_STUDENT_PRIMARY, StudentPoor.STUDENT_POOR, StudentPoor.STUDENT_POOR.STUDENT_ID);
 		public static final ForeignKey<TeacherRecord, TieRecord> TEACHER_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Teacher.TEACHER, Teacher.TEACHER.TIE_ID);
 		public static final ForeignKey<TeacherCourseTimetableInfoRecord, TieRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TIE_ID);
 		public static final ForeignKey<TeacherCourseTimetableInfoRecord, TeachTypeRecord> TEACHER_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);

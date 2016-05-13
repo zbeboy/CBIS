@@ -8,7 +8,6 @@ import com.school.cbis.domain.Cbis;
 import com.school.cbis.domain.Keys;
 import com.school.cbis.domain.tables.records.TeacherRecord;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teacher extends TableImpl<TeacherRecord> {
 
-	private static final long serialVersionUID = 900256271;
+	private static final long serialVersionUID = 1720155548;
 
 	/**
 	 * The reference instance of <code>cbis.teacher</code>
@@ -67,49 +66,9 @@ public class Teacher extends TableImpl<TeacherRecord> {
 	public final TableField<TeacherRecord, String> TEACHER_JOB_NUMBER = createField("teacher_job_number", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.teacher.teacher_name</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_NAME = createField("teacher_name", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_phone</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_PHONE = createField("teacher_phone", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_email</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_EMAIL = createField("teacher_email", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_birthday</code>.
-	 */
-	public final TableField<TeacherRecord, Date> TEACHER_BIRTHDAY = createField("teacher_birthday", org.jooq.impl.SQLDataType.DATE, this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_head_photo</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_HEAD_PHOTO = createField("teacher_head_photo", org.jooq.impl.SQLDataType.VARCHAR.length(800), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_sex</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_SEX = createField("teacher_sex", org.jooq.impl.SQLDataType.VARCHAR.length(2), this, "");
-
-	/**
 	 * The column <code>cbis.teacher.teacher_introduce_article_info_id</code>.
 	 */
 	public final TableField<TeacherRecord, Integer> TEACHER_INTRODUCE_ARTICLE_INFO_ID = createField("teacher_introduce_article_info_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_identity_card</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_IDENTITY_CARD = createField("teacher_identity_card", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_address</code>.
-	 */
-	public final TableField<TeacherRecord, String> TEACHER_ADDRESS = createField("teacher_address", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
 
 	/**
 	 * Create a <code>cbis.teacher</code> table reference

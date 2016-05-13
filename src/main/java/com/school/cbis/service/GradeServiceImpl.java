@@ -59,17 +59,19 @@ public class GradeServiceImpl implements GradeService {
         }
 
         if (StringUtils.hasLength(gradeVo.getGradeHead())) {
-            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + gradeVo.getGradeHead() + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + gradeVo.getGradeHead() + "%"));
         }
 
         SelectConditionStep<Record6<Integer, Integer, String, String, String, String>> b =
                 create.select(Tables.GRADE.ID, Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
-                        Tables.TEACHER.TEACHER_NAME.as("gradeHead"), Tables.TEACHER.TEACHER_JOB_NUMBER.as("gradeHeadID"))
+                        Tables.USERS.REAL_NAME.as("gradeHead"), Tables.TEACHER.TEACHER_JOB_NUMBER.as("gradeHeadID"))
                         .from(Tables.GRADE)
                         .leftJoin(Tables.MAJOR)
                         .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
                         .leftJoin(Tables.TEACHER)
                         .on(Tables.GRADE.GRADE_HEAD.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
+                        .leftJoin(Tables.USERS)
+                        .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
                         .where(a);
 
         SortField<Integer> c = Tables.GRADE.ID.desc();
@@ -97,9 +99,9 @@ public class GradeServiceImpl implements GradeService {
                 }
             } else if (gradeVo.getSortField().equals("gradeHead")) {
                 if (gradeVo.getSortOrder().equals("desc")) {
-                    d = Tables.TEACHER.TEACHER_NAME.desc();
+                    d = Tables.USERS.REAL_NAME.desc();
                 } else {
-                    d = Tables.TEACHER.TEACHER_NAME.asc();
+                    d = Tables.USERS.REAL_NAME.asc();
                 }
             }
             b.orderBy(d);
@@ -127,7 +129,7 @@ public class GradeServiceImpl implements GradeService {
         }
 
         if (StringUtils.hasLength(gradeVo.getGradeHead())) {
-            a = a.and(Tables.TEACHER.TEACHER_NAME.like("%" + gradeVo.getGradeHead() + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + gradeVo.getGradeHead() + "%"));
         }
 
         Record1<Integer> count = create.selectCount()
@@ -136,6 +138,8 @@ public class GradeServiceImpl implements GradeService {
                 .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
                 .leftJoin(Tables.TEACHER)
                 .on(Tables.GRADE.GRADE_HEAD.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
+                .leftJoin(Tables.USERS)
+                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
                 .where(a).fetchOne();
         return count.value1();
     }

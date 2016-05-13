@@ -26,6 +26,7 @@ import com.school.cbis.domain.tables.PlaceFileTitle;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
+import com.school.cbis.domain.tables.StudentPoor;
 import com.school.cbis.domain.tables.SystemInform;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
@@ -169,6 +170,11 @@ public class Tables {
 	 * The table cbis.student_course_timetable_info
 	 */
 	public static final StudentCourseTimetableInfo STUDENT_COURSE_TIMETABLE_INFO = com.school.cbis.domain.tables.StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO;
+
+	/**
+	 * The table cbis.student_poor
+	 */
+	public static final StudentPoor STUDENT_POOR = com.school.cbis.domain.tables.StudentPoor.STUDENT_POOR;
 
 	/**
 	 * The table cbis.system_inform

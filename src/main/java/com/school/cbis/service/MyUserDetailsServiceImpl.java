@@ -69,6 +69,6 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         if(users.getEnabled() == 1){
             enable = true;
         }
-        return new MyUserImpl(users.getUsername(),users.getPassword(),users.getUserTypeId(),enable,true,true,true,authorities);
+        return new MyUserImpl(users.getUsername(),users.getPassword(),users.getUserTypeId(),users,enable,true,true,true,authorities);
     }
 }

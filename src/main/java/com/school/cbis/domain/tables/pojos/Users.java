@@ -5,6 +5,8 @@ package com.school.cbis.domain.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
@@ -24,12 +26,34 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users implements Serializable {
 
-	private static final long serialVersionUID = 1323321428;
+	private static final long serialVersionUID = -1234676644;
 
-	private String  username;
-	private String  password;
-	private Byte    enabled;
-	private Integer userTypeId;
+	private String    username;
+	private String    password;
+	private Byte      enabled;
+	private Integer   userTypeId;
+	private String    realName;
+	private String    mobile;
+	private String    email;
+	private Date      birthday;
+	private String    headImg;
+	private String    sex;
+	private String    identityCard;
+	private String    familyResidence;
+	private String    post;
+	private String    politicalLandscape;
+	private String    religiousBelief;
+	private String    nation;
+	private Byte      isCheckMobile;
+	private Byte      isCheckEmail;
+	private String    mobileCheckKey;
+	private String    emailCheckKey;
+	private String    passwordResetKey;
+	private Timestamp mobileCheckKeyValidityPeriod;
+	private Timestamp emailCheckKeyValidityPeriod;
+	private Timestamp passwordResetKey_ValidityPeriod;
+	private String    langKey;
+	private String    personaIntroduction;
 
 	public Users() {}
 
@@ -38,18 +62,84 @@ public class Users implements Serializable {
 		this.password = value.password;
 		this.enabled = value.enabled;
 		this.userTypeId = value.userTypeId;
+		this.realName = value.realName;
+		this.mobile = value.mobile;
+		this.email = value.email;
+		this.birthday = value.birthday;
+		this.headImg = value.headImg;
+		this.sex = value.sex;
+		this.identityCard = value.identityCard;
+		this.familyResidence = value.familyResidence;
+		this.post = value.post;
+		this.politicalLandscape = value.politicalLandscape;
+		this.religiousBelief = value.religiousBelief;
+		this.nation = value.nation;
+		this.isCheckMobile = value.isCheckMobile;
+		this.isCheckEmail = value.isCheckEmail;
+		this.mobileCheckKey = value.mobileCheckKey;
+		this.emailCheckKey = value.emailCheckKey;
+		this.passwordResetKey = value.passwordResetKey;
+		this.mobileCheckKeyValidityPeriod = value.mobileCheckKeyValidityPeriod;
+		this.emailCheckKeyValidityPeriod = value.emailCheckKeyValidityPeriod;
+		this.passwordResetKey_ValidityPeriod = value.passwordResetKey_ValidityPeriod;
+		this.langKey = value.langKey;
+		this.personaIntroduction = value.personaIntroduction;
 	}
 
 	public Users(
-		String  username,
-		String  password,
-		Byte    enabled,
-		Integer userTypeId
+		String    username,
+		String    password,
+		Byte      enabled,
+		Integer   userTypeId,
+		String    realName,
+		String    mobile,
+		String    email,
+		Date      birthday,
+		String    headImg,
+		String    sex,
+		String    identityCard,
+		String    familyResidence,
+		String    post,
+		String    politicalLandscape,
+		String    religiousBelief,
+		String    nation,
+		Byte      isCheckMobile,
+		Byte      isCheckEmail,
+		String    mobileCheckKey,
+		String    emailCheckKey,
+		String    passwordResetKey,
+		Timestamp mobileCheckKeyValidityPeriod,
+		Timestamp emailCheckKeyValidityPeriod,
+		Timestamp passwordResetKey_ValidityPeriod,
+		String    langKey,
+		String    personaIntroduction
 	) {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 		this.userTypeId = userTypeId;
+		this.realName = realName;
+		this.mobile = mobile;
+		this.email = email;
+		this.birthday = birthday;
+		this.headImg = headImg;
+		this.sex = sex;
+		this.identityCard = identityCard;
+		this.familyResidence = familyResidence;
+		this.post = post;
+		this.politicalLandscape = politicalLandscape;
+		this.religiousBelief = religiousBelief;
+		this.nation = nation;
+		this.isCheckMobile = isCheckMobile;
+		this.isCheckEmail = isCheckEmail;
+		this.mobileCheckKey = mobileCheckKey;
+		this.emailCheckKey = emailCheckKey;
+		this.passwordResetKey = passwordResetKey;
+		this.mobileCheckKeyValidityPeriod = mobileCheckKeyValidityPeriod;
+		this.emailCheckKeyValidityPeriod = emailCheckKeyValidityPeriod;
+		this.passwordResetKey_ValidityPeriod = passwordResetKey_ValidityPeriod;
+		this.langKey = langKey;
+		this.personaIntroduction = personaIntroduction;
 	}
 
 	@NotNull
@@ -90,6 +180,200 @@ public class Users implements Serializable {
 		this.userTypeId = userTypeId;
 	}
 
+	@Size(max = 30)
+	public String getRealName() {
+		return this.realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	@Size(max = 15)
+	public String getMobile() {
+		return this.mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Size(max = 500)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getBirthday() {
+		return this.birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	@Size(max = 500)
+	public String getHeadImg() {
+		return this.headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+
+	@Size(max = 2)
+	public String getSex() {
+		return this.sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	@Size(max = 20)
+	public String getIdentityCard() {
+		return this.identityCard;
+	}
+
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+
+	@Size(max = 600)
+	public String getFamilyResidence() {
+		return this.familyResidence;
+	}
+
+	public void setFamilyResidence(String familyResidence) {
+		this.familyResidence = familyResidence;
+	}
+
+	@Size(max = 100)
+	public String getPost() {
+		return this.post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	@Size(max = 10)
+	public String getPoliticalLandscape() {
+		return this.politicalLandscape;
+	}
+
+	public void setPoliticalLandscape(String politicalLandscape) {
+		this.politicalLandscape = politicalLandscape;
+	}
+
+	@Size(max = 500)
+	public String getReligiousBelief() {
+		return this.religiousBelief;
+	}
+
+	public void setReligiousBelief(String religiousBelief) {
+		this.religiousBelief = religiousBelief;
+	}
+
+	@Size(max = 200)
+	public String getNation() {
+		return this.nation;
+	}
+
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+
+	@NotNull
+	public Byte getIsCheckMobile() {
+		return this.isCheckMobile;
+	}
+
+	public void setIsCheckMobile(Byte isCheckMobile) {
+		this.isCheckMobile = isCheckMobile;
+	}
+
+	@NotNull
+	public Byte getIsCheckEmail() {
+		return this.isCheckEmail;
+	}
+
+	public void setIsCheckEmail(Byte isCheckEmail) {
+		this.isCheckEmail = isCheckEmail;
+	}
+
+	@Size(max = 20)
+	public String getMobileCheckKey() {
+		return this.mobileCheckKey;
+	}
+
+	public void setMobileCheckKey(String mobileCheckKey) {
+		this.mobileCheckKey = mobileCheckKey;
+	}
+
+	@Size(max = 20)
+	public String getEmailCheckKey() {
+		return this.emailCheckKey;
+	}
+
+	public void setEmailCheckKey(String emailCheckKey) {
+		this.emailCheckKey = emailCheckKey;
+	}
+
+	@Size(max = 20)
+	public String getPasswordResetKey() {
+		return this.passwordResetKey;
+	}
+
+	public void setPasswordResetKey(String passwordResetKey) {
+		this.passwordResetKey = passwordResetKey;
+	}
+
+	public Timestamp getMobileCheckKeyValidityPeriod() {
+		return this.mobileCheckKeyValidityPeriod;
+	}
+
+	public void setMobileCheckKeyValidityPeriod(Timestamp mobileCheckKeyValidityPeriod) {
+		this.mobileCheckKeyValidityPeriod = mobileCheckKeyValidityPeriod;
+	}
+
+	public Timestamp getEmailCheckKeyValidityPeriod() {
+		return this.emailCheckKeyValidityPeriod;
+	}
+
+	public void setEmailCheckKeyValidityPeriod(Timestamp emailCheckKeyValidityPeriod) {
+		this.emailCheckKeyValidityPeriod = emailCheckKeyValidityPeriod;
+	}
+
+	public Timestamp getPasswordResetKey_ValidityPeriod() {
+		return this.passwordResetKey_ValidityPeriod;
+	}
+
+	public void setPasswordResetKey_ValidityPeriod(Timestamp passwordResetKey_ValidityPeriod) {
+		this.passwordResetKey_ValidityPeriod = passwordResetKey_ValidityPeriod;
+	}
+
+	@Size(max = 5)
+	public String getLangKey() {
+		return this.langKey;
+	}
+
+	public void setLangKey(String langKey) {
+		this.langKey = langKey;
+	}
+
+	@Size(max = 200)
+	public String getPersonaIntroduction() {
+		return this.personaIntroduction;
+	}
+
+	public void setPersonaIntroduction(String personaIntroduction) {
+		this.personaIntroduction = personaIntroduction;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Users (");
@@ -98,6 +382,28 @@ public class Users implements Serializable {
 		sb.append(", ").append(password);
 		sb.append(", ").append(enabled);
 		sb.append(", ").append(userTypeId);
+		sb.append(", ").append(realName);
+		sb.append(", ").append(mobile);
+		sb.append(", ").append(email);
+		sb.append(", ").append(birthday);
+		sb.append(", ").append(headImg);
+		sb.append(", ").append(sex);
+		sb.append(", ").append(identityCard);
+		sb.append(", ").append(familyResidence);
+		sb.append(", ").append(post);
+		sb.append(", ").append(politicalLandscape);
+		sb.append(", ").append(religiousBelief);
+		sb.append(", ").append(nation);
+		sb.append(", ").append(isCheckMobile);
+		sb.append(", ").append(isCheckEmail);
+		sb.append(", ").append(mobileCheckKey);
+		sb.append(", ").append(emailCheckKey);
+		sb.append(", ").append(passwordResetKey);
+		sb.append(", ").append(mobileCheckKeyValidityPeriod);
+		sb.append(", ").append(emailCheckKeyValidityPeriod);
+		sb.append(", ").append(passwordResetKey_ValidityPeriod);
+		sb.append(", ").append(langKey);
+		sb.append(", ").append(personaIntroduction);
 
 		sb.append(")");
 		return sb.toString();

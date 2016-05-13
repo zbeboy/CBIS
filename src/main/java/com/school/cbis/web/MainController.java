@@ -112,17 +112,7 @@ public class MainController {
         ArticleInfo articleInfo = articleInfoService.findById(tieIntroduceArticleInfoId);
         if (!StringUtils.isEmpty(articleInfo)) {
             Users users = usersService.findByUsername(articleInfo.getArticleWriter());
-            if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == users.getUserTypeId()) {//教师类型
-                List<Teacher> teachers = teacherService.findByTeacherJobNumber(articleInfo.getArticleWriter());
-                if (!teachers.isEmpty()) {
-                    articleInfo.setArticleWriter(teachers.get(0).getTeacherName());
-                }
-            } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == users.getUserTypeId()) {//学生类型
-                List<Student> students = studentService.findByStudentNumber(articleInfo.getArticleWriter());
-                if (!students.isEmpty()) {
-                    articleInfo.setArticleWriter(students.get(0).getStudentName());
-                }
-            }
+            articleInfo.setArticleWriter(users.getRealName());
             if (articleInfo.getArticleContent().trim().length() > 100) {
                 articleInfo.setArticleContent(articleInfo.getArticleContent().substring(0, 100) + "....");
             }
