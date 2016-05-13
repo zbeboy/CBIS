@@ -12,12 +12,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IWebContext;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/3/29.
@@ -34,7 +35,7 @@ public class MailServiceImpl implements MailService {
     private MessageSource messageSource;
 
     @Resource
-    private TemplateEngine templateEngine;
+    private SpringTemplateEngine springTemplateEngine;
 
     @Async
     @Override
@@ -68,7 +69,7 @@ public class MailServiceImpl implements MailService {
         data.setLocale(locale);
         data.setVariable("user",users);
         data.setVariable("baseUrl", baseUrl);
-        sendEmail(users.getUsername(), messageSource.getMessage("email.activation.title", null, locale), templateEngine.process("/mails/activationemail.html",data),false, true);
+        sendEmail(users.getEmail(), messageSource.getMessage("email.activation.title", null, locale), springTemplateEngine.process("/mails/activationemail",data),false, true);
     }
 
     @Async
@@ -80,7 +81,7 @@ public class MailServiceImpl implements MailService {
         data.setLocale(locale);
         data.setVariable("user",users);
         data.setVariable("baseUrl",baseUrl);
-        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),templateEngine.process("/mails/creationemail.html",data), false, true);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),springTemplateEngine.process("/mails/creationemail.html",data), false, true);
 
     }
 
@@ -93,6 +94,6 @@ public class MailServiceImpl implements MailService {
         data.setLocale(locale);
         data.setVariable("user",users);
         data.setVariable("baseUrl",baseUrl);
-        sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),templateEngine.process("/mails/passwordresetemail.html",data), false, true);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),springTemplateEngine.process("/mails/passwordresetemail.html",data), false, true);
     }
 }
