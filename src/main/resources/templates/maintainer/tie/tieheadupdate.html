@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="generator"
           content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
@@ -148,7 +148,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var imgPath  = /*[[${articleinfo.articlePhotoUrl}]]*/ null;
-    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
+    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/maintainer/tie/tieheadupdate.js}"

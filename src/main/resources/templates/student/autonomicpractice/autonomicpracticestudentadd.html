@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="generator"
           content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
@@ -91,7 +91,7 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/'}]]*/ '';
+    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
     var heads = /*[[${heads}]]*/ null; //对应该模板下的标题信息
     var currentAuthorities = /*[[${currentAuthorities}]]*/ null; //当前用户的权限
     var studentInfo =  /*[[${studentInfo}]]*/ null; //当前用户的个人信息
