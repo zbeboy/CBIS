@@ -102,24 +102,10 @@ public class UsersDao extends DAOImpl<UsersRecord, com.school.cbis.domain.tables
 	}
 
 	/**
-	 * Fetch a unique record that has <code>mobile = value</code>
-	 */
-	public com.school.cbis.domain.tables.pojos.Users fetchOneByMobile(String value) {
-		return fetchOne(Users.USERS.MOBILE, value);
-	}
-
-	/**
 	 * Fetch records that have <code>email IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.Users> fetchByEmail(String... values) {
 		return fetch(Users.USERS.EMAIL, values);
-	}
-
-	/**
-	 * Fetch a unique record that has <code>email = value</code>
-	 */
-	public com.school.cbis.domain.tables.pojos.Users fetchOneByEmail(String value) {
-		return fetchOne(Users.USERS.EMAIL, value);
 	}
 
 	/**

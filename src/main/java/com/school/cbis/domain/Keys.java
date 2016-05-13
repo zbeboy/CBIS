@@ -189,8 +189,6 @@ public class Keys {
 	public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_AFFIX_PRIMARY;
 	public static final UniqueKey<TieNoticeTimeRecord> KEY_TIE_NOTICE_TIME_PRIMARY = UniqueKeys0.KEY_TIE_NOTICE_TIME_PRIMARY;
 	public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
-	public static final UniqueKey<UsersRecord> KEY_USERS_MOBILE = UniqueKeys0.KEY_USERS_MOBILE;
-	public static final UniqueKey<UsersRecord> KEY_USERS_EMAIL = UniqueKeys0.KEY_USERS_EMAIL;
 	public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = UniqueKeys0.KEY_USER_TYPE_PRIMARY;
 	public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = UniqueKeys0.KEY_YARD_PRIMARY;
 
@@ -330,8 +328,6 @@ public class Keys {
 		public static final UniqueKey<TieNoticeAffixRecord> KEY_TIE_NOTICE_AFFIX_PRIMARY = createUniqueKey(TieNoticeAffix.TIE_NOTICE_AFFIX, TieNoticeAffix.TIE_NOTICE_AFFIX.ID);
 		public static final UniqueKey<TieNoticeTimeRecord> KEY_TIE_NOTICE_TIME_PRIMARY = createUniqueKey(TieNoticeTime.TIE_NOTICE_TIME, TieNoticeTime.TIE_NOTICE_TIME.ID);
 		public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, Users.USERS.USERNAME);
-		public static final UniqueKey<UsersRecord> KEY_USERS_MOBILE = createUniqueKey(Users.USERS, Users.USERS.MOBILE);
-		public static final UniqueKey<UsersRecord> KEY_USERS_EMAIL = createUniqueKey(Users.USERS, Users.USERS.EMAIL);
 		public static final UniqueKey<UserTypeRecord> KEY_USER_TYPE_PRIMARY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static final UniqueKey<YardRecord> KEY_YARD_PRIMARY = createUniqueKey(Yard.YARD, Yard.YARD.ID);
 	}
