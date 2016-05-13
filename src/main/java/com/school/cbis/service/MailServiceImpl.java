@@ -11,9 +11,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/3/29.
@@ -59,38 +63,24 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendActivationEmail(Users users, String baseUrl) {
         log.debug("Sending activation e-mail to '{}'", users.getUsername());
-//        Locale locale = Locale.forLanguageTag(users.getLangKey());
-//        Map<String, Object> emailMap = new HashMap<>();
-//        emailMap.put("user", users);
-//        emailMap.put("baseUrl", baseUrl);
-//        emailMap.put("title", messageSource.getMessage("email.activation.title", null, locale));
-//        emailMap.put("greeting", messageSource.getMessage("email.activation.greeting" , null, locale));
-//        emailMap.put("text1",messageSource.getMessage("email.activation.text1" , null, locale));
-//        emailMap.put("text2",messageSource.getMessage("email.activation.text2" , null, locale));
-//        emailMap.put("signature",messageSource.getMessage("email.signature" , null, locale));
-//        Context data = new Context();
-//        data.setLocale(locale);
-//        data.setVariable("user",users);
-//        sendEmail(users.getUsername(), messageSource.getMessage("email.activation.title", null, locale), templateEngine.process("/mails/activationemail.html",data),false, true);
+        Locale locale = Locale.forLanguageTag(users.getLangKey());
+        Context data = new Context();
+        data.setLocale(locale);
+        data.setVariable("user",users);
+        data.setVariable("baseUrl", baseUrl);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.activation.title", null, locale), templateEngine.process("/mails/activationemail.html",data),false, true);
     }
 
     @Async
     @Override
     public void sendCreationEmail(Users users, String baseUrl) {
         log.debug("Sending creation e-mail to '{}'", users.getUsername());
-//        Locale locale = Locale.forLanguageTag(users.getLangKey());
-//        Map<String, Object> emailMap = new HashMap<>();
-//        emailMap.put("user", users);
-//        emailMap.put("baseUrl", baseUrl);
-//        emailMap.put("title", messageSource.getMessage("email.creation.title", null, locale));
-//        emailMap.put("greeting", messageSource.getMessage("email.activation.greeting" , null, locale));
-//        emailMap.put("text1",messageSource.getMessage("email.creation.text1" , null, locale));
-//        emailMap.put("text2",messageSource.getMessage("email.activation.text2" , null, locale));
-//        emailMap.put("signature",messageSource.getMessage("email.signature" , null, locale));
-//        Context data = new Context();
-//        data.setLocale(locale);
-//        data.setVariable("user",users);
-//        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),templateEngine.process("/mails/creationemail.html",data), false, true);
+        Locale locale = Locale.forLanguageTag(users.getLangKey());
+        Context data = new Context();
+        data.setLocale(locale);
+        data.setVariable("user",users);
+        data.setVariable("baseUrl",baseUrl);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),templateEngine.process("/mails/creationemail.html",data), false, true);
 
     }
 
@@ -98,18 +88,11 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendPasswordResetMail(Users users, String baseUrl) {
         log.debug("Sending password reset e-mail to '{}'", users.getUsername());
-//        Locale locale = Locale.forLanguageTag(users.getLangKey());
-//        Map<String, Object> emailMap = new HashMap<>();
-//        emailMap.put("user", users);
-//        emailMap.put("baseUrl", baseUrl);
-//        emailMap.put("title", messageSource.getMessage("email.reset.title", null, locale));
-//        emailMap.put("greeting", messageSource.getMessage("email.reset.greeting" , null, locale));
-//        emailMap.put("text1",messageSource.getMessage("email.reset.text1" , null, locale));
-//        emailMap.put("text2",messageSource.getMessage("email.reset.text2" , null, locale));
-//        emailMap.put("signature",messageSource.getMessage("email.signature" , null, locale));
-//        Context data = new Context();
-//        data.setLocale(locale);
-//        data.setVariable("user",users);
-//        sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),templateEngine.process("/mails/passwordresetemail.html",data), false, true);
+        Locale locale = Locale.forLanguageTag(users.getLangKey());
+        Context data = new Context();
+        data.setLocale(locale);
+        data.setVariable("user",users);
+        data.setVariable("baseUrl",baseUrl);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),templateEngine.process("/mails/passwordresetemail.html",data), false, true);
     }
 }
