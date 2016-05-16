@@ -423,4 +423,9 @@ public class StudentServiceImpl implements StudentService {
                 .fetchOne();
         return count.value1();
     }
+
+    @Override
+    public void update(Student student) {
+        studentDao.update(student);
+    }
 }

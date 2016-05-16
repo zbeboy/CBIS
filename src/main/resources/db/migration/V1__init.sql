@@ -468,7 +468,7 @@ insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 
 insert into users(username, password, enabled, user_type_id, real_name, mobile, email, birthday, head_img, sex, identity_card, family_residence, post, political_landscape, religious_belief, nation, is_check_mobile, is_check_email, mobile_check_key, email_check_key, password_reset_key, mobile_check_key_validity_period, email_check_key_validity_period, password_reset_key__validity_period,lang_key, persona_introduction)
-values('10000','e10adc3949ba59abbe56e057f20f883e',true,2,'zbeboy','13987614709','863052317@qq.com','1994-01-07',null,'男','530181199401073015','昆明市','普通学生','预备党员','无','汉',true,true,null,null,null,null,null,null,'zh_cn','系统管理员');
+values('10000','e10adc3949ba59abbe56e057f20f883e',true,2,'zbeboy','13987614709','863052317@qq.com','1994-01-07',null,'男','530181199401073015','昆明市','普通学生','预备党员','无','汉',true,true,null,null,null,null,null,null,'zh_CN','系统管理员');
 insert into authorities values('10000','ROLE_ADMIN');
 
 insert into article_type(name) values('系简介');

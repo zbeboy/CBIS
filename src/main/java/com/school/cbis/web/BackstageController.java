@@ -140,7 +140,7 @@ public class BackstageController {
      * @param request
      * @return 完整文件信息
      */
-    @RequestMapping(value = "/maintainer/uploadFile", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData<FileData> uploadPicture(MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request) {
         AjaxData<FileData> data = new AjaxData();

@@ -52,7 +52,9 @@ function action() {
         'param': JSON.stringify(param)
     }, function (data) {
         outputHtml(data);
-        initPage(data);
+        if(data.result.length>0){
+            initPage(data);
+        }
     });
 }
 

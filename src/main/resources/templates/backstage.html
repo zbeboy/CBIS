@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org"
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
@@ -52,8 +52,8 @@
             <div class="uk-panel uk-panel-box">
                 <h3 class="uk-panel-title">个人业务</h3>
                 <ul class="uk-nav uk-nav-side">
-                    <li><a href="#">修改资料</a></li>
-                    <li id="navrevisepassword"><a href="#" th:href="@{/student/personal/revisepassword}">修改密码</a></li>
+                    <li id="navmodifydata"><a href="#" th:href="@{/student/personal/modifyData}" >修改资料</a></li>
+                    <li id="navrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
                 </ul>
             </div>
         </div>
@@ -66,8 +66,8 @@
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas">
                 <li class="uk-nav-header">个人业务</li>
-                <li><a href="#">修改资料</a></li>
-                <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/personal/revisepassword}">修改密码</a></li>
+                <li id="offcanvasmodifydata"><a href="#" th:href="@{/student/personal/modifyData}">修改资料</a></li>
+                <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

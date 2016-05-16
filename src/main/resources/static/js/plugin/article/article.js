@@ -243,7 +243,7 @@ function initUpload() {
         bar = progressbar.find('.uk-progress-bar'),
         settings = {
 
-            action: web_path + '/maintainer/uploadFile', // upload url
+            action: web_path + '/student/uploadFile', // upload url
 
             allow: '*.(jpeg|jpg|gif|png|JPEG|JPG|GIF|PNG)', // allow only images
 
@@ -279,7 +279,7 @@ function initUpload() {
                 }
 
                 //显示图片
-                $('#articleimg').attr('src', '/files/' + param.uploadParamFileName + '/' + str);
+                $('#articleimg').attr('src', web_path + '/files/' + param.uploadParamFileName + '/' + str);
                 $('#articleimg').parent().parent().removeClass('uk-hidden');
 
                 //保存服务器端绝对路径
@@ -297,7 +297,7 @@ function initUpload() {
     if (param.openAffix) {
         var affixSettings = {
 
-            action: web_path + '/maintainer/uploadFile', // upload url
+            action: web_path + '/student/uploadFile', // upload url
 
             allow: '*.(txt|doc|docx|xls|xlsx|ppt|pptx|zip|7z|rar|iso|gzip|png|jpeg|jpg|gif|tar|pdf)', // allow only images
 
@@ -362,7 +362,7 @@ function deleteArticle() {
         layer.close(index);
         if (status) {
             if (data.state) {
-                window.location.href = param.clickNoUrl;
+                window.location.href = web_path + param.clickNoUrl;
             }
         } else {
             layer.msg("网络异常，请稍后重试！");

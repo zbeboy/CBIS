@@ -186,4 +186,10 @@ public interface StudentService {
      * @return
      */
     int findByGradeIdAndTieIdAndYearNotInStudentIdCount(AutonomousPracticeParamVo autonomousPracticeParamVo,int tieId,List<Integer> studentId);
+
+    /**
+     * 更新
+     * @param student
+     */
+    void update(Student student);
 }

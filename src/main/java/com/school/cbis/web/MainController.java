@@ -54,9 +54,6 @@ public class MainController {
     @Resource
     private MajorService majorService;
 
-    @Resource
-    private MailService mailService;
-
     /**
      * 主页
      *
@@ -156,8 +153,6 @@ public class MainController {
         if (StringUtils.isEmpty(usersService.getUserName())) {
             return "/login";
         }
-        Users users =usersService.getUserInfoBySession();
-        mailService.sendActivationEmail(users,"/test");
         return "/student/backstage";
     }
 
