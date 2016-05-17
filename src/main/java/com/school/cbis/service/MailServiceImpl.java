@@ -96,4 +96,16 @@ public class MailServiceImpl implements MailService {
         data.setVariable("baseUrl",baseUrl);
         sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),springTemplateEngine.process("/mails/passwordresetemail.html",data), false, true);
     }
+
+    @Async
+    @Override
+    public void sendValidEmailMail(Users users, String baseUrl) {
+        log.debug("Sending valid e-mail to '{}'", users.getUsername());
+        Locale locale = Locale.forLanguageTag(users.getLangKey());
+        Context data = new Context();
+        data.setLocale(locale);
+        data.setVariable("user",users);
+        data.setVariable("validLink",baseUrl+"/user/checkEmail?key="+users.getEmailCheckKey()+"&username="+users.getUsername());
+        sendEmail(users.getEmail(), messageSource.getMessage("email.valid.title", null, locale),springTemplateEngine.process("/mails/validemail",data), false, true);
+    }
 }

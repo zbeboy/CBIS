@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-	private static final long serialVersionUID = -167030335;
+	private static final long serialVersionUID = -1202004732;
 
 	/**
 	 * The reference instance of <code>cbis.users</code>
@@ -167,9 +167,9 @@ public class Users extends TableImpl<UsersRecord> {
 	public final TableField<UsersRecord, Timestamp> EMAIL_CHECK_KEY_VALIDITY_PERIOD = createField("email_check_key_validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "邮箱验证有效期");
 
 	/**
-	 * The column <code>cbis.users.password_reset_key__validity_period</code>. 密码重置key有效期
+	 * The column <code>cbis.users.password_reset_key_validity_period</code>. 密码重置key有效期
 	 */
-	public final TableField<UsersRecord, Timestamp> PASSWORD_RESET_KEY__VALIDITY_PERIOD = createField("password_reset_key__validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "密码重置key有效期");
+	public final TableField<UsersRecord, Timestamp> PASSWORD_RESET_KEY_VALIDITY_PERIOD = createField("password_reset_key_validity_period", org.jooq.impl.SQLDataType.TIMESTAMP, this, "密码重置key有效期");
 
 	/**
 	 * The column <code>cbis.users.lang_key</code>. message source

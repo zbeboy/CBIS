@@ -4,6 +4,7 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.UsersDao;
 import com.school.cbis.domain.tables.pojos.Users;
+import com.school.cbis.domain.tables.records.UsersRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -166,6 +167,15 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void save(Users users) {
         usersDao.insert(users);
+    }
+
+    @Override
+    public UsersRecord findByEmailAndUsername(String email, String username) {
+        Byte b = 1;
+        UsersRecord record = create.selectFrom(Tables.USERS)
+                .where(Tables.USERS.USERNAME.ne(username).and(Tables.USERS.EMAIL.eq(email)).and(Tables.USERS.IS_CHECK_EMAIL.eq(b)))
+                .fetchOne();
+        return record;
     }
 
 }

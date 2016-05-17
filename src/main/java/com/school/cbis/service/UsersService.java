@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Users;
+import com.school.cbis.domain.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -78,4 +79,12 @@ public interface UsersService {
      * @param users
      */
     void save(Users users);
+
+    /**
+     * 检验邮箱用 注:不等于该用户名
+     * @param email
+     * @param username
+     * @return
+     */
+    UsersRecord findByEmailAndUsername(String email, String username);
 }

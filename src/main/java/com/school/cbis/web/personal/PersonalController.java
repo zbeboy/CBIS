@@ -5,12 +5,15 @@ import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.FileData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.domain.tables.records.UsersRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.MD5Utils;
+import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.personal.RevisePasswordVo;
 import com.school.cbis.vo.personal.StudentModifyDataVo;
 import com.school.cbis.vo.personal.TeacherModifyDataVo;
 import org.apache.poi.ss.formula.functions.T;
+import org.joda.time.DateTime;
 import org.jooq.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +62,9 @@ public class PersonalController {
 
     @Resource
     private ArticleSubService articleSubService;
+
+    @Resource
+    private MailService mailService;
 
     @Resource
     private Wordbook wordbook;
@@ -311,5 +317,53 @@ public class PersonalController {
         List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
         modelMap.addAttribute("articleSub", articleSubs);
         return "/user/personal/individualresumeshow";
+    }
+
+    @RequestMapping("/student/personal/mailboxVerification")
+    public String mailboxVerification(ModelMap modelMap){
+        Users users = usersService.findByUsername(usersService.getUserName());
+        if(users.getIsCheckEmail() == 1){
+            modelMap.addAttribute("isCheckEmail",true);
+            modelMap.addAttribute("email",users.getEmail());
+        } else {
+            modelMap.addAttribute("isCheckEmail",false);
+        }
+        return "/student/personal/mailboxverification";
+    }
+
+    @RequestMapping("/student/personal/validEmail")
+    @ResponseBody
+    public Map<String,Object> validEmail(@RequestParam("email") String email ){
+        Map<String ,Object> map = new HashMap<>();
+        Users users = usersService.getUserInfoBySession();
+        if(!ObjectUtils.isEmpty(users.getEmail())&&users.getEmail().equals(email) && users.getIsCheckEmail() ==1){
+            map.put("error","该邮箱已验证!");
+        } else {
+            UsersRecord record = usersService.findByEmailAndUsername(email,usersService.getUserName());
+            if(ObjectUtils.isEmpty(record)){
+                map.put("ok","");
+            } else {
+                map.put("error","该邮箱已被使用!");
+            }
+        }
+        return map;
+    }
+
+    @RequestMapping("/student/personal/updateEmail")
+    @ResponseBody
+    public AjaxData updateEmail(@RequestParam("email") String email,HttpServletRequest request){
+        Users users = usersService.findByUsername(usersService.getUserName());
+        users.setEmail(email);
+        DateTime dateTime = new DateTime().plusDays(2);
+        Timestamp timestamp = new Timestamp(dateTime.getMillis());
+        users.setEmailCheckKeyValidityPeriod(timestamp);
+        users.setEmailCheckKey(RandomUtils.generateEmailCheckKey());
+        Byte b = 0;
+        users.setIsCheckEmail(b);
+        usersService.update(users);
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+        mailService.sendValidEmailMail(users, basePath);
+        return new AjaxData().success().msg("邮件已发送至您的邮箱!");
     }
 }

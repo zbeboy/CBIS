@@ -295,7 +295,7 @@ public class UsersController {
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
-        users.setLangKey("zh-CN");
+        users.setLangKey("zh_CN");
         usersService.save(users);
         AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
         authoritiesRecord.setUsername(username);
@@ -329,7 +329,7 @@ public class UsersController {
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));
-        users.setLangKey("zh-CN");
+        users.setLangKey("zh_CN");
         usersService.save(users);
         AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
         authoritiesRecord.setUsername(username);

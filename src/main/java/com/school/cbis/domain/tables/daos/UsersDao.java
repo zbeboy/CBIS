@@ -221,10 +221,10 @@ public class UsersDao extends DAOImpl<UsersRecord, com.school.cbis.domain.tables
 	}
 
 	/**
-	 * Fetch records that have <code>password_reset_key__validity_period IN (values)</code>
+	 * Fetch records that have <code>password_reset_key_validity_period IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.Users> fetchByPasswordResetKey_ValidityPeriod(Timestamp... values) {
-		return fetch(Users.USERS.PASSWORD_RESET_KEY__VALIDITY_PERIOD, values);
+	public List<com.school.cbis.domain.tables.pojos.Users> fetchByPasswordResetKeyValidityPeriod(Timestamp... values) {
+		return fetch(Users.USERS.PASSWORD_RESET_KEY_VALIDITY_PERIOD, values);
 	}
 
 	/**

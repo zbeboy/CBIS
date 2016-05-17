@@ -45,15 +45,15 @@ public class RandomUtils {
      * @return the autonomous_practice_head title_variable
      */
     public static String generateTitleVariable() {
-        return "v_" + RandomStringUtils.randomAlphanumeric(20);
+        return "v_" + RandomStringUtils.randomAlphanumeric(DEF_COUNT);
     }
 
     /**
-     * Generates a autonomous_practice_content row_older
+     * Generates a email check key
      *
-     * @return the autonomous_practice_content row_older
+     * @return the email check key
      */
-    public static String generateRowOlder() {
-        return RandomStringUtils.randomAlphanumeric(40);
+    public static String generateEmailCheckKey() {
+        return RandomStringUtils.randomAlphanumeric(DEF_COUNT);
     }
 }

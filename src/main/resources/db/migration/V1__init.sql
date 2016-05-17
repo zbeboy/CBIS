@@ -27,7 +27,7 @@ create table users(
   password_reset_key varchar(20) comment '密码重置key',
   mobile_check_key_validity_period datetime  comment '手机验证有效期',
   email_check_key_validity_period datetime comment '邮箱验证有效期',
-  password_reset_key__validity_period datetime comment '密码重置key有效期',
+  password_reset_key_validity_period datetime comment '密码重置key有效期',
   lang_key varchar(5) comment 'message source',
   persona_introduction varchar(200) comment '个人介绍',
   introduce_article_info_id int comment '文章简介id',
@@ -466,7 +466,7 @@ create table autonomous_practice_content(
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 
-insert into users(username, password, enabled, user_type_id, real_name, mobile, email, birthday, head_img, sex, identity_card, family_residence, post, political_landscape, religious_belief, nation, is_check_mobile, is_check_email, mobile_check_key, email_check_key, password_reset_key, mobile_check_key_validity_period, email_check_key_validity_period, password_reset_key__validity_period,lang_key, persona_introduction)
+insert into users(username, password, enabled, user_type_id, real_name, mobile, email, birthday, head_img, sex, identity_card, family_residence, post, political_landscape, religious_belief, nation, is_check_mobile, is_check_email, mobile_check_key, email_check_key, password_reset_key, mobile_check_key_validity_period, email_check_key_validity_period, password_reset_key_validity_period,lang_key, persona_introduction)
 values('10000','e10adc3949ba59abbe56e057f20f883e',true,2,'zbeboy','13987614709','863052317@qq.com','1994-01-07',null,'男','530181199401073015','昆明市','普通学生','预备党员','无','汉',true,true,null,null,null,null,null,null,'zh_CN','系统管理员');
 insert into authorities values('10000','ROLE_ADMIN');
 

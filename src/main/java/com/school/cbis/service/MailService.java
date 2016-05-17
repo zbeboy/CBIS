@@ -37,4 +37,11 @@ public interface MailService {
      * @param baseUrl
      */
     void sendPasswordResetMail(Users users, String baseUrl);
+
+    /**
+     * 发送邮箱验证邮件
+     * @param users
+     * @param baseUrl
+     */
+    void sendValidEmailMail(Users users, String baseUrl);
 }

@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users implements Serializable {
 
-	private static final long serialVersionUID = -1605598695;
+	private static final long serialVersionUID = -110532342;
 
 	private String    username;
 	private String    password;
@@ -51,7 +51,7 @@ public class Users implements Serializable {
 	private String    passwordResetKey;
 	private Timestamp mobileCheckKeyValidityPeriod;
 	private Timestamp emailCheckKeyValidityPeriod;
-	private Timestamp passwordResetKey_ValidityPeriod;
+	private Timestamp passwordResetKeyValidityPeriod;
 	private String    langKey;
 	private String    personaIntroduction;
 	private Integer   introduceArticleInfoId;
@@ -82,7 +82,7 @@ public class Users implements Serializable {
 		this.passwordResetKey = value.passwordResetKey;
 		this.mobileCheckKeyValidityPeriod = value.mobileCheckKeyValidityPeriod;
 		this.emailCheckKeyValidityPeriod = value.emailCheckKeyValidityPeriod;
-		this.passwordResetKey_ValidityPeriod = value.passwordResetKey_ValidityPeriod;
+		this.passwordResetKeyValidityPeriod = value.passwordResetKeyValidityPeriod;
 		this.langKey = value.langKey;
 		this.personaIntroduction = value.personaIntroduction;
 		this.introduceArticleInfoId = value.introduceArticleInfoId;
@@ -112,7 +112,7 @@ public class Users implements Serializable {
 		String    passwordResetKey,
 		Timestamp mobileCheckKeyValidityPeriod,
 		Timestamp emailCheckKeyValidityPeriod,
-		Timestamp passwordResetKey_ValidityPeriod,
+		Timestamp passwordResetKeyValidityPeriod,
 		String    langKey,
 		String    personaIntroduction,
 		Integer   introduceArticleInfoId
@@ -140,7 +140,7 @@ public class Users implements Serializable {
 		this.passwordResetKey = passwordResetKey;
 		this.mobileCheckKeyValidityPeriod = mobileCheckKeyValidityPeriod;
 		this.emailCheckKeyValidityPeriod = emailCheckKeyValidityPeriod;
-		this.passwordResetKey_ValidityPeriod = passwordResetKey_ValidityPeriod;
+		this.passwordResetKeyValidityPeriod = passwordResetKeyValidityPeriod;
 		this.langKey = langKey;
 		this.personaIntroduction = personaIntroduction;
 		this.introduceArticleInfoId = introduceArticleInfoId;
@@ -352,12 +352,12 @@ public class Users implements Serializable {
 		this.emailCheckKeyValidityPeriod = emailCheckKeyValidityPeriod;
 	}
 
-	public Timestamp getPasswordResetKey_ValidityPeriod() {
-		return this.passwordResetKey_ValidityPeriod;
+	public Timestamp getPasswordResetKeyValidityPeriod() {
+		return this.passwordResetKeyValidityPeriod;
 	}
 
-	public void setPasswordResetKey_ValidityPeriod(Timestamp passwordResetKey_ValidityPeriod) {
-		this.passwordResetKey_ValidityPeriod = passwordResetKey_ValidityPeriod;
+	public void setPasswordResetKeyValidityPeriod(Timestamp passwordResetKeyValidityPeriod) {
+		this.passwordResetKeyValidityPeriod = passwordResetKeyValidityPeriod;
 	}
 
 	@Size(max = 5)
@@ -413,7 +413,7 @@ public class Users implements Serializable {
 		sb.append(", ").append(passwordResetKey);
 		sb.append(", ").append(mobileCheckKeyValidityPeriod);
 		sb.append(", ").append(emailCheckKeyValidityPeriod);
-		sb.append(", ").append(passwordResetKey_ValidityPeriod);
+		sb.append(", ").append(passwordResetKeyValidityPeriod);
 		sb.append(", ").append(langKey);
 		sb.append(", ").append(personaIntroduction);
 		sb.append(", ").append(introduceArticleInfoId);

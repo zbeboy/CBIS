@@ -79,6 +79,9 @@ public class Wordbook {
         roleMap.put(CBIS_STU, "学生");
     }
 
+    //短信接口 apikey  目前仅做测试用
+    public static final String MOBILE_APIKEY = "dff42b3e8cbd6406beea0bf160080115";
+
     private static final String mail_form = "863052317@qq.com";
 
     private static final int corePoolSize = 2;

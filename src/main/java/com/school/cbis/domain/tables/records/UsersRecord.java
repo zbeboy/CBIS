@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
 
-	private static final long serialVersionUID = 1291497961;
+	private static final long serialVersionUID = 817484783;
 
 	/**
 	 * Setter for <code>cbis.users.username</code>.
@@ -377,16 +377,16 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
 	}
 
 	/**
-	 * Setter for <code>cbis.users.password_reset_key__validity_period</code>. 密码重置key有效期
+	 * Setter for <code>cbis.users.password_reset_key_validity_period</code>. 密码重置key有效期
 	 */
-	public void setPasswordResetKey_ValidityPeriod(Timestamp value) {
+	public void setPasswordResetKeyValidityPeriod(Timestamp value) {
 		setValue(23, value);
 	}
 
 	/**
-	 * Getter for <code>cbis.users.password_reset_key__validity_period</code>. 密码重置key有效期
+	 * Getter for <code>cbis.users.password_reset_key_validity_period</code>. 密码重置key有效期
 	 */
-	public Timestamp getPasswordResetKey_ValidityPeriod() {
+	public Timestamp getPasswordResetKeyValidityPeriod() {
 		return (Timestamp) getValue(23);
 	}
 
@@ -460,7 +460,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
 	/**
 	 * Create a detached, initialised UsersRecord
 	 */
-	public UsersRecord(String username, String password, Byte enabled, Integer userTypeId, String realName, String mobile, String email, Date birthday, String headImg, String sex, String identityCard, String familyResidence, String post, String politicalLandscape, String religiousBelief, String nation, Byte isCheckMobile, Byte isCheckEmail, String mobileCheckKey, String emailCheckKey, String passwordResetKey, Timestamp mobileCheckKeyValidityPeriod, Timestamp emailCheckKeyValidityPeriod, Timestamp passwordResetKey_ValidityPeriod, String langKey, String personaIntroduction, Integer introduceArticleInfoId) {
+	public UsersRecord(String username, String password, Byte enabled, Integer userTypeId, String realName, String mobile, String email, Date birthday, String headImg, String sex, String identityCard, String familyResidence, String post, String politicalLandscape, String religiousBelief, String nation, Byte isCheckMobile, Byte isCheckEmail, String mobileCheckKey, String emailCheckKey, String passwordResetKey, Timestamp mobileCheckKeyValidityPeriod, Timestamp emailCheckKeyValidityPeriod, Timestamp passwordResetKeyValidityPeriod, String langKey, String personaIntroduction, Integer introduceArticleInfoId) {
 		super(Users.USERS);
 
 		setValue(0, username);
@@ -486,7 +486,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
 		setValue(20, passwordResetKey);
 		setValue(21, mobileCheckKeyValidityPeriod);
 		setValue(22, emailCheckKeyValidityPeriod);
-		setValue(23, passwordResetKey_ValidityPeriod);
+		setValue(23, passwordResetKeyValidityPeriod);
 		setValue(24, langKey);
 		setValue(25, personaIntroduction);
 		setValue(26, introduceArticleInfoId);
