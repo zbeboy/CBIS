@@ -1,5 +1,7 @@
 package com.school.cbis.test;
 
+import com.school.cbis.service.MobileServiceImpl;
+import com.school.cbis.util.RandomUtils;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -44,9 +46,7 @@ public class TestMobile {
 
     @Test
     public void test(){
-        String httpUrl = "http://apis.baidu.com/kingtto_media/106sms/106sms";
-        String httpArg = "mobile=13987614709&content=%E3%80%90%E5%87%AF%E4%BF%A1%E9%80%9A%E3%80%91%E6%82%A8%E7%9A%84%E9%AA%8C%E8%AF%81%E7%A0%81%EF%BC%9A888888";
-        String jsonResult = request(httpUrl, httpArg);
-        System.out.println(jsonResult);
+        MobileServiceImpl mobileService = new MobileServiceImpl();
+        mobileService.sendValidMobileShortMessage("13987614709", RandomUtils.generateMobileKey());
     }
 }

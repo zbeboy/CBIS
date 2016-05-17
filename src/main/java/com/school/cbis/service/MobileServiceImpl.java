@@ -2,6 +2,8 @@ package com.school.cbis.service;
 
 import com.school.cbis.commons.Wordbook;
 import org.apache.commons.lang3.CharEncoding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedReader;
@@ -16,15 +18,18 @@ import java.net.URLEncoder;
  */
 public class MobileServiceImpl implements MobileService {
 
+    private final Logger log = LoggerFactory.getLogger(MailService.class);
+
     @Async
     @Override
     public void sendShortMessage(String mobile, String content) {
+        String result = null;
         try {
             String httpUrl = "http://apis.baidu.com/kingtto_media/106sms/106sms";
             content = URLEncoder.encode(content,CharEncoding.UTF_8);
-            String httpArg = "mobile="+mobile+"&content="+content+"&tag=2";
+            log.debug(" mobile content : {}",content);
+            String httpArg = "mobile="+mobile+"&content="+content;
             BufferedReader reader = null;
-            String result = null;
             StringBuffer sbf = new StringBuffer();
             httpUrl = httpUrl + "?" + httpArg;
             URL url = new URL(httpUrl);
@@ -46,12 +51,14 @@ public class MobileServiceImpl implements MobileService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug(" mobile result : {}",result);
     }
 
     @Async
     @Override
     public void sendValidMobileShortMessage(String mobile, String verificationCode) {
-        String content = "[信息工程系信息平台] 您的验证码:"+verificationCode;
+        log.debug(" mobile valid : {} : {}",mobile,verificationCode);
+        String content = "【信息工程系信息平台】 您的验证码:"+verificationCode;
         sendShortMessage(mobile,content);
     }
 }

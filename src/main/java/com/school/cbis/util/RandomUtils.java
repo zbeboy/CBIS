@@ -8,6 +8,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class RandomUtils {
     private static final int DEF_COUNT = 20;
 
+    private static final int MOBILE_COUNT = 6;
+
     private RandomUtils() {
 
     }
@@ -55,5 +57,14 @@ public class RandomUtils {
      */
     public static String generateEmailCheckKey() {
         return RandomStringUtils.randomAlphanumeric(DEF_COUNT);
+    }
+
+    /**
+     * Generates a mobile check key
+     *
+     * @return the mobile check key
+     */
+    public static String generateMobileKey() {
+        return RandomStringUtils.randomNumeric(MOBILE_COUNT);
     }
 }
