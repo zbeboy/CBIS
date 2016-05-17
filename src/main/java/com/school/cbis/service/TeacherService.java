@@ -19,7 +19,7 @@ public interface TeacherService {
      * @param tieId
      * @return
      */
-    Result<Record5<Integer,Integer,Integer,String,String>> findByTieIdAndTeacherName(String teacherName, int tieId);
+    Result<Record4<Integer,Integer,String,String>> findByTieIdAndTeacherName(String teacherName, int tieId);
 
     /**
      * 通过教师工号查询
@@ -59,4 +59,10 @@ public interface TeacherService {
      * @param teacher
      */
     void save(Teacher teacher);
+
+    /**
+     * 更新
+     * @param teacher
+     */
+    void update(Teacher teacher);
 }

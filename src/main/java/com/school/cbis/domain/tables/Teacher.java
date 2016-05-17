@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teacher extends TableImpl<TeacherRecord> {
 
-	private static final long serialVersionUID = 1720155548;
+	private static final long serialVersionUID = -35017209;
 
 	/**
 	 * The reference instance of <code>cbis.teacher</code>
@@ -64,11 +64,6 @@ public class Teacher extends TableImpl<TeacherRecord> {
 	 * The column <code>cbis.teacher.teacher_job_number</code>.
 	 */
 	public final TableField<TeacherRecord, String> TEACHER_JOB_NUMBER = createField("teacher_job_number", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.teacher.teacher_introduce_article_info_id</code>.
-	 */
-	public final TableField<TeacherRecord, Integer> TEACHER_INTRODUCE_ARTICLE_INFO_ID = createField("teacher_introduce_article_info_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>cbis.teacher</code> table reference

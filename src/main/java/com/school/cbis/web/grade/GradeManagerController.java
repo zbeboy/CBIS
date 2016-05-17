@@ -5,14 +5,15 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.GradeRecord;
-import com.school.cbis.domain.tables.records.TeacherRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.GradeService;
 import com.school.cbis.service.TeacherService;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.grade.GradeVo;
-import org.apache.poi.ss.formula.functions.T;
-import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.Record4;
+import org.jooq.Record6;
+import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -93,7 +94,7 @@ public class GradeManagerController {
         if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        Result<Record5<Integer,Integer,Integer,String,String>> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
+        Result<Record4<Integer,Integer,String,String>> teachers = teacherService.findByTieIdAndTeacherName(search, tieId);
         if (teachers.isNotEmpty()) {
             teachers.forEach(teacherRecord -> {
                 AutoCompleteData data = new AutoCompleteData();

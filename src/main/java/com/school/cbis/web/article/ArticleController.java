@@ -68,13 +68,19 @@ public class ArticleController {
     @Resource
     private TieNoticeAffixService tieNoticeAffixService;
 
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private StudentService studentService;
+
     /**
      * 保存文章
      *
      * @param lastParam 文章数据
      * @return
      */
-    @RequestMapping(value = "/maintainer/saveArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/saveArticle", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData saveArticle(@RequestParam(value = "lastParam") String lastParam) {
         AjaxData data = new AjaxData();
@@ -246,6 +252,18 @@ public class ArticleController {
                 } else {
                     data.fail().msg("获取专业信息失败!");
                 }
+            }else if (articleDatas.get(0).getArticleType().equals(Wordbook.USER_SUMMARY)) {//用户简介
+                Map<String, Object> majorMap = (Map<String, Object>) JSON.parse(myParam.toString());
+                Users users = usersService.findByUsername(majorMap.get("username").toString());
+                if (!StringUtils.isEmpty(users)) {
+                    users.setIntroduceArticleInfoId(articleInfoId);
+                    usersService.update(users);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("single", articleInfoId);
+                    data.success().msg("更新文章成功!").mapData(map);
+                } else {
+                    data.fail().msg("获取教师信息失败!");
+                }
             }
 
             //处理附件
@@ -274,7 +292,7 @@ public class ArticleController {
      * @param lastParam
      * @return
      */
-    @RequestMapping(value = "/maintainer/updateArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/updateArticle", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData updateArticle(@RequestParam(value = "lastParam") String lastParam) {
         AjaxData data = new AjaxData();

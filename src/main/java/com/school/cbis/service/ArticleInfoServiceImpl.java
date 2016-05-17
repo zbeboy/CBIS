@@ -1,5 +1,6 @@
 package com.school.cbis.service;
 
+import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.ArticleInfoDao;
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 
 /**
@@ -27,6 +29,9 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     private final DSLContext create;
 
     private ArticleInfoDao articleInfoDao;
+
+    @Resource
+    private Wordbook wordbook;
 
     @Autowired
     public ArticleInfoServiceImpl(DSLContext dslContext, Configuration configuration) {
@@ -75,5 +80,16 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
                 .where(Tables.ARTICLE_INFO.ID.eq(id))
                 .orderBy(Tables.ARTICLE_INFO.DATE.desc()).fetch();
         return record8s;
+    }
+
+    @Override
+    public Record findByUsername(String username) {
+            Record record = create.select()
+                    .from(Tables.USERS)
+                    .join(Tables.ARTICLE_INFO)
+                    .on(Tables.USERS.INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                    .where(Tables.USERS.USERNAME.equal(username))
+                    .fetchOne();
+            return record;
     }
 }

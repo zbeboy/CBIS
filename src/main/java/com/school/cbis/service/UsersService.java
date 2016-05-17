@@ -65,7 +65,7 @@ public interface UsersService {
     void update(Users users);
 
     /**
-     * 通过用户名获得用户完整有效信息，包括所在院，系，班级信息
+     * 通过session用户名获得用户完整有效信息，包括所在院，系，班级信息
      *
      * @param username
      * @return 用户完整有效信息

@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student implements Serializable {
 
-	private static final long serialVersionUID = -1646445627;
+	private static final long serialVersionUID = -1835322735;
 
 	private Integer id;
 	private String  studentNumber;
@@ -34,7 +34,6 @@ public class Student implements Serializable {
 	private String  parentContactPhone;
 	private String  placeOrigin;
 	private String  problemSituation;
-	private Integer studentIntroduceArticleInfoId;
 
 	public Student() {}
 
@@ -47,7 +46,6 @@ public class Student implements Serializable {
 		this.parentContactPhone = value.parentContactPhone;
 		this.placeOrigin = value.placeOrigin;
 		this.problemSituation = value.problemSituation;
-		this.studentIntroduceArticleInfoId = value.studentIntroduceArticleInfoId;
 	}
 
 	public Student(
@@ -58,8 +56,7 @@ public class Student implements Serializable {
 		String  parentName,
 		String  parentContactPhone,
 		String  placeOrigin,
-		String  problemSituation,
-		Integer studentIntroduceArticleInfoId
+		String  problemSituation
 	) {
 		this.id = id;
 		this.studentNumber = studentNumber;
@@ -69,7 +66,6 @@ public class Student implements Serializable {
 		this.parentContactPhone = parentContactPhone;
 		this.placeOrigin = placeOrigin;
 		this.problemSituation = problemSituation;
-		this.studentIntroduceArticleInfoId = studentIntroduceArticleInfoId;
 	}
 
 	@NotNull
@@ -145,14 +141,6 @@ public class Student implements Serializable {
 		this.problemSituation = problemSituation;
 	}
 
-	public Integer getStudentIntroduceArticleInfoId() {
-		return this.studentIntroduceArticleInfoId;
-	}
-
-	public void setStudentIntroduceArticleInfoId(Integer studentIntroduceArticleInfoId) {
-		this.studentIntroduceArticleInfoId = studentIntroduceArticleInfoId;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Student (");
@@ -165,7 +153,6 @@ public class Student implements Serializable {
 		sb.append(", ").append(parentContactPhone);
 		sb.append(", ").append(placeOrigin);
 		sb.append(", ").append(problemSituation);
-		sb.append(", ").append(studentIntroduceArticleInfoId);
 
 		sb.append(")");
 		return sb.toString();

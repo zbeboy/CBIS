@@ -36,8 +36,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public  Result<Record5<Integer,Integer,Integer,String,String>> findByTieIdAndTeacherName(String teacherName, int tieId) {
-        Result<Record5<Integer,Integer,Integer,String,String>> records = create.select(Tables.TEACHER.ID,Tables.TEACHER.TEACHER_INTRODUCE_ARTICLE_INFO_ID,Tables.TEACHER.TIE_ID,Tables.TEACHER.TEACHER_JOB_NUMBER,Tables.USERS.REAL_NAME)
+    public  Result<Record4<Integer,Integer,String,String>> findByTieIdAndTeacherName(String teacherName, int tieId) {
+        Result<Record4<Integer,Integer,String,String>> records = create.select(Tables.TEACHER.ID,Tables.TEACHER.TIE_ID,Tables.TEACHER.TEACHER_JOB_NUMBER,Tables.USERS.REAL_NAME)
                 .from(Tables.TEACHER)
                 .join(Tables.USERS)
                 .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
@@ -110,5 +110,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void save(Teacher teacher) {
         teacherDao.insert(teacher);
+    }
+
+    @Override
+    public void update(Teacher teacher) {
+        teacherDao.update(teacher);
     }
 }

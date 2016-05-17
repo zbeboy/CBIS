@@ -30,6 +30,7 @@ create table users(
   password_reset_key__validity_period datetime comment '密码重置key有效期',
   lang_key varchar(5) comment 'message source',
   persona_introduction varchar(200) comment '个人介绍',
+  introduce_article_info_id int comment '文章简介id',
   foreign key(user_type_id) references user_type(id)
 );
 
@@ -121,7 +122,6 @@ create table student(
   parent_contact_phone varchar(15) comment '家长联系电话',
   place_origin varchar(500) comment '生源地',
   problem_situation varchar(500) comment '问题情况',
-  student_introduce_article_info_id int,
   foreign key(grade_id) references grade(id)
 );
 
@@ -137,7 +137,6 @@ create table teacher(
   id int not null primary key auto_increment,
   tie_id int not null,
   teacher_job_number varchar(25) not null,
-  teacher_introduce_article_info_id int,
   foreign key(tie_id) references tie(id)
 );
 
@@ -478,13 +477,10 @@ insert into article_type(name) values('专业简介');
 insert into article_type(name) values('专业培养目标');
 insert into article_type(name) values('专业特色');
 insert into article_type(name) values('专业带头人');
-insert into article_type(name) values('学生简介');
-insert into article_type(name) values('教师简介');
+insert into article_type(name) values('用户简介');
 insert into article_type(name) values('系风采');
 insert into article_type(name) values('系公告');
 insert into article_type(name) values('系主任');
-
-insert into article_info(id,article_writer,article_type_id) values(1,'10000',1);
 
 insert into yard(yard_name,yard_address) values('城市学院','云南省昆明盘龙区新迎校区');
 

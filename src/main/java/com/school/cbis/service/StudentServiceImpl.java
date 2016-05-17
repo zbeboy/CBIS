@@ -102,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Record findById(int id) {
+    public Record findByIdWithGrade(int id) {
         Record record = create.select()
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
@@ -427,5 +427,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void update(Student student) {
         studentDao.update(student);
+    }
+
+    @Override
+    public Student findById(int id) {
+        Student student = studentDao.findById(id);
+        return student;
     }
 }

@@ -3,15 +3,15 @@ package com.school.cbis.web.personal;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.FileData;
-import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.domain.tables.pojos.Users;
-import com.school.cbis.service.StudentService;
-import com.school.cbis.service.UploadService;
-import com.school.cbis.service.UsersService;
+import com.school.cbis.domain.Tables;
+import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.service.*;
 import com.school.cbis.util.MD5Utils;
 import com.school.cbis.vo.personal.RevisePasswordVo;
 import com.school.cbis.vo.personal.StudentModifyDataVo;
 import com.school.cbis.vo.personal.TeacherModifyDataVo;
+import org.apache.poi.ss.formula.functions.T;
+import org.jooq.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -50,6 +50,15 @@ public class PersonalController {
 
     @Resource
     private StudentService studentService;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ArticleInfoService articleInfoService;
+
+    @Resource
+    private ArticleSubService articleSubService;
 
     @Resource
     private Wordbook wordbook;
@@ -148,29 +157,35 @@ public class PersonalController {
     @RequestMapping("/student/personal/modifyData")
     public String modifyData(ModelMap modelMap) {
         Users users = usersService.findByUsername(usersService.getUserName());
-        modelMap.addAttribute("users",users);
-        if(users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)){//类型为老师
+        modelMap.addAttribute("users", users);
+        if (users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {//类型为老师
             return "/teacher/personal/teachermodifydata";
         } else {
             List<Student> students = studentService.findByStudentNumber(users.getUsername());
-            if(!students.isEmpty()){
-                modelMap.addAttribute("studentInfo",students.get(0));
+            if (!students.isEmpty()) {
+                modelMap.addAttribute("studentInfo", students.get(0));
             } else {
-                modelMap.addAttribute("studentInfo",new Student());
+                modelMap.addAttribute("studentInfo", new Student());
             }
             return "/student/personal/studentmodifydata";
         }
     }
 
+    /**
+     * 更新学生资料
+     *
+     * @param studentModifyDataVo
+     * @return
+     */
     @RequestMapping("/student/personal/updateStudentModifyData")
     @ResponseBody
     public AjaxData updateStudentModifyData(StudentModifyDataVo studentModifyDataVo) {
 
         try {
-            if(StringUtils.hasLength(studentModifyDataVo.getUsername())){
+            if (StringUtils.hasLength(studentModifyDataVo.getUsername())) {
                 Users users = usersService.findByUsername(studentModifyDataVo.getUsername());
-                if(!ObjectUtils.isEmpty(users)){
-                    if(StringUtils.hasLength(studentModifyDataVo.getBirthday())){
+                if (!ObjectUtils.isEmpty(users)) {
+                    if (StringUtils.hasLength(studentModifyDataVo.getBirthday())) {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         java.sql.Date date = new java.sql.Date(sdf.parse(studentModifyDataVo.getBirthday()).getTime());
                         users.setBirthday(date);
@@ -187,7 +202,7 @@ public class PersonalController {
                     users.setPersonaIntroduction(studentModifyDataVo.getPersonaIntroduction());
                     usersService.update(users);
                     List<Student> students = studentService.findByStudentNumber(studentModifyDataVo.getUsername());
-                    if(!students.isEmpty()){
+                    if (!students.isEmpty()) {
                         Student student = students.get(0);
                         student.setParentName(studentModifyDataVo.getParentName());
                         student.setParentContactPhone(studentModifyDataVo.getParentContactPhone());
@@ -211,15 +226,21 @@ public class PersonalController {
         return new AjaxData().success().msg("更新成功!");
     }
 
+    /**
+     * 更新教师资料
+     *
+     * @param teacherModifyDataVo
+     * @return
+     */
     @RequestMapping("/teacher/personal/updateTeacherModifyData")
     @ResponseBody
     public AjaxData updateTeacherModifyData(TeacherModifyDataVo teacherModifyDataVo) {
 
         try {
-            if(StringUtils.hasLength(teacherModifyDataVo.getUsername())){
+            if (StringUtils.hasLength(teacherModifyDataVo.getUsername())) {
                 Users users = usersService.findByUsername(teacherModifyDataVo.getUsername());
-                if(!ObjectUtils.isEmpty(users)){
-                    if(StringUtils.hasLength(teacherModifyDataVo.getBirthday())){
+                if (!ObjectUtils.isEmpty(users)) {
+                    if (StringUtils.hasLength(teacherModifyDataVo.getBirthday())) {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         java.sql.Date date = new java.sql.Date(sdf.parse(teacherModifyDataVo.getBirthday()).getTime());
                         users.setBirthday(date);
@@ -246,5 +267,49 @@ public class PersonalController {
             return new AjaxData().fail().msg("转换异常!");
         }
         return new AjaxData().success().msg("更新成功!");
+    }
+
+    /**
+     * 个人简介
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/student/personal/individualResume")
+    public String individualResume(ModelMap modelMap) {
+        Users users = usersService.getUserInfoBySession();
+        log.debug("username : {}",users.getUsername());
+        Record record = articleInfoService.findByUsername(users.getUsername());
+        ArticleInfo articleInfo;
+        List<ArticleSub> articleSubs = null;
+        if(!ObjectUtils.isEmpty(record)){
+            articleInfo = record.into(ArticleInfo.class);
+            log.debug("articleInfo : {}",articleInfo);
+            articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
+        } else {
+            articleInfo = new ArticleInfo();
+        }
+        modelMap.addAttribute("articleinfo", articleInfo);
+        modelMap.addAttribute("articlesubinfo", articleSubs);
+        modelMap.addAttribute("username", users.getUsername());
+        return "/student/personal/individualresume";
+    }
+
+    /**
+     * 个人简介展示
+     * @param id
+     * @param username
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/student/personal/individualResumeShow")
+    public String individualResume(@RequestParam("id") int id, @RequestParam("username") String username,  ModelMap modelMap) {
+        Record record = articleInfoService.findByUsername(username);
+        Users users = record.into(Users.class);
+        modelMap.addAttribute("userInfo", users);
+        ArticleInfo articleInfo = record.into(ArticleInfo.class);
+        modelMap.addAttribute("articleInfo", articleInfo);
+        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
+        modelMap.addAttribute("articleSub", articleSubs);
+        return "/user/personal/individualresumeshow";
     }
 }

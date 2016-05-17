@@ -112,11 +112,4 @@ public class StudentDao extends DAOImpl<StudentRecord, com.school.cbis.domain.ta
 	public List<com.school.cbis.domain.tables.pojos.Student> fetchByProblemSituation(String... values) {
 		return fetch(Student.STUDENT.PROBLEM_SITUATION, values);
 	}
-
-	/**
-	 * Fetch records that have <code>student_introduce_article_info_id IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Student> fetchByStudentIntroduceArticleInfoId(Integer... values) {
-		return fetch(Student.STUDENT.STUDENT_INTRODUCE_ARTICLE_INFO_ID, values);
-	}
 }

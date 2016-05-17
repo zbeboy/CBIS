@@ -77,11 +77,4 @@ public class TeacherDao extends DAOImpl<TeacherRecord, com.school.cbis.domain.ta
 	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherJobNumber(String... values) {
 		return fetch(Teacher.TEACHER.TEACHER_JOB_NUMBER, values);
 	}
-
-	/**
-	 * Fetch records that have <code>teacher_introduce_article_info_id IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.Teacher> fetchByTeacherIntroduceArticleInfoId(Integer... values) {
-		return fetch(Teacher.TEACHER.TEACHER_INTRODUCE_ARTICLE_INFO_ID, values);
-	}
 }

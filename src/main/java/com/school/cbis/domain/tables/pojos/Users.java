@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users implements Serializable {
 
-	private static final long serialVersionUID = -1234676644;
+	private static final long serialVersionUID = -1605598695;
 
 	private String    username;
 	private String    password;
@@ -54,6 +54,7 @@ public class Users implements Serializable {
 	private Timestamp passwordResetKey_ValidityPeriod;
 	private String    langKey;
 	private String    personaIntroduction;
+	private Integer   introduceArticleInfoId;
 
 	public Users() {}
 
@@ -84,6 +85,7 @@ public class Users implements Serializable {
 		this.passwordResetKey_ValidityPeriod = value.passwordResetKey_ValidityPeriod;
 		this.langKey = value.langKey;
 		this.personaIntroduction = value.personaIntroduction;
+		this.introduceArticleInfoId = value.introduceArticleInfoId;
 	}
 
 	public Users(
@@ -112,7 +114,8 @@ public class Users implements Serializable {
 		Timestamp emailCheckKeyValidityPeriod,
 		Timestamp passwordResetKey_ValidityPeriod,
 		String    langKey,
-		String    personaIntroduction
+		String    personaIntroduction,
+		Integer   introduceArticleInfoId
 	) {
 		this.username = username;
 		this.password = password;
@@ -140,6 +143,7 @@ public class Users implements Serializable {
 		this.passwordResetKey_ValidityPeriod = passwordResetKey_ValidityPeriod;
 		this.langKey = langKey;
 		this.personaIntroduction = personaIntroduction;
+		this.introduceArticleInfoId = introduceArticleInfoId;
 	}
 
 	@NotNull
@@ -374,6 +378,14 @@ public class Users implements Serializable {
 		this.personaIntroduction = personaIntroduction;
 	}
 
+	public Integer getIntroduceArticleInfoId() {
+		return this.introduceArticleInfoId;
+	}
+
+	public void setIntroduceArticleInfoId(Integer introduceArticleInfoId) {
+		this.introduceArticleInfoId = introduceArticleInfoId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Users (");
@@ -404,6 +416,7 @@ public class Users implements Serializable {
 		sb.append(", ").append(passwordResetKey_ValidityPeriod);
 		sb.append(", ").append(langKey);
 		sb.append(", ").append(personaIntroduction);
+		sb.append(", ").append(introduceArticleInfoId);
 
 		sb.append(")");
 		return sb.toString();

@@ -50,7 +50,7 @@ public interface StudentService {
      * @param id
      * @return
      */
-    Record findById(int id);
+    Record findByIdWithGrade(int id);
 
     /**
      * 通过年级，系id，查询该系下，该年级有多少学生
@@ -192,4 +192,11 @@ public interface StudentService {
      * @param student
      */
     void update(Student student);
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    Student findById(int id);
 }

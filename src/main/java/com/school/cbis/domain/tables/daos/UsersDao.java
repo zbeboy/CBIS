@@ -240,4 +240,11 @@ public class UsersDao extends DAOImpl<UsersRecord, com.school.cbis.domain.tables
 	public List<com.school.cbis.domain.tables.pojos.Users> fetchByPersonaIntroduction(String... values) {
 		return fetch(Users.USERS.PERSONA_INTRODUCTION, values);
 	}
+
+	/**
+	 * Fetch records that have <code>introduce_article_info_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Users> fetchByIntroduceArticleInfoId(Integer... values) {
+		return fetch(Users.USERS.INTRODUCE_ARTICLE_INFO_ID, values);
+	}
 }

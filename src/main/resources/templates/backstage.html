@@ -54,6 +54,7 @@
                 <ul class="uk-nav uk-nav-side">
                     <li id="navmodifydata"><a href="#" th:href="@{/student/personal/modifyData}" >修改资料</a></li>
                     <li id="navrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
+                    <li id="navindividualresume"><a href="#" th:href="@{/student/personal/individualResume}">个人简介</a></li>
                 </ul>
             </div>
         </div>
@@ -68,6 +69,7 @@
                 <li class="uk-nav-header">个人业务</li>
                 <li id="offcanvasmodifydata"><a href="#" th:href="@{/student/personal/modifyData}">修改资料</a></li>
                 <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
+                <li id="offcanvasindividualresume"><a href="#" th:href="@{/student/personal/individualResume}">个人简介</a></li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

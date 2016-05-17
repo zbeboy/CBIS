@@ -37,8 +37,7 @@ public class Wordbook {
     public static final String MAJOR_BRING_IN_GOAL = "专业培养目标";
     public static final String MAJOR_ITEM = "专业特色";
     public static final String MAJOR_LEAD = "专业带头人";
-    public static final String STUDENT_SUMMARY = "学生简介";
-    public static final String TEACHER_SUMMARY = "教师简介";
+    public static final String USER_SUMMARY = "用户简介";
 
     private Map<String, Integer> articleTypeMap;
 

@@ -6,7 +6,6 @@ import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.major.MajorIndexVo;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

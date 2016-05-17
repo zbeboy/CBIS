@@ -172,7 +172,7 @@ public class BackstageController {
      * @param path 文件路径
      * @return
      */
-    @RequestMapping(value = "/maintainer/deleteFile")
+    @RequestMapping(value = "/student/deleteFile")
     @ResponseBody
     public AjaxData deleteFile(@RequestParam("path") String path) {
         AjaxData data = new AjaxData();

@@ -17,7 +17,7 @@ var param = {
     'clickNoUrl': '',//文章保存或更新成功点击取消需要刷新的地址
     'uploadParamFileName': '',//上传图片需要保存图片的文件夹名
     'articleId': 0,//用于文章id
-    'myParam':{},//自定义参数
+    'myParam': {},//自定义参数
     'cleanFromClient': false,//删除图片时，服务器端也删除，默认只删除html dom
     'cleanUrl': '',//若开启cleanFromClient,此项必填，删除请求地址
     'openAffix': false,//开启附件功能
@@ -55,7 +55,7 @@ var is_del = false;
 function initImage() {
     if (imgPath != '' && imgPath != null) {
         var str = imgPath.substring(imgPath.lastIndexOf('/') + 1, imgPath.length);
-        $('#articleimg').attr('src', '/files/' + param.uploadParamFileName + '/' + str);
+        $('#articleimg').attr('src', web_path + '/files/' + param.uploadParamFileName + '/' + str);
     } else {
         $('#upload-drop').removeClass("uk-hidden");
         $('#imgShow').children().addClass("uk-hidden");
@@ -179,15 +179,15 @@ function saveArticle() {
 function sendArtitle(subData) {
 
     var lastParam = {
-      'articleData':subData,
-        'myParam':param.myParam,
-        'openAffix':param.openAffix,
-        'affixData':param.affixData
+        'articleData': subData,
+        'myParam': param.myParam,
+        'openAffix': param.openAffix,
+        'affixData': param.affixData
     };
 
     var index = layer.load(1, {shade: false});
     $.post(param.articleSaveOrUpdateUrl, {
-        'lastParam':JSON.stringify(lastParam)
+        'lastParam': JSON.stringify(lastParam)
     }, function (data, status) {
         layer.close(index);
         if (status) {
@@ -283,7 +283,7 @@ function initUpload() {
                 $('#articleimg').parent().parent().removeClass('uk-hidden');
 
                 //保存服务器端绝对路径
-                imgPath = json.msg;
+                imgPath = '/files/' + param.uploadParamFileName + '/' + str;
 
                 //删除图片标记
                 is_del = false;
@@ -329,11 +329,9 @@ function cleanimg() {
             }, function (data, status) {
                 layer.close(index);
                 if (status) {/*网络正常*/
-                    if (data.state) {
-                        /*删除成功 重新显示上传组件*/
-                        $('#upload-drop').removeClass('uk-hidden');
-                        $('#articleimg').parent().parent().addClass('uk-hidden');
-                    }
+                    /*删除成功 重新显示上传组件*/
+                    $('#upload-drop').removeClass('uk-hidden');
+                    $('#articleimg').parent().parent().addClass('uk-hidden');
                     layer.msg(data.msg);
                 } else {
                     layer.msg("网络异常，请稍后重试！");
@@ -374,27 +372,27 @@ function deleteArticle() {
  * 输出附件html
  */
 function outputAffixHtml(data) {
-/*
-    var html = "<li class='affixdata' >" +
-        "<p style='display:none;'>" +
-        data.lastPath +
-        "</p>" +
-        "<p style='display:none;'>" +
-        data.originalFilename +
-        "</p>" +
-        "<div class='uk-grid'>" +
-        "<div class='uk-width-4-5 uk-text-truncate'>" +
-        data.originalFilename +
-        "</div>" +
-        "<div class='uk-width-1-5 uk-text-muted uk-text-right'>" +
-        " <a href='javascript:;' onclick='deleteAffix(this);'>" +
-        "删除" +
-        "</a>" +
-        "</div>" +
-        "</div>" +
-        "</li>";
-    $('#affixDatas').append(html);
-*/
+    /*
+     var html = "<li class='affixdata' >" +
+     "<p style='display:none;'>" +
+     data.lastPath +
+     "</p>" +
+     "<p style='display:none;'>" +
+     data.originalFilename +
+     "</p>" +
+     "<div class='uk-grid'>" +
+     "<div class='uk-width-4-5 uk-text-truncate'>" +
+     data.originalFilename +
+     "</div>" +
+     "<div class='uk-width-1-5 uk-text-muted uk-text-right'>" +
+     " <a href='javascript:;' onclick='deleteAffix(this);'>" +
+     "删除" +
+     "</a>" +
+     "</div>" +
+     "</div>" +
+     "</li>";
+     $('#affixDatas').append(html);
+     */
     var _ = DOMBuilder;
     $('#affixDatas').append(_.DOM(
         _('li.affixdata')._([

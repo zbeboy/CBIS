@@ -24,12 +24,11 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teacher implements Serializable {
 
-	private static final long serialVersionUID = -785185249;
+	private static final long serialVersionUID = 283771172;
 
 	private Integer id;
 	private Integer tieId;
 	private String  teacherJobNumber;
-	private Integer teacherIntroduceArticleInfoId;
 
 	public Teacher() {}
 
@@ -37,19 +36,16 @@ public class Teacher implements Serializable {
 		this.id = value.id;
 		this.tieId = value.tieId;
 		this.teacherJobNumber = value.teacherJobNumber;
-		this.teacherIntroduceArticleInfoId = value.teacherIntroduceArticleInfoId;
 	}
 
 	public Teacher(
 		Integer id,
 		Integer tieId,
-		String  teacherJobNumber,
-		Integer teacherIntroduceArticleInfoId
+		String  teacherJobNumber
 	) {
 		this.id = id;
 		this.tieId = tieId;
 		this.teacherJobNumber = teacherJobNumber;
-		this.teacherIntroduceArticleInfoId = teacherIntroduceArticleInfoId;
 	}
 
 	@NotNull
@@ -80,14 +76,6 @@ public class Teacher implements Serializable {
 		this.teacherJobNumber = teacherJobNumber;
 	}
 
-	public Integer getTeacherIntroduceArticleInfoId() {
-		return this.teacherIntroduceArticleInfoId;
-	}
-
-	public void setTeacherIntroduceArticleInfoId(Integer teacherIntroduceArticleInfoId) {
-		this.teacherIntroduceArticleInfoId = teacherIntroduceArticleInfoId;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Teacher (");
@@ -95,7 +83,6 @@ public class Teacher implements Serializable {
 		sb.append(id);
 		sb.append(", ").append(tieId);
 		sb.append(", ").append(teacherJobNumber);
-		sb.append(", ").append(teacherIntroduceArticleInfoId);
 
 		sb.append(")");
 		return sb.toString();

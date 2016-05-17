@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.ArticleInfo;
+import org.jooq.Record;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Result;
@@ -49,4 +50,10 @@ public interface ArticleInfoService {
      */
     Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> findByIdWithUsers(int id);
 
+    /**
+     * 根据用户id查询
+     * @param username
+     * @return
+     */
+    Record findByUsername(String username);
 }

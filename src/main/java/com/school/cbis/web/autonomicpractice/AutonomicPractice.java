@@ -971,7 +971,7 @@ public class AutonomicPractice {
         AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(id);
 
         //当前填报学生的个人信息，用于数据库字段
-        Record student = studentService.findById(studentId);
+        Record student = studentService.findByIdWithGrade(studentId);
         AutonomicPracticeStudentInfoVo autonomicPracticeStudentInfoVo = new AutonomicPracticeStudentInfoVo();
         autonomicPracticeStudentInfoVo.setId(student.getValue(Tables.STUDENT.ID));
         autonomicPracticeStudentInfoVo.setStudentNumber(student.getValue(Tables.STUDENT.STUDENT_NUMBER));
