@@ -463,6 +463,25 @@ create table autonomous_practice_content(
   foreign key(autonomous_practice_info_id) references autonomous_practice_info(id)
 );
 
+create table mailbox_settings(
+  id int not null primary key auto_increment,
+  switch_email boolean not null default true comment '是否开户邮箱',
+  daily_limit int comment '每日限额'
+);
+
+create table mailbox_count(
+  id int not null primary key auto_increment,
+  send_user varchar(64) not null comment '发送者',
+  accept_user varchar(64) not null comment '接收者',
+  subject varchar(500) comment '邮箱标题',
+  content text comment '内容',
+  send_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  mailbox_settings_id int not null,
+  foreign key(send_user) references users(username),
+  foreign key(accept_user) references users(username),
+  foreign key(mailbox_settings_id) references mailbox_settings(id)
+);
+
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 

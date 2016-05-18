@@ -319,6 +319,11 @@ public class PersonalController {
         return "/user/personal/individualresumeshow";
     }
 
+    /**
+     * 邮箱验证页
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/student/personal/mailboxVerification")
     public String mailboxVerification(ModelMap modelMap){
         Users users = usersService.findByUsername(usersService.getUserName());
@@ -331,6 +336,11 @@ public class PersonalController {
         return "/student/personal/mailboxverification";
     }
 
+    /**
+     * 校验邮箱
+     * @param email
+     * @return
+     */
     @RequestMapping("/student/personal/validEmail")
     @ResponseBody
     public Map<String,Object> validEmail(@RequestParam("email") String email ){
@@ -349,6 +359,12 @@ public class PersonalController {
         return map;
     }
 
+    /**
+     * 发送邮箱验证
+     * @param email
+     * @param request
+     * @return
+     */
     @RequestMapping("/student/personal/updateEmail")
     @ResponseBody
     public AjaxData updateEmail(@RequestParam("email") String email,HttpServletRequest request){
@@ -367,6 +383,13 @@ public class PersonalController {
         return new AjaxData().success().msg("邮件已发送至您的邮箱!");
     }
 
+    /**
+     * 验证邮箱
+     * @param key
+     * @param username
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/user/checkEmail")
     public String checkEmail(@RequestParam("key") String key,@RequestParam("username") String username,ModelMap modelMap){
         Users users = usersService.findByUsername(username);

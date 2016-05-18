@@ -18,6 +18,8 @@ import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
+import com.school.cbis.domain.tables.MailboxCount;
+import com.school.cbis.domain.tables.MailboxSettings;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -130,6 +132,16 @@ public class Tables {
 	 * The table cbis.head_type
 	 */
 	public static final HeadType HEAD_TYPE = com.school.cbis.domain.tables.HeadType.HEAD_TYPE;
+
+	/**
+	 * The table cbis.mailbox_count
+	 */
+	public static final MailboxCount MAILBOX_COUNT = com.school.cbis.domain.tables.MailboxCount.MAILBOX_COUNT;
+
+	/**
+	 * The table cbis.mailbox_settings
+	 */
+	public static final MailboxSettings MAILBOX_SETTINGS = com.school.cbis.domain.tables.MailboxSettings.MAILBOX_SETTINGS;
 
 	/**
 	 * The table cbis.major
