@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +20,9 @@ import java.net.URLEncoder;
 public class MobileServiceImpl implements MobileService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
+
+    @Resource
+    private Wordbook wordbook;
 
     @Async
     @Override
@@ -37,7 +41,7 @@ public class MobileServiceImpl implements MobileService {
                     .openConnection();
             connection.setRequestMethod("GET");
             // 填入apikey到HTTP header
-            connection.setRequestProperty("apikey", Wordbook.MOBILE_APIKEY);
+            connection.setRequestProperty("apikey", wordbook.mobileApikey);
             connection.connect();
             InputStream is = connection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(is, CharEncoding.UTF_8));

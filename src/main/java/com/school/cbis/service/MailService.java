@@ -44,4 +44,7 @@ public interface MailService {
      * @param baseUrl
      */
     void sendValidEmailMail(Users users, String baseUrl);
+
+
+    void sendAliDMMail(String to, String subject, String content);
 }

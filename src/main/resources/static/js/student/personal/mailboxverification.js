@@ -17,10 +17,8 @@ function cancelUpdate(){
 /**
  * 提交数据
  */
-function submitData(t,m){
-    var target = "#"+t;
-    var msgTarget = "#"+m;
-    updateEmail(target,msgTarget);
+function submitData(){
+    $('#updateForm').submit();
 }
 
 /**
@@ -54,7 +52,8 @@ function initForm(){
             });
         },
         validClass:"uk-form-success",
-        invalidClass:"uk-form-danger"
+        invalidClass:"uk-form-danger",
+        msgClass: "n-bottom"
     });
 
     $('#addForm').validator({

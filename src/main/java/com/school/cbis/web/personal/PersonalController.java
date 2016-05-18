@@ -366,4 +366,27 @@ public class PersonalController {
         mailService.sendValidEmailMail(users, basePath);
         return new AjaxData().success().msg("邮件已发送至您的邮箱!");
     }
+
+    @RequestMapping("/user/checkEmail")
+    public String checkEmail(@RequestParam("key") String key,@RequestParam("username") String username,ModelMap modelMap){
+        Users users = usersService.findByUsername(username);
+        if(!ObjectUtils.isEmpty(users)){
+            Timestamp cur = new Timestamp(System.currentTimeMillis());
+            if(!ObjectUtils.isEmpty(users.getEmailCheckKeyValidityPeriod())&&cur.before(users.getEmailCheckKeyValidityPeriod())){
+                if(StringUtils.trimWhitespace(key).equals(users.getEmailCheckKey())){
+                    Byte b = 1;
+                    users.setIsCheckEmail(b);
+                    usersService.update(users);
+                    modelMap.addAttribute("msg","恭喜您,您的邮箱:"+users.getEmail()+"已经验证成功!");
+                } else {
+                    modelMap.addAttribute("msg","验证码不正确,请登录重新获取验证邮件!");
+                }
+            } else {
+                modelMap.addAttribute("msg","您的邮箱验证已过有效期(2日内),请登录重新获取验证邮件!");
+            }
+        } else {
+            modelMap.addAttribute("msg","未获取到用户信息,验证失效!");
+        }
+        return "/user/personal/checkemailmsg";
+    }
 }

@@ -98,12 +98,12 @@
             <div class="uk-modal-header">
                 <h2>修改邮箱</h2>
             </div>
-            <form id="updateForm" class="uk-form uk-text-center">
+            <form id="updateForm" class="uk-form uk-text-center uk-margin-bottom">
                 <input type="email" placeholder="您的邮箱" name="email" class="uk-margin-small-top uk-form-width-large" />
                 <p id="msg"></p>
             </form>
             <div class="uk-modal-footer uk-text-right">
-                <button type="submit" class="uk-button uk-button-primary">确定</button>
+                <button type="button" class="uk-button uk-button-primary" onclick="submitData();" >确定</button>
                 <button type="button" class="uk-button" onclick="cancelUpdate();" >取消</button>
             </div>
         </div>

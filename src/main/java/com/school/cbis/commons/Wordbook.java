@@ -9,6 +9,7 @@ import com.school.cbis.service.WordbookService;
 import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -79,8 +80,22 @@ public class Wordbook {
         roleMap.put(CBIS_STU, "学生");
     }
 
+    //阿里云邮箱服务
+    @Value("${cbis.mail.user}")
+    public String aliyunMailUser;
+
+    @Value("${cbis.mail.password}")
+    public String aliyunMailPassword;
+
+    @Value("${cbis.mail.host}")
+    public String aliyunSmtpHost;
+
+    @Value("${cbis.mail.port}")
+    public int aliyunSmtpPort;
+
     //短信接口 apikey  目前仅做测试用
-    public static final String MOBILE_APIKEY = "dff42b3e8cbd6406beea0bf160080115";
+    @Value("${cbis.mobile.apikey}")
+    public String mobileApikey;
 
     private static final String mail_form = "863052317@qq.com";
 
