@@ -19,7 +19,6 @@ import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
-import com.school.cbis.domain.tables.MailboxSettings;
 import com.school.cbis.domain.tables.Major;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
@@ -70,7 +69,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -1887850757;
+	private static final long serialVersionUID = 690750723;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -108,7 +107,6 @@ public class Cbis extends SchemaImpl {
 			Grade.GRADE,
 			HeadType.HEAD_TYPE,
 			MailboxCount.MAILBOX_COUNT,
-			MailboxSettings.MAILBOX_SETTINGS,
 			Major.MAJOR,
 			PersistentLogins.PERSISTENT_LOGINS,
 			PlaceFileContent.PLACE_FILE_CONTENT,

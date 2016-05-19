@@ -66,17 +66,10 @@ public class MailboxCountDao extends DAOImpl<MailboxCountRecord, com.school.cbis
 	}
 
 	/**
-	 * Fetch records that have <code>send_user IN (values)</code>
+	 * Fetch records that have <code>accept_email IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.MailboxCount> fetchBySendUser(String... values) {
-		return fetch(MailboxCount.MAILBOX_COUNT.SEND_USER, values);
-	}
-
-	/**
-	 * Fetch records that have <code>accept_user IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.MailboxCount> fetchByAcceptUser(String... values) {
-		return fetch(MailboxCount.MAILBOX_COUNT.ACCEPT_USER, values);
+	public List<com.school.cbis.domain.tables.pojos.MailboxCount> fetchByAcceptEmail(String... values) {
+		return fetch(MailboxCount.MAILBOX_COUNT.ACCEPT_EMAIL, values);
 	}
 
 	/**
@@ -101,9 +94,9 @@ public class MailboxCountDao extends DAOImpl<MailboxCountRecord, com.school.cbis
 	}
 
 	/**
-	 * Fetch records that have <code>mailbox_settings_id IN (values)</code>
+	 * Fetch records that have <code>accept_user IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.MailboxCount> fetchByMailboxSettingsId(Integer... values) {
-		return fetch(MailboxCount.MAILBOX_COUNT.MAILBOX_SETTINGS_ID, values);
+	public List<com.school.cbis.domain.tables.pojos.MailboxCount> fetchByAcceptUser(String... values) {
+		return fetch(MailboxCount.MAILBOX_COUNT.ACCEPT_USER, values);
 	}
 }

@@ -67,6 +67,9 @@ public class PersonalController {
     private MailService mailService;
 
     @Resource
+    private MailboxCountService mailboxCountService;
+
+    @Resource
     private Wordbook wordbook;
 
     /**
@@ -377,10 +380,19 @@ public class PersonalController {
         Byte b = 0;
         users.setIsCheckEmail(b);
         usersService.update(users);
-        String path = request.getContextPath();
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
-        mailService.sendValidEmailMail(users, basePath);
-        return new AjaxData().success().msg("邮件已发送至您的邮箱!");
+        if(wordbook.mailSwitch){
+            if(mailboxCountService.isExceedDailyLimit()){
+                return new AjaxData().fail().msg("发送失败,已超过每日邮件发送上限!");
+            } else {
+                String path = request.getContextPath();
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+                mailService.sendValidEmailMail(users, basePath);
+                return new AjaxData().success().msg("邮件已发送至您的邮箱!");
+            }
+        } else {
+            return new AjaxData().fail().msg("发送失败,管理员已关闭邮箱功能!");
+        }
+
     }
 
     /**

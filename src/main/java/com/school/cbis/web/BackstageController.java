@@ -7,6 +7,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
+import com.school.cbis.vo.mail.MailListVo;
 import com.school.cbis.vo.major.MajorListVo;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -225,5 +226,15 @@ public class BackstageController {
         } else {
             return "redirect:/student/autonomicpractice/autonomicPractice";
         }
+    }
+
+    /**
+     * 邮件管理界面
+     * @return
+     */
+    @RequestMapping("/maintainer/mail/mailManager")
+    public String mailManager(MailListVo mailListVo,ModelMap modelMap){
+        modelMap.addAttribute("mailListVo",mailListVo);
+        return "/maintainer/mail/mailmanager";
     }
 }

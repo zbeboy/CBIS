@@ -25,44 +25,40 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailboxCount implements Serializable {
 
-	private static final long serialVersionUID = -170992690;
+	private static final long serialVersionUID = 1043223203;
 
 	private Integer   id;
-	private String    sendUser;
-	private String    acceptUser;
+	private String    acceptEmail;
 	private String    subject;
 	private String    content;
 	private Timestamp sendTime;
-	private Integer   mailboxSettingsId;
+	private String    acceptUser;
 
 	public MailboxCount() {}
 
 	public MailboxCount(MailboxCount value) {
 		this.id = value.id;
-		this.sendUser = value.sendUser;
-		this.acceptUser = value.acceptUser;
+		this.acceptEmail = value.acceptEmail;
 		this.subject = value.subject;
 		this.content = value.content;
 		this.sendTime = value.sendTime;
-		this.mailboxSettingsId = value.mailboxSettingsId;
+		this.acceptUser = value.acceptUser;
 	}
 
 	public MailboxCount(
 		Integer   id,
-		String    sendUser,
-		String    acceptUser,
+		String    acceptEmail,
 		String    subject,
 		String    content,
 		Timestamp sendTime,
-		Integer   mailboxSettingsId
+		String    acceptUser
 	) {
 		this.id = id;
-		this.sendUser = sendUser;
-		this.acceptUser = acceptUser;
+		this.acceptEmail = acceptEmail;
 		this.subject = subject;
 		this.content = content;
 		this.sendTime = sendTime;
-		this.mailboxSettingsId = mailboxSettingsId;
+		this.acceptUser = acceptUser;
 	}
 
 	@NotNull
@@ -76,22 +72,12 @@ public class MailboxCount implements Serializable {
 
 	@NotNull
 	@Size(max = 64)
-	public String getSendUser() {
-		return this.sendUser;
+	public String getAcceptEmail() {
+		return this.acceptEmail;
 	}
 
-	public void setSendUser(String sendUser) {
-		this.sendUser = sendUser;
-	}
-
-	@NotNull
-	@Size(max = 64)
-	public String getAcceptUser() {
-		return this.acceptUser;
-	}
-
-	public void setAcceptUser(String acceptUser) {
-		this.acceptUser = acceptUser;
+	public void setAcceptEmail(String acceptEmail) {
+		this.acceptEmail = acceptEmail;
 	}
 
 	@Size(max = 500)
@@ -121,12 +107,13 @@ public class MailboxCount implements Serializable {
 	}
 
 	@NotNull
-	public Integer getMailboxSettingsId() {
-		return this.mailboxSettingsId;
+	@Size(max = 64)
+	public String getAcceptUser() {
+		return this.acceptUser;
 	}
 
-	public void setMailboxSettingsId(Integer mailboxSettingsId) {
-		this.mailboxSettingsId = mailboxSettingsId;
+	public void setAcceptUser(String acceptUser) {
+		this.acceptUser = acceptUser;
 	}
 
 	@Override
@@ -134,12 +121,11 @@ public class MailboxCount implements Serializable {
 		StringBuilder sb = new StringBuilder("MailboxCount (");
 
 		sb.append(id);
-		sb.append(", ").append(sendUser);
-		sb.append(", ").append(acceptUser);
+		sb.append(", ").append(acceptEmail);
 		sb.append(", ").append(subject);
 		sb.append(", ").append(content);
 		sb.append(", ").append(sendTime);
-		sb.append(", ").append(mailboxSettingsId);
+		sb.append(", ").append(acceptUser);
 
 		sb.append(")");
 		return sb.toString();

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.*;
 
 /**
@@ -79,6 +80,14 @@ public class Wordbook {
         roleMap.put(CBIS_TEA, "教师");
         roleMap.put(CBIS_STU, "学生");
     }
+
+    //邮箱开启
+    @Value("${cbis.mail.switch}")
+    public boolean mailSwitch;
+
+    //每日限额
+    @Value("${cbis.mail.limit}")
+    public int dailyLimit;
 
     //阿里云邮箱服务
     @Value("${cbis.mail.user}")

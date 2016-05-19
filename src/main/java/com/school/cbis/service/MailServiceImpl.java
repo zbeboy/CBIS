@@ -1,6 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.commons.Wordbook;
+import com.school.cbis.domain.tables.pojos.MailboxCount;
 import com.school.cbis.domain.tables.pojos.Users;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -36,6 +38,9 @@ public class MailServiceImpl implements MailService {
 
     @Resource
     private MessageSource messageSource;
+
+    @Resource
+    private MailboxCountService mailboxCountService;
 
     @Resource
     private SpringTemplateEngine springTemplateEngine;
@@ -112,11 +117,21 @@ public class MailServiceImpl implements MailService {
         data.setLocale(locale);
         data.setVariable("user",users);
         data.setVariable("validLink",baseUrl+"/user/checkEmail?key="+users.getEmailCheckKey()+"&username="+users.getUsername());
-        sendEmail(users.getEmail(), messageSource.getMessage("email.valid.title", null, locale),springTemplateEngine.process("/mails/validemail",data), false, true);
+        String subject = messageSource.getMessage("email.valid.title", null, locale);
+        String content = springTemplateEngine.process("/mails/validemail",data);
+        sendEmail(users.getEmail(), subject,content, false, true);
+
+        MailboxCount mailboxCount = new MailboxCount();
+        mailboxCount.setAcceptEmail(users.getEmail());
+        mailboxCount.setContent(content);
+        mailboxCount.setSubject(subject);
+        mailboxCount.setSendTime(new Timestamp(System.currentTimeMillis()));
+        mailboxCount.setAcceptUser(users.getUsername());
+        mailboxCountService.save(mailboxCount);
     }
 
     @Override
-    public void sendAliDMMail(String toUser, String subject, String content) {
+    public void sendAliDMMail(Users users, String subject, String content) {
         try{
             // 配置发送邮件的环境属性
             final Properties props = new Properties();
@@ -155,18 +170,26 @@ public class MailServiceImpl implements MailService {
             message.setFrom(form);
 
             // 设置收件人
-            InternetAddress to = new InternetAddress(toUser);
+            InternetAddress to = new InternetAddress(users.getEmail());
             message.setRecipient(MimeMessage.RecipientType.TO, to);
 
             // 设置邮件标题
             message.setSubject(subject);
             // 设置邮件的内容体
             message.setContent(content, "text/html;charset=UTF-8");
-            log.debug("Sent e-mail to User '{}'", toUser);
+            log.debug("Sent e-mail to User '{}'", users.getEmail());
             // 发送邮件
             Transport.send(message);
+
+            MailboxCount mailboxCount = new MailboxCount();
+            mailboxCount.setAcceptEmail(users.getEmail());
+            mailboxCount.setContent(content);
+            mailboxCount.setSubject(subject);
+            mailboxCount.setSendTime(new Timestamp(System.currentTimeMillis()));
+            mailboxCount.setAcceptUser(users.getUsername());
+            mailboxCountService.save(mailboxCount);
         } catch (MessagingException e){
-            log.warn("E-mail could not be sent to user '{}', exception is: {}", toUser, e.getMessage());
+            log.warn("E-mail could not be sent to user '{}', exception is: {}", users.getEmail(), e.getMessage());
         }
     }
 }

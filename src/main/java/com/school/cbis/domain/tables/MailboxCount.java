@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailboxCount extends TableImpl<MailboxCountRecord> {
 
-	private static final long serialVersionUID = -274902908;
+	private static final long serialVersionUID = -1903647375;
 
 	/**
 	 * The reference instance of <code>cbis.mailbox_count</code>
@@ -57,14 +57,9 @@ public class MailboxCount extends TableImpl<MailboxCountRecord> {
 	public final TableField<MailboxCountRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.mailbox_count.send_user</code>. 发送者
+	 * The column <code>cbis.mailbox_count.accept_email</code>. 接收邮箱
 	 */
-	public final TableField<MailboxCountRecord, String> SEND_USER = createField("send_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "发送者");
-
-	/**
-	 * The column <code>cbis.mailbox_count.accept_user</code>. 接收者
-	 */
-	public final TableField<MailboxCountRecord, String> ACCEPT_USER = createField("accept_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "接收者");
+	public final TableField<MailboxCountRecord, String> ACCEPT_EMAIL = createField("accept_email", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "接收邮箱");
 
 	/**
 	 * The column <code>cbis.mailbox_count.subject</code>. 邮箱标题
@@ -82,9 +77,9 @@ public class MailboxCount extends TableImpl<MailboxCountRecord> {
 	public final TableField<MailboxCountRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
 
 	/**
-	 * The column <code>cbis.mailbox_count.mailbox_settings_id</code>.
+	 * The column <code>cbis.mailbox_count.accept_user</code>. 接收者
 	 */
-	public final TableField<MailboxCountRecord, Integer> MAILBOX_SETTINGS_ID = createField("mailbox_settings_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<MailboxCountRecord, String> ACCEPT_USER = createField("accept_user", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "接收者");
 
 	/**
 	 * Create a <code>cbis.mailbox_count</code> table reference
@@ -137,7 +132,7 @@ public class MailboxCount extends TableImpl<MailboxCountRecord> {
 	 */
 	@Override
 	public List<ForeignKey<MailboxCountRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<MailboxCountRecord, ?>>asList(Keys.MAILBOX_COUNT_IBFK_1, Keys.MAILBOX_COUNT_IBFK_2, Keys.MAILBOX_COUNT_IBFK_3);
+		return Arrays.<ForeignKey<MailboxCountRecord, ?>>asList(Keys.MAILBOX_COUNT_IBFK_1);
 	}
 
 	/**

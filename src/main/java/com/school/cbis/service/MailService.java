@@ -45,6 +45,11 @@ public interface MailService {
      */
     void sendValidEmailMail(Users users, String baseUrl);
 
-
-    void sendAliDMMail(String to, String subject, String content);
+    /**
+     * 阿里云邮箱服务
+     * @param users
+     * @param subject
+     * @param content
+     */
+    void sendAliDMMail(Users users, String subject, String content);
 }
