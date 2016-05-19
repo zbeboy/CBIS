@@ -83,7 +83,7 @@
             <form id="addForm" class="uk-form uk-text-center uk-margin-top" th:if="${!isCheckEmail}" >
                 <input type="email" placeholder="您的邮箱" name="email" class="uk-margin-small-top uk-form-width-large" autofocus="autofocus" />
                 <button class="uk-button uk-margin-small-top" type="submit">确定验证</button>
-                <p id="addError" class="msg-box uk-text-danger" >未验证邮箱</p>
+                <p id="addError" class="uk-text-danger" >未验证邮箱</p>
             </form>
             <form class="uk-form uk-text-center uk-margin-top" th:if="${isCheckEmail}">
                 <input type="email" readonly="readonly" th:value="${email}" placeholder="您的邮箱" class="uk-margin-small-top uk-form-width-large" />

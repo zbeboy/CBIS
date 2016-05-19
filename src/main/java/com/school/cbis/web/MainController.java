@@ -1,10 +1,13 @@
 package com.school.cbis.web;
 
 import com.school.cbis.commons.Wordbook;
+import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
+import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.major.MajorIndexVo;
+import org.joda.time.DateTime;
 import org.jooq.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +16,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2016-01-05.
@@ -52,6 +61,12 @@ public class MainController {
 
     @Resource
     private MajorService majorService;
+
+    @Resource
+    private MailService mailService;
+
+    @Resource
+    private MailboxCountService mailboxCountService;
 
     /**
      * 主页
@@ -163,5 +178,106 @@ public class MainController {
     @RequestMapping("/login")
     public String login() {
         return "login";
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @return
+     */
+    @RequestMapping("/user/mail/forgetPassword")
+    public String forgetPassword() {
+        return "/user/mail/forgetpassword";
+    }
+
+    /**
+     * 重置密码时检验用户账号
+     *
+     * @param username
+     * @return
+     */
+    @RequestMapping("/user/mail/validUsername")
+    @ResponseBody
+    public Map<String, Object> validUsername(@RequestParam("username") String username) {
+        Map<String, Object> map = new HashMap<>();
+        Users users = usersService.findByUsername(StringUtils.trimWhitespace(username));
+        if (!ObjectUtils.isEmpty(users)) {
+            if (users.getIsCheckEmail() == 0) {
+                map.put("error", "您的账号未验证邮箱,无法完成重置!");
+            } else {
+                map.put("ok", "ok");
+            }
+        } else {
+            map.put("error", "账号不存在!");
+        }
+        return map;
+    }
+
+    /**
+     * 发送重置密码邮件
+     *
+     * @param username
+     * @param request
+     * @return
+     */
+    @RequestMapping("/user/mail/sendResetPasswordEmail")
+    @ResponseBody
+    public AjaxData sendResetPasswordEmail(@RequestParam("username") String username, HttpServletRequest request) {
+        Users users = usersService.findByUsername(StringUtils.trimWhitespace(username));
+        if (!ObjectUtils.isEmpty(users)) {
+            if (users.getIsCheckEmail() == 0) {
+                return new AjaxData().fail().msg("您的账号未验证邮箱,无法完成重置!");
+            } else {
+                if (wordbook.mailSwitch) {
+                    if (mailboxCountService.isExceedDailyLimit()) {
+                        return new AjaxData().fail().msg("发送失败,已超过每日邮件发送上限!");
+                    } else {
+                        users.setPasswordResetKey(RandomUtils.generateResetKey());
+                        DateTime dateTime = new DateTime().plusDays(2);
+                        Timestamp timestamp = new Timestamp(dateTime.getMillis());
+                        users.setPasswordResetKeyValidityPeriod(timestamp);
+                        usersService.update(users);
+                        String path = request.getContextPath();
+                        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+                        mailService.sendPasswordResetMail(users, basePath);
+                        return new AjaxData().success().msg("重置邮件已发送至您的邮箱,请注意查收!");
+                    }
+                } else {
+                    return new AjaxData().fail().msg("发送失败,管理员已关闭邮箱功能!");
+                }
+            }
+        } else {
+            return new AjaxData().fail().msg("账号不存在!");
+        }
+    }
+
+    /**
+     * 验证重置key
+     *
+     * @param key
+     * @param username
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/user/checkResetPassword")
+    public String checkResetPassword(@RequestParam("key") String key, @RequestParam("username") String username, ModelMap modelMap) {
+        Users users = usersService.findByUsername(StringUtils.trimWhitespace(username));
+        if (!ObjectUtils.isEmpty(users)) {
+            Timestamp cur = new Timestamp(System.currentTimeMillis());
+            if (cur.before(users.getPasswordResetKeyValidityPeriod())) {
+                if (users.getPasswordResetKey().equals(key)) {
+                    modelMap.addAttribute("msg", "");
+                    modelMap.addAttribute("username", users.getUsername());
+                    return "/user/mail/resetpassword";
+                } else {
+                    modelMap.addAttribute("msg", "验证码无效!");
+                }
+            } else {
+                modelMap.addAttribute("msg", "重置链接已过有效期!");
+            }
+        } else {
+            modelMap.addAttribute("msg", "账号不存在!");
+        }
+        return "/user/mail/forgetpasswordmsg";
     }
 }

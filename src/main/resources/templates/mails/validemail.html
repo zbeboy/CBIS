@@ -14,6 +14,9 @@
 <p>
     <a href="#" th:href="${validLink}" >验证链接</a>
 </p>
+<em>
+    链接有效期为:<span th:text="${user.emailCheckKeyValidityPeriod}" ></span>
+</em>
 <p>
     <span th:text="#{email.valid.text2}"> </span>
     <br/>

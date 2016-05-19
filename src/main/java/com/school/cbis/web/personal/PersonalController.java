@@ -9,6 +9,7 @@ import com.school.cbis.domain.tables.records.UsersRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.MD5Utils;
 import com.school.cbis.util.RandomUtils;
+import com.school.cbis.vo.personal.ResetPasswordVo;
 import com.school.cbis.vo.personal.RevisePasswordVo;
 import com.school.cbis.vo.personal.StudentModifyDataVo;
 import com.school.cbis.vo.personal.TeacherModifyDataVo;
@@ -100,7 +101,6 @@ public class PersonalController {
                     if (StringUtils.trimWhitespace(passwordVo.getNewPassword()).equals(StringUtils.trimWhitespace(passwordVo.getOkPassword()))) {//确认密码一致
                         Users users = usersService.findByUsername(usersService.getUserName());
                         users.setPassword(MD5Utils.md5(passwordVo.getOkPassword()));
-                        users.setUsername(usersService.getUserName());
                         usersService.update(users);//存入数据库
                         buildMap(map, false, new RevisePasswordVo(), false, true, "修改成功，请点击退出按钮，重新登录！");
 
@@ -115,6 +115,34 @@ public class PersonalController {
             }
         }
         return "/student/personal/revisepassword";
+    }
+
+    /**
+     * 重置密码
+     * @param resetPasswordVo
+     * @param bindingResult
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/user/personal/resetPassword")
+    public String resetPassword(@Valid ResetPasswordVo resetPasswordVo,BindingResult bindingResult,ModelMap modelMap){
+        if(!bindingResult.hasErrors()){
+            if (StringUtils.trimWhitespace(resetPasswordVo.getNewPassword()).equals(StringUtils.trimWhitespace(resetPasswordVo.getOkPassword()))) {//确认密码一致
+                Users users = usersService.findByUsername(resetPasswordVo.getUsername());
+                if(!ObjectUtils.isEmpty(users)){
+                    users.setPassword(MD5Utils.md5(resetPasswordVo.getOkPassword()));
+                    usersService.update(users);//存入数据库
+                    modelMap.addAttribute("msg","您的账号:"+users.getUsername()+"重置密码成功!");
+                } else {
+                    modelMap.addAttribute("msg","账号不存在!");
+                }
+            } else {
+                modelMap.addAttribute("msg","密码不一致,重置失败!");
+            }
+        } else {
+            modelMap.addAttribute("msg","参数异常!");
+        }
+        return "/user/mail/forgetpasswordmsg";
     }
 
     /**

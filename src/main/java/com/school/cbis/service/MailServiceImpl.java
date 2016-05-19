@@ -92,7 +92,7 @@ public class MailServiceImpl implements MailService {
         data.setLocale(locale);
         data.setVariable("user",users);
         data.setVariable("baseUrl",baseUrl);
-        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),springTemplateEngine.process("/mails/creationemail.html",data), false, true);
+        sendEmail(users.getUsername(), messageSource.getMessage("email.creation.title", null, locale),springTemplateEngine.process("/mails/creationemail",data), false, true);
 
     }
 
@@ -104,8 +104,18 @@ public class MailServiceImpl implements MailService {
         Context data = new Context();
         data.setLocale(locale);
         data.setVariable("user",users);
-        data.setVariable("baseUrl",baseUrl);
-        sendEmail(users.getUsername(), messageSource.getMessage("email.reset.title", null, locale),springTemplateEngine.process("/mails/passwordresetemail.html",data), false, true);
+        data.setVariable("validLink",baseUrl+"/user/checkResetPassword?key="+users.getPasswordResetKey()+"&username="+users.getUsername());
+        String subject = messageSource.getMessage("email.reset.title", null, locale);
+        String content = springTemplateEngine.process("/mails/passwordresetemail",data);
+        sendEmail(users.getEmail(), subject,content, false, true);
+
+        MailboxCount mailboxCount = new MailboxCount();
+        mailboxCount.setAcceptEmail(users.getEmail());
+        mailboxCount.setContent(content);
+        mailboxCount.setSubject(subject);
+        mailboxCount.setSendTime(new Timestamp(System.currentTimeMillis()));
+        mailboxCount.setAcceptUser(users.getUsername());
+        mailboxCountService.save(mailboxCount);
     }
 
     @Async
