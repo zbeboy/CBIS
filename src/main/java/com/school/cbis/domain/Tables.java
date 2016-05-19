@@ -20,6 +20,7 @@ import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
 import com.school.cbis.domain.tables.Major;
+import com.school.cbis.domain.tables.MobileCount;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
@@ -141,6 +142,11 @@ public class Tables {
 	 * The table cbis.major
 	 */
 	public static final Major MAJOR = com.school.cbis.domain.tables.Major.MAJOR;
+
+	/**
+	 * The table cbis.mobile_count
+	 */
+	public static final MobileCount MOBILE_COUNT = com.school.cbis.domain.tables.MobileCount.MOBILE_COUNT;
 
 	/**
 	 * The table cbis.persistent_logins

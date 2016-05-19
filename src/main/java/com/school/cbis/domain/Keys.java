@@ -20,6 +20,7 @@ import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
 import com.school.cbis.domain.tables.Major;
+import com.school.cbis.domain.tables.MobileCount;
 import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
@@ -61,6 +62,7 @@ import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.domain.tables.records.HeadTypeRecord;
 import com.school.cbis.domain.tables.records.MailboxCountRecord;
 import com.school.cbis.domain.tables.records.MajorRecord;
+import com.school.cbis.domain.tables.records.MobileCountRecord;
 import com.school.cbis.domain.tables.records.PersistentLoginsRecord;
 import com.school.cbis.domain.tables.records.PlaceFileContentRecord;
 import com.school.cbis.domain.tables.records.PlaceFileInfoRecord;
@@ -128,6 +130,7 @@ public class Keys {
 	public static final Identity<HeadTypeRecord, Integer> IDENTITY_HEAD_TYPE = Identities0.IDENTITY_HEAD_TYPE;
 	public static final Identity<MailboxCountRecord, Integer> IDENTITY_MAILBOX_COUNT = Identities0.IDENTITY_MAILBOX_COUNT;
 	public static final Identity<MajorRecord, Integer> IDENTITY_MAJOR = Identities0.IDENTITY_MAJOR;
+	public static final Identity<MobileCountRecord, Integer> IDENTITY_MOBILE_COUNT = Identities0.IDENTITY_MOBILE_COUNT;
 	public static final Identity<PlaceFileContentRecord, Integer> IDENTITY_PLACE_FILE_CONTENT = Identities0.IDENTITY_PLACE_FILE_CONTENT;
 	public static final Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = Identities0.IDENTITY_PLACE_FILE_INFO;
 	public static final Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = Identities0.IDENTITY_PLACE_FILE_TITLE;
@@ -170,6 +173,7 @@ public class Keys {
 	public static final UniqueKey<HeadTypeRecord> KEY_HEAD_TYPE_PRIMARY = UniqueKeys0.KEY_HEAD_TYPE_PRIMARY;
 	public static final UniqueKey<MailboxCountRecord> KEY_MAILBOX_COUNT_PRIMARY = UniqueKeys0.KEY_MAILBOX_COUNT_PRIMARY;
 	public static final UniqueKey<MajorRecord> KEY_MAJOR_PRIMARY = UniqueKeys0.KEY_MAJOR_PRIMARY;
+	public static final UniqueKey<MobileCountRecord> KEY_MOBILE_COUNT_PRIMARY = UniqueKeys0.KEY_MOBILE_COUNT_PRIMARY;
 	public static final UniqueKey<PersistentLoginsRecord> KEY_PERSISTENT_LOGINS_PRIMARY = UniqueKeys0.KEY_PERSISTENT_LOGINS_PRIMARY;
 	public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_CONTENT_PRIMARY;
 	public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_INFO_PRIMARY;
@@ -225,6 +229,7 @@ public class Keys {
 	public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = ForeignKeys0.GRADE_IBFK_2;
 	public static final ForeignKey<MailboxCountRecord, UsersRecord> MAILBOX_COUNT_IBFK_1 = ForeignKeys0.MAILBOX_COUNT_IBFK_1;
 	public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = ForeignKeys0.MAJOR_IBFK_1;
+	public static final ForeignKey<MobileCountRecord, UsersRecord> MOBILE_COUNT_IBFK_1 = ForeignKeys0.MOBILE_COUNT_IBFK_1;
 	public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = ForeignKeys0.PLACE_FILE_CONTENT_IBFK_1;
 	public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = ForeignKeys0.PLACE_FILE_INFO_IBFK_1;
 	public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = ForeignKeys0.PLACE_FILE_INFO_IBFK_2;
@@ -272,6 +277,7 @@ public class Keys {
 		public static Identity<HeadTypeRecord, Integer> IDENTITY_HEAD_TYPE = createIdentity(HeadType.HEAD_TYPE, HeadType.HEAD_TYPE.ID);
 		public static Identity<MailboxCountRecord, Integer> IDENTITY_MAILBOX_COUNT = createIdentity(MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ID);
 		public static Identity<MajorRecord, Integer> IDENTITY_MAJOR = createIdentity(Major.MAJOR, Major.MAJOR.ID);
+		public static Identity<MobileCountRecord, Integer> IDENTITY_MOBILE_COUNT = createIdentity(MobileCount.MOBILE_COUNT, MobileCount.MOBILE_COUNT.ID);
 		public static Identity<PlaceFileContentRecord, Integer> IDENTITY_PLACE_FILE_CONTENT = createIdentity(PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.ID);
 		public static Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = createIdentity(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
 		public static Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = createIdentity(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
@@ -312,6 +318,7 @@ public class Keys {
 		public static final UniqueKey<HeadTypeRecord> KEY_HEAD_TYPE_PRIMARY = createUniqueKey(HeadType.HEAD_TYPE, HeadType.HEAD_TYPE.ID);
 		public static final UniqueKey<MailboxCountRecord> KEY_MAILBOX_COUNT_PRIMARY = createUniqueKey(MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ID);
 		public static final UniqueKey<MajorRecord> KEY_MAJOR_PRIMARY = createUniqueKey(Major.MAJOR, Major.MAJOR.ID);
+		public static final UniqueKey<MobileCountRecord> KEY_MOBILE_COUNT_PRIMARY = createUniqueKey(MobileCount.MOBILE_COUNT, MobileCount.MOBILE_COUNT.ID);
 		public static final UniqueKey<PersistentLoginsRecord> KEY_PERSISTENT_LOGINS_PRIMARY = createUniqueKey(PersistentLogins.PERSISTENT_LOGINS, PersistentLogins.PERSISTENT_LOGINS.SERIES);
 		public static final UniqueKey<PlaceFileContentRecord> KEY_PLACE_FILE_CONTENT_PRIMARY = createUniqueKey(PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.ID);
 		public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = createUniqueKey(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
@@ -365,6 +372,7 @@ public class Keys {
 		public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Grade.GRADE, Grade.GRADE.GRADE_HEAD);
 		public static final ForeignKey<MailboxCountRecord, UsersRecord> MAILBOX_COUNT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ACCEPT_USER);
 		public static final ForeignKey<MajorRecord, TieRecord> MAJOR_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Major.MAJOR, Major.MAJOR.TIE_ID);
+		public static final ForeignKey<MobileCountRecord, UsersRecord> MOBILE_COUNT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, MobileCount.MOBILE_COUNT, MobileCount.MOBILE_COUNT.ACCEPT_USER);
 		public static final ForeignKey<PlaceFileContentRecord, PlaceFileTitleRecord> PLACE_FILE_CONTENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_TITLE_PRIMARY, PlaceFileContent.PLACE_FILE_CONTENT, PlaceFileContent.PLACE_FILE_CONTENT.PLACE_FILE_TITLE_ID);
 		public static final ForeignKey<PlaceFileInfoRecord, TeachTaskInfoRecord> PLACE_FILE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.TEACH_TASK_INFO_ID);
 		public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.FILE_USER);

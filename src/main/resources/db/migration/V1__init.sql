@@ -473,6 +473,15 @@ create table mailbox_count(
   foreign key (accept_user) references users(username)
 );
 
+create table mobile_count(
+  id int not null primary key auto_increment,
+  accept_user varchar(64) not null comment '接收者',
+  content text comment '内容',
+  send_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  accept_email varchar(64) not null comment '接收邮箱',
+  foreign key (accept_user) references users(username)
+);
+
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 

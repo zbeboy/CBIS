@@ -87,4 +87,12 @@ public interface UsersService {
      * @return
      */
     UsersRecord findByEmailAndUsername(String email, String username);
+
+    /**
+     * 检验手机用 注:不等于该用户名
+     * @param mobile
+     * @param username
+     * @return
+     */
+    UsersRecord findByMobileAndUsername(String mobile,String username);
 }

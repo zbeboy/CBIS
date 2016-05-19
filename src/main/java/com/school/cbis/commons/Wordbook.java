@@ -106,6 +106,14 @@ public class Wordbook {
     @Value("${cbis.mobile.apikey}")
     public String mobileApikey;
 
+    //手机开启
+    @Value("${cbis.mobile.switch}")
+    public boolean mobileSwitch;
+
+    //手机流量
+    @Value("${cbis.mobile.flow}")
+    public int mobileFlow;
+
     private static final String mail_form = "863052317@qq.com";
 
     private static final int corePoolSize = 2;

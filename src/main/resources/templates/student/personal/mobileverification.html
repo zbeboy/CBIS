@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>手机验证</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+
+    <!-- nice validator css -->
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+
+    <!-- nice validator js -->
+    <script type="text/javascript" src="js/validator/jquery.validator.js"
+            th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh_CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#navmobileverification').addClass('uk-active');
+            $('#offcanvasmobileverification').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>个人业务</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::personalnav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <form id="addForm" class="uk-form uk-text-center uk-margin-top" th:if="${!isCheckMobile}" >
+                <div class="uk-form-row">
+                    <input type="text" placeholder="您的手机号" id="mobile" name="mobile" class="uk-form-width-large" autofocus="autofocus" />
+                    <p id="mobileError" class="uk-text-danger" ></p>
+                </div>
+                <div class="uk-form-row">
+                    <input type="text" placeholder="验证码" class="uk-form-width-medium" id="code" name="code" />
+                    <input class="uk-button" type="button" id="btnSendCode" value="获取验证码" onClick="sendMessage()" />
+                    <span>(验证码5分钟内有效)</span>
+                </div>
+                <div class="uk-form-row">
+                    <button class="uk-button" type="submit">确定验证</button>
+                </div>
+                <p id="addError" class="msg-box uk-text-danger" >未验证手机</p>
+            </form>
+            <form class="uk-form uk-text-center uk-margin-top" th:if="${isCheckMobile}">
+                <input type="text" readonly="readonly" th:value="${mobile}" placeholder="您的手机号" class="uk-margin-small-top uk-form-width-large" />
+                <button class="uk-button uk-margin-small-top" type="button" data-uk-modal="{target:'#update'}">修改</button>
+                <p class="uk-text-success">手机号已通过验证</p>
+            </form>
+        </div>
+    </div>
+    <div id="update" class="uk-modal" th:if="${isCheckMobile}">
+        <div class="uk-modal-dialog">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header">
+                <h2>修改手机号</h2>
+            </div>
+            <form id="updateForm" class="uk-form uk-text-center uk-margin-bottom">
+                <div class="uk-form-row">
+                    <input type="text" placeholder="您的手机号" id="updateMobile" name="mobile" class="uk-form-width-large" autofocus="autofocus" />
+                    <p id="updateMobileError" class="uk-text-danger" ></p>
+                </div>
+                <div class="uk-form-row">
+                    <input type="text" placeholder="验证码" class="uk-form-width-medium" id="updateCode" name="code" />
+                    <input class="uk-button" type="button" id="updateBtnSendCode" value="获取验证码" onClick="sendUpdateMessage()" />
+                    <span>(验证码5分钟内有效)</span>
+                </div>
+                <div class="uk-form-row">
+                    <button class="uk-button" type="submit">确定验证</button>
+                </div>
+                <p id="msg" class="uk-text-danger" ></p>
+            </form>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="uk-button uk-button-primary" onclick="submitData();" >确定</button>
+                <button type="button" class="uk-button" onclick="cancelUpdate();" >取消</button>
+            </div>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    /*]]>*/
+</script>
+<script th:src="@{/js/student/personal/mobileverification.js}"
+        src="js/student/personal/mobileverification.js"></script>
+</body>
+</html>

@@ -28,7 +28,7 @@ function initForm(){
     $('#updateForm').validator({
         fields: {
             email: {
-                rule: "required; email;remote[/student/personal/validEmail]",
+                rule: "required; email;remote["+web_path+"/student/personal/validEmail]",
                 msg: {required: "请填写邮箱",email: "请检查邮箱格式"}
             }
         },
@@ -59,7 +59,7 @@ function initForm(){
     $('#addForm').validator({
         fields: {
             email: {
-                rule: "required; email;remote[/student/personal/validEmail]",
+                rule: "required; email;remote["+web_path+"/student/personal/validEmail]",
                 msg: {required: "请填写邮箱",email: "请检查邮箱格式"}
             }
         },
@@ -76,7 +76,6 @@ function initForm(){
                 type: "POST",
                 success: function(data){
                     layer.close(index);
-                    cancelUpdate();
                     layer.msg(data.msg);
                     me.holdSubmit(false);
                 }

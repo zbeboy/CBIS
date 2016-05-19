@@ -67,6 +67,9 @@ public class PersonalController {
     private MailService mailService;
 
     @Resource
+    private MobileService mobileService;
+
+    @Resource
     private MailboxCountService mailboxCountService;
 
     @Resource
@@ -423,5 +426,113 @@ public class PersonalController {
             modelMap.addAttribute("msg","未获取到用户信息,验证失效!");
         }
         return "/user/personal/checkemailmsg";
+    }
+
+    /**
+     * 手机验证页
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/student/personal/mobileVerification")
+    public String mobileVerification(ModelMap modelMap){
+        Users users = usersService.findByUsername(usersService.getUserName());
+        if(users.getIsCheckMobile() == 1){
+            modelMap.addAttribute("isCheckMobile",true);
+            modelMap.addAttribute("mobile",users.getMobile());
+        } else {
+            modelMap.addAttribute("isCheckMobile",false);
+        }
+        return "/student/personal/mobileverification";
+    }
+
+    @RequestMapping("/student/personal/sendMobileKey")
+    @ResponseBody
+    public AjaxData sendMobileKey(@RequestParam("mobile") String mobile){
+        AjaxData ajaxData = new AjaxData();
+        Users users = usersService.findByUsername(usersService.getUserName());
+        if(!ObjectUtils.isEmpty(users.getMobile())&&users.getMobile().equals(mobile) && users.getIsCheckMobile() ==1){
+            ajaxData.fail().msg("该手机号已验证!");
+        } else {
+            UsersRecord record = usersService.findByMobileAndUsername(mobile,usersService.getUserName());
+            if(ObjectUtils.isEmpty(record)){
+                users.setMobile(mobile);
+                DateTime dateTime = new DateTime().plusMinutes(5);
+                Timestamp timestamp = new Timestamp(dateTime.getMillis());
+                users.setMobileCheckKeyValidityPeriod(timestamp);
+                String mobileKey = RandomUtils.generateMobileKey();
+                users.setMobileCheckKey(mobileKey);
+                Byte b = 0;
+                users.setIsCheckMobile(b);
+                usersService.update(users);
+                if(wordbook.mobileSwitch){
+//            if(mailboxCountService.isExceedDailyLimit()){
+//                return new AjaxData().fail().msg("发送失败,已超过每日邮件发送上限!");
+//            } else {
+//                mobileService.sendValidMobileShortMessage(mobile,mobileKey);
+                    log.debug(" mobilekey : {} ",mobileKey);
+                    ajaxData.success().msg("短信已发至您的手机,可能会有延迟,请稍等!");
+//            }
+                } else {
+                    ajaxData.fail().msg("发送失败,管理员已关闭手机功能!");
+                }
+            } else {
+                ajaxData.fail().msg("该手机号已被使用!");
+            }
+        }
+        return ajaxData;
+    }
+
+    /**
+     * 校验手机
+     * @param mobile
+     * @return
+     */
+    @RequestMapping("/student/personal/validMobile")
+    @ResponseBody
+    public Map<String,Object> validMobile(@RequestParam("mobile") String mobile ){
+        Map<String ,Object> map = new HashMap<>();
+        Users users = usersService.getUserInfoBySession();
+        if(!ObjectUtils.isEmpty(users.getMobile())&&users.getMobile().equals(mobile) && users.getIsCheckMobile() ==1){
+            map.put("error","该手机号已验证!");
+        } else {
+            UsersRecord record = usersService.findByMobileAndUsername(mobile,usersService.getUserName());
+            if(ObjectUtils.isEmpty(record)){
+                map.put("ok","");
+            } else {
+                map.put("error","该手机号已被使用!");
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 更新手机
+     * @param mobile
+     * @return
+     */
+    @RequestMapping("/student/checkMobile")
+    @ResponseBody
+    public AjaxData checkMobile(@RequestParam("mobile") String mobile,@RequestParam("code") String key){
+        Users users = usersService.findByUsername(usersService.getUserName());
+        AjaxData ajaxData = new AjaxData();
+        if(!ObjectUtils.isEmpty(users)){
+            Timestamp cur = new Timestamp(System.currentTimeMillis());
+            if(!ObjectUtils.isEmpty(users.getMobileCheckKeyValidityPeriod())&&cur.before(users.getMobileCheckKeyValidityPeriod())){
+                if(StringUtils.trimWhitespace(key).equals(users.getMobileCheckKey())){
+                    Byte b = 1;
+                    users.setMobile(mobile);
+                    users.setIsCheckMobile(b);
+                    usersService.update(users);
+                    ajaxData.success().msg("恭喜您,您的手机:"+users.getMobile()+"已经验证成功!");
+                } else {
+                    ajaxData.fail().msg("验证码不正确,请重新获取验证码!");
+                }
+            } else {
+                ajaxData.fail().msg("您的手机验证已过有效期(5分钟内),请重新获取验证码!");
+            }
+        } else {
+            ajaxData.fail().msg("未获取到用户信息,验证失效!");
+        }
+        return ajaxData;
     }
 }

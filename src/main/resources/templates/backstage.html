@@ -56,6 +56,7 @@
                     <li id="navrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
                     <li id="navindividualresume"><a href="#" th:href="@{/student/personal/individualResume}">个人简介</a></li>
                     <li id="navmailboxverification"><a href="#" th:href="@{/student/personal/mailboxVerification}">邮箱验证</a></li>
+                    <li id="navmobileverification"><a href="#" th:href="@{/student/personal/mobileVerification}">手机验证</a></li>
                 </ul>
             </div>
         </div>
@@ -71,7 +72,8 @@
                 <li id="offcanvasmodifydata"><a href="#" th:href="@{/student/personal/modifyData}">修改资料</a></li>
                 <li id="offcanvasrevisepassword"><a href="#" th:href="@{/student/personal/revisePassword}">修改密码</a></li>
                 <li id="offcanvasindividualresume"><a href="#" th:href="@{/student/personal/individualResume}">个人简介</a></li>
-                <li id="offcanvasmailboxverification"><a href="#" th:href="@{/student/personal/individualResume}">邮箱验证</a></li>
+                <li id="offcanvasmailboxverification"><a href="#" th:href="@{/student/personal/mailboxVerification}">邮箱验证</a></li>
+                <li id="offcanvasmobileverification"><a href="#" th:href="@{/student/personal/mobileVerification}">手机验证</a></li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

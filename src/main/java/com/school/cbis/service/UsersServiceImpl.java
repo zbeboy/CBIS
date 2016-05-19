@@ -178,4 +178,13 @@ public class UsersServiceImpl implements UsersService {
         return record;
     }
 
+    @Override
+    public UsersRecord findByMobileAndUsername(String mobile, String username) {
+        Byte b = 1;
+        UsersRecord record = create.selectFrom(Tables.USERS)
+                .where(Tables.USERS.USERNAME.ne(username).and(Tables.USERS.MOBILE.eq(mobile)).and(Tables.USERS.IS_CHECK_MOBILE.eq(b)))
+                .fetchOne();
+        return record;
+    }
+
 }

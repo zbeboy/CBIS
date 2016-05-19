@@ -5,6 +5,7 @@ import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ import java.net.URLEncoder;
 /**
  * Created by lenovo on 2016-05-17.
  */
+@Service("mobileService")
 public class MobileServiceImpl implements MobileService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
