@@ -1,4 +1,4 @@
-package com.school.cbis.vo.mobile;
+package com.school.cbis.vo.m;
 
 /**
  * Created by lenovo on 2016-05-19.
