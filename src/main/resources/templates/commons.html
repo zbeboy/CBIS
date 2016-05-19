@@ -152,6 +152,16 @@
                         <input class="uk-width-1-1 uk-form-large" id="password" type="password" name="password" placeholder="密码" data-rule="required;" data-msg-required="请填写密码!"  data-tip="密码由6位及以上任意字符组成" />
                     </div>
                     <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-1-2">
+                                <img src="/user/jcaptcha" id="jcaptcha" th:src="@{/user/jcaptcha}" onclick="newCaptcha();" />
+                            </div>
+                            <div class="uk-width-1-2">
+                                <input type="text" name='j_captcha_response' placeholder="验证码" class="uk-margin-small-top" data-rule="required;remote[/user/validateCaptchaForId]" data-tip="请输入验证码" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
                         <button type="submit" class="uk-width-1-1 uk-button uk-button-primary uk-button-large">登录</button>
                     </div>
                     <div class="uk-form-row uk-text-small">

@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="keywords" content="" th:content="#{web_keywords}" />
     <meta http-equiv="description" content="" th:content="#{web_description}" />
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
     <title th:text="#{web_title}"></title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
@@ -31,6 +35,7 @@
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
     <script src="js/plugin/moment/moment.min.js" th:src="@{/js/plugin/moment/moment.min.js}"></script>
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
 
     <!-- nice validator js -->
     <script type="text/javascript" src="js/validator/jquery.validator.js"
@@ -234,6 +239,7 @@
         /*]]>*/
     </script>
     <script src="/js/cbis/js/index/index.js" th:src="@{/js/user/index/index.js}"></script>
+    <script src="js/plugin/jcaptcha/jcaptcha.js" th:src="@{/js/plugin/jcaptcha/jcaptcha.js}"></script>
 </div>
 </body>
 </html>

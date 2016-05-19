@@ -35,6 +35,9 @@ function SetRemainTime() {
     }
 }
 
+/**
+ * 检验账号
+ */
 function validUsername(){
     var username = $('#username').val().trim();
     if(username.length>0){
@@ -58,3 +61,10 @@ function validUsername(){
         $('#msg').text('请输入账号!');
     }
 }
+
+$('#loginmodal').on({
+
+    'show.uk.modal': function () {
+        $('#username').focus();
+    }
+});

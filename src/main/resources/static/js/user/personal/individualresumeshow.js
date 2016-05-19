@@ -27,3 +27,10 @@ function back(){
 $(document).ready(function(){
     initParam();
 });
+
+$('#loginmodal').on({
+
+    'show.uk.modal': function () {
+        $('#username').focus();
+    }
+});

@@ -1,12 +1,16 @@
 package com.school.cbis.web;
 
+import com.octo.captcha.service.CaptchaServiceException;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
+import com.school.cbis.util.CaptchaServiceSingleton;
 import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.major.MajorIndexVo;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.joda.time.DateTime;
 import org.jooq.Record;
 import org.slf4j.Logger;
@@ -20,7 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -279,5 +289,69 @@ public class MainController {
             modelMap.addAttribute("msg", "账号不存在!");
         }
         return "/user/mail/forgetpasswordmsg";
+    }
+
+    @RequestMapping("/user/jcaptcha")
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        byte[] captchaChallengeAsJpeg = null;
+        // the output stream to render the captcha image as jpeg into
+        ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+        try{
+            // get the session id that will identify the generated captcha.
+            // the same id must be used to validate the response, the session id is a good candidate!
+            String captchaId = request.getSession().getId();
+            log.debug("getCaptcha captchaId : {}",captchaId);
+            // call the ImageCaptchaService getChallenge method
+            BufferedImage challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(captchaId,request.getLocale());
+            // a jpeg encoder
+            JPEGImageEncoder jpegEncoder = JPEGCodec.createJPEGEncoder(jpegOutputStream);
+            jpegEncoder.encode(challenge);
+        } catch (IllegalArgumentException e){
+            response.sendError(response.SC_NOT_FOUND);
+            log.error(" jcaptcha exception : {} ",e.getMessage());
+            return;
+        } catch (CaptchaServiceException e) {
+            response.sendError(response.SC_INTERNAL_SERVER_ERROR);
+            log.error(" jcaptcha exception : {} ",e.getMessage());
+            return;
+        }
+
+        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
+
+        //flush it in the response
+        response.setHeader("Cache-Control","no-store");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader("Expires",0);
+        response.setContentType("image/jpeg");
+        ServletOutputStream responseOutputStream = response.getOutputStream();
+
+        responseOutputStream.write(captchaChallengeAsJpeg);
+        responseOutputStream.flush();
+        responseOutputStream.close();
+    }
+
+    @RequestMapping("/user/validateCaptchaForId")
+    @ResponseBody
+    public Map<String,Object> validateCaptchaForId(@RequestParam("j_captcha_response") String captcha,HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        Boolean isResponseCorrect = Boolean.FALSE;
+        // remenber that we need an id to validate!
+        String captchaId = request.getSession().getId();
+        log.debug("validateCaptchaForId captchaId : {}",captchaId);
+        log.debug(" j_captcha_response : {} ",captcha);
+        // call the service method
+        try{
+            isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(captchaId,captcha);
+            if(isResponseCorrect){
+                map.put("ok","");
+            } else {
+                map.put("error","验证码错误!");
+            }
+        } catch (CaptchaServiceException e){
+            // should not happen,may be thrown if the id is not valid
+            map.put("error","参数无效,请刷新页面!");
+            log.error(" validateCaptchaForId exception : {} ",e.getMessage());
+        }
+        return  map;
     }
 }
