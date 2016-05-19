@@ -46,7 +46,6 @@ public class TestMobile {
 
     @Test
     public void test(){
-        MobileServiceImpl mobileService = new MobileServiceImpl();
-        mobileService.sendValidMobileShortMessage("13987614709", RandomUtils.generateMobileKey());
+
     }
 }

@@ -9,6 +9,7 @@ import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.mail.MailListVo;
 import com.school.cbis.vo.major.MajorListVo;
+import com.school.cbis.vo.mobile.MobileListVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,5 +237,17 @@ public class BackstageController {
     public String mailManager(MailListVo mailListVo,ModelMap modelMap){
         modelMap.addAttribute("mailListVo",mailListVo);
         return "/maintainer/mail/mailmanager";
+    }
+
+    /**
+     * 手机管理界面
+     * @param mobileListVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/mobile/mobileManager")
+    public String mobileManager(MobileListVo mobileListVo,ModelMap modelMap){
+        modelMap.addAttribute("mobileListVo",mobileListVo);
+        return "/maintainer/mobile/mobilemanager";
     }
 }

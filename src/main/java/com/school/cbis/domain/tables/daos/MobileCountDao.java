@@ -87,9 +87,9 @@ public class MobileCountDao extends DAOImpl<MobileCountRecord, com.school.cbis.d
 	}
 
 	/**
-	 * Fetch records that have <code>accept_email IN (values)</code>
+	 * Fetch records that have <code>accept_mobile IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.MobileCount> fetchByAcceptEmail(String... values) {
-		return fetch(MobileCount.MOBILE_COUNT.ACCEPT_EMAIL, values);
+	public List<com.school.cbis.domain.tables.pojos.MobileCount> fetchByAcceptMobile(String... values) {
+		return fetch(MobileCount.MOBILE_COUNT.ACCEPT_MOBILE, values);
 	}
 }

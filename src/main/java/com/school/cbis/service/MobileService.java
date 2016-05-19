@@ -1,5 +1,7 @@
 package com.school.cbis.service;
 
+import com.school.cbis.domain.tables.pojos.Users;
+
 /**
  * Created by lenovo on 2016-05-17.
  */
@@ -7,15 +9,15 @@ public interface MobileService {
 
     /**
      * 发送短信
-     * @param mobile
+     * @param users
      * @param content
      */
-    void sendShortMessage(String mobile,String content);
+    void sendShortMessage(Users users, String content);
 
     /**
      * 发送短信验证码
-     * @param mobile
+     * @param users
      * @param verificationCode
      */
-    void sendValidMobileShortMessage(String mobile,String verificationCode);
+    void sendValidMobileShortMessage(Users users,String verificationCode);
 }

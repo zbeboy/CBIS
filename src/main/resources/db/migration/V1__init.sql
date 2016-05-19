@@ -478,7 +478,7 @@ create table mobile_count(
   accept_user varchar(64) not null comment '接收者',
   content text comment '内容',
   send_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  accept_email varchar(64) not null comment '接收邮箱',
+  accept_mobile varchar(64) not null comment '接收手机',
   foreign key (accept_user) references users(username)
 );
 

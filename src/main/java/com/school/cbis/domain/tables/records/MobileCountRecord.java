@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> implements Record5<Integer, String, String, Timestamp, String> {
 
-	private static final long serialVersionUID = -1730397379;
+	private static final long serialVersionUID = -1142968585;
 
 	/**
 	 * Setter for <code>cbis.mobile_count.id</code>.
@@ -95,18 +95,18 @@ public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> im
 	}
 
 	/**
-	 * Setter for <code>cbis.mobile_count.accept_email</code>. 接收邮箱
+	 * Setter for <code>cbis.mobile_count.accept_mobile</code>. 接收手机
 	 */
-	public void setAcceptEmail(String value) {
+	public void setAcceptMobile(String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>cbis.mobile_count.accept_email</code>. 接收邮箱
+	 * Getter for <code>cbis.mobile_count.accept_mobile</code>. 接收手机
 	 */
 	@NotNull
 	@Size(max = 64)
-	public String getAcceptEmail() {
+	public String getAcceptMobile() {
 		return (String) getValue(4);
 	}
 
@@ -179,7 +179,7 @@ public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> im
 	 */
 	@Override
 	public Field<String> field5() {
-		return MobileCount.MOBILE_COUNT.ACCEPT_EMAIL;
+		return MobileCount.MOBILE_COUNT.ACCEPT_MOBILE;
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> im
 	 */
 	@Override
 	public String value5() {
-		return getAcceptEmail();
+		return getAcceptMobile();
 	}
 
 	/**
@@ -263,7 +263,7 @@ public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> im
 	 */
 	@Override
 	public MobileCountRecord value5(String value) {
-		setAcceptEmail(value);
+		setAcceptMobile(value);
 		return this;
 	}
 
@@ -294,13 +294,13 @@ public class MobileCountRecord extends UpdatableRecordImpl<MobileCountRecord> im
 	/**
 	 * Create a detached, initialised MobileCountRecord
 	 */
-	public MobileCountRecord(Integer id, String acceptUser, String content, Timestamp sendTime, String acceptEmail) {
+	public MobileCountRecord(Integer id, String acceptUser, String content, Timestamp sendTime, String acceptMobile) {
 		super(MobileCount.MOBILE_COUNT);
 
 		setValue(0, id);
 		setValue(1, acceptUser);
 		setValue(2, content);
 		setValue(3, sendTime);
-		setValue(4, acceptEmail);
+		setValue(4, acceptMobile);
 	}
 }

@@ -25,13 +25,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MobileCount implements Serializable {
 
-	private static final long serialVersionUID = 1671890071;
+	private static final long serialVersionUID = -2076295921;
 
 	private Integer   id;
 	private String    acceptUser;
 	private String    content;
 	private Timestamp sendTime;
-	private String    acceptEmail;
+	private String    acceptMobile;
 
 	public MobileCount() {}
 
@@ -40,7 +40,7 @@ public class MobileCount implements Serializable {
 		this.acceptUser = value.acceptUser;
 		this.content = value.content;
 		this.sendTime = value.sendTime;
-		this.acceptEmail = value.acceptEmail;
+		this.acceptMobile = value.acceptMobile;
 	}
 
 	public MobileCount(
@@ -48,13 +48,13 @@ public class MobileCount implements Serializable {
 		String    acceptUser,
 		String    content,
 		Timestamp sendTime,
-		String    acceptEmail
+		String    acceptMobile
 	) {
 		this.id = id;
 		this.acceptUser = acceptUser;
 		this.content = content;
 		this.sendTime = sendTime;
-		this.acceptEmail = acceptEmail;
+		this.acceptMobile = acceptMobile;
 	}
 
 	@NotNull
@@ -95,12 +95,12 @@ public class MobileCount implements Serializable {
 
 	@NotNull
 	@Size(max = 64)
-	public String getAcceptEmail() {
-		return this.acceptEmail;
+	public String getAcceptMobile() {
+		return this.acceptMobile;
 	}
 
-	public void setAcceptEmail(String acceptEmail) {
-		this.acceptEmail = acceptEmail;
+	public void setAcceptMobile(String acceptMobile) {
+		this.acceptMobile = acceptMobile;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class MobileCount implements Serializable {
 		sb.append(", ").append(acceptUser);
 		sb.append(", ").append(content);
 		sb.append(", ").append(sendTime);
-		sb.append(", ").append(acceptEmail);
+		sb.append(", ").append(acceptMobile);
 
 		sb.append(")");
 		return sb.toString();

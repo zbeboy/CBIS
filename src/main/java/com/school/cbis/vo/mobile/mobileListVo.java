@@ -1,13 +1,13 @@
-package com.school.cbis.vo.mail;
+package com.school.cbis.vo.mobile;
 
 /**
  * Created by lenovo on 2016-05-19.
  */
-public class MailListVo {
+public class MobileListVo {
     private String acceptUser;
-    private String subject;
     private String sendTime;
-    private String acceptEmail;
+    private String content;
+    private String acceptMobile;
     private String username;//搜索用
     private String startDate;//搜索用
     private String endDate;//搜索用
@@ -22,14 +22,6 @@ public class MailListVo {
         this.acceptUser = acceptUser;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getSendTime() {
         return sendTime;
     }
@@ -38,12 +30,20 @@ public class MailListVo {
         this.sendTime = sendTime;
     }
 
-    public String getAcceptEmail() {
-        return acceptEmail;
+    public String getContent() {
+        return content;
     }
 
-    public void setAcceptEmail(String acceptEmail) {
-        this.acceptEmail = acceptEmail;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAcceptMobile() {
+        return acceptMobile;
+    }
+
+    public void setAcceptMobile(String acceptMobile) {
+        this.acceptMobile = acceptMobile;
     }
 
     public String getUsername() {
@@ -88,11 +88,11 @@ public class MailListVo {
 
     @Override
     public String toString() {
-        return "MailListVo{" +
+        return "MobileListVo{" +
                 "acceptUser='" + acceptUser + '\'' +
-                ", subject='" + subject + '\'' +
                 ", sendTime='" + sendTime + '\'' +
-                ", acceptEmail='" + acceptEmail + '\'' +
+                ", content='" + content + '\'' +
+                ", acceptMobile='" + acceptMobile + '\'' +
                 ", username='" + username + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +

@@ -283,19 +283,20 @@ public class PersonalController {
 
     /**
      * 个人简介
+     *
      * @param modelMap
      * @return
      */
     @RequestMapping("/student/personal/individualResume")
     public String individualResume(ModelMap modelMap) {
         Users users = usersService.getUserInfoBySession();
-        log.debug("username : {}",users.getUsername());
+        log.debug("username : {}", users.getUsername());
         Record record = articleInfoService.findByUsername(users.getUsername());
         ArticleInfo articleInfo;
         List<ArticleSub> articleSubs = null;
-        if(!ObjectUtils.isEmpty(record)){
+        if (!ObjectUtils.isEmpty(record)) {
             articleInfo = record.into(ArticleInfo.class);
-            log.debug("articleInfo : {}",articleInfo);
+            log.debug("articleInfo : {}", articleInfo);
             articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
         } else {
             articleInfo = new ArticleInfo();
@@ -308,13 +309,14 @@ public class PersonalController {
 
     /**
      * 个人简介展示
+     *
      * @param id
      * @param username
      * @param modelMap
      * @return
      */
     @RequestMapping("/student/personal/individualResumeShow")
-    public String individualResume(@RequestParam("id") int id, @RequestParam("username") String username,  ModelMap modelMap) {
+    public String individualResume(@RequestParam("id") int id, @RequestParam("username") String username, ModelMap modelMap) {
         Record record = articleInfoService.findByUsername(username);
         Users users = record.into(Users.class);
         modelMap.addAttribute("userInfo", users);
@@ -327,39 +329,41 @@ public class PersonalController {
 
     /**
      * 邮箱验证页
+     *
      * @param modelMap
      * @return
      */
     @RequestMapping("/student/personal/mailboxVerification")
-    public String mailboxVerification(ModelMap modelMap){
+    public String mailboxVerification(ModelMap modelMap) {
         Users users = usersService.findByUsername(usersService.getUserName());
-        if(users.getIsCheckEmail() == 1){
-            modelMap.addAttribute("isCheckEmail",true);
-            modelMap.addAttribute("email",users.getEmail());
+        if (users.getIsCheckEmail() == 1) {
+            modelMap.addAttribute("isCheckEmail", true);
+            modelMap.addAttribute("email", users.getEmail());
         } else {
-            modelMap.addAttribute("isCheckEmail",false);
+            modelMap.addAttribute("isCheckEmail", false);
         }
         return "/student/personal/mailboxverification";
     }
 
     /**
      * 校验邮箱
+     *
      * @param email
      * @return
      */
     @RequestMapping("/student/personal/validEmail")
     @ResponseBody
-    public Map<String,Object> validEmail(@RequestParam("email") String email ){
-        Map<String ,Object> map = new HashMap<>();
+    public Map<String, Object> validEmail(@RequestParam("email") String email) {
+        Map<String, Object> map = new HashMap<>();
         Users users = usersService.getUserInfoBySession();
-        if(!ObjectUtils.isEmpty(users.getEmail())&&users.getEmail().equals(email) && users.getIsCheckEmail() ==1){
-            map.put("error","该邮箱已验证!");
+        if (!ObjectUtils.isEmpty(users.getEmail()) && users.getEmail().equals(email) && users.getIsCheckEmail() == 1) {
+            map.put("error", "该邮箱已验证!");
         } else {
-            UsersRecord record = usersService.findByEmailAndUsername(email,usersService.getUserName());
-            if(ObjectUtils.isEmpty(record)){
-                map.put("ok","");
+            UsersRecord record = usersService.findByEmailAndUsername(email, usersService.getUserName());
+            if (ObjectUtils.isEmpty(record)) {
+                map.put("ok", "");
             } else {
-                map.put("error","该邮箱已被使用!");
+                map.put("error", "该邮箱已被使用!");
             }
         }
         return map;
@@ -367,26 +371,27 @@ public class PersonalController {
 
     /**
      * 发送邮箱验证
+     *
      * @param email
      * @param request
      * @return
      */
     @RequestMapping("/student/personal/updateEmail")
     @ResponseBody
-    public AjaxData updateEmail(@RequestParam("email") String email,HttpServletRequest request){
-        Users users = usersService.findByUsername(usersService.getUserName());
-        users.setEmail(email);
-        DateTime dateTime = new DateTime().plusDays(2);
-        Timestamp timestamp = new Timestamp(dateTime.getMillis());
-        users.setEmailCheckKeyValidityPeriod(timestamp);
-        users.setEmailCheckKey(RandomUtils.generateEmailCheckKey());
-        Byte b = 0;
-        users.setIsCheckEmail(b);
-        usersService.update(users);
-        if(wordbook.mailSwitch){
-            if(mailboxCountService.isExceedDailyLimit()){
+    public AjaxData updateEmail(@RequestParam("email") String email, HttpServletRequest request) {
+        if (wordbook.mailSwitch) {
+            if (mailboxCountService.isExceedDailyLimit()) {
                 return new AjaxData().fail().msg("发送失败,已超过每日邮件发送上限!");
             } else {
+                Users users = usersService.findByUsername(usersService.getUserName());
+                users.setEmail(email);
+                DateTime dateTime = new DateTime().plusDays(2);
+                Timestamp timestamp = new Timestamp(dateTime.getMillis());
+                users.setEmailCheckKeyValidityPeriod(timestamp);
+                users.setEmailCheckKey(RandomUtils.generateEmailCheckKey());
+                Byte b = 0;
+                users.setIsCheckEmail(b);
+                usersService.update(users);
                 String path = request.getContextPath();
                 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
                 mailService.sendValidEmailMail(users, basePath);
@@ -400,78 +405,82 @@ public class PersonalController {
 
     /**
      * 验证邮箱
+     *
      * @param key
      * @param username
      * @param modelMap
      * @return
      */
     @RequestMapping("/user/checkEmail")
-    public String checkEmail(@RequestParam("key") String key,@RequestParam("username") String username,ModelMap modelMap){
+    public String checkEmail(@RequestParam("key") String key, @RequestParam("username") String username, ModelMap modelMap) {
         Users users = usersService.findByUsername(username);
-        if(!ObjectUtils.isEmpty(users)){
+        if (!ObjectUtils.isEmpty(users)) {
             Timestamp cur = new Timestamp(System.currentTimeMillis());
-            if(!ObjectUtils.isEmpty(users.getEmailCheckKeyValidityPeriod())&&cur.before(users.getEmailCheckKeyValidityPeriod())){
-                if(StringUtils.trimWhitespace(key).equals(users.getEmailCheckKey())){
+            if (!ObjectUtils.isEmpty(users.getEmailCheckKeyValidityPeriod()) && cur.before(users.getEmailCheckKeyValidityPeriod())) {
+                if (StringUtils.trimWhitespace(key).equals(users.getEmailCheckKey())) {
                     Byte b = 1;
                     users.setIsCheckEmail(b);
                     usersService.update(users);
-                    modelMap.addAttribute("msg","恭喜您,您的邮箱:"+users.getEmail()+"已经验证成功!");
+                    modelMap.addAttribute("msg", "恭喜您,您的邮箱:" + users.getEmail() + "已经验证成功!");
                 } else {
-                    modelMap.addAttribute("msg","验证码不正确,请登录重新获取验证邮件!");
+                    modelMap.addAttribute("msg", "验证码不正确,请登录重新获取验证邮件!");
                 }
             } else {
-                modelMap.addAttribute("msg","您的邮箱验证已过有效期(2日内),请登录重新获取验证邮件!");
+                modelMap.addAttribute("msg", "您的邮箱验证已过有效期(2日内),请登录重新获取验证邮件!");
             }
         } else {
-            modelMap.addAttribute("msg","未获取到用户信息,验证失效!");
+            modelMap.addAttribute("msg", "未获取到用户信息,验证失效!");
         }
         return "/user/personal/checkemailmsg";
     }
 
     /**
      * 手机验证页
+     *
      * @param modelMap
      * @return
      */
     @RequestMapping("/student/personal/mobileVerification")
-    public String mobileVerification(ModelMap modelMap){
+    public String mobileVerification(ModelMap modelMap) {
         Users users = usersService.findByUsername(usersService.getUserName());
-        if(users.getIsCheckMobile() == 1){
-            modelMap.addAttribute("isCheckMobile",true);
-            modelMap.addAttribute("mobile",users.getMobile());
+        if (users.getIsCheckMobile() == 1) {
+            modelMap.addAttribute("isCheckMobile", true);
+            modelMap.addAttribute("mobile", users.getMobile());
         } else {
-            modelMap.addAttribute("isCheckMobile",false);
+            modelMap.addAttribute("isCheckMobile", false);
         }
         return "/student/personal/mobileverification";
     }
 
+    /**
+     * 发送手机验证码
+     *
+     * @param mobile
+     * @return
+     */
     @RequestMapping("/student/personal/sendMobileKey")
     @ResponseBody
-    public AjaxData sendMobileKey(@RequestParam("mobile") String mobile){
+    public AjaxData sendMobileKey(@RequestParam("mobile") String mobile) {
         AjaxData ajaxData = new AjaxData();
         Users users = usersService.findByUsername(usersService.getUserName());
-        if(!ObjectUtils.isEmpty(users.getMobile())&&users.getMobile().equals(mobile) && users.getIsCheckMobile() ==1){
+        if (!ObjectUtils.isEmpty(users.getMobile()) && users.getMobile().equals(mobile) && users.getIsCheckMobile() == 1) {
             ajaxData.fail().msg("该手机号已验证!");
         } else {
-            UsersRecord record = usersService.findByMobileAndUsername(mobile,usersService.getUserName());
-            if(ObjectUtils.isEmpty(record)){
-                users.setMobile(mobile);
-                DateTime dateTime = new DateTime().plusMinutes(5);
-                Timestamp timestamp = new Timestamp(dateTime.getMillis());
-                users.setMobileCheckKeyValidityPeriod(timestamp);
-                String mobileKey = RandomUtils.generateMobileKey();
-                users.setMobileCheckKey(mobileKey);
-                Byte b = 0;
-                users.setIsCheckMobile(b);
-                usersService.update(users);
-                if(wordbook.mobileSwitch){
-//            if(mailboxCountService.isExceedDailyLimit()){
-//                return new AjaxData().fail().msg("发送失败,已超过每日邮件发送上限!");
-//            } else {
-//                mobileService.sendValidMobileShortMessage(mobile,mobileKey);
-                    log.debug(" mobilekey : {} ",mobileKey);
+            UsersRecord record = usersService.findByMobileAndUsername(mobile, usersService.getUserName());
+            if (ObjectUtils.isEmpty(record)) {
+                if (wordbook.mobileSwitch) {
+                    users.setMobile(mobile);
+                    DateTime dateTime = new DateTime().plusMinutes(5);
+                    Timestamp timestamp = new Timestamp(dateTime.getMillis());
+                    users.setMobileCheckKeyValidityPeriod(timestamp);
+                    String mobileKey = RandomUtils.generateMobileKey();
+                    users.setMobileCheckKey(mobileKey);
+                    Byte b = 0;
+                    users.setIsCheckMobile(b);
+                    usersService.update(users);
+                    mobileService.sendValidMobileShortMessage(users, mobileKey);
+                    log.debug(" mobilekey : {} ", mobileKey);
                     ajaxData.success().msg("短信已发至您的手机,可能会有延迟,请稍等!");
-//            }
                 } else {
                     ajaxData.fail().msg("发送失败,管理员已关闭手机功能!");
                 }
@@ -484,22 +493,23 @@ public class PersonalController {
 
     /**
      * 校验手机
+     *
      * @param mobile
      * @return
      */
     @RequestMapping("/student/personal/validMobile")
     @ResponseBody
-    public Map<String,Object> validMobile(@RequestParam("mobile") String mobile ){
-        Map<String ,Object> map = new HashMap<>();
+    public Map<String, Object> validMobile(@RequestParam("mobile") String mobile) {
+        Map<String, Object> map = new HashMap<>();
         Users users = usersService.getUserInfoBySession();
-        if(!ObjectUtils.isEmpty(users.getMobile())&&users.getMobile().equals(mobile) && users.getIsCheckMobile() ==1){
-            map.put("error","该手机号已验证!");
+        if (!ObjectUtils.isEmpty(users.getMobile()) && users.getMobile().equals(mobile) && users.getIsCheckMobile() == 1) {
+            map.put("error", "该手机号已验证!");
         } else {
-            UsersRecord record = usersService.findByMobileAndUsername(mobile,usersService.getUserName());
-            if(ObjectUtils.isEmpty(record)){
-                map.put("ok","");
+            UsersRecord record = usersService.findByMobileAndUsername(mobile, usersService.getUserName());
+            if (ObjectUtils.isEmpty(record)) {
+                map.put("ok", "");
             } else {
-                map.put("error","该手机号已被使用!");
+                map.put("error", "该手机号已被使用!");
             }
         }
         return map;
@@ -507,23 +517,24 @@ public class PersonalController {
 
     /**
      * 更新手机
+     *
      * @param mobile
      * @return
      */
     @RequestMapping("/student/checkMobile")
     @ResponseBody
-    public AjaxData checkMobile(@RequestParam("mobile") String mobile,@RequestParam("code") String key){
+    public AjaxData checkMobile(@RequestParam("mobile") String mobile, @RequestParam("code") String key) {
         Users users = usersService.findByUsername(usersService.getUserName());
         AjaxData ajaxData = new AjaxData();
-        if(!ObjectUtils.isEmpty(users)){
+        if (!ObjectUtils.isEmpty(users)) {
             Timestamp cur = new Timestamp(System.currentTimeMillis());
-            if(!ObjectUtils.isEmpty(users.getMobileCheckKeyValidityPeriod())&&cur.before(users.getMobileCheckKeyValidityPeriod())){
-                if(StringUtils.trimWhitespace(key).equals(users.getMobileCheckKey())){
+            if (!ObjectUtils.isEmpty(users.getMobileCheckKeyValidityPeriod()) && cur.before(users.getMobileCheckKeyValidityPeriod())) {
+                if (StringUtils.trimWhitespace(key).equals(users.getMobileCheckKey())) {
                     Byte b = 1;
                     users.setMobile(mobile);
                     users.setIsCheckMobile(b);
                     usersService.update(users);
-                    ajaxData.success().msg("恭喜您,您的手机:"+users.getMobile()+"已经验证成功!");
+                    ajaxData.success().msg("恭喜您,您的手机:" + users.getMobile() + "已经验证成功!");
                 } else {
                     ajaxData.fail().msg("验证码不正确,请重新获取验证码!");
                 }
