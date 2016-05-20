@@ -68,12 +68,58 @@ function outputHtml(d){
     }
 }
 
+/**
+ * 首页显示
+ * @param id
+ * @param show
+ */
 function toShow(id,show){
-
+    var s = '';
+    if(Number(show) == 0){
+        s = "确定不在首页显示该文章吗?";
+    } else {
+        s = "确定在首页显示该文章吗?"
+    }
+    layer.confirm(s, {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        $.post(web_path + '/maintainer/tie/updateTieNoticeShow',{
+            'id':id,
+            'isShow':show
+        },function(data){
+            layer.close(index);
+            if(data.state){
+                layer.msg(data.msg, {icon: 1});
+                action();
+            } else {
+                layer.msg(data.msg);
+            }
+        },'json');
+    });
 }
 
 function toDel(id){
-
+    layer.confirm("确定要删除该文章吗?", {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        $.post(web_path + '/maintainer/tie/deleteTieNotice',{
+            'id':id
+        },function(data){
+            layer.close(index);
+            if(data.state){
+                layer.msg(data.msg, {icon: 1});
+                action();
+            } else {
+                layer.msg(data.msg);
+            }
+        },'json');
+    });
 }
 
 function toEdit(id){

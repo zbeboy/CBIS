@@ -31,11 +31,12 @@ function initArticleParam() {
     param.checkArticleTitle = true;
     param.checkArticleContent = true;
     param.checkArticlePic = false;
-    param.articleSaveOrUpdateUrl = web_path + "/maintainer/updateArticle";
+    param.articleSaveOrUpdateUrl = web_path + "/student/updateArticle";
     param.clickOkUrl = web_path + "/user/tie/tieNoticeShow";
     param.clickNoUrl = web_path + "/maintainer/tie/tieNotice";
     param.uploadParamFileName = "tienotice";
     param.myParam = myParam;
+    param.articleId = $('#articleInfoId').text().trim();
     param.cleanFromClient = false;
     param.openAffix = true;
     param.affixSaveFunc = "tieNoticeAffix"

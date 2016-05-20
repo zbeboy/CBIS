@@ -353,19 +353,29 @@ function cleanimg() {
  * 删除文章
  */
 function deleteArticle() {
-    var index = layer.load(1, {shade: false});
-    $.post(web_path + '/maintainer/deleteArticle', {
-        'id': param.id
-    }, function (data, status) {
-        layer.close(index);
-        if (status) {
-            if (data.state) {
-                window.location.href = web_path + param.clickNoUrl;
+
+    layer.confirm("确定要删除该文章吗?", {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        $.post(web_path + '/maintainer/deleteArticle', {
+            'id': param.articleId
+        }, function (data, status) {
+            layer.close(index);
+            if (status) {
+                if (data.state) {
+                    window.location.href = param.clickNoUrl;
+                } else {
+                    layer.msg(data.msg);
+                }
+            } else {
+                layer.msg("网络异常，请稍后重试！");
             }
-        } else {
-            layer.msg("网络异常，请稍后重试！");
-        }
+        },'json');
     });
+
 }
 
 /**
@@ -393,10 +403,13 @@ function outputAffixHtml(data) {
      "</li>";
      $('#affixDatas').append(html);
      */
+    var str = data.lastPath.substring(data.lastPath.lastIndexOf('/') + 1, data.lastPath.length);
+    var lastPath = '/files/' + param.uploadParamFileName + '/' + str;
+
     var _ = DOMBuilder;
     $('#affixDatas').append(_.DOM(
         _('li.affixdata')._([
-            _('p.uk-hidden').H(data.lastPath),
+            _('p.uk-hidden').H(lastPath),
             _('p.uk-hidden').H(data.originalFilename),
             _('div.uk-grid')._([
                 _('div.uk-width-4-5.uk-text-truncate').H(data.originalFilename),

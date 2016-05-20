@@ -546,6 +546,27 @@ public class TieManagerController {
     }
 
     /**
+     * 更改系公告在首页显示
+     *
+     * @param tieNoticeVo
+     * @return
+     */
+    @RequestMapping(value = "/maintainer/tie/updateTieNoticeShow")
+    @ResponseBody
+    public AjaxData<TieNoticeVo> updateTieNoticeShow(TieNoticeVo tieNoticeVo) {
+        AjaxData<TieNoticeVo> ajaxData = new AjaxData<>();
+        if(tieNoticeVo.getId()>0){
+            TieNotice tieNotice = tieNoticeService.findById(tieNoticeVo.getId());
+            tieNotice.setIsShow(tieNoticeVo.getIsShow());
+            tieNoticeService.update(tieNotice);
+            ajaxData.success().msg("更改显示成功!");
+        } else {
+            ajaxData.fail().msg("参数异常,更改显示失败!");
+        }
+        return ajaxData;
+    }
+
+    /**
      * 删除系公告
      *
      * @param id 文章id
