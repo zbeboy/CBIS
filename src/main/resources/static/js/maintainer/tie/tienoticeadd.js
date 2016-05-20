@@ -30,12 +30,12 @@ function initArticleParam() {
     param.checkArticleTitle = true;
     param.checkArticleContent = true;
     param.checkArticlePic = false;
-    param.articleSaveOrUpdateUrl = web_path + "/maintainer/saveArticle";
+    param.articleSaveOrUpdateUrl = web_path + "/student/saveArticle";
     param.clickOkUrl = web_path + "/user/tie/tieNoticeShow";
     param.clickNoUrl = web_path + "/maintainer/tie/tieNotice";
     param.uploadParamFileName = "tienotice";
     param.cleanFromClient = true;
-    param.cleanUrl = web_path + "/maintainer/deleteFile";
+    param.cleanUrl = web_path + "/student/deleteFile";
     param.openAffix = true;
     param.myParam = myParam;
     param.affixSaveFunc = "tieNoticeAffix"

@@ -56,25 +56,30 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + tieNoticeVo.getBigTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(tieNoticeVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + tieNoticeVo.getUsername() + "%"));
+        if (StringUtils.hasLength(tieNoticeVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + tieNoticeVo.getRealName() + "%"));
         }
 
         if (StringUtils.hasLength(tieNoticeVo.getDate())) {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieNoticeVo.getDate() + "%"));
         }
 
-        if (!StringUtils.isEmpty(tieNoticeVo.getShow())) {
-            if (tieNoticeVo.getShow()) {
-                Byte bytes = 1;
-                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+        if (!StringUtils.isEmpty(tieNoticeVo.getIsShow())) {
+            if (tieNoticeVo.getIsShow() == 1) {
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(tieNoticeVo.getIsShow()));
             } else {
-                Byte bytes = 0;
-                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(tieNoticeVo.getIsShow()));
             }
         }
 
-        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_NOTICE.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_NOTICE.IS_SHOW)
+        int pageNum = tieNoticeVo.getPageNum();
+        int pageSize = tieNoticeVo.getPageSize();
+
+        if(pageNum <=0){
+            pageNum = 1;
+        }
+
+        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_NOTICE.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.REAL_NAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_NOTICE.IS_SHOW)
                 .from(Tables.TIE_NOTICE)
                 .join(Tables.ARTICLE_INFO)
                 .on(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID.equal(Tables.ARTICLE_INFO.ID))
@@ -89,11 +94,11 @@ public class TieNoticeServiceImpl implements TieNoticeService {
                 } else {
                     c = Tables.ARTICLE_INFO.BIG_TITLE.asc();
                 }
-            } else if (tieNoticeVo.getSortField().equals("username")) {
+            } else if (tieNoticeVo.getSortField().equals("realName")) {
                 if (tieNoticeVo.getSortOrder().equals("desc")) {
-                    c = Tables.USERS.USERNAME.desc();
+                    c = Tables.USERS.REAL_NAME.desc();
                 } else {
-                    c = Tables.USERS.USERNAME.asc();
+                    c = Tables.USERS.REAL_NAME.asc();
                 }
             } else if (tieNoticeVo.getSortField().equals("date")) {
                 if (tieNoticeVo.getSortOrder().equals("desc")) {
@@ -115,7 +120,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             e.orderBy(b);
         }
 
-        return e.limit((tieNoticeVo.getPageIndex() - 1) * tieNoticeVo.getPageSize(), tieNoticeVo.getPageSize()).fetch();
+        return e.limit((pageNum - 1) * pageSize, pageSize).fetch();
     }
 
     @Override
@@ -126,21 +131,19 @@ public class TieNoticeServiceImpl implements TieNoticeService {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + tieNoticeVo.getBigTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(tieNoticeVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + tieNoticeVo.getUsername() + "%"));
+        if (StringUtils.hasLength(tieNoticeVo.getRealName())) {
+            a = a.and(Tables.USERS.USERNAME.like("%" + tieNoticeVo.getRealName() + "%"));
         }
 
         if (StringUtils.hasLength(tieNoticeVo.getDate())) {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieNoticeVo.getDate() + "%"));
         }
 
-        if (!StringUtils.isEmpty(tieNoticeVo.getShow())) {
-            if (tieNoticeVo.getShow()) {
-                Byte bytes = 1;
-                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+        if (!StringUtils.isEmpty(tieNoticeVo.getIsShow())) {
+            if (tieNoticeVo.getIsShow() == 1) {
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(tieNoticeVo.getIsShow()));
             } else {
-                Byte bytes = 0;
-                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(bytes));
+                a = a.and(Tables.TIE_NOTICE.IS_SHOW.eq(tieNoticeVo.getIsShow()));
             }
         }
 

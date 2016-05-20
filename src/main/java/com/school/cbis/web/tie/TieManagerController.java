@@ -2,6 +2,7 @@ package com.school.cbis.web.tie;
 
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
+import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.TieRecord;
@@ -232,7 +233,7 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieElegantShow")
     public String tieElegantShow(@RequestParam("id") int id, ModelMap modelMap) {
-        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String, String>> record8s = articleInfoService.findByIdWithUsers(id);
         if (record8s.isNotEmpty()) {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
 
@@ -483,7 +484,7 @@ public class TieManagerController {
     @ResponseBody
     public Map<String, Object> tieArticleShowData(@RequestParam("id") int id) {
         Map<String, Object> map = new HashMap<>();
-        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String, String>> record8s = articleInfoService.findByIdWithUsers(id);
         if (record8s.isNotEmpty()) {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
@@ -505,7 +506,8 @@ public class TieManagerController {
      * @return 页面地址
      */
     @RequestMapping(value = "/maintainer/tie/tieNotice")
-    public String tieNotice() {
+    public String tieNotice(TieNoticeVo tieNoticeVo,ModelMap modelMap) {
+        modelMap.addAttribute("tieNoticeVo",tieNoticeVo);
         return "/maintainer/tie/tienoticelist";
     }
 
@@ -517,8 +519,8 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/tie/tieNoticeData")
     @ResponseBody
-    public Map<String, Object> tieNoticeData(TieNoticeVo tieNoticeVo) {
-        JsGrid<TieNoticeVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<TieNoticeVo> tieNoticeData(TieNoticeVo tieNoticeVo) {
+        AjaxData<TieNoticeVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -529,19 +531,18 @@ public class TieManagerController {
             Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = tieNoticeService.findByTieIdWithBigTitleAndPage(tieNoticeVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieNoticeVo.class);
-                list.forEach(t -> {
-                    if (!StringUtils.isEmpty(t.getIsShow())) {
-                        t.setShow(t.getIsShow() == 0 ? false : true);
-                    }
-                });
-                jsGrid.loadData(list, tieNoticeService.findByTieIdWithBigTitleAndCount(tieNoticeVo, tieId));
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(tieNoticeVo.getPageNum());
+                paginationData.setPageSize(tieNoticeVo.getPageSize());
+                paginationData.setTotalDatas(tieNoticeService.findByTieIdWithBigTitleAndCount(tieNoticeVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.fail().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.fail().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
@@ -552,26 +553,22 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/tie/deleteTieNotice", method = RequestMethod.POST)
     @ResponseBody
-    public TieNoticeVo deleteTieNotice(@RequestParam(value = "id") int id, String imgpath) {
-        JsGrid<TieNoticeVo> jsGrid = new JsGrid<>();
+    public AjaxData deleteTieNotice(@RequestParam(value = "id") int id, String imgpath) {
         try {
             ArticleInfo articleInfo = articleInfoService.findById(id);
             if (!StringUtils.isEmpty(articleInfo)) {
                 tieNoticeService.deleteById(id);
                 articleSubService.deleteByArticleInfoId(id);
                 articleInfoService.deleteById(id);
-                FilesUtils.deleteFile(imgpath);
-                TieNoticeVo tieNoticeVo = new TieNoticeVo();
-                tieNoticeVo.setId(id);
-                tieNoticeVo.setBigTitle(articleInfo.getBigTitle());
-                tieNoticeVo.setUsername(usersService.getUserName());
-                tieNoticeVo.setDate(new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date(articleInfo.getDate().getTime())));
-                return jsGrid.deleteItem(tieNoticeVo);
+                if(StringUtils.hasLength(imgpath)){
+                    FilesUtils.deleteFile(imgpath);
+                }
+                return new AjaxData().success().msg("删除成功!");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug(" not found imgPath exception is : {} ",e.getMessage());
         }
-        return null;
+        return new AjaxData().success().msg("删除成功!");
     }
 
     /**
@@ -613,7 +610,7 @@ public class TieManagerController {
      */
     @RequestMapping("/user/tie/tieNoticeShow")
     public String tieNoticeShow(@RequestParam("id") int id, ModelMap modelMap) {
-        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String, String>> record8s = articleInfoService.findByIdWithUsers(id);
         if (record8s.isNotEmpty()) {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
 
