@@ -44,7 +44,7 @@ public interface TieNoticeService {
      * @param id 文章id
      * @return
      */
-    void deleteById(int id);
+    void deleteByArticleInfoId(int id);
 
     /**
      * 通过系风采时间组查询
@@ -83,4 +83,10 @@ public interface TieNoticeService {
      * @return
      */
     List<TieNotice> findByShow(Byte bytes);
+
+    /**
+     * 通过主键删除
+     * @param id
+     */
+    void deleteById(int id);
 }

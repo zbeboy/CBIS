@@ -132,7 +132,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
         }
 
         if (StringUtils.hasLength(tieNoticeVo.getRealName())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + tieNoticeVo.getRealName() + "%"));
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + tieNoticeVo.getRealName() + "%"));
         }
 
         if (StringUtils.hasLength(tieNoticeVo.getDate())) {
@@ -159,7 +159,7 @@ public class TieNoticeServiceImpl implements TieNoticeService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteByArticleInfoId(int id) {
         create.deleteFrom(Tables.TIE_NOTICE).where(Tables.TIE_NOTICE.TIE_NOTICE_ARTICLE_INFO_ID.eq(id)).execute();
     }
 
@@ -212,5 +212,10 @@ public class TieNoticeServiceImpl implements TieNoticeService {
     public List<TieNotice> findByShow(Byte bytes) {
         List<TieNotice> tieNotices = tieNoticeDao.fetchByIsShow(bytes);
         return tieNotices;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        tieNoticeDao.deleteById(id);
     }
 }

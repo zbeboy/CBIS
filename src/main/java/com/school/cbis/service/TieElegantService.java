@@ -46,7 +46,7 @@ public interface TieElegantService {
      * @param id 文章id
      * @return
      */
-    void deleteById(int id);
+    void deleteByArticleInfoId(int id);
 
     /**
      * 更新系风采文章信息
@@ -88,4 +88,10 @@ public interface TieElegantService {
      * @return
      */
     List<TieElegant> findByShow(Byte bytes);
+
+    /**
+     * 通过主键删除
+     * @param id
+     */
+    void deleteById(int id);
 }

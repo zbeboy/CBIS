@@ -125,7 +125,8 @@ public class TieManagerController {
      * @return 页面地址
      */
     @RequestMapping(value = "/maintainer/tie/tieElegant")
-    public String tieElegant() {
+    public String tieElegant(TieElegantVo tieElegantVo,ModelMap modelMap) {
+        modelMap.addAttribute("tieElegantVo",tieElegantVo);
         return "/maintainer/tie/tieelegantlist";
     }
 
@@ -137,8 +138,8 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/tie/tieElegantData")
     @ResponseBody
-    public Map<String, Object> tieElegantData(TieElegantVo tieElegantVo) {
-        JsGrid<TieElegantVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<TieElegantVo> tieElegantData(TieElegantVo tieElegantVo) {
+        AjaxData<TieElegantVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -149,49 +150,65 @@ public class TieManagerController {
             Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = tieElegantService.findByTieIdWithBigTitleAndPage(tieElegantVo, tieId);
             if (record5s.isNotEmpty()) {
                 list = record5s.into(TieElegantVo.class);
-                list.forEach(t -> {
-                    if (!StringUtils.isEmpty(t.getIsShow())) {
-                        t.setShow(t.getIsShow() == 0 ? false : true);
-                    }
-                });
-                jsGrid.loadData(list, tieElegantService.findByTieIdWithBigTitleAndCount(tieElegantVo, tieId));
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(tieElegantVo.getPageNum());
+                paginationData.setPageSize(tieElegantVo.getPageSize());
+                paginationData.setTotalDatas(tieElegantService.findByTieIdWithBigTitleAndCount(tieElegantVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.fail().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.fail().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
      * 删除系风采
      *
-     * @param id 文章id
+     * @param id
      * @return
      */
     @RequestMapping(value = "/maintainer/tie/deleteTieElegant", method = RequestMethod.POST)
     @ResponseBody
-    public TieElegantVo deleteTieElegant(@RequestParam(value = "id") int id, String imgpath) {
-        JsGrid<TieElegantVo> jsGrid = new JsGrid<>();
+    public AjaxData deleteTieElegant(@RequestParam(value = "id") int id, String imgpath) {
         try {
-            ArticleInfo articleInfo = articleInfoService.findById(id);
-            if (!StringUtils.isEmpty(articleInfo)) {
+            TieElegant tieElegant = tieElegantService.findById(id);
+            if (!StringUtils.isEmpty(tieElegant)) {
+                articleSubService.deleteByArticleInfoId(tieElegant.getTieElegantArticleInfoId());
+                articleInfoService.deleteById(tieElegant.getTieElegantArticleInfoId());
                 tieElegantService.deleteById(id);
-                articleSubService.deleteByArticleInfoId(id);
-                articleInfoService.deleteById(id);
-                FilesUtils.deleteFile(imgpath);
-                TieElegantVo tieElegantVo = new TieElegantVo();
-                tieElegantVo.setId(id);
-                tieElegantVo.setBigTitle(articleInfo.getBigTitle());
-                tieElegantVo.setUsername(usersService.getUserName());
-                tieElegantVo.setDate(new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date(articleInfo.getDate().getTime())));
-                return jsGrid.deleteItem(tieElegantVo);
+                if(StringUtils.hasLength(imgpath)){
+                    FilesUtils.deleteFile(imgpath);
+                }
+            } else {
+                return new AjaxData().fail().msg("参数为空!");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return new AjaxData().success().msg("删除成功!");
+    }
+
+    /**
+     * 更新系风采显示
+     * @param tieElegantVo
+     * @return
+     */
+    @RequestMapping("/maintainer/tie/updateTieElegantShow")
+    @ResponseBody
+    public AjaxData updateTieElegantShow(TieElegantVo tieElegantVo){
+        AjaxData ajaxData = new AjaxData<>();
+        if(tieElegantVo.getId()>0){
+            TieElegant tieElegant = tieElegantService.findById(tieElegantVo.getId());
+            tieElegant.setIsShow(tieElegantVo.getIsShow());
+            tieElegantService.update(tieElegant);
+            ajaxData.success().msg("更改显示成功!");
+        } else {
+            ajaxData.fail().msg("参数异常,更改显示失败!");
+        }
+        return ajaxData;
     }
 
     /**
@@ -243,12 +260,6 @@ public class TieManagerController {
             int tieId = 0;
             if (!ObjectUtils.isEmpty(record)) {
                 tieId = record.getValue(Tables.TIE.ID);
-            }
-
-            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
-                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                articleVos.get(0).setArticlePhotoUrl(photo);
             }
 
             modelMap.addAttribute("articleInfo", articleVos.get(0));
@@ -569,22 +580,30 @@ public class TieManagerController {
     /**
      * 删除系公告
      *
-     * @param id 文章id
+     * @param id
      * @return
      */
     @RequestMapping(value = "/maintainer/tie/deleteTieNotice", method = RequestMethod.POST)
     @ResponseBody
     public AjaxData deleteTieNotice(@RequestParam(value = "id") int id, String imgpath) {
         try {
-            ArticleInfo articleInfo = articleInfoService.findById(id);
-            if (!StringUtils.isEmpty(articleInfo)) {
+            TieNotice tieNotice = tieNoticeService.findById(id);
+            if (!StringUtils.isEmpty(tieNotice)) {
+                articleSubService.deleteByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
+                articleInfoService.deleteById(tieNotice.getTieNoticeArticleInfoId());
+                List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(tieNotice.getTieNoticeArticleInfoId());
+                for(TieNoticeAffix t:tieNoticeAffices){
+                    if(StringUtils.hasLength(t.getTieNoticeFileUrl())){
+                        FilesUtils.deleteFile(t.getTieNoticeFileUrl());
+                    }
+                    tieNoticeAffixService.deleteById(t.getId());
+                }
                 tieNoticeService.deleteById(id);
-                articleSubService.deleteByArticleInfoId(id);
-                articleInfoService.deleteById(id);
                 if(StringUtils.hasLength(imgpath)){
                     FilesUtils.deleteFile(imgpath);
                 }
-                return new AjaxData().success().msg("删除成功!");
+            } else {
+                return new AjaxData().fail().msg("文章为空!");
             }
         } catch (IOException e) {
             log.debug(" not found imgPath exception is : {} ",e.getMessage());
@@ -636,12 +655,6 @@ public class TieManagerController {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
 
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
-
-            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
-                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                articleVos.get(0).setArticlePhotoUrl(photo);
-            }
 
             List<TieNoticeAffix> tieNoticeAffices = tieNoticeAffixService.findByArticleInfoId(id);
             modelMap.addAttribute("tieNoticeAffix", tieNoticeAffices);

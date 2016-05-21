@@ -113,8 +113,9 @@ function toDel(id){
         },function(data){
             layer.close(index);
             if(data.state){
-                layer.msg(data.msg, {icon: 1});
-                action();
+                layer.msg(data.msg, {icon: 1},function(){
+                    window.location.reload(true);
+                });
             } else {
                 layer.msg(data.msg);
             }

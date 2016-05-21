@@ -55,30 +55,33 @@ public class TieElegantServiceImpl implements TieElegantService {
 
         SortField<Timestamp> d = null;
 
+        int pageNum = tieElegantVo.getPageNum();
+        int pageSize = tieElegantVo.getPageSize();
+        if(pageNum<=0){
+            pageNum = 1;
+        }
 
         if (StringUtils.hasLength(tieElegantVo.getBigTitle())) {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + tieElegantVo.getBigTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(tieElegantVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + tieElegantVo.getUsername() + "%"));
+        if (StringUtils.hasLength(tieElegantVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + tieElegantVo.getRealName() + "%"));
         }
 
         if (StringUtils.hasLength(tieElegantVo.getDate())) {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieElegantVo.getDate() + "%"));
         }
 
-        if( !StringUtils.isEmpty(tieElegantVo.getShow()) ){
-            if(tieElegantVo.getShow()){
-                Byte bytes = 1;
-                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+        if( !StringUtils.isEmpty(tieElegantVo.getIsShow()) ){
+            if(tieElegantVo.getIsShow() == 1){
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(tieElegantVo.getIsShow()));
             } else {
-                Byte bytes = 0;
-                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(tieElegantVo.getIsShow()));
             }
         }
 
-        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_ELEGANT.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.USERNAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_ELEGANT.IS_SHOW)
+        SelectConditionStep<Record5<Integer, String, String, Timestamp,Byte>> e = create.select(Tables.TIE_ELEGANT.ID, Tables.ARTICLE_INFO.BIG_TITLE, Tables.USERS.REAL_NAME, Tables.ARTICLE_INFO.DATE,Tables.TIE_ELEGANT.IS_SHOW)
                 .from(Tables.TIE_ELEGANT)
                 .join(Tables.ARTICLE_INFO)
                 .on(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID.equal(Tables.ARTICLE_INFO.ID))
@@ -93,11 +96,11 @@ public class TieElegantServiceImpl implements TieElegantService {
                 } else {
                     c = Tables.ARTICLE_INFO.BIG_TITLE.asc();
                 }
-            } else if (tieElegantVo.getSortField().equals("username")) {
+            } else if (tieElegantVo.getSortField().equals("realName")) {
                 if (tieElegantVo.getSortOrder().equals("desc")) {
-                    c = Tables.USERS.USERNAME.desc();
+                    c = Tables.USERS.REAL_NAME.desc();
                 } else {
-                    c = Tables.USERS.USERNAME.asc();
+                    c = Tables.USERS.REAL_NAME.asc();
                 }
             } else if (tieElegantVo.getSortField().equals("date")) {
                 if (tieElegantVo.getSortOrder().equals("desc")) {
@@ -119,7 +122,7 @@ public class TieElegantServiceImpl implements TieElegantService {
             e.orderBy(b);
         }
 
-        return e.limit((tieElegantVo.getPageIndex() - 1) * tieElegantVo.getPageSize(), tieElegantVo.getPageSize()).fetch();
+        return e.limit((pageNum - 1) * pageSize, pageSize).fetch();
 
     }
 
@@ -132,21 +135,19 @@ public class TieElegantServiceImpl implements TieElegantService {
             a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%" + tieElegantVo.getBigTitle() + "%"));
         }
 
-        if (StringUtils.hasLength(tieElegantVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + tieElegantVo.getUsername() + "%"));
+        if (StringUtils.hasLength(tieElegantVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + tieElegantVo.getRealName() + "%"));
         }
 
         if (StringUtils.hasLength(tieElegantVo.getDate())) {
             a = a.and(Tables.ARTICLE_INFO.DATE.like("%" + tieElegantVo.getDate() + "%"));
         }
 
-        if( !StringUtils.isEmpty(tieElegantVo.getShow()) ){
-            if(tieElegantVo.getShow()){
-                Byte bytes = 1;
-                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+        if( !StringUtils.isEmpty(tieElegantVo.getIsShow()) ){
+            if(tieElegantVo.getIsShow() == 1){
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(tieElegantVo.getIsShow()));
             } else {
-                Byte bytes = 0;
-                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(bytes));
+                a = a.and(Tables.TIE_ELEGANT.IS_SHOW.eq(tieElegantVo.getIsShow()));
             }
         }
 
@@ -162,7 +163,7 @@ public class TieElegantServiceImpl implements TieElegantService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteByArticleInfoId(int id) {
         create.deleteFrom(Tables.TIE_ELEGANT).where(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID.eq(id)).execute();
     }
 
@@ -212,5 +213,10 @@ public class TieElegantServiceImpl implements TieElegantService {
     public List<TieElegant> findByShow(Byte bytes) {
         List<TieElegant> tieElegants = tieElegantDao.fetchByIsShow(bytes);
         return tieElegants;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        tieElegantDao.deleteById(id);
     }
 }

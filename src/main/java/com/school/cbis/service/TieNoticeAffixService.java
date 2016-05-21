@@ -37,4 +37,10 @@ public interface TieNoticeAffixService {
      * @return
      */
     TieNoticeAffix findById(int id);
+
+    /**
+     * 通过主键删除
+     * @param id
+     */
+    void deleteById(int id);
 }

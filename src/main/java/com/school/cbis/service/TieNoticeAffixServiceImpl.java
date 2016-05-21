@@ -63,4 +63,9 @@ public class TieNoticeAffixServiceImpl implements TieNoticeAffixService {
         TieNoticeAffix tieNoticeAffix = tieNoticeAffixDao.findById(id);
         return tieNoticeAffix;
     }
+
+    @Override
+    public void deleteById(int id) {
+        tieNoticeAffixDao.deleteById(id);
+    }
 }

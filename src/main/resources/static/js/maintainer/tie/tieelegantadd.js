@@ -29,13 +29,13 @@ function initArticleParam() {
     param.checkArticleTitle = true;
     param.checkArticleContent = true;
     param.checkArticlePic = true;
-    param.articleSaveOrUpdateUrl = web_path + "/maintainer/saveArticle";
+    param.articleSaveOrUpdateUrl = web_path + "/student/saveArticle";
     param.clickOkUrl = web_path + "/user/tie/tieElegantShow";
     param.clickNoUrl = web_path + "/maintainer/tie/tieElegant";
     param.uploadParamFileName = "tieelegant";
     param.myParam = myParam;
     param.cleanFromClient = true;
-    param.cleanUrl = web_path + "/maintainer/deleteFile";
+    param.cleanUrl = web_path + "/student/deleteFile";
     initUpload();
     initImage();
 }

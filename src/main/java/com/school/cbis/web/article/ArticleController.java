@@ -387,7 +387,9 @@ public class ArticleController {
             if (!StringUtils.isEmpty(articleInfo)) {
                 articleSubService.deleteByArticleInfoId(articleInfo.getId());
                 articleInfoService.deleteById(articleInfo.getId());
-                FilesUtils.deleteFile(articleInfo.getArticlePhotoUrl());
+                if(StringUtils.hasLength(articleInfo.getArticlePhotoUrl())){
+                    FilesUtils.deleteFile(articleInfo.getArticlePhotoUrl());
+                }
                 ajaxData.success();
             } else {
                 ajaxData.fail().msg("获取文章信息有误!");

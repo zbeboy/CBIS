@@ -1,9 +1,8 @@
 /**
  * Created by lenovo on 2016-03-09.
  */
-var isShow = 0;
+var isShow = $('#isShow').val();
 $(document).ready(function () {
-    isShow = $('#isShow').val();
     initArticleParam();
     $('#isShow').click(function(){
         if (isShow == 0) {
@@ -59,4 +58,29 @@ function tieNoticeAffix(id, url, original_name) {
 
 function endFunc() {
     param.affixData = tieNoticeAffixArr;
+}
+
+/**
+ *删除公告文章
+ */
+function toDel(){
+    layer.confirm("确定要删除该文章吗?", {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        $.post(web_path + '/maintainer/tie/deleteTieNotice',{
+            'id':myParam.tieNoticeId
+        },function(data){
+            layer.close(index);
+            if(data.state){
+                layer.msg(data.msg, {icon: 1},function(){
+                    window.location.href = web_path + '/maintainer/tie/tieNotice';
+                });
+            } else {
+                layer.msg(data.msg);
+            }
+        },'json');
+    });
 }
