@@ -42,6 +42,7 @@ public class TieElegantServiceImpl implements TieElegantService {
                 .set(Tables.TIE_ELEGANT.TIE_ID, tieElegant.getTieId())
                 .set(Tables.TIE_ELEGANT.TIE_ELEGANT_ARTICLE_INFO_ID, tieElegant.getTieElegantArticleInfoId())
                 .set(Tables.TIE_ELEGANT.TIE_ELEGANT_TIME_ID, tieElegant.getTieElegantTimeId())
+                .set(Tables.TIE_ELEGANT.IS_SHOW,tieElegant.getIsShow())
                 .execute();
     }
 

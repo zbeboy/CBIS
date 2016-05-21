@@ -111,11 +111,7 @@ public class MainController {
         if (!tieElegants.isEmpty()) {
             for (TieElegant t : tieElegants) {
                 ArticleInfo articleInfo = articleInfoService.findById(t.getTieElegantArticleInfoId());
-                if (StringUtils.hasLength(articleInfo.getArticlePhotoUrl())) {
-                    String[] paths = articleInfo.getArticlePhotoUrl().split("/");
-                    String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                    articleInfo.setArticlePhotoUrl(photo);
-                }
+                log.debug(" articlePhotoUrl : {}",articleInfo.getArticlePhotoUrl());
                 tieElegantData.add(articleInfo);
             }
             modelMap.addAttribute("tieElegantData", tieElegantData);
