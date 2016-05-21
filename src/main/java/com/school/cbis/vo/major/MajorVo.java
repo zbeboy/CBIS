@@ -6,7 +6,7 @@ package com.school.cbis.vo.major;
 public class MajorVo {
     private int id;
     private String majorName;
-    private int pageIndex;
+    private int pageNum;
     private int pageSize;
     private String sortField;
     private String sortOrder;
@@ -27,12 +27,12 @@ public class MajorVo {
         this.majorName = majorName;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
     public int getPageSize() {
@@ -64,7 +64,7 @@ public class MajorVo {
         return "MajorVo{" +
                 "id=" + id +
                 ", majorName='" + majorName + '\'' +
-                ", pageIndex=" + pageIndex +
+                ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", sortField='" + sortField + '\'' +
                 ", sortOrder='" + sortOrder + '\'' +

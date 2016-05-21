@@ -1,8 +1,11 @@
 package com.school.cbis.web.major;
 
 import com.school.cbis.commons.Wordbook;
+import com.school.cbis.data.AjaxData;
+import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.domain.tables.records.MajorRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.article.ArticleVo;
@@ -55,6 +58,9 @@ public class MajorManagerController {
     @Resource
     private StudentService studentService;
 
+    @Resource
+    private GradeService gradeService;
+
     /**
      * 专业数据
      *
@@ -63,8 +69,8 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorData")
     @ResponseBody
-    public Map<String, Object> majorData(MajorVo majorVo) {
-        JsGrid<MajorVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<MajorVo> majorData(MajorVo majorVo) {
+        AjaxData<MajorVo> ajaxData = new AjaxData<>();
         //通过用户类型获取系表ID
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -76,14 +82,83 @@ public class MajorManagerController {
             Result<Record2<Integer, String>> record2s = majorService.findByTieIdByPage(majorVo, tieId);
             if (record2s.isNotEmpty()) {
                 majorVos = record2s.into(MajorVo.class);
-                jsGrid.loadData(majorVos, majorService.findByTieIdCount(majorVo, tieId));
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(majorVo.getPageNum());
+                paginationData.setPageSize(majorVo.getPageSize());
+                paginationData.setTotalDatas(majorService.findByTieIdCount(majorVo, tieId));
+                ajaxData.success().listData(majorVos).paginationData(paginationData);
             } else {
-                jsGrid.loadData(majorVos, 0);
+                ajaxData.success().listData(majorVos);
             }
         } else {
-            jsGrid.loadData(majorVos, 0);
+            ajaxData.success().listData(majorVos);
         }
-        return jsGrid.getMap();
+        return ajaxData;
+    }
+
+    /**
+     * 检验添加专业时 专业名
+     * @param majorName
+     * @return
+     */
+    @RequestMapping("/maintainer/major/validAddMajorName")
+    @ResponseBody
+    public Map<String, Object> validMajorName(@RequestParam("majorName") String majorName) {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.hasLength(majorName)) {
+            //通过用户类型获取系表ID
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            if (tieId > 0) {
+                MajorRecord majorRecord = majorService.findByMajorNameAndTieId(StringUtils.trimWhitespace(majorName), tieId);
+                if (ObjectUtils.isEmpty(majorRecord)) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "该专业已存在!");
+                }
+            } else {
+                map.put("error", "获取当前用户信息失败!");
+            }
+        } else {
+            map.put("error", "参数异常!");
+        }
+        return map;
+    }
+
+    /**
+     * 检验更新时 专业名
+     * @param id
+     * @param majorName
+     * @return
+     */
+    @RequestMapping("/maintainer/major/validUpdateMajorName")
+    @ResponseBody
+    public Map<String,Object> validUpdateMajorName(@RequestParam("id") int id,@RequestParam("majorName") String majorName){
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.hasLength(majorName)) {
+            //通过用户类型获取系表ID
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            if (tieId > 0) {
+                MajorRecord majorRecord = majorService.findByMajorNameAndIdAndTieId(StringUtils.trimWhitespace(majorName), tieId,id);
+                if (ObjectUtils.isEmpty(majorRecord)) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "该专业已存在!");
+                }
+            } else {
+                map.put("error", "获取当前用户信息失败!");
+            }
+        } else {
+            map.put("error", "参数异常!");
+        }
+        return map;
     }
 
     /**
@@ -93,28 +168,20 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping(value = "/maintainer/major/saveMajor", method = RequestMethod.POST)
-    @ResponseBody
-    public MajorVo saveMajor(MajorVo majorVo) {
-        JsGrid<MajorVo> jsGrid = new JsGrid<>();
-        //通过用户类型获取系表ID
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        if (tieId > 0) {
-            if (StringUtils.hasLength(majorVo.getMajorName())) {
-                List<Major> majors = majorService.findByMajorName(majorVo.getMajorName());
-                if (majors.isEmpty()) {
-                    Major major = new Major();
-                    major.setMajorName(majorVo.getMajorName());
-                    major.setTieId(tieId);
-                    majorService.saveMajor(major);
-                    return jsGrid.insertItem(majorVo);
-                }
+    public String saveMajor(MajorVo majorVo) {
+        if (StringUtils.hasLength(majorVo.getMajorName())) {
+            //通过用户类型获取系表ID
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
             }
+            Major major = new Major();
+            major.setMajorName(majorVo.getMajorName());
+            major.setTieId(tieId);
+            majorService.saveMajor(major);
         }
-        return null;
+        return "redirect:/maintainer/major/majorManager";
     }
 
     /**
@@ -124,19 +191,13 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping(value = "/maintainer/major/updateMajor", method = RequestMethod.POST)
-    @ResponseBody
-    public MajorVo updateMajor(MajorVo majorVo) {
-        JsGrid<MajorVo> jsGrid = new JsGrid<>();
+    public String updateMajor(MajorVo majorVo) {
         Major major = majorService.findById(majorVo.getId());
-        if (StringUtils.hasLength(majorVo.getMajorName())) {
-            List<Major> majors = majorService.findByMajorName(majorVo.getMajorName());
-            if (majors.isEmpty()) {
-                major.setMajorName(majorVo.getMajorName());
-                majorService.update(major);
-                return jsGrid.updateItem(majorVo);
-            }
+        if (!ObjectUtils.isEmpty(major)&&StringUtils.hasLength(majorVo.getMajorName())) {
+            major.setMajorName(majorVo.getMajorName());
+            majorService.update(major);
         }
-        return null;
+        return "redirect:/maintainer/major/majorManager";
     }
 
     /**
@@ -147,10 +208,16 @@ public class MajorManagerController {
      */
     @RequestMapping(value = "/maintainer/major/deleteMajor", method = RequestMethod.POST)
     @ResponseBody
-    public MajorVo deleteMajor(MajorVo majorVo) {
-        JsGrid<MajorVo> jsGrid = new JsGrid<>();
-        majorService.deleteById(majorVo.getId());
-        return jsGrid.deleteItem(majorVo);
+    public AjaxData deleteMajor(MajorVo majorVo) {
+        AjaxData ajaxData = new AjaxData();
+        List<Grade> grades = gradeService.findByMajorId(majorVo.getId());
+        if (grades.isEmpty()) {
+            majorService.deleteById(majorVo.getId());
+            ajaxData.success().msg("删除专业成功!");
+        } else {
+            ajaxData.fail().msg("不能删除该专业,该专业已有对应的班级!");
+        }
+        return ajaxData;
     }
 
     /**
@@ -159,23 +226,8 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping("/maintainer/major/majorIntroduce")
-    public String majorIntroduce(ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        List<MajorListVo> majorListVos = new ArrayList<>();
-        MajorListVo majorListVo = new MajorListVo();
-        majorListVo.setId(0);
-        majorListVo.setMajorName("");
-        majorListVos.add(majorListVo);
-        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
-        if (record2s.isNotEmpty()) {
-            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
-            majorListVos.addAll(majorListVoList);
-        }
-        modelMap.addAttribute("majors", majorListVos);
+    public String majorIntroduce(MajorIntroduceVo majorIntroduceVo,ModelMap modelMap) {
+        modelMap.addAttribute("majorIntroduceVo",majorIntroduceVo);
         return "/maintainer/major/majorintroducelist";
     }
 
@@ -187,8 +239,8 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorIntroduceData")
     @ResponseBody
-    public Map<String, Object> majorIntroduceData(MajorIntroduceVo majorIntroduceVo) {
-        JsGrid<MajorIntroduceVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<MajorIntroduceVo> majorIntroduceData(MajorIntroduceVo majorIntroduceVo) {
+        AjaxData<MajorIntroduceVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -196,22 +248,41 @@ public class MajorManagerController {
         }
         List<MajorIntroduceVo> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record5<Integer, String, String, Timestamp, Byte>> record5s = majorService.findAllWithIntroduceByPage(majorIntroduceVo, tieId);
-            if (record5s.isNotEmpty()) {
-                list = record5s.into(MajorIntroduceVo.class);
-                list.forEach(m->{
-                    if (!StringUtils.isEmpty(m.getIsShow())) {
-                        m.setShow(m.getIsShow() == 0 ? false : true);
-                    }
-                });
-                jsGrid.loadData(list, majorService.findAllWithIntroduceByPageCount(majorIntroduceVo, tieId));
+            Result<Record6<Integer,String, String, String, Timestamp, Byte>> record6s = majorService.findAllWithIntroduceByPage(majorIntroduceVo, tieId);
+            if (record6s.isNotEmpty()) {
+                list = record6s.into(MajorIntroduceVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(majorIntroduceVo.getPageNum());
+                paginationData.setPageSize(majorIntroduceVo.getPageSize());
+                paginationData.setTotalDatas(majorService.findAllWithIntroduceByPageCount(majorIntroduceVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
+    }
+
+    /**
+     * 专业显示在首页
+     * @param majorIntroduceVo
+     * @return
+     */
+    @RequestMapping("/maintainer/major/updateMajorIntroduceShow")
+    @ResponseBody
+    public AjaxData updateMajorIntroduceShow(MajorIntroduceVo majorIntroduceVo){
+        AjaxData ajaxData = new AjaxData<>();
+        if(majorIntroduceVo.getId()>0){
+            Major major = majorService.findById(majorIntroduceVo.getId());
+            major.setIsShow(majorIntroduceVo.getIsShow());
+            majorService.update(major);
+            ajaxData.success().msg("更改显示成功!");
+        } else {
+            ajaxData.fail().msg("参数异常,更改显示失败!");
+        }
+        return ajaxData;
     }
 
     /**
@@ -237,7 +308,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articleinfo", articleInfo);
             modelMap.addAttribute("articlesubinfo", articleSubs);
             modelMap.addAttribute("major", major);
-            modelMap.addAttribute("isShow", false);
+            modelMap.addAttribute("isShow", major.getIsShow() == 0 ? false : true);
         }
         return "/maintainer/major/majorintroduceupdate";
     }
@@ -350,16 +421,10 @@ public class MajorManagerController {
     @ResponseBody
     public Map<String, Object> majorArticleShowData(@RequestParam("id") int id) {
         Map<String, Object> map = new HashMap<>();
-        Result<Record8<Integer, String, String, Integer, Timestamp, String, String,String>> record8s = articleInfoService.findByIdWithUsers(id);
+        Result<Record8<Integer, String, String, Integer, Timestamp, String, String, String>> record8s = articleInfoService.findByIdWithUsers(id);
         if (record8s.isNotEmpty()) {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
-
-            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
-                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                articleVos.get(0).setArticlePhotoUrl(photo);
-            }
             map.put("articleInfo", articleVos.get(0));
             map.put("articleSub", articleSubs);
         }
@@ -372,23 +437,8 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping("/maintainer/major/majorHead")
-    public String majorHead(ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        List<MajorListVo> majorListVos = new ArrayList<>();
-        MajorListVo majorListVo = new MajorListVo();
-        majorListVo.setId(0);
-        majorListVo.setMajorName("");
-        majorListVos.add(majorListVo);
-        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
-        if (record2s.isNotEmpty()) {
-            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
-            majorListVos.addAll(majorListVoList);
-        }
-        modelMap.addAttribute("majors", majorListVos);
+    public String majorHead(ModelMap modelMap,MajorHeadVo majorHeadVo) {
+        modelMap.addAttribute("majorHeadVo",majorHeadVo);
         return "/maintainer/major/majorheadlist";
     }
 
@@ -400,8 +450,8 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorHeadData")
     @ResponseBody
-    public Map<String, Object> majorHeadData(MajorHeadVo majorHeadVo) {
-        JsGrid<MajorHeadVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<MajorHeadVo> majorHeadData(MajorHeadVo majorHeadVo) {
+        AjaxData<MajorHeadVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -410,17 +460,21 @@ public class MajorManagerController {
         List<MajorHeadVo> list = new ArrayList<>();
 
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithHeadByPage(majorHeadVo, tieId);
-            if (record4s.isNotEmpty()) {
-                list = record4s.into(MajorHeadVo.class);
-                jsGrid.loadData(list, majorService.findAllWithHeadByPageCount(majorHeadVo, tieId));
+            Result<Record5<Integer,String, String, String, Timestamp>> record5s = majorService.findAllWithHeadByPage(majorHeadVo, tieId);
+            if (record5s.isNotEmpty()) {
+                list = record5s.into(MajorHeadVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(majorHeadVo.getPageNum());
+                paginationData.setPageSize(majorHeadVo.getPageSize());
+                paginationData.setTotalDatas(majorService.findAllWithHeadByPageCount(majorHeadVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
@@ -454,23 +508,8 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping("/maintainer/major/majorTrainingGoal")
-    public String majorTrainingGoal(ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        List<MajorListVo> majorListVos = new ArrayList<>();
-        MajorListVo majorListVo = new MajorListVo();
-        majorListVo.setId(0);
-        majorListVo.setMajorName("");
-        majorListVos.add(majorListVo);
-        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
-        if (record2s.isNotEmpty()) {
-            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
-            majorListVos.addAll(majorListVoList);
-        }
-        modelMap.addAttribute("majors", majorListVos);
+    public String majorTrainingGoal(ModelMap modelMap,MajorTrainingGoalVo majorTrainingGoalVo) {
+        modelMap.addAttribute("majorTrainingGoalVo",majorTrainingGoalVo);
         return "/maintainer/major/majortraininggoallist";
     }
 
@@ -482,8 +521,8 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorTrainingGoalData")
     @ResponseBody
-    public Map<String, Object> majorTrainingGoalData(MajorTrainingGoalVo majorTrainingGoalVo) {
-        JsGrid<MajorTrainingGoalVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<MajorTrainingGoalVo> majorTrainingGoalData(MajorTrainingGoalVo majorTrainingGoalVo) {
+        AjaxData<MajorTrainingGoalVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -492,17 +531,21 @@ public class MajorManagerController {
         List<MajorTrainingGoalVo> list = new ArrayList<>();
 
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithTrainingGoalByPage(majorTrainingGoalVo, tieId);
-            if (record4s.isNotEmpty()) {
-                list = record4s.into(MajorTrainingGoalVo.class);
-                jsGrid.loadData(list, majorService.findAllWithTrainingGoalByPageCount(majorTrainingGoalVo, tieId));
+            Result<Record5<Integer,String, String, String, Timestamp>> record5s = majorService.findAllWithTrainingGoalByPage(majorTrainingGoalVo, tieId);
+            if (record5s.isNotEmpty()) {
+                list = record5s.into(MajorTrainingGoalVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(majorTrainingGoalVo.getPageNum());
+                paginationData.setPageSize(majorTrainingGoalVo.getPageSize());
+                paginationData.setTotalDatas(majorService.findAllWithTrainingGoalByPageCount(majorTrainingGoalVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
@@ -536,23 +579,8 @@ public class MajorManagerController {
      * @return
      */
     @RequestMapping("/maintainer/major/majorTrait")
-    public String majorTrait(ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        List<MajorListVo> majorListVos = new ArrayList<>();
-        MajorListVo majorListVo = new MajorListVo();
-        majorListVo.setId(0);
-        majorListVo.setMajorName("");
-        majorListVos.add(majorListVo);
-        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
-        if (record2s.isNotEmpty()) {
-            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
-            majorListVos.addAll(majorListVoList);
-        }
-        modelMap.addAttribute("majors", majorListVos);
+    public String majorTrait(ModelMap modelMap,MajorTraitVo majorTraitVo) {
+        modelMap.addAttribute("majorTraitVo",majorTraitVo);
         return "/maintainer/major/majortraitlist";
     }
 
@@ -564,8 +592,8 @@ public class MajorManagerController {
      */
     @RequestMapping("/maintainer/major/majorTraitData")
     @ResponseBody
-    public Map<String, Object> majorTraitData(MajorTraitVo majorTraitVo) {
-        JsGrid<MajorTraitVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<MajorTraitVo> majorTraitData(MajorTraitVo majorTraitVo) {
+        AjaxData<MajorTraitVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -574,17 +602,21 @@ public class MajorManagerController {
         List<MajorTraitVo> list = new ArrayList<>();
 
         if (tieId > 0) {
-            Result<Record4<Integer, String, String, Timestamp>> record4s = majorService.findAllWithTraitByPage(majorTraitVo, tieId);
-            if (record4s.isNotEmpty()) {
-                list = record4s.into(MajorTraitVo.class);
-                jsGrid.loadData(list, majorService.findAllWithTraitByPageCount(majorTraitVo, tieId));
+            Result<Record5<Integer,String, String, String, Timestamp>> record5s = majorService.findAllWithTraitByPage(majorTraitVo, tieId);
+            if (record5s.isNotEmpty()) {
+                list = record5s.into(MajorTraitVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(majorTraitVo.getPageNum());
+                paginationData.setPageSize(majorTraitVo.getPageSize());
+                paginationData.setTotalDatas(majorService.findAllWithTraitByPageCount(majorTraitVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**

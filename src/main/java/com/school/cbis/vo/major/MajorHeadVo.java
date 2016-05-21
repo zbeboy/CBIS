@@ -5,10 +5,11 @@ package com.school.cbis.vo.major;
  */
 public class MajorHeadVo {
     private int id;
+    private String majorName;
     private String bigTitle;
-    private String username;
+    private String realName;
     private String date;
-    private int pageIndex;
+    private int pageNum;
     private int pageSize;
     private String sortField;
     private String sortOrder;
@@ -21,6 +22,14 @@ public class MajorHeadVo {
         this.id = id;
     }
 
+    public String getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(String majorName) {
+        this.majorName = majorName;
+    }
+
     public String getBigTitle() {
         return bigTitle;
     }
@@ -29,12 +38,12 @@ public class MajorHeadVo {
         this.bigTitle = bigTitle;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getDate() {
@@ -45,12 +54,12 @@ public class MajorHeadVo {
         this.date = date;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
     public int getPageSize() {
@@ -81,10 +90,11 @@ public class MajorHeadVo {
     public String toString() {
         return "MajorHeadVo{" +
                 "id=" + id +
+                ", majorName='" + majorName + '\'' +
                 ", bigTitle='" + bigTitle + '\'' +
-                ", username='" + username + '\'' +
+                ", realName='" + realName + '\'' +
                 ", date='" + date + '\'' +
-                ", pageIndex=" + pageIndex +
+                ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", sortField='" + sortField + '\'' +
                 ", sortOrder='" + sortOrder + '\'' +

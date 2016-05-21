@@ -499,12 +499,6 @@ public class TieManagerController {
         if (record8s.isNotEmpty()) {
             List<ArticleVo> articleVos = record8s.into(ArticleVo.class);
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleVos.get(0).getId());
-
-            if (StringUtils.hasLength(articleVos.get(0).getArticlePhotoUrl())) {
-                String[] paths = articleVos.get(0).getArticlePhotoUrl().split("/");
-                String photo = "/" + paths[paths.length - 3] + "/" + paths[paths.length - 2] + "/" + paths[paths.length - 1];
-                articleVos.get(0).setArticlePhotoUrl(photo);
-            }
             map.put("articleInfo", articleVos.get(0));
             map.put("articleSub", articleSubs);
         }
@@ -564,8 +558,8 @@ public class TieManagerController {
      */
     @RequestMapping(value = "/maintainer/tie/updateTieNoticeShow")
     @ResponseBody
-    public AjaxData<TieNoticeVo> updateTieNoticeShow(TieNoticeVo tieNoticeVo) {
-        AjaxData<TieNoticeVo> ajaxData = new AjaxData<>();
+    public AjaxData updateTieNoticeShow(TieNoticeVo tieNoticeVo) {
+        AjaxData ajaxData = new AjaxData<>();
         if(tieNoticeVo.getId()>0){
             TieNotice tieNotice = tieNoticeService.findById(tieNoticeVo.getId());
             tieNotice.setIsShow(tieNoticeVo.getIsShow());

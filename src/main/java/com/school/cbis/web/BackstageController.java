@@ -9,6 +9,7 @@ import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.mail.MailListVo;
 import com.school.cbis.vo.major.MajorListVo;
+import com.school.cbis.vo.major.MajorVo;
 import com.school.cbis.vo.mobile.MobileListVo;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -100,12 +101,13 @@ public class BackstageController {
      * @return
      */
     @RequestMapping("/maintainer/major/majorManager")
-    public String majorManager() {
+    public String majorManager(MajorVo majorVo,ModelMap modelMap) {
+        modelMap.addAttribute("majorVo",majorVo);
         return "/maintainer/major/majorlist";
     }
 
     /**
-     * 专业管理界面
+     * 班级管理界面
      *
      * @param modelMap
      * @return
@@ -202,27 +204,29 @@ public class BackstageController {
      * @param response
      */
     @RequestMapping("/user/tie/downloadTieNoticeAffix")
-    public void download(@RequestParam("id") int id, HttpServletResponse response) {
+    public void download(@RequestParam("id") int id, HttpServletResponse response, HttpServletRequest request) {
         try {
             TieNoticeAffix tieNoticeAffix = tieNoticeAffixService.findById(id);
             if (!StringUtils.isEmpty(tieNoticeAffix)) {
                 response.setContentType("application/x-msdownload");
                 response.setHeader("Content-disposition", "attachment; filename=\"" + new String((tieNoticeAffix.getTieNoticeFileName() + tieNoticeAffix.getTieNoticeFileUrl().substring(tieNoticeAffix.getTieNoticeFileUrl().lastIndexOf("."))).getBytes("gb2312"), "ISO8859-1") + "\"");
-                InputStream inputStream = new FileInputStream(tieNoticeAffix.getTieNoticeFileUrl());
+                String realPath = request.getSession().getServletContext().getRealPath("/");
+                InputStream inputStream = new FileInputStream(realPath + tieNoticeAffix.getTieNoticeFileUrl());
                 FileCopyUtils.copy(inputStream, response.getOutputStream());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(" file is not found exception is {} ",e.getMessage());
         }
     }
 
     /**
      * 自主实习管理界面
+     *
      * @return
      */
     @RequestMapping("/student/autonomicpractice/autonomicPracticeManager")
-    public String autonomicPracticeManager(){
-        if(usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)){//管理员可进入
+    public String autonomicPracticeManager() {
+        if (usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)) {//管理员可进入
             return "redirect:/administrator/autonomicpractice/reportsettingList";
         } else {
             return "redirect:/student/autonomicpractice/autonomicPractice";
@@ -231,23 +235,25 @@ public class BackstageController {
 
     /**
      * 邮件管理界面
+     *
      * @return
      */
     @RequestMapping("/maintainer/mail/mailManager")
-    public String mailManager(MailListVo mailListVo,ModelMap modelMap){
-        modelMap.addAttribute("mailListVo",mailListVo);
+    public String mailManager(MailListVo mailListVo, ModelMap modelMap) {
+        modelMap.addAttribute("mailListVo", mailListVo);
         return "/maintainer/mail/mailmanager";
     }
 
     /**
      * 手机管理界面
+     *
      * @param mobileListVo
      * @param modelMap
      * @return
      */
     @RequestMapping("/maintainer/mobile/mobileManager")
-    public String mobileManager(MobileListVo mobileListVo,ModelMap modelMap){
-        modelMap.addAttribute("mobileListVo",mobileListVo);
+    public String mobileManager(MobileListVo mobileListVo, ModelMap modelMap) {
+        modelMap.addAttribute("mobileListVo", mobileListVo);
         return "/maintainer/mobile/mobilemanager";
     }
 }

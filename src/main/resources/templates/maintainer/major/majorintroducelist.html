@@ -19,10 +19,8 @@
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
-
-    <!-- jsgrid css-->
-    <link rel="stylesheet" type="text/css" href="css/jsgrid/jsgrid.min.css" th:href="@{/css/jsgrid/jsgrid.min.css}" />
-    <link rel="stylesheet" type="text/css" href="css/jsgrid/jsgrid-theme.min.css" th:href="@{/css/jsgrid/jsgrid-theme.min.css}" />
+    <!-- tableSaw css -->
+    <link rel="stylesheet" href="css/tablesaw/tablesaw.css" th:href="@{/css/tablesaw/tablesaw.css}"/>
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -31,6 +29,7 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
 
@@ -38,6 +37,9 @@
     <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
 
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+    <!-- tableSaw js -->
+    <script src="js/plugin/tablesaw/tablesaw.js" th:src="@{/js/plugin/tablesaw/tablesaw.js}"></script>
+    <script src="js/plugin/tablesaw/tablesaw-init.js" th:src="@{/js/plugin/tablesaw/tablesaw-init.js}"></script>
 
     <script>
         $(function () {
@@ -75,7 +77,26 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <div id="jsGrid"></div>
+            <form th:action="@{/maintainer/major/majorIntroduce}" class="uk-form" id="searchForm">
+                <fieldset data-uk-margin="">
+                    <legend>专业简介管理</legend>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1 uk-text-right">
+                            <input type="text" placeholder="专业" id="majorName" th:value="${majorIntroduceVo.majorName}"
+                                   name="majorName" class="uk-margin-small-top"/>
+                            <input type="text" placeholder="标题" id="bigTitle" th:value="${majorIntroduceVo.bigTitle}"
+                                   name="bigTitle" class="uk-margin-small-top"/>
+                            <input type="text" placeholder="姓名" th:value="${majorIntroduceVo.realName}"
+                                   id="realName" name="realName" class="uk-margin-small-top"/>
+                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();">重置</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <br/>
+            <div id="ajaxed"></div>
+            <ul class="uk-pagination"></ul>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -87,23 +108,9 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var majors  = /*[[${majors}]]*/ null;
     var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
     /*]]>*/
 </script>
-<!-- jsgrid js-->
-<script src="js/cbis/db/major/majorintroducedb.js" th:src="@{/js/maintainer/db/major/majorintroducedb.js}" ></script>
-<script src="js/jsgrid.core.js" th:src="@{/js/plugin/jsgrid/jsgrid.core.js}" ></script>
-<script src="js/jsgrid.load-indicator.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-indicator.js}" ></script>
-<script src="js/jsgrid.load-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.load-strategies.js}" ></script>
-<script src="js/jsgrid.sort-strategies.js" th:src="@{/js/plugin/jsgrid/jsgrid.sort-strategies.js}" ></script>
-<script src="js/jsgrid.field.js" th:src="@{/js/plugin/jsgrid/jsgrid.field.js}" ></script>
-<script src="js/fields/jsgrid.field.text.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.text.js}" ></script>
-<script src="js/fields/jsgrid.field.number.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.number.js}" ></script>
-<script src="js/fields/jsgrid.field.select.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.select.js}"></script>
-<script src="js/fields/jsgrid.field.checkbox.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.checkbox.js}"></script>
-<script src="js/fields/jsgrid.field.control.js" th:src="@{/js/plugin/jsgrid/fields/jsgrid.field.control.js}" ></script>
-
 <script th:src="@{/js/maintainer/major/majorintroducelist.js}"
         src="js/cbis/js/major/majorintroducelist.js"></script>
 </body>

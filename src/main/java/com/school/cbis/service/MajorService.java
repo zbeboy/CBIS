@@ -1,11 +1,9 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Major;
+import com.school.cbis.domain.tables.records.MajorRecord;
 import com.school.cbis.vo.major.*;
-import org.jooq.Record2;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,11 +61,20 @@ public interface MajorService {
 
     /**
      * 通过专业名查询
-     *
-     * @param majorName 专业名
+     * @param majorName
+     * @param tieId
      * @return
      */
-    List<Major> findByMajorName(String majorName);
+    MajorRecord findByMajorNameAndTieId(String majorName, int tieId);
+
+    /**
+     * 通过专业名查询和主键查询 注:不等于主键
+     * @param majorName
+     * @param tieId
+     * @param id
+     * @return
+     */
+    MajorRecord findByMajorNameAndIdAndTieId(String majorName, int tieId,int id);
 
     /**
      * 查询所有专业信息
@@ -83,7 +90,7 @@ public interface MajorService {
      * @param tieId
      * @return
      */
-    Result<Record5<Integer, String, String, Timestamp,Byte>> findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId);
+    Result<Record6<Integer,String, String, String, Timestamp,Byte>>  findAllWithIntroduceByPage(MajorIntroduceVo majorIntroduceVo, int tieId);
 
     /**
      * 查询专业简介总数
@@ -101,7 +108,7 @@ public interface MajorService {
      * @param tieId
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findAllWithHeadByPage(MajorHeadVo majorHeadVo, int tieId);
+    Result<Record5<Integer,String, String, String, Timestamp>> findAllWithHeadByPage(MajorHeadVo majorHeadVo, int tieId);
 
     /**
      * 专业带头人简介总数
@@ -119,7 +126,7 @@ public interface MajorService {
      * @param tieId
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findAllWithTrainingGoalByPage(MajorTrainingGoalVo majorTrainingGoalVo, int tieId);
+    Result<Record5<Integer,String, String, String, Timestamp>> findAllWithTrainingGoalByPage(MajorTrainingGoalVo majorTrainingGoalVo, int tieId);
 
     /**
      * 专业培养目标简介总数
@@ -137,7 +144,7 @@ public interface MajorService {
      * @param tieId
      * @return
      */
-    Result<Record4<Integer, String, String, Timestamp>> findAllWithTraitByPage(MajorTraitVo majorTraitVo, int tieId);
+    Result<Record5<Integer,String, String, String, Timestamp>> findAllWithTraitByPage(MajorTraitVo majorTraitVo, int tieId);
 
     /**
      * 专业特色简介总数

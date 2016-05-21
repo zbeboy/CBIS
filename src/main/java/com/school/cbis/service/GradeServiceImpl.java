@@ -219,4 +219,10 @@ public class GradeServiceImpl implements GradeService {
                 .fetch();
         return record2s;
     }
+
+    @Override
+    public List<Grade> findByMajorId(int majorId) {
+        List<Grade> grades = gradeDao.fetchByMajorId(majorId);
+        return grades;
+    }
 }

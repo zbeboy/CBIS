@@ -111,4 +111,11 @@ public interface GradeService {
      * @return
      */
     Result<Record2<Integer,String>> findByMajorIdAndYear(int majorId,String year);
+
+    /**
+     * 根据专业id查询
+     * @param majorId
+     * @return
+     */
+    List<Grade> findByMajorId(int majorId);
 }

@@ -33,8 +33,31 @@ $('.uk-pagination').on('select.uk.pagination', function (e, pageIndex) {
     action();
 });
 
+/**
+ * 输出表格
+ */
+function outputTable(){
+    var html = "<table class='tablesaw tablesaw-stack' data-tablesaw-mode='stack' id='mytable'>" +
+        "<thead>" +
+        "<tr>" +
+        "<th scope='col' data-tablesaw-priority='persist'>标题</th>" +
+        "<th scope='col'>作者</th>" +
+        "<th scope='col'>时间</th>" +
+        "<th scope='col'>首页显示</th>" +
+        "<th scope='col'>操作</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody id='tableData'></tbody>" +
+        "</table>";
+    $( '#ajaxed').html(html);
+}
+
+/**
+ * 输出数据
+ * @param d
+ */
 function outputHtml(d){
-    $('#tableData').empty();
+    outputTable();
     var list = d.result;
     for(var i = 0;i< list.length;i++){
         var s = '';
@@ -66,6 +89,7 @@ function outputHtml(d){
                 )
         );
     }
+    $('#mytable').table().data( "table" ).refresh();
 }
 
 /**

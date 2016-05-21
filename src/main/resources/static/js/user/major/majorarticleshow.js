@@ -7,7 +7,7 @@
  */
 function outputHtml(data) {
     $(target.bigTitle).attr('href', web_path + '/user/major/majorArticleShow?id=' + target.id + "&majorId=" + target.majorId).text(data.articleInfo.bigTitle);
-    $(target.realname).text(data.articleInfo.userRealName);
+    $(target.realname).text(data.articleInfo.realName);
     $(target.date).text(data.articleInfo.date);
     $(target.imgurl).attr('href', web_path + '/user/major/majorArticleShow?id=' + target.id + "&majorId=" + target.majorId);
     $(target.imgsrc).attr('src', data.articleInfo.articlePhotoUrl);

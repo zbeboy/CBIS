@@ -2,9 +2,8 @@
  * Created by lenovo on 2016-02-09.
  */
 
-var isShow = 0;
+var isShow = $('#isShow').val();
 $(document).ready(function () {
-    isShow = $('#isShow').val();
     initArticleParam();
     $('#isShow').click(function(){
         if (isShow == 0) {
@@ -33,11 +32,11 @@ function initArticleParam() {
     var deletePicWay = false;//删除图片方式
     var deleteUrl = "";
     if ($('#articleInfoId').text().trim().length <= 0) {
-        url = web_path + "/maintainer/saveArticle";
+        url = web_path + "/student/saveArticle";
         deletePicWay = true;
-        deleteUrl = web_path + "/maintainer/deleteFile";
+        deleteUrl = web_path + "/student/deleteFile";
     } else {
-        url = web_path + "/maintainer/updateArticle";
+        url = web_path + "/student/updateArticle";
         deletePicWay = false;
     }
     myParam.articleId = $('#articleInfoId').text().trim();
@@ -51,6 +50,7 @@ function initArticleParam() {
     param.clickNoUrl = web_path + "/maintainer/major/majorIntroduce";
     param.uploadParamFileName = "majorintroduce";
     param.myParam = myParam;
+    param.articleId = $('#articleInfoId').text().trim();
     param.cleanFromClient = deletePicWay;
     param.cleanUrl = deleteUrl;
     param.pluginClickOkUrlParam = "&majorId=" + $('#majorId').text();
