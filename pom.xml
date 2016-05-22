@@ -18,6 +18,7 @@
         <org.apache.poi.version>3.15-beta1</org.apache.poi.version>
         <xmlbeans.version>2.3.0</xmlbeans.version>
         <jcaptcha.version>1.0</jcaptcha.version>
+        <maven-compiler.version>3.5.1</maven-compiler.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -192,6 +193,21 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArguments>
+                        <verbose />
+                        <bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
             </plugin>
 
             <plugin>
