@@ -434,4 +434,10 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentDao.findById(id);
         return student;
     }
+
+    @Override
+    public List<Student> findByGradeId(int gradeId) {
+        List<Student> students = studentDao.fetchByGradeId(gradeId);
+        return students;
+    }
 }

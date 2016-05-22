@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,8 +65,8 @@ public class UsersController {
      * @return
      */
     @RequestMapping("/maintainer/users/studentManager")
-    public String studentManager(ModelMap modelMap, String studentName, String studentNumber) {
-        modelMap.addAttribute("studentName", studentName);
+    public String studentManager(ModelMap modelMap, String realName, String studentNumber) {
+        modelMap.addAttribute("realName", realName);
         modelMap.addAttribute("studentNumber", studentNumber);
 
         //通过用户类型获取系表ID
@@ -121,7 +122,7 @@ public class UsersController {
         if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        Result<Record5<Integer, String, String, Byte, String>> record5s = studentService.findByTieIdAndPage(map.get("studentName").toString(),
+        Result<Record5<Integer, String, String, Byte, String>> record5s = studentService.findByTieIdAndPage(map.get("realName").toString(),
                 map.get("studentNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
                 tieId);
         if (record5s.isNotEmpty()) {
@@ -136,7 +137,7 @@ public class UsersController {
             });
         }
 
-        map.put("totalData", studentService.findByTieIdAndPageCount(map.get("studentName").toString(),
+        map.put("totalData", studentService.findByTieIdAndPageCount(map.get("realName").toString(),
                 map.get("studentNumber").toString(), tieId));
         ajaxData.success().listData(studentVos).mapData(map);
         return ajaxData;
@@ -148,8 +149,8 @@ public class UsersController {
      * @return
      */
     @RequestMapping("/maintainer/users/teacherManager")
-    public String teacherManager(String teacherName, String teacherJobNumber, ModelMap modelMap) {
-        modelMap.addAttribute("teacherName", teacherName);
+    public String teacherManager(String realName, String teacherJobNumber, ModelMap modelMap) {
+        modelMap.addAttribute("realName", realName);
         modelMap.addAttribute("teacherJobNumber", teacherJobNumber);
         return "/maintainer/users/teacherlist";
     }
@@ -172,7 +173,7 @@ public class UsersController {
         if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        Result<Record4<Integer, String, String, Byte>> record4s = teacherService.findByTieIdAndPage(map.get("teacherName").toString(),
+        Result<Record4<Integer, String, String, Byte>> record4s = teacherService.findByTieIdAndPage(map.get("realName").toString(),
                 map.get("teacherJobNumber").toString(), Integer.parseInt(map.get("pageNum").toString()), Integer.parseInt(map.get("pageSize").toString()),
                 tieId);
         if (record4s.isNotEmpty()) {
@@ -186,7 +187,7 @@ public class UsersController {
                 t.setAuthorities(authorities);
             });
         }
-        map.put("totalData", teacherService.findByTieIdAndPageCount(map.get("teacherName").toString(),
+        map.put("totalData", teacherService.findByTieIdAndPageCount(map.get("realName").toString(),
                 map.get("teacherJobNumber").toString(), tieId));
         ajaxData.success().listData(teacherVos).mapData(map);
         return ajaxData;
@@ -275,7 +276,7 @@ public class UsersController {
      * @return
      */
     @RequestMapping(value = "/maintainer/users/addTeacher", method = RequestMethod.POST)
-    public String addTeacher(@RequestParam("username") String username, @RequestParam("realname") String realname) {
+    public String addTeacher(@RequestParam("username") String username, @RequestParam("realname") String realname, HttpServletRequest request) {
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -295,7 +296,8 @@ public class UsersController {
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER));
-        users.setLangKey("zh_CN");
+        users.setLangKey(request.getLocale().toString());
+        users.setHeadImg(Wordbook.USER_DEFAULT_HEAD_IMG);
         usersService.save(users);
         AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
         authoritiesRecord.setUsername(username);
@@ -314,7 +316,7 @@ public class UsersController {
      * @return
      */
     @RequestMapping(value = "/maintainer/users/addStudent", method = RequestMethod.POST)
-    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade) {
+    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade,HttpServletRequest request) {
         Student student = new Student();
         student.setStudentNumber(username);
         student.setGradeId(grade);
@@ -329,7 +331,8 @@ public class UsersController {
         Byte b = 1;
         users.setEnabled(b);
         users.setUserTypeId(wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT));
-        users.setLangKey("zh_CN");
+        users.setLangKey(request.getLocale().toString());
+        users.setHeadImg(Wordbook.USER_DEFAULT_HEAD_IMG);
         usersService.save(users);
         AuthoritiesRecord authoritiesRecord = new AuthoritiesRecord();
         authoritiesRecord.setUsername(username);
@@ -372,5 +375,28 @@ public class UsersController {
         log.debug("roleList : {}",wordbook.getRoleString());
         map.put("roleList",wordbook.getRoleString());
         return ajaxData.success().mapData(map);
+    }
+
+    /**
+     * 编辑
+     * @param username
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/users/editUserData")
+    public String editUserData(@RequestParam("username") String username,ModelMap modelMap){
+        Users users = usersService.findByUsername(username);
+        modelMap.addAttribute("users", users);
+        if (users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {//类型为老师
+            return "/maintainer/users/teacherdata";
+        } else {
+            List<Student> students = studentService.findByStudentNumber(users.getUsername());
+            if (!students.isEmpty()) {
+                modelMap.addAttribute("studentInfo", students.get(0));
+            } else {
+                modelMap.addAttribute("studentInfo", new Student());
+            }
+            return "/maintainer/users/studentdata";
+        }
     }
 }

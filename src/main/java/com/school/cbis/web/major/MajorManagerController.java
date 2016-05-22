@@ -323,6 +323,9 @@ public class MajorManagerController {
      */
     @RequestMapping("/user/major/majorArticleShow")
     public String majorArticleShow(ModelMap modelMap, @RequestParam("majorId") int majorId, @RequestParam("id") int id) {
+        /**
+         * id = -2 专业教师
+         */
         Major major = majorService.findById(majorId);
         if (!StringUtils.isEmpty(major)) {
             if (!StringUtils.isEmpty(major.getMajorIntroduceArticleInfoId()) && major.getMajorIntroduceArticleInfoId() == id) {//简介
@@ -333,12 +336,15 @@ public class MajorManagerController {
                 modelMap.addAttribute("navId", "navmajortrait");
             } else if (!StringUtils.isEmpty(major.getMajorForegoerArticleInfoId()) && major.getMajorForegoerArticleInfoId() == id) {//带头人
                 modelMap.addAttribute("navId", "navmajorhead");
+            } else if(id == -2){
+                modelMap.addAttribute("navId", "navmajorteacher");
             }
 
             modelMap.addAttribute("majorintroduceid", major.getMajorIntroduceArticleInfoId());
             modelMap.addAttribute("majortraingoalid", major.getMajorTrainingGoalArticleInfoId());
             modelMap.addAttribute("majortraitid", major.getMajorTraitArticleInfoId());
             modelMap.addAttribute("majorheadid", major.getMajorForegoerArticleInfoId());
+            modelMap.addAttribute("majorteacher", -2);
             modelMap.addAttribute("currentId", id);
             modelMap.addAttribute("currentMajorId", majorId);
             modelMap.addAttribute("currentMajorName", major.getMajorName());
@@ -371,6 +377,9 @@ public class MajorManagerController {
      */
     @RequestMapping("/user/major/articleMajorData")
     public String articleMajorData(ModelMap modelMap, @RequestParam("majorId") int majorId, String navId) {
+        /**
+         * id = -2 专业教师
+         */
         Major major = majorService.findById(majorId);
         if (!StringUtils.isEmpty(major)) {
             int id = 0;
@@ -382,6 +391,8 @@ public class MajorManagerController {
                 id = major.getMajorTraitArticleInfoId();
             } else if (navId.equals("navmajorhead") && !StringUtils.isEmpty(major.getMajorForegoerArticleInfoId())) {//带头人
                 id = major.getMajorForegoerArticleInfoId();
+            } else if(navId.equals("navmajorteacher")){
+                id = -2;
             }
 
             modelMap.addAttribute("navId", navId);
@@ -389,6 +400,7 @@ public class MajorManagerController {
             modelMap.addAttribute("majortraingoalid", major.getMajorTrainingGoalArticleInfoId());
             modelMap.addAttribute("majortraitid", major.getMajorTraitArticleInfoId());
             modelMap.addAttribute("majorheadid", major.getMajorForegoerArticleInfoId());
+            modelMap.addAttribute("majorteacher", -2);
             modelMap.addAttribute("currentId", id);
             modelMap.addAttribute("currentMajorId", majorId);
             modelMap.addAttribute("currentMajorName", major.getMajorName());
@@ -429,6 +441,24 @@ public class MajorManagerController {
             map.put("articleSub", articleSubs);
         }
         return map;
+    }
+
+    /**
+     * 专业文章老师数据
+     *
+     * @param majorId
+     * @return
+     */
+    @RequestMapping("/user/major/majorArticleShowTeacherData")
+    @ResponseBody
+    public AjaxData<MajorTeacherVo> majorArticleShowTeacherData(@RequestParam("majorId") int majorId) {
+        Result<Record3<String, String, String>> record3s = majorService.findByIdWithTeacher(majorId);
+        if(record3s.isNotEmpty()){
+            List<MajorTeacherVo> majorTeacherVos = record3s.into(MajorTeacherVo.class);
+            return new AjaxData().success().listData(majorTeacherVos);
+        } else {
+            return new AjaxData().fail().msg("无数据!");
+        }
     }
 
     /**

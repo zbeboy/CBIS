@@ -7,6 +7,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
+import com.school.cbis.vo.grade.GradeVo;
 import com.school.cbis.vo.mail.MailListVo;
 import com.school.cbis.vo.major.MajorListVo;
 import com.school.cbis.vo.major.MajorVo;
@@ -113,7 +114,7 @@ public class BackstageController {
      * @return
      */
     @RequestMapping("/maintainer/grade/gradeManager")
-    public String gradeManager(ModelMap modelMap) {
+    public String gradeManager(ModelMap modelMap, GradeVo gradeVo) {
         //通过用户类型获取系表ID
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -122,18 +123,7 @@ public class BackstageController {
         }
         List<Major> majors = majorService.findByTieId(tieId);
         modelMap.addAttribute("majorNames", majors);
-
-        List<MajorListVo> majorListVos = new ArrayList<>();
-        MajorListVo majorListVo = new MajorListVo();
-        majorListVo.setId(0);
-        majorListVo.setMajorName("");
-        majorListVos.add(majorListVo);
-        Result<Record2<Integer, String>> record2s = majorService.findByTieIdToList(tieId);
-        if (record2s.isNotEmpty()) {
-            List<MajorListVo> majorListVoList = record2s.into(MajorListVo.class);
-            majorListVos.addAll(majorListVoList);
-        }
-        modelMap.addAttribute("majors", majorListVos);
+        modelMap.addAttribute("gradeVo",gradeVo);
         return "/maintainer/grade/gradelist";
     }
 

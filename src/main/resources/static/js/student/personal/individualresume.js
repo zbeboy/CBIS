@@ -20,7 +20,7 @@ function initArticleParam() {
     var url = '';
     var deletePicWay = false;//删除图片方式
     var deleteUrl = "";
-    if (articleInfoId.length <= 0) {
+    if (articleInfoId == null) {
         url = web_path + "/student/saveArticle";
         deletePicWay = true;
         deleteUrl = web_path + "/student/deleteFile";
@@ -43,7 +43,7 @@ function initArticleParam() {
     param.myParam = myParam;
     param.cleanFromClient = deletePicWay;
     param.cleanUrl = deleteUrl;
-    param.pluginClickOkUrlParam = "&username=" + username ;
+    param.pluginClickOkUrlParam = "&username=" + username;
     initUpload();
     initImage();
 }
@@ -51,6 +51,6 @@ function initArticleParam() {
 /**
  * 查看文章
  */
-function scanIntroduce(){
-    window.location.href = web_path + '/student/personal/individualResumeShow?id='+articleInfoId + "&username="+username;
+function scanIntroduce() {
+    window.location.href = web_path + '/user/personal/individualResumeShow?username=' + username;
 }

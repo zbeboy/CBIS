@@ -296,7 +296,6 @@ public class MainController {
             // get the session id that will identify the generated captcha.
             // the same id must be used to validate the response, the session id is a good candidate!
             String captchaId = request.getSession().getId();
-            log.debug("getCaptcha captchaId : {}",captchaId);
             // call the ImageCaptchaService getChallenge method
             BufferedImage challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(captchaId,request.getLocale());
             // a jpeg encoder

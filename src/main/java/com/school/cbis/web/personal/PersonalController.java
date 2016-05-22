@@ -36,10 +36,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lenovo on 2016-01-09.
@@ -337,21 +334,42 @@ public class PersonalController {
 
     /**
      * 个人简介展示
-     *
-     * @param id
      * @param username
      * @param modelMap
      * @return
      */
-    @RequestMapping("/student/personal/individualResumeShow")
-    public String individualResume(@RequestParam("id") int id, @RequestParam("username") String username, ModelMap modelMap) {
+    @RequestMapping("/user/personal/individualResumeShow")
+    public String individualResume( @RequestParam("username") String username, ModelMap modelMap) {
         Record record = articleInfoService.findByUsername(username);
-        Users users = record.into(Users.class);
-        modelMap.addAttribute("userInfo", users);
-        ArticleInfo articleInfo = record.into(ArticleInfo.class);
-        modelMap.addAttribute("articleInfo", articleInfo);
-        List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
-        modelMap.addAttribute("articleSub", articleSubs);
+        List<ArticleSub> articleSubs = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(record)){
+            Users users = record.into(Users.class);
+            //为保证用户信息安全，以下信息清空
+            users.setPasswordResetKey(null);
+            users.setPassword(null);
+            users.setEmailCheckKey(null);
+            users.setMobileCheckKey(null);
+            users.setBirthday(null);
+            users.setIdentityCard(null);
+            users.setNation(null);
+            users.setPoliticalLandscape(null);
+            users.setPost(null);
+            users.setEmail(null);
+            users.setMobile(null);
+            users.setSex(null);
+            users.setReligiousBelief(null);
+            modelMap.addAttribute("userInfo", users);
+            ArticleInfo articleInfo = record.into(ArticleInfo.class);
+            modelMap.addAttribute("articleInfo", articleInfo);
+            articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
+            modelMap.addAttribute("articleSub", articleSubs);
+        } else {
+            modelMap.addAttribute("userInfo", new Users());
+            modelMap.addAttribute("articleInfo", new ArticleInfo());
+            modelMap.addAttribute("articleSub", articleSubs);
+        }
+
+
         return "/user/personal/individualresumeshow";
     }
 

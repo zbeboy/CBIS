@@ -26,7 +26,14 @@ public interface GradeService {
      * @param tieId   系id
      * @return
      */
-    Result<Record6<Integer, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId);
+    Result<Record7<Integer,String, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId);
+
+    /**
+     * 通过班级主键查询
+     * @param gradeId
+     * @return
+     */
+    Record7<Integer,String, Integer, String, String, String, String> findByGradeIdWithUpdate(int gradeId);
 
     /**
      * 查询总数

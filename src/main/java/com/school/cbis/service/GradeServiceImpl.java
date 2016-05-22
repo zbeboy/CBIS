@@ -43,7 +43,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Result<Record6<Integer, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId) {
+    public Result<Record7<Integer,String, Integer, String, String, String, String>> findAllByPage(GradeVo gradeVo, int tieId) {
         Condition a = Tables.MAJOR.TIE_ID.eq(tieId);
 
         if (gradeVo.getMajorId() > 0) {
@@ -62,16 +62,24 @@ public class GradeServiceImpl implements GradeService {
             a = a.and(Tables.USERS.REAL_NAME.like("%" + gradeVo.getGradeHead() + "%"));
         }
 
-        SelectConditionStep<Record6<Integer, Integer, String, String, String, String>> b =
-                create.select(Tables.GRADE.ID, Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
-                        Tables.USERS.REAL_NAME.as("gradeHead"), Tables.TEACHER.TEACHER_JOB_NUMBER.as("gradeHeadID"))
+        if (StringUtils.hasLength(gradeVo.getMajorName())) {
+            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + gradeVo.getMajorName() + "%"));
+        }
+
+        int pageNum = gradeVo.getPageNum();
+        int pageSize = gradeVo.getPageSize();
+        if(pageNum <=0){
+            pageNum = 1;
+        }
+
+        SelectConditionStep<Record7<Integer,String , Integer, String, String, String, String>> b =
+                create.select(Tables.GRADE.ID, Tables.MAJOR.MAJOR_NAME,Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
+                        Tables.USERS.REAL_NAME.as("gradeHead"), Tables.USERS.USERNAME.as("gradeHeadID"))
                         .from(Tables.GRADE)
                         .leftJoin(Tables.MAJOR)
                         .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
-                        .leftJoin(Tables.TEACHER)
-                        .on(Tables.GRADE.GRADE_HEAD.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
                         .leftJoin(Tables.USERS)
-                        .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                        .on(Tables.GRADE.GRADE_HEAD.eq(Tables.USERS.USERNAME))
                         .where(a);
 
         SortField<Integer> c = Tables.GRADE.ID.desc();
@@ -109,7 +117,21 @@ public class GradeServiceImpl implements GradeService {
             b.orderBy(c);
         }
 
-        return b.limit((gradeVo.getPageIndex() - 1) * gradeVo.getPageSize(), gradeVo.getPageSize()).fetch();
+        return b.limit((pageNum - 1) * pageSize, pageSize).fetch();
+    }
+
+    @Override
+    public Record7<Integer, String, Integer, String, String, String, String> findByGradeIdWithUpdate(int gradeId) {
+        Record7<Integer, String, Integer, String, String, String, String> record7 =create.select(Tables.GRADE.ID, Tables.MAJOR.MAJOR_NAME,Tables.MAJOR.ID.as("majorId"), Tables.GRADE.YEAR, Tables.GRADE.GRADE_NAME,
+                Tables.USERS.REAL_NAME.as("gradeHead"), Tables.USERS.USERNAME.as("gradeHeadID"))
+                .from(Tables.GRADE)
+                .leftJoin(Tables.MAJOR)
+                .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
+                .leftJoin(Tables.USERS)
+                .on(Tables.GRADE.GRADE_HEAD.eq(Tables.USERS.USERNAME))
+                .where(Tables.GRADE.ID.eq(gradeId))
+                .fetchOne();
+        return record7;
     }
 
     @Override
@@ -132,14 +154,16 @@ public class GradeServiceImpl implements GradeService {
             a = a.and(Tables.USERS.REAL_NAME.like("%" + gradeVo.getGradeHead() + "%"));
         }
 
+        if (StringUtils.hasLength(gradeVo.getMajorName())) {
+            a = a.and(Tables.MAJOR.MAJOR_NAME.like("%" + gradeVo.getMajorName() + "%"));
+        }
+
         Record1<Integer> count = create.selectCount()
                 .from(Tables.GRADE)
                 .leftJoin(Tables.MAJOR)
                 .on(Tables.GRADE.MAJOR_ID.eq(Tables.MAJOR.ID))
-                .leftJoin(Tables.TEACHER)
-                .on(Tables.GRADE.GRADE_HEAD.eq(Tables.TEACHER.TEACHER_JOB_NUMBER))
                 .leftJoin(Tables.USERS)
-                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                .on(Tables.GRADE.GRADE_HEAD.eq(Tables.USERS.USERNAME))
                 .where(a).fetchOne();
         return count.value1();
     }

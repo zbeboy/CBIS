@@ -114,6 +114,9 @@ public class Wordbook {
     @Value("${cbis.mobile.flow}")
     public int mobileFlow;
 
+    //用户默认头像
+    public static final String USER_DEFAULT_HEAD_IMG = "/images/placeholder_800x280.svg";
+
     private static final String mail_form = "863052317@qq.com";
 
     private static final int corePoolSize = 2;

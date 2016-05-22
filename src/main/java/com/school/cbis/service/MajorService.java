@@ -185,4 +185,11 @@ public interface MajorService {
      * @return
      */
     List<Major> findByShow(Byte bytes);
+
+    /**
+     * 通过专业id查询该专业下的所有老师
+     * @param id
+     * @return
+     */
+    Result<Record3<String,String,String>> findByIdWithTeacher(int id);
 }

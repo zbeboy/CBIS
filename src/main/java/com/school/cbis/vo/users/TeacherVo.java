@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class TeacherVo {
     private int id;
-    private String teacherName;
+    private String realName;
     private String teacherJobNumber;
     private boolean enabled;
     private List<String> authorities;
@@ -26,12 +26,12 @@ public class TeacherVo {
         this.id = id;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getTeacherJobNumber() {
@@ -86,7 +86,7 @@ public class TeacherVo {
     public String toString() {
         return "TeacherVo{" +
                 "id=" + id +
-                ", teacherName='" + teacherName + '\'' +
+                ", realName='" + realName + '\'' +
                 ", teacherJobNumber='" + teacherJobNumber + '\'' +
                 ", enabled=" + enabled +
                 ", authorities=" + authorities +

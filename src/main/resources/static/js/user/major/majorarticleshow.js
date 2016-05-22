@@ -23,7 +23,24 @@ function outputHtml(data) {
         }
 
     }
+}
 
+/**
+ * 专业教师
+ * @param data
+ */
+function outputTeacherHtml(data){
+    $('#teacherData').empty();
+    var list = data.result;
+    for(var i = 0;i<list.length;i++){
+        $('#teacherData').append(
+            $('<div class="uk-width-medium-1-4">').append(
+                $('<a class="uk-thumbnail uk-thumbnail-medium" href="'+web_path+'/user/personal/individualResumeShow?username='+list[i].username+'">')
+                    .append($('<img class="uk-thumbnail" alt="教师图片" src="'+web_path+list[i].headImg+'" />'))
+                    .append($('<div class="uk-thumbnail-caption">').text(list[i].realName))
+            )
+        );
+    }
 }
 
 /**
@@ -42,6 +59,7 @@ function initParam() {
         target.imgsrc = "#majorintroduceimgsrc";
         target.content = "#majorintroducecontent";
         target.sub = "#majorintroducesub";
+        action();
     }
 
     if (currentId == majorheadid) {
@@ -52,6 +70,7 @@ function initParam() {
         target.imgsrc = "#majorheadimgsrc";
         target.content = "#majorheadcontent";
         target.sub = "#majorheadsub";
+        action();
     }
 
     if (currentId == majortraingoalid) {
@@ -62,6 +81,7 @@ function initParam() {
         target.imgsrc = "#majorgoalimgsrc";
         target.content = "#majorgoalcontent";
         target.sub = "#majorgoalsub";
+        action();
     }
 
     if (currentId == majortraitid) {
@@ -72,9 +92,14 @@ function initParam() {
         target.imgsrc = "#majoritemimgsrc";
         target.content = "#majoritemcontent";
         target.sub = "#majoritemsub";
+        action();
     }
 
-    action();
+    if(currentId == majorteacher){
+        teacherAction();
+    }
+
+
 }
 
 /**
@@ -103,6 +128,19 @@ function action() {
             'id': target.id
         }, function (data) {
             outputHtml(data);
+        }, 'json');
+    }
+}
+
+/**
+ * 获取专业教师数据
+ */
+function teacherAction(){
+    if (target.majorId != null && target.majorId > 0) {
+        $.post(web_path + '/user/major/majorArticleShowTeacherData', {
+            'majorId': target.majorId
+        }, function (data) {
+            outputTeacherHtml(data);
         }, 'json');
     }
 }
@@ -144,6 +182,15 @@ function toGoal() {
 function toItem() {
     currentId = majortraitid;
     navId = "navmajortrait";
+    initParam();
+}
+
+/**
+ * 专业教师
+ */
+function toMajorTeacher(){
+    currentId = majorteacher;
+    navId = "navmajorteacher";
     initParam();
 }
 

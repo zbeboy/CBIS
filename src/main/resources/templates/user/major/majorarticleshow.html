@@ -87,8 +87,8 @@
                     <li id="navmajortrait">
                         <a href="#" onclick="toItem();">专业特色</a>
                     </li>
-                    <li class="">
-                        <a href="#">专业教师</a>
+                    <li id="navmajorteacher">
+                        <a href="#" onclick="toMajorTeacher();">专业教师</a>
                     </li>
                     <li class="">
                         <a href="#">专业实验室</a>
@@ -192,31 +192,8 @@
                 </li>
                 <li>
                     <h1>专业教师</h1>
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-4">
-                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
-                                <img class="uk-thumbnail" alt=""/>
-                                <div class="uk-thumbnail-caption">...</div>
-                            </a>
-                        </div>
-                        <div class="uk-width-medium-1-4">
-                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
-                                <img class="uk-thumbnail"  alt=""/>
-                                <div class="uk-thumbnail-caption">...</div>
-                            </a>
-                        </div>
-                        <div class="uk-width-medium-1-4">
-                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
-                                <img class="uk-thumbnail"  alt=""/>
-                                <div class="uk-thumbnail-caption">...</div>
-                            </a>
-                        </div>
-                        <div class="uk-width-medium-1-4">
-                            <a class="uk-thumbnail uk-thumbnail-medium" href="">
-                                <img class="uk-thumbnail" alt=""/>
-                                <div class="uk-thumbnail-caption">...</div>
-                            </a>
-                        </div>
+                    <div class="uk-grid" id="teacherData" >
+
                     </div>
                 </li>
                 <li>
@@ -297,6 +274,7 @@
     var majortraingoalid = /*[[${majortraingoalid}]]*/ 0;
     var majortraitid = /*[[${majortraitid}]]*/ 0;
     var majorheadid = /*[[${majorheadid}]]*/ 0;
+    var majorteacher = /*[[${majorteacher}]]*/ 0;
     var currentId = /*[[${currentId}]]*/ -1;
     var currentMajorId = /*[[${currentMajorId}]]*/ -1;
     var currentMajorName = /*[[${currentMajorName}]]*/ '';

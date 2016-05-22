@@ -18,14 +18,14 @@ function outputHtml(data) {
         $('#teacherData').append(_.DOM(
             _('li')._(
                 _('div.uk-panel.uk-panel-space.uk-panel-box.uk-panel-box-secondary')._([
-                    _('h3.uk-panel-title').H('姓名:' + (data.result[i].teacherName == null ? '' : data.result[i].teacherName)),
+                    _('h3.uk-panel-title').H('姓名:' + (data.result[i].realName == null ? '' : data.result[i].realName)),
                     _('ul.uk-list.uk-list-space')._([
                         _('li').H('账号:' + data.result[i].teacherJobNumber),
                         _('li').H('角色:' + (authorities.join(","))),
                         _('li' + (data.result[i].enabled ? '' : '.uk-text-danger')).H('状态:' + (data.result[i].enabled ? '正常' : '注销')),
                         _('li.uk-clearfix')._([
                             _('p.uk-hidden').H(data.result[i].teacherJobNumber),
-                            _('button.uk-button.uk-button-primary.uk-float-right[type=button][onclick=openEditModal(this);]').H('编辑'),
+                            _('button.uk-button.uk-button-primary.uk-float-right[type=button][onclick=edit(this);]').H('编辑'),
                             _('button.uk-button.uk-float-left[type=button][onclick=resetPassword(this);]').H('重置')
                         ]),
                         _('li.uk-clearfix')._([
@@ -73,7 +73,7 @@ function initPage(data) {
  * @type {{teacherName: (string|*|jQuery), teacherJobNumber: (string|*|jQuery), pageNum: number, pageSize: number, totalData: number}}
  */
 var param = {
-    'teacherName': $('#teacherName').val().trim(),
+    'realName': $('#realName').val().trim(),
     'teacherJobNumber': $('#teacherJobNumber').val().trim(),
     'pageNum': 1,
     'pageSize': 6,
@@ -232,9 +232,9 @@ function cancel(obj) {
 /**
  * 保存编辑，待定
  */
-function edit() {
-
-
+function edit(obj) {
+    var teacherJobNumber = $(obj).prev().text().trim();
+    window.location.href = web_path +'/maintainer/users/editUserData?username='+teacherJobNumber;
 }
 
 /**
@@ -291,7 +291,7 @@ function authorities() {
  * 搜索重置
  */
 function refresh(){
-    $('#teacherName').val('');
+    $('#realName').val('');
     $('#teacherJobNumber').val('');
     $('#searchForm').submit();
 }

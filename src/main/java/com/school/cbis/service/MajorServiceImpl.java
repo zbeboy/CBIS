@@ -655,4 +655,17 @@ public class MajorServiceImpl implements MajorService {
         List<Major> majors = majorDao.fetchByIsShow(bytes);
         return majors;
     }
+
+    @Override
+    public Result<Record3<String, String, String>> findByIdWithTeacher(int id) {
+        Result<Record3<String, String, String>> record3s = create.select(Tables.USERS.USERNAME,Tables.USERS.REAL_NAME,Tables.USERS.HEAD_IMG)
+                .from(Tables.MAJOR)
+                .join(Tables.TEACHER)
+                .on(Tables.MAJOR.TIE_ID.eq(Tables.TEACHER.TIE_ID))
+                .join(Tables.USERS)
+                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                .where(Tables.MAJOR.ID.eq(id))
+                .fetch();
+        return record3s;
+    }
 }

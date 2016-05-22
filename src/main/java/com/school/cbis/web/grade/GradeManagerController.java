@@ -1,19 +1,20 @@
 package com.school.cbis.web.grade;
 
+import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.AutoCompleteData;
+import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
+import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.GradeService;
+import com.school.cbis.service.StudentService;
 import com.school.cbis.service.TeacherService;
 import com.school.cbis.service.UsersService;
 import com.school.cbis.vo.grade.GradeVo;
-import org.jooq.Record;
-import org.jooq.Record4;
-import org.jooq.Record6;
-import org.jooq.Result;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,9 @@ public class GradeManagerController {
     @Resource
     private TeacherService teacherService;
 
+    @Resource
+    private StudentService studentService;
+
     /**
      * 班级数据
      *
@@ -55,8 +59,8 @@ public class GradeManagerController {
      */
     @RequestMapping("/maintainer/grade/gradeData")
     @ResponseBody
-    public Map<String, Object> gradeData(GradeVo gradeVo, String templateId) {
-        JsGrid<GradeVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<GradeVo> gradeData(GradeVo gradeVo) {
+        AjaxData<GradeVo> ajaxData = new AjaxData<>();
         //通过用户类型获取系表ID
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -65,17 +69,38 @@ public class GradeManagerController {
         }
         List<GradeVo> gradeVos = new ArrayList<>();
         if (tieId > 0) {
-            Result<Record6<Integer, Integer, String, String, String, String>> record6s = gradeService.findAllByPage(gradeVo, tieId);
-            if (record6s.isNotEmpty()) {
-                gradeVos = record6s.into(GradeVo.class);
-                jsGrid.loadData(gradeVos, gradeService.findAllByPageCount(gradeVo, tieId));
+            Result<Record7<Integer,String, Integer, String, String, String, String>> record7s = gradeService.findAllByPage(gradeVo, tieId);
+            if (record7s.isNotEmpty()) {
+                gradeVos = record7s.into(GradeVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(gradeVo.getPageNum());
+                paginationData.setPageSize(gradeVo.getPageSize());
+                paginationData.setTotalDatas(gradeService.findAllByPageCount(gradeVo, tieId));
+                ajaxData.success().listData(gradeVos).paginationData(paginationData);
             } else {
-                jsGrid.loadData(gradeVos, 0);
+                ajaxData.success().listData(gradeVos);
             }
         } else {
-            jsGrid.loadData(gradeVos, 0);
+            ajaxData.success().listData(gradeVos);
         }
-        return jsGrid.getMap();
+        return ajaxData;
+    }
+
+    /**
+     * 更新班级所需信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/maintainer/grade/gradeUpdate")
+    @ResponseBody
+    public AjaxData updateGrade(@RequestParam("id") int id){
+        Record7<Integer,String, Integer, String, String, String, String> record7 = gradeService.findByGradeIdWithUpdate(id);
+        if(!ObjectUtils.isEmpty(record7)){
+            GradeVo gradeVo = record7.into(GradeVo.class);
+            return new AjaxData().success().obj(gradeVo);
+        } else {
+            return new AjaxData().fail().msg("获取信息失败!");
+        }
     }
 
     /**
@@ -214,9 +239,13 @@ public class GradeManagerController {
      */
     @RequestMapping(value = "/maintainer/grade/deleteGrade", method = RequestMethod.POST)
     @ResponseBody
-    public GradeVo deleteGrade(GradeVo gradeVo) {
-        JsGrid<GradeVo> jsGrid = new JsGrid<>();
-        gradeService.deleteById(gradeVo.getId());
-        return jsGrid.deleteItem(gradeVo);
+    public AjaxData deleteGrade(GradeVo gradeVo) {
+        List<Student> students = studentService.findByGradeId(gradeVo.getId());
+        if(students.isEmpty()){
+            gradeService.deleteById(gradeVo.getId());
+            return new AjaxData().success().msg("删除成功!");
+        } else {
+            return new AjaxData().fail().msg("删除失败,该班级下已有学生!");
+        }
     }
 }

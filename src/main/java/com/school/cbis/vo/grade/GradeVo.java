@@ -6,11 +6,12 @@ package com.school.cbis.vo.grade;
 public class GradeVo {
     private int id;
     private int majorId;
+    private String majorName;
     private String year;
     private String gradeName;
     private String gradeHead;
     private String gradeHeadID;
-    private int pageIndex;
+    private int pageNum;
     private int pageSize;
     private String sortField;
     private String sortOrder;
@@ -29,6 +30,14 @@ public class GradeVo {
 
     public void setMajorId(int majorId) {
         this.majorId = majorId;
+    }
+
+    public String getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(String majorName) {
+        this.majorName = majorName;
     }
 
     public String getYear() {
@@ -63,12 +72,12 @@ public class GradeVo {
         this.gradeHeadID = gradeHeadID;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
     public int getPageSize() {
@@ -93,21 +102,5 @@ public class GradeVo {
 
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
-    }
-
-    @Override
-    public String toString() {
-        return "GradeVo{" +
-                "id=" + id +
-                ", majorId='" + majorId + '\'' +
-                ", year='" + year + '\'' +
-                ", gradeName='" + gradeName + '\'' +
-                ", gradeHead='" + gradeHead + '\'' +
-                ", gradeHeadID='" + gradeHeadID + '\'' +
-                ", pageIndex=" + pageIndex +
-                ", pageSize=" + pageSize +
-                ", sortField='" + sortField + '\'' +
-                ", sortOrder='" + sortOrder + '\'' +
-                '}';
     }
 }

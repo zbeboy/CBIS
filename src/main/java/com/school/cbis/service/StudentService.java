@@ -199,4 +199,11 @@ public interface StudentService {
      * @return
      */
     Student findById(int id);
+
+    /**
+     * 通过班级id查询
+     * @param gradeId
+     * @return
+     */
+    List<Student> findByGradeId(int gradeId);
 }

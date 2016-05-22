@@ -21,7 +21,9 @@ function initParam(){
  * 返回
  */
 function back(){
-    window.location.href = web_path + '/student/personal/individualResume';
+
+        //window.location.href = web_path + '/student/personal/individualResume';
+    window.history.go(-1);
 }
 
 $(document).ready(function(){
