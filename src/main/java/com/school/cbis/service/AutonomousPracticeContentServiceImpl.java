@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-04-12.
@@ -150,6 +151,12 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                 .where(a)
                 .fetch();
         return count;
+    }
+
+    @Override
+    public List<AutonomousPracticeContent> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId) {
+        List<AutonomousPracticeContent> autonomousPracticeContents = autonomousPracticeContentDao.fetchByAutonomousPracticeInfoId(autonomousPracticeInfoId);
+        return autonomousPracticeContents;
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.jooq.Record1;
 import org.jooq.Record5;
 import org.jooq.Result;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-04-12.
  */
@@ -117,5 +119,12 @@ public interface AutonomousPracticeContentService {
      * @return
      */
     Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndGradeIdAndYear(AutonomousPracticeParamVo autonomousPracticeParamVo);
+
+    /**
+     * 根据 autonomousPracticeInfoId查询
+     * @param autonomousPracticeInfoId
+     * @return
+     */
+    List<AutonomousPracticeContent> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId);
 
 }

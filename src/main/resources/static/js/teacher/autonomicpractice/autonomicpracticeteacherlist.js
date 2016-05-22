@@ -109,7 +109,12 @@ function changeSearchTitle(){
         }
     }
 
-    //处理被选中选
+    if(Number($('#searchHead').val()) == 0){
+        $('#initSearchTitle').empty();
+        $('#initSearchTitle').append($('<input type="text" placeholder="内容" id="searchContent" name="content" class="uk-margin-small-top">'));
+    }
+
+    //处理被选中
     if(selected != -1){
         $('#initSearchTitle').append(outputSearchHead(searchHeads[selected].typeValue,'content',searchHeads[selected].content,'',searchHeads[selected].databaseTableField));
     }

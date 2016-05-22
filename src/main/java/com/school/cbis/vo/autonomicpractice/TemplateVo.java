@@ -8,8 +8,8 @@ public class TemplateVo {
     private int id;
     private String autonomousPracticeTemplateTitle;
     private String createTime;
-    private String username;
-    private int pageIndex;
+    private String realName;
+    private int pageNum;
     private int pageSize;
     private String sortField;
     private String sortOrder;
@@ -38,20 +38,20 @@ public class TemplateVo {
         this.createTime = createTime;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
     public int getPageSize() {
@@ -84,8 +84,8 @@ public class TemplateVo {
                 "id=" + id +
                 ", autonomousPracticeTemplateTitle='" + autonomousPracticeTemplateTitle + '\'' +
                 ", createTime='" + createTime + '\'' +
-                ", username='" + username + '\'' +
-                ", pageIndex=" + pageIndex +
+                ", realName='" + realName + '\'' +
+                ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", sortField='" + sortField + '\'' +
                 ", sortOrder='" + sortOrder + '\'' +

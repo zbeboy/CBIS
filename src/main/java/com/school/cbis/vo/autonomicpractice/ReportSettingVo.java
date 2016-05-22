@@ -13,8 +13,8 @@ public class ReportSettingVo {
     private String gradeYear;
     private String startTime;
     private String endTime;
-    private String username;
-    private int pageIndex;
+    private String realName;
+    private int pageNum;
     private int pageSize;
     private String sortField;
     private String sortOrder;
@@ -67,20 +67,20 @@ public class ReportSettingVo {
         this.endTime = endTime;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
     public int getPageSize() {
@@ -116,8 +116,8 @@ public class ReportSettingVo {
                 ", gradeYear='" + gradeYear + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", username='" + username + '\'' +
-                ", pageIndex=" + pageIndex +
+                ", realName='" + realName + '\'' +
+                ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", sortField='" + sortField + '\'' +
                 ", sortOrder='" + sortOrder + '\'' +

@@ -85,7 +85,8 @@ public class AutonomicPractice {
      * @return
      */
     @RequestMapping("/administrator/autonomicpractice/reportsettingList")
-    public String reportSetting() {
+    public String reportSetting(ReportSettingVo reportSettingVo,ModelMap modelMap) {
+        modelMap.addAttribute("reportSettingVo",reportSettingVo);
         return "/student/autonomicpractice/reportsettinglist";
     }
 
@@ -97,8 +98,8 @@ public class AutonomicPractice {
      */
     @RequestMapping("/administrator/autonomicpractice/reportSettingData")
     @ResponseBody
-    public Map<String, Object> reportSettingData(ReportSettingVo reportSettingVo) {
-        JsGrid<ReportSettingVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<ReportSettingVo> reportSettingData(ReportSettingVo reportSettingVo) {
+        AjaxData<ReportSettingVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -109,15 +110,19 @@ public class AutonomicPractice {
             Result<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> record7s = autonomousPracticeInfoService.findByTieIdAndPage(reportSettingVo, tieId);
             if (record7s.isNotEmpty()) {
                 list = record7s.into(ReportSettingVo.class);
-                jsGrid.loadData(list, autonomousPracticeInfoService.findByTieIdAndCount(reportSettingVo, tieId));
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(reportSettingVo.getPageNum());
+                paginationData.setPageSize(reportSettingVo.getPageSize());
+                paginationData.setTotalDatas(autonomousPracticeInfoService.findByTieIdAndCount(reportSettingVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
 
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
@@ -128,10 +133,14 @@ public class AutonomicPractice {
      */
     @RequestMapping(value = "/administrator/autonomicpractice/deleteReportSetting", method = RequestMethod.POST)
     @ResponseBody
-    public ReportSettingVo deleteReportSetting(ReportSettingVo reportSettingVo) {
-        JsGrid<ReportSettingVo> jsGrid = new JsGrid<>();
-        autonomousPracticeInfoService.deleteById(reportSettingVo.getId());
-        return jsGrid.deleteItem(reportSettingVo);
+    public AjaxData deleteReportSetting(ReportSettingVo reportSettingVo) {
+        List<AutonomousPracticeContent> autonomousPracticeContents = autonomousPracticeContentService.findByAutonomousPracticeInfoId(reportSettingVo.getId());
+        if(autonomousPracticeContents.isEmpty()){
+            autonomousPracticeInfoService.deleteById(reportSettingVo.getId());
+            return new AjaxData().success().msg("删除成功!");
+        } else {
+            return new AjaxData().fail().msg("已经有内容存在,无法删除!");
+        }
     }
 
     /**
@@ -292,7 +301,8 @@ public class AutonomicPractice {
      * @return
      */
     @RequestMapping("/administrator/autonomicpractice/templateList")
-    public String templateList() {
+    public String templateList(TemplateVo templateVo,ModelMap modelMap) {
+        modelMap.addAttribute("templateVo",templateVo);
         return "/student/autonomicpractice/templatelist";
     }
 
@@ -304,8 +314,8 @@ public class AutonomicPractice {
      */
     @RequestMapping("/administrator/autonomicpractice/templateData")
     @ResponseBody
-    public Map<String, Object> templateData(TemplateVo templateVo) {
-        JsGrid<TemplateVo> jsGrid = new JsGrid<>(new HashMap<>());
+    public AjaxData<TemplateVo> templateData(TemplateVo templateVo) {
+        AjaxData<TemplateVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -316,15 +326,19 @@ public class AutonomicPractice {
             Result<Record4<Integer, String, Timestamp, String>> record4s = autonomousPracticeTemplateService.findAllAndPage(templateVo, tieId);
             if (record4s.isNotEmpty()) {
                 list = record4s.into(TemplateVo.class);
-                jsGrid.loadData(list, autonomousPracticeTemplateService.findAllAndCount(templateVo, tieId));
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(templateVo.getPageNum());
+                paginationData.setPageSize(templateVo.getPageSize());
+                paginationData.setTotalDatas(autonomousPracticeTemplateService.findAllAndCount(templateVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                jsGrid.loadData(list, 0);
+                ajaxData.success().listData(list);
             }
         } else {
-            jsGrid.loadData(list, 0);
+            ajaxData.success().listData(list);
         }
 
-        return jsGrid.getMap();
+        return ajaxData;
     }
 
     /**
@@ -335,8 +349,7 @@ public class AutonomicPractice {
      */
     @RequestMapping(value = "/administrator/autonomicpractice/deleteTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public TemplateVo deleteTemplate(TemplateVo templateVo) {
-        JsGrid<TemplateVo> jsGrid = new JsGrid<>();
+    public AjaxData deleteTemplate(TemplateVo templateVo) {
         List<AutonomousPracticeHead> autonomousPracticeHeads = autonomousPracticeHeadService.findByAutonomousPracticeTemplateId(templateVo.getId());
         autonomousPracticeHeads.forEach(m -> {
             autonomousPracticeContentService.deleteByAutonomousPracticeHeadId(m.getId());
@@ -344,7 +357,7 @@ public class AutonomicPractice {
         autonomousPracticeHeadService.deleteByAutonomousPracticeTemplateId(templateVo.getId());
         autonomousPracticeInfoService.deleteByAutonomousPracticeTemplateId(templateVo.getId());
         autonomousPracticeTemplateService.deleteById(templateVo.getId());
-        return jsGrid.deleteItem(templateVo);
+        return new AjaxData().success().msg("删除成功!");
     }
 
     /**
@@ -395,8 +408,6 @@ public class AutonomicPractice {
         tableFields.add(new SelectData(1, "student_identity_card", "学生身份证号", false));
         tableFields.add(new SelectData(1, "student_address", "学生地址", false));
         map.put("tableFileds", tableFields);
-        //权限
-        log.debug("roleList : {}", wordbook.getRoleString());
         map.put("roleList", wordbook.getRoleString());
         return new AjaxData().success().mapData(map);
     }

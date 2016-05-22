@@ -59,18 +59,24 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
             a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreateTime() + "%"));
         }
 
-        if (StringUtils.hasLength(templateVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + templateVo.getUsername() + "%"));
+        if (StringUtils.hasLength(templateVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + templateVo.getRealName() + "%"));
+        }
+
+        int pageNum = templateVo.getPageNum();
+        int pageSize = templateVo.getPageSize();
+        if(pageNum<=0){
+            pageNum = 1;
         }
 
         SelectConditionStep<Record4<Integer, String, Timestamp, String>> e =
                 create.select(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.ID, Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE,
-                        Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME, Tables.USERS.USERNAME)
+                        Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME, Tables.USERS.REAL_NAME)
                         .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)
                         .join(Tables.USERS)
                         .on(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.USERS_ID.eq(Tables.USERS.USERNAME))
                         .where(a);
-        log.debug(" templateVo : {}", templateVo);
+
         if (StringUtils.hasLength(templateVo.getSortField())) {
             if (templateVo.getSortField().equals("createTime")) {
                 if (templateVo.getSortOrder().equals("desc")) {
@@ -84,11 +90,11 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
                 } else {
                     c = Tables.AUTONOMOUS_PRACTICE_TEMPLATE.AUTONOMOUS_PRACTICE_TEMPLATE_TITLE.asc();
                 }
-            } else if (templateVo.getSortField().equals("username")) {
+            } else if (templateVo.getSortField().equals("realName")) {
                 if (templateVo.getSortOrder().equals("desc")) {
-                    c = Tables.USERS.USERNAME.desc();
+                    c = Tables.USERS.REAL_NAME.desc();
                 } else {
-                    c = Tables.USERS.USERNAME.asc();
+                    c = Tables.USERS.REAL_NAME.asc();
                 }
             }
 
@@ -101,7 +107,7 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
             e.orderBy(b);
         }
 
-        return e.limit((templateVo.getPageIndex() - 1) * templateVo.getPageSize(), templateVo.getPageSize()).fetch();
+        return e.limit((pageNum - 1) * pageSize, pageSize).fetch();
     }
 
     @Override
@@ -115,8 +121,8 @@ public class AutonomousPracticeTemplateServiceImpl implements AutonomousPractice
             a = a.and(Tables.AUTONOMOUS_PRACTICE_TEMPLATE.CREATE_TIME.like("%" + templateVo.getCreateTime() + "%"));
         }
 
-        if (StringUtils.hasLength(templateVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + templateVo.getUsername() + "%"));
+        if (StringUtils.hasLength(templateVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + templateVo.getRealName() + "%"));
         }
         Record1<Integer> count = create.selectCount()
                 .from(Tables.AUTONOMOUS_PRACTICE_TEMPLATE)

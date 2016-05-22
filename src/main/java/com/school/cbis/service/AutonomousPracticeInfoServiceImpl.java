@@ -65,13 +65,20 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
             a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.like("%" + reportSettingVo.getEndTime() + "%"));
         }
 
-        if (StringUtils.hasLength(reportSettingVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + reportSettingVo.getUsername() + "%"));
+        if (StringUtils.hasLength(reportSettingVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + reportSettingVo.getRealName() + "%"));
         }
+
+        int pageNum = reportSettingVo.getPageNum();
+        int pageSize = reportSettingVo.getPageSize();
+        if(pageNum<=0){
+            pageNum = 1;
+        }
+
         SelectConditionStep<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> e =
         create.select(Tables.AUTONOMOUS_PRACTICE_INFO.ID,Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE,
                 Tables.AUTONOMOUS_PRACTICE_INFO.CREATE_TIME, Tables.AUTONOMOUS_PRACTICE_INFO.GRADE_YEAR,
-                Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME, Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME,Tables.USERS.USERNAME)
+                Tables.AUTONOMOUS_PRACTICE_INFO.START_TIME, Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME,Tables.USERS.REAL_NAME)
                 .from(Tables.AUTONOMOUS_PRACTICE_INFO)
                 .join(Tables.USERS)
                 .on(Tables.AUTONOMOUS_PRACTICE_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
@@ -102,11 +109,11 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
                 } else {
                     c = Tables.AUTONOMOUS_PRACTICE_INFO.AUTONOMOUS_PRACTICE_TITLE.asc();
                 }
-            } else if (reportSettingVo.getSortField().equals("username")) {
+            } else if (reportSettingVo.getSortField().equals("realName")) {
                 if (reportSettingVo.getSortOrder().equals("desc")) {
-                    c = Tables.USERS.USERNAME.desc();
+                    c = Tables.USERS.REAL_NAME.desc();
                 } else {
-                    c = Tables.USERS.USERNAME.asc();
+                    c = Tables.USERS.REAL_NAME.asc();
                 }
             }
 
@@ -119,7 +126,7 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
         } else {
             e.orderBy(b);
         }
-        return e.limit((reportSettingVo.getPageIndex() - 1) * reportSettingVo.getPageSize(), reportSettingVo.getPageSize()).fetch();
+        return e.limit((pageNum - 1) * pageSize, pageSize).fetch();
     }
 
     @Override
@@ -145,8 +152,8 @@ public class AutonomousPracticeInfoServiceImpl implements AutonomousPracticeInfo
             a = a.and(Tables.AUTONOMOUS_PRACTICE_INFO.END_TIME.like("%" + reportSettingVo.getEndTime() + "%"));
         }
 
-        if (StringUtils.hasLength(reportSettingVo.getUsername())) {
-            a = a.and(Tables.USERS.USERNAME.like("%" + reportSettingVo.getUsername() + "%"));
+        if (StringUtils.hasLength(reportSettingVo.getRealName())) {
+            a = a.and(Tables.USERS.REAL_NAME.like("%" + reportSettingVo.getRealName() + "%"));
         }
         Record1<Integer> count = create.selectCount()
                 .from(Tables.AUTONOMOUS_PRACTICE_INFO)
