@@ -9,8 +9,6 @@ import com.school.cbis.service.*;
 import com.school.cbis.util.CaptchaServiceSingleton;
 import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.major.MajorIndexVo;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.joda.time.DateTime;
 import org.jooq.Record;
 import org.slf4j.Logger;
@@ -300,8 +298,7 @@ public class MainController {
             // call the ImageCaptchaService getChallenge method
             BufferedImage challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(captchaId,request.getLocale());
             // a jpeg encoder
-            JPEGImageEncoder jpegEncoder = JPEGCodec.createJPEGEncoder(jpegOutputStream);
-            jpegEncoder.encode(challenge);
+            ImageIO.write(challenge, "jpeg", jpegOutputStream);
         } catch (IllegalArgumentException e){
             response.sendError(response.SC_NOT_FOUND);
             log.error(" jcaptcha exception : {} ",e.getMessage());
