@@ -74,9 +74,9 @@ function outputHtml(d){
         }
         $('#tableData').append(
             $('<tr>')
-                .append($('<td>').text(list[i].bigTitle))
-                .append($('<td>').text(list[i].realName))
-                .append($('<td>').text(list[i].date))
+                .append($('<td>').text(dealNull(list[i].bigTitle)))
+                .append($('<td>').text(dealNull(list[i].realName)))
+                .append($('<td>').text(dealNull(list[i].date)))
                 .append($('<td>').text(s))
                 .append(
                     $('<td>')
@@ -90,6 +90,18 @@ function outputHtml(d){
         );
     }
     $('#mytable').table().data( "table" ).refresh();
+}
+
+/**
+ * 处理空值
+ * @param obj
+ */
+function dealNull(obj){
+    if(obj == null){
+        return '';
+    } else {
+        return obj;
+    }
 }
 
 /**

@@ -61,7 +61,7 @@ function outputHtml(d){
         $('#tableData').append(
             $('<tr>')
                 .append($('<td>').text(j))
-                .append($('<td>').text(list[i].majorName))
+                .append($('<td>').text(dealNull(list[i].majorName)))
                 .append(
                     $('<td>')
                         .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+',\''+list[i].majorName+'\');" >').html('<i class="uk-icon-pencil"></i>'))
@@ -73,6 +73,18 @@ function outputHtml(d){
         j++;
     }
     $('#mytable').table().data( "table" ).refresh();
+}
+
+/**
+ * 处理空值
+ * @param obj
+ */
+function dealNull(obj){
+    if(obj == null){
+        return '';
+    } else {
+        return obj;
+    }
 }
 
 function toDel(id){
