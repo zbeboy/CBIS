@@ -71,9 +71,9 @@ function outputHtml(d){
                 .append($('<td>').text(list[i].realName))
                 .append(
                     $('<td>')
-                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').text('编辑'))
+                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').html('<i class="uk-icon-pencil"></i>'))
                         .append(' ')
-                        .append($('<a href="javascript:;" onclick="toDel('+list[i].id+');" >').text('删除'))
+                        .append($('<a href="javascript:;" onclick="toDel('+list[i].id+');" >').html('<i class="uk-icon-trash uk-text-danger"></i>'))
 
                 )
         );

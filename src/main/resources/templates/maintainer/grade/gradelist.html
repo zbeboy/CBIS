@@ -91,20 +91,20 @@
                 <fieldset data-uk-margin="">
                     <legend>班级管理</legend>
                     <div class="uk-grid">
-                        <div class="uk-width-1-4 uk-text-left">
+                        <div class="uk-width-1-5 uk-text-left">
                             <button class="uk-button uk-button-success uk-margin-small-top" type="button"
-                               onclick="addData();">添加
+                               onclick="addData();"><i class="uk-icon-plus"></i>添加
                             </button>
                         </div>
-                        <div class="uk-width-3-4 uk-text-right">
+                        <div class="uk-width-4-5 uk-text-right">
                             <input type="text" placeholder="专业" id="majorSearchName" th:value="${gradeVo.majorName}"
                                    name="majorName" class="uk-margin-small-top"/>
                             <input type="text" placeholder="班级" id="gradeSearchName" th:value="${gradeVo.gradeName}"
                                    name="gradeName" class="uk-margin-small-top"/>
                             <input type="text" placeholder="班主任" th:value="${gradeVo.gradeHead}"
                                    id="gradeHead" name="gradeHead" class="uk-margin-small-top"/>
-                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
-                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();">重置</button>
+                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索</button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();"><i class="uk-icon-refresh"></i>重置</button>
                         </div>
                     </div>
                 </fieldset>

@@ -35,7 +35,7 @@ function outputTeacherHtml(data){
     for(var i = 0;i<list.length;i++){
         $('#teacherData').append(
             $('<div class="uk-width-medium-1-4">').append(
-                $('<a class="uk-thumbnail uk-thumbnail-medium" href="'+web_path+'/user/personal/individualResumeShow?username='+list[i].username+'">')
+                $('<a class="uk-thumbnail uk-thumbnail-medium" href="'+web_path+'/user/major/teachersResumeShow?username='+list[i].username+'&majorId='+currentMajorId+'">')
                     .append($('<img class="uk-thumbnail" alt="教师图片" src="'+web_path+list[i].headImg+'" />'))
                     .append($('<div class="uk-thumbnail-caption">').text(list[i].realName))
             )

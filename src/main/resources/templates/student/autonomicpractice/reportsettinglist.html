@@ -81,14 +81,14 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/autonomicpractice/reportSettingAdd}">添加
+                               th:href="@{/administrator/autonomicpractice/reportSettingAdd}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
                             <input type="text" placeholder="标题" id="autonomousPracticeTitle" th:value="${reportSettingVo.autonomousPracticeTitle}"
                                    name="autonomousPracticeTitle" class="uk-margin-small-top"/>
-                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
-                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();">重置</button>
+                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索</button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();"><i class="uk-icon-refresh"></i>重置</button>
                         </div>
                     </div>
                 </fieldset>

@@ -83,7 +83,7 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                                    th:href="@{/maintainer/tie/tieNoticeAdd}">添加
+                                    th:href="@{/maintainer/tie/tieNoticeAdd}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
@@ -91,8 +91,8 @@
                                    name="bigTitle" class="uk-margin-small-top"/>
                             <input type="text" placeholder="姓名" th:value="${tieNoticeVo.realName}"
                                    id="realName" name="realName" class="uk-margin-small-top"/>
-                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
-                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();">重置</button>
+                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索</button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();"><i class="uk-icon-refresh"></i>重置</button>
                         </div>
                     </div>
                 </fieldset>

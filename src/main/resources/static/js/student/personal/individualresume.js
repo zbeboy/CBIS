@@ -37,7 +37,7 @@ function initArticleParam() {
     param.checkArticleContent = true;
     param.checkArticlePic = false;
     param.articleSaveOrUpdateUrl = url;
-    param.clickOkUrl = web_path + "/student/personal/individualResumeShow";
+    param.clickOkUrl = web_path + "/user/personal/individualResumeShow";
     param.clickNoUrl = web_path + "/student/personal/individualResume";
     param.uploadParamFileName = "individualresume";
     param.myParam = myParam;

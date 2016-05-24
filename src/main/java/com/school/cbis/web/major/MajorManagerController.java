@@ -674,4 +674,62 @@ public class MajorManagerController {
         return "/maintainer/major/majortraitupdate";
     }
 
+    /**
+     * 专业简介展示
+     * @param username
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/user/major/teachersResumeShow")
+    public String teachersResumeShow( @RequestParam("username") String username,@RequestParam("majorId") int majorId, ModelMap modelMap) {
+        modelMap.addAttribute("username",username);
+        modelMap.addAttribute("majorId",majorId);
+        return "/user/major/teachersresumeshow";
+    }
+
+    /**
+     * 专业简介展示数据
+     * @param username
+     * @return
+     */
+    @RequestMapping("/user/major/teachersResumeShowData")
+    @ResponseBody
+    public AjaxData teachersResumeShowData( @RequestParam("username") String username,@RequestParam("majorId") int majorId) {
+        Map<String,Object> map = new HashMap<>();
+        Record record = articleInfoService.findByUsername(username);
+        List<ArticleSub> articleSubs = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(record)){
+            Users users = record.into(Users.class);
+            //为保证用户信息安全，以下信息清空
+            users.setPasswordResetKey(null);
+            users.setPassword(null);
+            users.setEmailCheckKey(null);
+            users.setMobileCheckKey(null);
+            users.setBirthday(null);
+            users.setIdentityCard(null);
+            users.setPoliticalLandscape(null);
+            users.setNation(null);
+            users.setPost(null);
+            users.setEmail(null);
+            users.setMobile(null);
+            users.setSex(null);
+            users.setReligiousBelief(null);
+            map.put("userInfo", users);
+            ArticleInfo articleInfo = record.into(ArticleInfo.class);
+            map.put("articleInfo", articleInfo);
+            articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
+        } else {
+            map.put("userInfo", new Users());
+            map.put("articleInfo", new ArticleInfo());
+        }
+        map.put("articleSub", articleSubs);
+        Result<Record3<String, String, String>> record3s = majorService.findByIdWithTeacher(majorId);
+        List<MajorTeacherVo> majorTeacherVos = new ArrayList<>();
+        if(record3s.isNotEmpty()){
+            majorTeacherVos = record3s.into(MajorTeacherVo.class);
+        }
+        map.put("majorTeacherVos",majorTeacherVos);
+        return new AjaxData().success().mapData(map);
+    }
+
 }

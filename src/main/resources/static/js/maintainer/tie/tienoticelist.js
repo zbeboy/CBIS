@@ -59,11 +59,11 @@ function outputHtml(d){
         if(list[i].isShow == 0){
             s = '不显示';
             show = 1;
-            oshow = '显示';
+            oshow = '<i class="uk-icon-eye"></i>';
         } else {
             s = '显示';
             show = 0;
-            oshow = '不显示';
+            oshow = '<i class="uk-icon-eye-slash"></i>';
         }
         $('#tableData').append(
             $('<tr>')
@@ -73,11 +73,11 @@ function outputHtml(d){
                 .append($('<td>').text(s))
                 .append(
                     $('<td>')
-                        .append($('<a href="javascript:;" onclick="toShow('+list[i].id+','+show+');" >').text(oshow))
+                        .append($('<a href="javascript:;" onclick="toShow('+list[i].id+','+show+');" >').html(oshow))
                         .append(' ')
-                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').text('编辑'))
+                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').html('<i class="uk-icon-pencil"></i>'))
                         .append(' ')
-                        .append($('<a href="javascript:;" onclick="toDel('+list[i].id+');" >').text('删除'))
+                        .append($('<a href="javascript:;" onclick="toDel('+list[i].id+');" >').html('<i class="uk-icon-trash uk-text-danger"></i>'))
 
                 )
         );

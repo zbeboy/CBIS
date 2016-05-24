@@ -368,8 +368,6 @@ public class PersonalController {
             modelMap.addAttribute("articleInfo", new ArticleInfo());
             modelMap.addAttribute("articleSub", articleSubs);
         }
-
-
         return "/user/personal/individualresumeshow";
     }
 

@@ -89,14 +89,14 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <button class="uk-button uk-button-success uk-margin-small-top" type="button"
-                                    onclick="openAddModal();">添加用户
+                                    onclick="openAddModal();"><i class="uk-icon-plus"></i>添加用户
                             </button>
                         </div>
                         <div class="uk-width-3-4 uk-text-right"><input type="text" placeholder="姓名" th:value="${realName}" id="realName" name="realName"
                                                                        class="uk-margin-small-top"/>
                             <input type="text" placeholder="工号" th:value="${teacherJobNumber}" id="teacherJobNumber" name="teacherJobNumber" class="uk-margin-small-top"/>
-                            <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
-                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" >重置</button>
+                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索</button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" ><i class="uk-icon-refresh"></i>重置</button>
                         </div>
                     </div>
                 </fieldset>

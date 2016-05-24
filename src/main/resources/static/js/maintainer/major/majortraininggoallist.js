@@ -69,7 +69,7 @@ function outputHtml(d){
                 .append($('<td>').text(dealNull(list[i].date)))
                 .append(
                     $('<td>')
-                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').text('编辑'))
+                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').html('<i class="uk-icon-pencil"></i>'))
                 )
         );
     }
