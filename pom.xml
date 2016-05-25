@@ -18,7 +18,7 @@
         <org.apache.poi.version>3.15-beta1</org.apache.poi.version>
         <xmlbeans.version>2.3.0</xmlbeans.version>
         <jcaptcha.version>1.0</jcaptcha.version>
-        <maven-compiler.version>3.5.1</maven-compiler.version>
+        <commons-httpclient.version>3.1</commons-httpclient.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -195,6 +195,13 @@
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>${commons-httpclient.version}</version>
         </dependency>
     </dependencies>
 

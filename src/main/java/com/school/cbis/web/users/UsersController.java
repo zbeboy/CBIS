@@ -405,6 +405,12 @@ public class UsersController {
         }
     }
 
+    /**
+     * 管理用户简介
+     * @param usersArticleVo
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/maintainer/users/userArticle")
     public String userArticle(UsersArticleVo usersArticleVo,ModelMap modelMap){
         modelMap.addAttribute("usersArticleVo",usersArticleVo);
@@ -416,6 +422,11 @@ public class UsersController {
 
     }
 
+    /**
+     * 简介数据
+     * @param usersArticleVo
+     * @return
+     */
     @RequestMapping("/maintainer/users/userArticleData")
     @ResponseBody
     public AjaxData<UsersArticleVo> userArticleData(UsersArticleVo usersArticleVo){

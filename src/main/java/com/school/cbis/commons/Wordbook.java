@@ -114,6 +114,17 @@ public class Wordbook {
     @Value("${cbis.mobile.flow}")
     public int mobileFlow;
 
+    //rest 连接地址
+    @Value("${cbis.server.address}")
+    public String serverAddress;
+
+    // security user
+    @Value("${security.user.name}")
+    public String securityUsername;
+
+    @Value("${security.user.password}")
+    public String securityUserPassword;
+
     //用户默认头像
     public static final String USER_DEFAULT_HEAD_IMG = "/images/placeholder_800x280.svg";
 
