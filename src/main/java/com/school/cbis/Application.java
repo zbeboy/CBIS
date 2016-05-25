@@ -85,17 +85,34 @@ public class Application extends SpringBootServletInitializer {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/files/**").permitAll()
+            http
+                    .csrf()
+                    .ignoringAntMatchers("/metrics/**","/health/**","/trace/**","/dump/**","/shutdown/**",
+                            "/beans/**","/configprops/**","/info/**","/autoconfig/**","/env/**","/mappings/**")
+                    .and()
+                    .authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/files/**").permitAll()
                     .and().formLogin().loginPage("/login").defaultSuccessUrl("/backstage", true)
                     .failureUrl("/login?error").permitAll().and().sessionManagement().invalidSessionUrl("/login")
-                    .and().logout().logoutSuccessUrl("/").permitAll().invalidateHttpSession(true)
+                    .and().logout().logoutSuccessUrl("/")
+                    .permitAll().invalidateHttpSession(true)
                     .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(jdbcTokenRepository(dataSource))
                     .and().authorizeRequests().antMatchers("/administrator/**").hasRole("ADMIN")
                     .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("MAI", "ADMIN")
                     .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("SEMI", "MAI", "ADMIN")
                     .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "SEMI", "MAI", "ADMIN")
                     .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI", "SEMI")
-                    .and().authorizeRequests().antMatchers("/user/**").permitAll();
+                    .and().authorizeRequests().antMatchers("/user/**").permitAll()
+                    .antMatchers("/metrics/**").hasRole("ADMIN")
+                    .antMatchers("/health/**").hasRole("ADMIN")
+                    .antMatchers("/trace/**").hasRole("ADMIN")
+                    .antMatchers("/dump/**").hasRole("ADMIN")
+                    .antMatchers("/shutdown/**").hasRole("ADMIN")
+                    .antMatchers("/beans/**").hasRole("ADMIN")
+                    .antMatchers("/configprops/**").hasRole("ADMIN")
+                    .antMatchers("/info/**").hasRole("ADMIN")
+                    .antMatchers("/autoconfig/**").hasRole("ADMIN")
+                    .antMatchers("/env/**").hasRole("ADMIN")
+                    .antMatchers("/mappings/**").hasRole("ADMIN");
         }
 
         @Override
