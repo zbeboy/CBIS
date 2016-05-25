@@ -154,7 +154,9 @@
                 <h3 class="uk-panel-title">用户管理</h3>
                 <ul class="uk-nav uk-nav-side" data-uk-nav="">
                     <li id="navstudentmanager"><a href="#" th:href="@{/maintainer/users/studentManager}">学生管理</a> </li>
+                    <li id="navstudentarticle"><a href="#" th:href="@{/maintainer/users/userArticle}+'?userType=学生'">学生简介</a> </li>
                     <li id="navteachermanager"><a href="#" th:href="@{/maintainer/users/teacherManager}">教师管理</a> </li>
+                    <li id="navteacherarticle"><a href="#" th:href="@{/maintainer/users/userArticle}+'?userType=教师'">教师简介</a> </li>
                 </ul>
             </div>
         </div>
@@ -167,7 +169,9 @@
             <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
                 <li class="uk-nav-header">用户管理</li>
                 <li id="offcanvasstudentmanager"><a href="#" th:href="@{/maintainer/users/studentManager}">学生管理</a> </li>
+                <li id="offcanvasstudentarticle"><a href="#" th:href="@{/maintainer/users/userArticle}+'?userType=学生'">学生简介</a> </li>
                 <li id="offcanvasteachermanager"><a href="#" th:href="@{/maintainer/users/teacherManager}">教师管理</a> </li>
+                <li id="offcanvasteacherarticle"><a href="#" th:href="@{/maintainer/users/userArticle}+'?userType=教师'">教师简介</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

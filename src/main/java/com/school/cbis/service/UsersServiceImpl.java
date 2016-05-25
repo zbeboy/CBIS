@@ -5,10 +5,8 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.UsersDao;
 import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.domain.tables.records.UsersRecord;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
+import com.school.cbis.vo.article.UsersArticleVo;
+import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-05.
@@ -185,6 +184,109 @@ public class UsersServiceImpl implements UsersService {
                 .where(Tables.USERS.USERNAME.ne(username).and(Tables.USERS.MOBILE.eq(mobile)).and(Tables.USERS.IS_CHECK_MOBILE.eq(b)))
                 .fetchOne();
         return record;
+    }
+
+    @Override
+    public Result<Record4<String ,String ,String ,Integer>> findByUserTypeIdAndTieIdWithArticle(UsersArticleVo usersArticleVo,int userTypeId, int tieId) {
+        Condition a = Tables.USERS.USER_TYPE_ID.eq(userTypeId).and(Tables.TIE.ID.eq(tieId));
+        if(StringUtils.hasLength(usersArticleVo.getUsername())){
+            a = a.and(Tables.USERS.USERNAME.like("%"+usersArticleVo.getUsername()+"%"));
+        }
+
+        if(StringUtils.hasLength(usersArticleVo.getRealName())){
+            a = a.and(Tables.USERS.REAL_NAME.like("%"+usersArticleVo.getRealName()+"%"));
+        }
+
+        if(StringUtils.hasLength(usersArticleVo.getBigTitle())){
+            a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%"+usersArticleVo.getBigTitle()+"%"));
+        }
+
+        int pageNum = usersArticleVo.getPageNum();
+        int pageSize = usersArticleVo.getPageSize();
+        if(pageNum<=0){
+            pageNum = 1;
+        }
+        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == userTypeId) {//教师类型
+            Result<Record4<String ,String ,String,Integer >> record = create.select(Tables.USERS.USERNAME,Tables.USERS.REAL_NAME,Tables.ARTICLE_INFO.BIG_TITLE,
+                    Tables.ARTICLE_INFO.ID)
+                    .from(Tables.TEACHER)
+                    .join(Tables.TIE)
+                    .on(Tables.TEACHER.TIE_ID.equal(Tables.TIE.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                    .leftJoin(Tables.ARTICLE_INFO)
+                    .on(Tables.USERS.INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                    .where(a)
+                    .limit((pageNum-1)*pageSize,pageSize)
+                    .fetch();
+            return record;
+        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == userTypeId) {//学生类型
+            Result<Record4<String ,String ,String,Integer >> record = create.select(Tables.USERS.USERNAME,Tables.USERS.REAL_NAME,Tables.ARTICLE_INFO.BIG_TITLE,
+                    Tables.ARTICLE_INFO.ID)
+                    .from(Tables.STUDENT)
+                    .join(Tables.GRADE)
+                    .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
+                    .join(Tables.MAJOR)
+                    .on(Tables.GRADE.MAJOR_ID.equal(Tables.MAJOR.ID))
+                    .join(Tables.TIE)
+                    .on(Tables.MAJOR.TIE_ID.equal(Tables.TIE.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
+                    .leftJoin(Tables.ARTICLE_INFO)
+                    .on(Tables.USERS.INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                    .where(a)
+                    .limit((pageNum-1)*pageSize,pageSize)
+                    .fetch();
+            return record;
+        }
+        return null;
+    }
+
+    @Override
+    public int findByUserTypeIdAndTieIdWithArticleCount(UsersArticleVo usersArticleVo, int userTypeId, int tieId) {
+        Condition a = Tables.USERS.USER_TYPE_ID.eq(userTypeId).and(Tables.TIE.ID.eq(tieId));
+        if(StringUtils.hasLength(usersArticleVo.getUsername())){
+            a = a.and(Tables.USERS.USERNAME.like("%"+usersArticleVo.getUsername()+"%"));
+        }
+
+        if(StringUtils.hasLength(usersArticleVo.getRealName())){
+            a = a.and(Tables.USERS.REAL_NAME.like("%"+usersArticleVo.getRealName()+"%"));
+        }
+
+        if(StringUtils.hasLength(usersArticleVo.getBigTitle())){
+            a = a.and(Tables.ARTICLE_INFO.BIG_TITLE.like("%"+usersArticleVo.getBigTitle()+"%"));
+        }
+
+        if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == userTypeId) {//教师类型
+            Record1<Integer> record1 = create.selectCount()
+                    .from(Tables.TEACHER)
+                    .join(Tables.TIE)
+                    .on(Tables.TEACHER.TIE_ID.equal(Tables.TIE.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                    .leftJoin(Tables.ARTICLE_INFO)
+                    .on(Tables.USERS.INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                    .where(a)
+                    .fetchOne();
+            return record1.value1();
+        } else if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_STUDENT) == userTypeId) {//学生类型
+            Record1<Integer> record1 = create.selectCount()
+                    .from(Tables.STUDENT)
+                    .join(Tables.GRADE)
+                    .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
+                    .join(Tables.MAJOR)
+                    .on(Tables.GRADE.MAJOR_ID.equal(Tables.MAJOR.ID))
+                    .join(Tables.TIE)
+                    .on(Tables.MAJOR.TIE_ID.equal(Tables.TIE.ID))
+                    .join(Tables.USERS)
+                    .on(Tables.STUDENT.STUDENT_NUMBER.eq(Tables.USERS.USERNAME))
+                    .leftJoin(Tables.ARTICLE_INFO)
+                    .on(Tables.USERS.INTRODUCE_ARTICLE_INFO_ID.eq(Tables.ARTICLE_INFO.ID))
+                    .where(a)
+                    .fetchOne();
+            return record1.value1();
+        }
+        return 0;
     }
 
 }

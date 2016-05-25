@@ -2,8 +2,13 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Users;
 import com.school.cbis.domain.tables.records.UsersRecord;
+import com.school.cbis.vo.article.UsersArticleVo;
 import org.jooq.Record;
+import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Result;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-05.
@@ -95,4 +100,22 @@ public interface UsersService {
      * @return
      */
     UsersRecord findByMobileAndUsername(String mobile,String username);
+
+    /**
+     * 根据用户类型和系id查询个人简介
+     * @param usersArticleVo
+     * @param userTypeId
+     * @param tieId
+     * @return
+     */
+    Result<Record4<String ,String ,String,Integer >> findByUserTypeIdAndTieIdWithArticle(UsersArticleVo usersArticleVo, int userTypeId, int tieId);
+
+    /**
+     * 根据用户类型和系id查询个人简介总数
+     * @param usersArticleVo
+     * @param userTypeId
+     * @param tieId
+     * @return
+     */
+    int findByUserTypeIdAndTieIdWithArticleCount(UsersArticleVo usersArticleVo,int userTypeId, int tieId);
 }

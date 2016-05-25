@@ -31,12 +31,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 
+@EnableAuthorizationServer
 @EnableAutoConfiguration
 @ComponentScan
 public class Application extends SpringBootServletInitializer {
@@ -50,21 +50,20 @@ public class Application extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }*/
-
     @Bean
     public ApplicationSecurity applicationSecurity() {
         return new ApplicationSecurity();
     }
 
     @Bean
-    public static Md5PasswordEncoder md5(){
+    public static Md5PasswordEncoder md5() {
         Md5PasswordEncoder md5 = new Md5PasswordEncoder();
         md5.setEncodeHashAsBase64(false);
         return md5;
     }
 
     @Bean
-    public static JdbcTokenRepositoryImpl jdbcTokenRepository(DataSource dataSource){
+    public static JdbcTokenRepositoryImpl jdbcTokenRepository(DataSource dataSource) {
         JdbcTokenRepositoryImpl j = new JdbcTokenRepositoryImpl();
         j.setDataSource(dataSource);
         return j;
@@ -92,10 +91,10 @@ public class Application extends SpringBootServletInitializer {
                     .and().logout().logoutSuccessUrl("/").permitAll().invalidateHttpSession(true)
                     .and().rememberMe().tokenValiditySeconds(2419200).rememberMeParameter("remember-me").tokenRepository(jdbcTokenRepository(dataSource))
                     .and().authorizeRequests().antMatchers("/administrator/**").hasRole("ADMIN")
-                    .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("MAI","ADMIN")
-                    .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("SEMI","MAI","ADMIN")
-                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA","SEMI","MAI","ADMIN")
-                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI","SEMI")
+                    .and().authorizeRequests().antMatchers("/maintainer/**").hasAnyRole("MAI", "ADMIN")
+                    .and().authorizeRequests().antMatchers("/semi/**").hasAnyRole("SEMI", "MAI", "ADMIN")
+                    .and().authorizeRequests().antMatchers("/teacher/**").hasAnyRole("TEA", "SEMI", "MAI", "ADMIN")
+                    .and().authorizeRequests().antMatchers("/student/**").hasAnyRole("STU", "TEA", "ADMIN", "MAI", "SEMI")
                     .and().authorizeRequests().antMatchers("/user/**").permitAll();
         }
 

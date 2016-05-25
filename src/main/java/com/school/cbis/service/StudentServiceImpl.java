@@ -150,11 +150,6 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
-        }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
@@ -173,11 +168,6 @@ public class StudentServiceImpl implements StudentService {
         Condition a = Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId));
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
-        }
-        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
         }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
@@ -247,11 +237,6 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
-        }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
@@ -270,11 +255,6 @@ public class StudentServiceImpl implements StudentService {
         Condition a = Tables.GRADE.MAJOR_ID.eq(autonomousPracticeParamVo.getMajorId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
-        }
-        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
         }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
@@ -344,11 +324,6 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        int pageNum = autonomousPracticeParamVo.getHavePayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHavePayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
-        }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
@@ -367,11 +342,6 @@ public class StudentServiceImpl implements StudentService {
         Condition a = Tables.GRADE.ID.eq(autonomousPracticeParamVo.getGradeId()).and(Tables.MAJOR.TIE_ID.eq(tieId)).and(Tables.STUDENT.ID.notIn(studentId).and(Tables.GRADE.YEAR.eq(autonomousPracticeParamVo.getYear())));
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
-        }
-        int pageNum = autonomousPracticeParamVo.getHaveNoPayPageNum();
-        int pageSize = autonomousPracticeParamVo.getHaveNoPayPageSize();
-        if(pageNum<=0){
-            pageNum = 1;
         }
         Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)

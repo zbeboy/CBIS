@@ -3,14 +3,13 @@ package com.school.cbis.web.users;
 import com.alibaba.fastjson.JSON;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
+import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.pojos.Grade;
-import com.school.cbis.domain.tables.pojos.Student;
-import com.school.cbis.domain.tables.pojos.Teacher;
-import com.school.cbis.domain.tables.pojos.Users;
+import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.MD5Utils;
+import com.school.cbis.vo.article.UsersArticleVo;
 import com.school.cbis.vo.users.StudentVo;
 import com.school.cbis.vo.users.TeacherVo;
 import org.jooq.*;
@@ -57,6 +56,12 @@ public class UsersController {
 
     @Resource
     private AuthoritiesService authoritiesService;
+
+    @Resource
+    private ArticleInfoService articleInfoService;
+
+    @Resource
+    private ArticleSubService articleSubService;
 
     /**
      * 学生管理界面
@@ -397,6 +402,75 @@ public class UsersController {
                 modelMap.addAttribute("studentInfo", new Student());
             }
             return "/maintainer/users/studentdata";
+        }
+    }
+
+    @RequestMapping("/maintainer/users/userArticle")
+    public String userArticle(UsersArticleVo usersArticleVo,ModelMap modelMap){
+        modelMap.addAttribute("usersArticleVo",usersArticleVo);
+        if(usersArticleVo.getUserType().equals(Wordbook.USER_TYPE_STUDENT)){
+            return "/maintainer/users/studentarticle";
+        } else {
+            return "/maintainer/users/teacherarticle";
+        }
+
+    }
+
+    @RequestMapping("/maintainer/users/userArticleData")
+    @ResponseBody
+    public AjaxData<UsersArticleVo> userArticleData(UsersArticleVo usersArticleVo){
+        AjaxData<UsersArticleVo> ajaxData = new AjaxData<>();
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        List<UsersArticleVo> usersArticleVos = new ArrayList<>();
+        if(tieId > 0){
+            int userTypeId = wordbook.getUserTypeMap().get(StringUtils.trimWhitespace(usersArticleVo.getUserType()));
+            Result<Record4<String ,String ,String ,Integer>> record4s = usersService.findByUserTypeIdAndTieIdWithArticle(usersArticleVo,userTypeId,tieId);
+            if(record4s.isNotEmpty()){
+                usersArticleVos = record4s.into(UsersArticleVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(usersArticleVo.getPageNum());
+                paginationData.setPageSize(usersArticleVo.getPageSize());
+                paginationData.setTotalDatas(usersService.findByUserTypeIdAndTieIdWithArticleCount(usersArticleVo,userTypeId,tieId));
+                ajaxData.success().listData(usersArticleVos).paginationData(paginationData);
+            } else {
+                ajaxData.success().listData(usersArticleVos);
+            }
+        } else {
+            ajaxData.success().listData(usersArticleVos);
+        }
+        return ajaxData;
+    }
+
+    /**
+     * 编辑个人简介
+     * @param modelMap
+     * @param username 账号
+     * @return
+     */
+    @RequestMapping("/maintainer/users/editUserArticle")
+    public String individualResume(ModelMap modelMap,@RequestParam("username") String username,@RequestParam("userType") String userType) {
+        ArticleInfo articleInfo = new ArticleInfo();
+        List<ArticleSub> articleSubs = null;
+        if(StringUtils.hasLength(username)){
+            Record record = articleInfoService.findByUsername(username);
+            if (!ObjectUtils.isEmpty(record)) {
+                articleInfo = record.into(ArticleInfo.class);
+                articleSubs = articleSubService.findByArticleInfoId(articleInfo.getId());
+            } else {
+                articleInfo = new ArticleInfo();
+            }
+        }
+        modelMap.addAttribute("articleinfo", articleInfo);
+        modelMap.addAttribute("articlesubinfo", articleSubs);
+        modelMap.addAttribute("username", username);
+        if(userType.equals(Wordbook.USER_TYPE_STUDENT)){
+            return "/maintainer/users/studentarticleupdate";
+        } else {
+            return "/maintainer/users/teacherarticleupdate";
         }
     }
 }
