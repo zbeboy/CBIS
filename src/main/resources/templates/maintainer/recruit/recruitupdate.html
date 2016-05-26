@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>添加招聘</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <!-- nice validator css-->
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
+    <script src="../src/js/components/datepicker.js" th:src="@{/js/plugin/components/datepicker.js}"></script>
+    <script src="../src/js/components/form-select.js" th:src="@{/js/plugin/components/form-select.js}"></script>
+    <script src="../src/js/components/autocomplete.js" th:src="@{/js/plugin/components/autocomplete.js}"></script>
+    <script src="../src/js/components/timepicker.js" th:src="@{/js/plugin/components/timepicker.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+    <!-- nice validator js-->
+    <script type="text/javascript" src="js/validator/jquery.validator.js"
+            th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh_CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+
+    <!--html editor-->
+    <link rel="stylesheet" href="../vendor/codemirror/codemirror.css" th:href="@{/css/codemirror/codemirror.css}"/>
+    <link rel="stylesheet" href="../vendor/codemirror/show-hint.css" th:href="@{/css/codemirror/show-hint.css}"/>
+    <script src="../vendor/codemirror/codemirror.js" th:src="@{/js/plugin/codemirror/codemirror.js}"></script>
+    <script src="../vendor/marked.js" th:src="@{/js/plugin/codemirror/marked.js}"></script>
+    <script src="../src/js/components/htmleditor.js" th:src="@{/js/plugin/components/htmleditor.js}"></script>
+
+    <!--chosen-->
+    <link href="js/jqueryUI/chosen/chosen.css" type="text/css" rel="stylesheet" th:href="@{/css/chosen/chosen.css}" />
+    <script type="text/javascript" src="js/jqueryUI/chosen/chosen.jquery.js" th:src="@{/js/plugin/chosen/chosen.jquery.min.js}"></script>
+
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#navrecruitmanager').addClass('uk-active');
+            $('#offcanvasrecruitmanager').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>平台管理</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::recruitnav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <h2 id="getstarted">添加招聘</h2>
+            <form class="uk-form uk-form-horizontal" th:action="@{/maintainer/recruit/updateRecruit}" method="post"
+                  data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
+                <input type="hidden" name="id" th:value="${recruit.id}" />
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="recruitTitle">标题</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="recruitTitle" name="recruitTitle"
+                               class="uk-form-width-large uk-width-1-1"
+                               placeholder="标题" data-rule="required;length[1~100];" th:value="${recruit.recruitTitle}" />
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="recruitDate">时间</label>
+                    <div class="uk-form-controls">
+                        <input type="text" readonly="readonly" id="recruitDate" name="recruitDate"
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}" th:value="${recruit.recruitDate}" />
+                        <input type="text" readonly="readonly" id="recruitTime" th:value="${recruit.recruitTime}" name="recruitTime" data-uk-timepicker=""/>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="recruitAddress">地址</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="recruitAddress" name="recruitAddress"
+                               class="uk-form-width-large uk-width-1-1"
+                               placeholder="地址" data-rule="required;length[1~500];" th:value="${recruit.recruitAddress}" />
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="fitMajor">适合专业</label>
+                    <div class="uk-form-controls">
+                        <select id="fitMajor" th:unless="${#lists.isEmpty(majors)}" style="width:80%;" data-placeholder="选择专业" name="fitMajor" multiple="multiple">
+                            <option th:each="m:${majors}" th:text="${m.majorName}" ></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="recruitContent">招聘内容</label>
+                    <div class="uk-form-controls">
+                        <textarea data-uk-htmleditor="{maxsplitsize:600}" id="recruitContent" name="recruitContent" th:text="${recruit.recruitContent}" ></textarea>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="textLink">原文链接</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="textLink" name="textLink" class="uk-form-width-large uk-width-1-1"
+                               placeholder="原文链接(选填)" th:value="${recruit.textLink}" />
+                    </div>
+                </div>
+                <div class="uk-form-row uk-text-center">
+                    <button type="submit" class="uk-button uk-button-primary">保存</button>
+                    &nbsp;&nbsp;
+                    <a class="uk-button" href="#" th:href="@{/maintainer/recruit/recruitManager}">返回</a>
+                </div>
+            </form>
+            <small class="uk-text-danger">注:请注意招聘内容真实性,勿发虚假不可靠的信息!</small>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var fitMajor = /*[[${recruit.fitMajor}]]*/ '';
+    /*]]>*/
+</script>
+
+<script th:src="@{/js/maintainer/recruit/recruitupdate.js}"
+        src="js/cbis/js/recruit/recruitupdate.js"></script>
+</body>
+</html>

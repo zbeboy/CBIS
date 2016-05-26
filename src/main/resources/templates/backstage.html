@@ -268,6 +268,34 @@
     </div>
 </div>
 
+<!-- 招聘管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="recruitnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">招聘管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navrecruitmanager"><a href="#" th:href="@{/maintainer/recruit/recruitManager}">招聘管理</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#recruit-id'}"><i class="uk-icon-reorder"></i>招聘管理</button>
+    </div>
+    <div id="recruit-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">招聘管理</li>
+                <li id="offcanvasrecruitmanager"><a href="#" th:href="@{/maintainer/recruit/recruitManager}">招聘管理</a> </li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <!-- 自主实习nav-->
 <div class="uk-width-medium-1-4" th:fragment="practicenav">
     <div class="uk-grid uk-hidden-small">

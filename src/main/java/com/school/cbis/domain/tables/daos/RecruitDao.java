@@ -94,9 +94,37 @@ public class RecruitDao extends DAOImpl<RecruitRecord, com.school.cbis.domain.ta
 	}
 
 	/**
+	 * Fetch records that have <code>recruit_title IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Recruit> fetchByRecruitTitle(String... values) {
+		return fetch(Recruit.RECRUIT.RECRUIT_TITLE, values);
+	}
+
+	/**
+	 * Fetch records that have <code>fit_major IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Recruit> fetchByFitMajor(String... values) {
+		return fetch(Recruit.RECRUIT.FIT_MAJOR, values);
+	}
+
+	/**
 	 * Fetch records that have <code>tie_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.Recruit> fetchByTieId(Integer... values) {
 		return fetch(Recruit.RECRUIT.TIE_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>username IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Recruit> fetchByUsername(String... values) {
+		return fetch(Recruit.RECRUIT.USERNAME, values);
+	}
+
+	/**
+	 * Fetch records that have <code>create_time IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.Recruit> fetchByCreateTime(Timestamp... values) {
+		return fetch(Recruit.RECRUIT.CREATE_TIME, values);
 	}
 }

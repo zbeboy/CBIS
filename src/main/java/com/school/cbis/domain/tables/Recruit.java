@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Recruit extends TableImpl<RecruitRecord> {
 
-	private static final long serialVersionUID = 46631597;
+	private static final long serialVersionUID = 1870222215;
 
 	/**
 	 * The reference instance of <code>cbis.recruit</code>
@@ -77,9 +77,29 @@ public class Recruit extends TableImpl<RecruitRecord> {
 	public final TableField<RecruitRecord, String> TEXT_LINK = createField("text_link", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "原文链接");
 
 	/**
+	 * The column <code>cbis.recruit.recruit_title</code>. 招聘标题
+	 */
+	public final TableField<RecruitRecord, String> RECRUIT_TITLE = createField("recruit_title", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "招聘标题");
+
+	/**
+	 * The column <code>cbis.recruit.fit_major</code>. 适合专业
+	 */
+	public final TableField<RecruitRecord, String> FIT_MAJOR = createField("fit_major", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "适合专业");
+
+	/**
 	 * The column <code>cbis.recruit.tie_id</code>.
 	 */
 	public final TableField<RecruitRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.recruit.username</code>.
+	 */
+	public final TableField<RecruitRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(64).nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.recruit.create_time</code>.
+	 */
+	public final TableField<RecruitRecord, Timestamp> CREATE_TIME = createField("create_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>cbis.recruit</code> table reference
@@ -132,7 +152,7 @@ public class Recruit extends TableImpl<RecruitRecord> {
 	 */
 	@Override
 	public List<ForeignKey<RecruitRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<RecruitRecord, ?>>asList(Keys.RECRUIT_IBFK_1);
+		return Arrays.<ForeignKey<RecruitRecord, ?>>asList(Keys.RECRUIT_IBFK_1, Keys.RECRUIT_IBFK_2);
 	}
 
 	/**

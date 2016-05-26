@@ -1,9 +1,6 @@
 package com.school.cbis.service;
 
-import com.school.cbis.domain.tables.records.ArticleTypeRecord;
-import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
-import com.school.cbis.domain.tables.records.TeachTypeRecord;
-import com.school.cbis.domain.tables.records.UserTypeRecord;
+import com.school.cbis.domain.tables.records.*;
 import org.jooq.Result;
 
 /**
@@ -37,4 +34,11 @@ public interface WordbookService {
      * @return 四大件类型
      */
     Result<FourItemsTypeRecord> fourItemsType();
+
+    /**
+     * 用于默认系使用
+     * @param tieName
+     * @return
+     */
+    TieRecord findByTieName(String tieName);
 }

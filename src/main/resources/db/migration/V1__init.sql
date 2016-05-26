@@ -192,8 +192,13 @@ create table recruit(
   recruit_address varchar(500) comment '招聘地点',
   recruit_content text comment '招聘内容',
   text_link varchar(1000) comment '原文链接',
+  recruit_title varchar(100) comment '招聘标题',
+  fit_major varchar(500) comment '适合专业',
   tie_id int not null,
-  foreign key(tie_id) references tie(id)
+  username varchar(64) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  foreign key(tie_id) references tie(id),
+  foreign key(username) references users(username)
 );
 
 create table teach_type(

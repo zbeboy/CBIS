@@ -1,10 +1,7 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.records.ArticleTypeRecord;
-import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
-import com.school.cbis.domain.tables.records.TeachTypeRecord;
-import com.school.cbis.domain.tables.records.UserTypeRecord;
+import com.school.cbis.domain.tables.records.*;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -45,5 +42,13 @@ public class WordbookServiceImpl implements WordbookService {
     @Override
     public Result<FourItemsTypeRecord> fourItemsType() {
         return create.selectFrom(Tables.FOUR_ITEMS_TYPE).fetch();
+    }
+
+    @Override
+    public TieRecord findByTieName(String tieName) {
+        TieRecord tieRecord = create.selectFrom(Tables.TIE)
+                .where(Tables.TIE.TIE_NAME.eq(tieName))
+                .fetchOne();
+        return tieRecord;
     }
 }

@@ -5,6 +5,7 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
+import com.school.cbis.domain.tables.records.TieRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.CaptchaServiceSingleton;
 import com.school.cbis.util.RandomUtils;
@@ -82,12 +83,13 @@ public class MainController {
 
     /**
      * 主页
-     *
+     * ##系入口根目录，若无系id传入则使用默认系
+     * @param modelMap
+     * @param tieId
      * @return
      */
     @RequestMapping("/")
-    public String root(ModelMap modelMap) {
-        int tieId = 0;
+    public String root(ModelMap modelMap,@RequestParam(value = "tieId",defaultValue = "0",required = false) int tieId) {
         int tieIntroduceArticleInfoId = 0;//系简介
         if (!StringUtils.isEmpty(usersService.getUserName())) {
             Record record = usersService.findAll(usersService.getUserName());
@@ -98,8 +100,11 @@ public class MainController {
                 }
             }
         } else {
-            tieId = 1;
-
+            if(tieId == 0){
+                //使用默认系
+                TieRecord tieRecord = wordbook.getTieInfo();
+                tieId = tieRecord.getId();
+            }
             //系简介
             Tie tie = tieService.findById(tieId);
             if (!StringUtils.isEmpty(tie) && !StringUtils.isEmpty(tie.getTieIntroduceArticleInfoId())) {

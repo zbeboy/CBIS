@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>系招聘</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+
+    <!-- nice validator css -->
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+
+    <!-- nice validator js -->
+    <script type="text/javascript" src="js/validator/jquery.validator.js"
+            th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh_CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4">
+            <div class="uk-panel uk-panel-box uk-hidden-small"
+                 data-uk-sticky="{top:70,media: '(min-width: 640px) and (orientation: landscape)'}">
+                <ul class="uk-nav uk-nav-side" th:unless="${#lists.isEmpty(recruitListVoList)}">
+                    <li class="uk-nav-header">最新招聘</li>
+                    <li th:each="rl:${recruitListVoList}" class="uk-text-truncate" >
+                        <a href="#" th:text="${rl.recruitTitle}" th:href="@{/user/recruit/recruitShowDetailed}+'?id='+${rl.id}">列表1</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+                <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>菜单
+                </button>
+            </div>
+            <div id="my-id" class="uk-offcanvas uk-visible-small">
+                <div class="uk-offcanvas-bar">
+                    <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav=""
+                        th:unless="${#lists.isEmpty(recruitListVoList)}">
+                        <h3 class="uk-panel-title uk-text-center">最新招聘</h3>
+                        <li th:each="rl:${recruitListVoList}" class="uk-text-truncate">
+                            <a href="#" th:text="${rl.recruitTitle}" th:href="@{/user/recruit/recruitShowDetailed}+'?id='+${rl.id}" >列表1</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-medium-3-4">
+            <form th:action="@{/user/recruit/recruitShow}" class="uk-form uk-margin" id="searchForm">
+                <fieldset data-uk-margin="">
+                    <legend>招聘信息</legend>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1 uk-text-right">
+                            <input type="text" placeholder="标题" id="recruitTitle"
+                                   th:value="${recruitListVo.recruitTitle}"
+                                   name="recruitTitle" class="uk-margin-small-top"/>
+                            <input type="text" placeholder="专业" th:value="${recruitListVo.fitMajor}"
+                                   id="fitMajor" name="fitMajor" class="uk-margin-small-top"/>
+                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索
+                            </button>
+                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();"><i
+                                    class="uk-icon-refresh"></i>重置
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="uk-grid" data-uk-grid-margin="">
+                <div class="uk-width-medium-1-1" id="tableData">
+                </div>
+            </div>
+            <ul class="uk-pagination"></ul>
+        </div>
+    </div>
+    <div id="loginmodal" th:include="commons::loginmodal" class="uk-modal">
+
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    /*]]>*/
+</script>
+<script th:src="@{/js/user/recruit/recruitshow.js}"
+        src="js/cbis/js/recruit/recruitshow.js"></script>
+<script src="js/plugin/jcaptcha/jcaptcha.js" th:src="@{/js/plugin/jcaptcha/jcaptcha.js}"></script>
+</body>
+</html>

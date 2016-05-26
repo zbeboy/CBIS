@@ -25,14 +25,18 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Recruit implements Serializable {
 
-	private static final long serialVersionUID = 1852622867;
+	private static final long serialVersionUID = 608982260;
 
 	private Integer   id;
 	private Timestamp recruitTime;
 	private String    recruitAddress;
 	private String    recruitContent;
 	private String    textLink;
+	private String    recruitTitle;
+	private String    fitMajor;
 	private Integer   tieId;
+	private String    username;
+	private Timestamp createTime;
 
 	public Recruit() {}
 
@@ -42,7 +46,11 @@ public class Recruit implements Serializable {
 		this.recruitAddress = value.recruitAddress;
 		this.recruitContent = value.recruitContent;
 		this.textLink = value.textLink;
+		this.recruitTitle = value.recruitTitle;
+		this.fitMajor = value.fitMajor;
 		this.tieId = value.tieId;
+		this.username = value.username;
+		this.createTime = value.createTime;
 	}
 
 	public Recruit(
@@ -51,14 +59,22 @@ public class Recruit implements Serializable {
 		String    recruitAddress,
 		String    recruitContent,
 		String    textLink,
-		Integer   tieId
+		String    recruitTitle,
+		String    fitMajor,
+		Integer   tieId,
+		String    username,
+		Timestamp createTime
 	) {
 		this.id = id;
 		this.recruitTime = recruitTime;
 		this.recruitAddress = recruitAddress;
 		this.recruitContent = recruitContent;
 		this.textLink = textLink;
+		this.recruitTitle = recruitTitle;
+		this.fitMajor = fitMajor;
 		this.tieId = tieId;
+		this.username = username;
+		this.createTime = createTime;
 	}
 
 	@NotNull
@@ -106,6 +122,24 @@ public class Recruit implements Serializable {
 		this.textLink = textLink;
 	}
 
+	@Size(max = 100)
+	public String getRecruitTitle() {
+		return this.recruitTitle;
+	}
+
+	public void setRecruitTitle(String recruitTitle) {
+		this.recruitTitle = recruitTitle;
+	}
+
+	@Size(max = 500)
+	public String getFitMajor() {
+		return this.fitMajor;
+	}
+
+	public void setFitMajor(String fitMajor) {
+		this.fitMajor = fitMajor;
+	}
+
 	@NotNull
 	public Integer getTieId() {
 		return this.tieId;
@@ -113,6 +147,25 @@ public class Recruit implements Serializable {
 
 	public void setTieId(Integer tieId) {
 		this.tieId = tieId;
+	}
+
+	@NotNull
+	@Size(max = 64)
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@NotNull
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 	@Override
@@ -124,7 +177,11 @@ public class Recruit implements Serializable {
 		sb.append(", ").append(recruitAddress);
 		sb.append(", ").append(recruitContent);
 		sb.append(", ").append(textLink);
+		sb.append(", ").append(recruitTitle);
+		sb.append(", ").append(fitMajor);
 		sb.append(", ").append(tieId);
+		sb.append(", ").append(username);
+		sb.append(", ").append(createTime);
 
 		sb.append(")");
 		return sb.toString();

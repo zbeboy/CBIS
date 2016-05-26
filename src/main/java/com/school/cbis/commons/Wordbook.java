@@ -1,10 +1,8 @@
 package com.school.cbis.commons;
 
 import com.school.cbis.data.SelectData;
-import com.school.cbis.domain.tables.records.ArticleTypeRecord;
-import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
-import com.school.cbis.domain.tables.records.TeachTypeRecord;
-import com.school.cbis.domain.tables.records.UserTypeRecord;
+import com.school.cbis.domain.tables.records.*;
+import com.school.cbis.service.TieService;
 import com.school.cbis.service.WordbookService;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -118,6 +116,13 @@ public class Wordbook {
     @Value("${cbis.server.address}")
     public String serverAddress;
 
+    //默认系
+    @Value("${cbis.default.tie.name}")
+    public String defaultTie;
+
+    //默认系信息
+    private TieRecord tieInfo;
+
     // security user
     @Value("${security.user.name}")
     public String securityUsername;
@@ -203,5 +208,10 @@ public class Wordbook {
             fourItemsTypeMap.put(r.getName(), r.getId());
         });
         return fourItemsTypeMap;
+    }
+
+    public TieRecord getTieInfo() {
+        this.tieInfo = wordbookService.findByTieName(defaultTie);
+        return tieInfo;
     }
 }

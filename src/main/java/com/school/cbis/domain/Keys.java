@@ -238,6 +238,7 @@ public class Keys {
 	public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = ForeignKeys0.PLACE_FILE_INFO_IBFK_2;
 	public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = ForeignKeys0.PLACE_FILE_TITLE_IBFK_1;
 	public static final ForeignKey<RecruitRecord, TieRecord> RECRUIT_IBFK_1 = ForeignKeys0.RECRUIT_IBFK_1;
+	public static final ForeignKey<RecruitRecord, UsersRecord> RECRUIT_IBFK_2 = ForeignKeys0.RECRUIT_IBFK_2;
 	public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = ForeignKeys0.STUDENT_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2;
@@ -385,6 +386,7 @@ public class Keys {
 		public static final ForeignKey<PlaceFileInfoRecord, UsersRecord> PLACE_FILE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.FILE_USER);
 		public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_INFO_PRIMARY, PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.PLACE_FILE_INFO_ID);
 		public static final ForeignKey<RecruitRecord, TieRecord> RECRUIT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Recruit.RECRUIT, Recruit.RECRUIT.TIE_ID);
+		public static final ForeignKey<RecruitRecord, UsersRecord> RECRUIT_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Recruit.RECRUIT, Recruit.RECRUIT.USERNAME);
 		public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, Student.STUDENT, Student.STUDENT.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
