@@ -448,10 +448,10 @@ public class UsersController {
                 paginationData.setTotalDatas(usersService.findByUserTypeIdAndTieIdWithArticleCount(usersArticleVo,userTypeId,tieId));
                 ajaxData.success().listData(usersArticleVos).paginationData(paginationData);
             } else {
-                ajaxData.success().listData(usersArticleVos);
+                ajaxData.fail().listData(usersArticleVos);
             }
         } else {
-            ajaxData.success().listData(usersArticleVos);
+            ajaxData.fail().listData(usersArticleVos);
         }
         return ajaxData;
     }

@@ -12,7 +12,6 @@ import com.school.cbis.domain.tables.AutonomousPracticeContent;
 import com.school.cbis.domain.tables.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
-import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
@@ -25,11 +24,13 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
+import com.school.cbis.domain.tables.Recruit;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
 import com.school.cbis.domain.tables.StudentPoor;
 import com.school.cbis.domain.tables.SystemInform;
+import com.school.cbis.domain.tables.SystemLog;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
 import com.school.cbis.domain.tables.TeachTaskInfo;
@@ -70,7 +71,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -1951692851;
+	private static final long serialVersionUID = -1137463611;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -101,7 +102,6 @@ public class Cbis extends SchemaImpl {
 			AutonomousPracticeHead.AUTONOMOUS_PRACTICE_HEAD,
 			AutonomousPracticeInfo.AUTONOMOUS_PRACTICE_INFO,
 			AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE,
-			BringIn.BRING_IN,
 			ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO,
 			FourItems.FOUR_ITEMS,
 			FourItemsType.FOUR_ITEMS_TYPE,
@@ -114,11 +114,13 @@ public class Cbis extends SchemaImpl {
 			PlaceFileContent.PLACE_FILE_CONTENT,
 			PlaceFileInfo.PLACE_FILE_INFO,
 			PlaceFileTitle.PLACE_FILE_TITLE,
+			Recruit.RECRUIT,
 			SchemaVersion.SCHEMA_VERSION,
 			Student.STUDENT,
 			StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO,
 			StudentPoor.STUDENT_POOR,
 			SystemInform.SYSTEM_INFORM,
+			SystemLog.SYSTEM_LOG,
 			Teacher.TEACHER,
 			TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO,
 			TeachCourseInfo.TEACH_COURSE_INFO,

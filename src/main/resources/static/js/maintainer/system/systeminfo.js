@@ -8,31 +8,43 @@
  */
 function initPage(data){
     //health
-    var health = JSON.parse(data.single.health);
-    if(health.status === 'UP'){
-        $('#sysStatus').text('正常');
+    if(data.single.health.length>0){
+        var health = JSON.parse(data.single.health);
+        if(health.status === 'UP'){
+            $('#sysStatus').text('正常');
+        } else {
+            $('#sysStatus').addClass('uk-badge-danger');
+            $('#sysStatus').text('异常');
+        }
+
+        if(health.diskSpace.status === 'UP'){
+            $('#sysDiskStatus').text('正常');
+        } else {
+            $('#sysDiskStatus').addClass('uk-badge-danger');
+            $('#sysDiskStatus').text('异常');
+        }
+
+        $('#sysDiskTotal').text(health.diskSpace.total + "B")
+        $('#sysDiskFree').text(health.diskSpace.free + "B");
+
+        if(health.db.status === 'UP'){
+            $('#sysDbStatus').text('正常');
+        } else {
+            $('#sysDbStatus').addClass('uk-badge-danger');
+            $('#sysDbStatus').text('异常');
+        }
+        $('#sysDb').text(health.db.database);
     } else {
         $('#sysStatus').addClass('uk-badge-danger');
         $('#sysStatus').text('异常');
-    }
 
-    if(health.diskSpace.status === 'UP'){
-        $('#sysDiskStatus').text('正常');
-    } else {
         $('#sysDiskStatus').addClass('uk-badge-danger');
         $('#sysDiskStatus').text('异常');
-    }
 
-    $('#sysDiskTotal').text(health.diskSpace.total + "B")
-    $('#sysDiskFree').text(health.diskSpace.free + "B");
-
-    if(health.db.status === 'UP'){
-        $('#sysDbStatus').text('正常');
-    } else {
         $('#sysDbStatus').addClass('uk-badge-danger');
         $('#sysDbStatus').text('异常');
     }
-    $('#sysDb').text(health.db.database);
+
 
     //env
     var env = JSON.parse(data.single.env);

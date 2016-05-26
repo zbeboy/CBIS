@@ -107,6 +107,7 @@ public class TeacherServiceImpl implements TeacherService {
         return count.value1();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void save(Teacher teacher) {
         teacherDao.insert(teacher);

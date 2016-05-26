@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailboxCount implements Serializable {
 
-	private static final long serialVersionUID = 1043223203;
+	private static final long serialVersionUID = 182491068;
 
 	private Integer   id;
 	private String    acceptEmail;
@@ -98,6 +98,7 @@ public class MailboxCount implements Serializable {
 		this.content = content;
 	}
 
+	@NotNull
 	public Timestamp getSendTime() {
 		return this.sendTime;
 	}

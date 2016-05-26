@@ -245,6 +245,7 @@
                 <ul class="uk-nav uk-nav-side" data-uk-nav="">
                     <li id="navsystemmanager"><a href="#" th:href="@{/maintainer/system/systemManager}">系统信息</a> </li>
                     <li id="navsystemmetrics"><a href="#" th:href="@{/maintainer/system/systemMetrics}">系统指标</a> </li>
+                    <li id="navsystemlog"><a href="#" th:href="@{/maintainer/system/systemLog}">系统日志</a> </li>
                 </ul>
             </div>
         </div>
@@ -258,6 +259,7 @@
                 <li class="uk-nav-header">系统管理</li>
                 <li id="offcanvassystemmanager"><a href="#" th:href="@{/maintainer/system/systemManager}">系统信息</a> </li>
                 <li id="offcanvassystemmetrics"><a href="#" th:href="@{/maintainer/system/systemMetrics}">系统指标</a> </li>
+                <li id="offcanvassystemlog"><a href="#" th:href="@{/maintainer/system/systemLog}">系统日志</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

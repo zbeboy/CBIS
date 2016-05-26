@@ -12,7 +12,6 @@ import com.school.cbis.domain.tables.AutonomousPracticeContent;
 import com.school.cbis.domain.tables.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
-import com.school.cbis.domain.tables.BringIn;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.FourItemsType;
@@ -25,11 +24,13 @@ import com.school.cbis.domain.tables.PersistentLogins;
 import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
+import com.school.cbis.domain.tables.Recruit;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
 import com.school.cbis.domain.tables.StudentPoor;
 import com.school.cbis.domain.tables.SystemInform;
+import com.school.cbis.domain.tables.SystemLog;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
 import com.school.cbis.domain.tables.TeachTaskInfo;
@@ -104,11 +105,6 @@ public class Tables {
 	public static final AutonomousPracticeTemplate AUTONOMOUS_PRACTICE_TEMPLATE = com.school.cbis.domain.tables.AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE;
 
 	/**
-	 * The table cbis.bring_in
-	 */
-	public static final BringIn BRING_IN = com.school.cbis.domain.tables.BringIn.BRING_IN;
-
-	/**
 	 * The table cbis.classroom_course_timetable_info
 	 */
 	public static final ClassroomCourseTimetableInfo CLASSROOM_COURSE_TIMETABLE_INFO = com.school.cbis.domain.tables.ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO;
@@ -169,6 +165,11 @@ public class Tables {
 	public static final PlaceFileTitle PLACE_FILE_TITLE = com.school.cbis.domain.tables.PlaceFileTitle.PLACE_FILE_TITLE;
 
 	/**
+	 * The table cbis.recruit
+	 */
+	public static final Recruit RECRUIT = com.school.cbis.domain.tables.Recruit.RECRUIT;
+
+	/**
 	 * The table cbis.schema_version
 	 */
 	public static final SchemaVersion SCHEMA_VERSION = com.school.cbis.domain.tables.SchemaVersion.SCHEMA_VERSION;
@@ -192,6 +193,11 @@ public class Tables {
 	 * The table cbis.system_inform
 	 */
 	public static final SystemInform SYSTEM_INFORM = com.school.cbis.domain.tables.SystemInform.SYSTEM_INFORM;
+
+	/**
+	 * The table cbis.system_log
+	 */
+	public static final SystemLog SYSTEM_LOG = com.school.cbis.domain.tables.SystemLog.SYSTEM_LOG;
 
 	/**
 	 * The table cbis.teacher

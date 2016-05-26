@@ -78,10 +78,10 @@ public class GradeManagerController {
                 paginationData.setTotalDatas(gradeService.findAllByPageCount(gradeVo, tieId));
                 ajaxData.success().listData(gradeVos).paginationData(paginationData);
             } else {
-                ajaxData.success().listData(gradeVos);
+                ajaxData.fail().listData(gradeVos);
             }
         } else {
-            ajaxData.success().listData(gradeVos);
+            ajaxData.fail().listData(gradeVos);
         }
         return ajaxData;
     }

@@ -88,10 +88,10 @@ public class MajorManagerController {
                 paginationData.setTotalDatas(majorService.findByTieIdCount(majorVo, tieId));
                 ajaxData.success().listData(majorVos).paginationData(paginationData);
             } else {
-                ajaxData.success().listData(majorVos);
+                ajaxData.fail().listData(majorVos);
             }
         } else {
-            ajaxData.success().listData(majorVos);
+            ajaxData.fail().listData(majorVos);
         }
         return ajaxData;
     }

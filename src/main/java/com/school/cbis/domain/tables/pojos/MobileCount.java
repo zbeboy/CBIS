@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MobileCount implements Serializable {
 
-	private static final long serialVersionUID = -2076295921;
+	private static final long serialVersionUID = 2046118166;
 
 	private Integer   id;
 	private String    acceptUser;
@@ -85,6 +85,7 @@ public class MobileCount implements Serializable {
 		this.content = content;
 	}
 
+	@NotNull
 	public Timestamp getSendTime() {
 		return this.sendTime;
 	}

@@ -186,10 +186,12 @@ create table system_inform(
   system_inform_show int
 );
 
-create table bring_in(
+create table recruit(
   id int not null primary key auto_increment,
-  release_article_article_info_id int,
-  HR_email varchar(100),
+  recruit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '招聘时间',
+  recruit_address varchar(500) comment '招聘地点',
+  recruit_content text comment '招聘内容',
+  text_link varchar(1000) comment '原文链接',
   tie_id int not null,
   foreign key(tie_id) references tie(id)
 );
@@ -468,7 +470,7 @@ create table mailbox_count(
   accept_email varchar(64) not null comment '接收邮箱',
   subject varchar(500) comment '邮箱标题',
   content text comment '内容',
-  send_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  send_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   accept_user varchar(64) not null comment '接收者',
   foreign key (accept_user) references users(username)
 );
@@ -477,9 +479,19 @@ create table mobile_count(
   id int not null primary key auto_increment,
   accept_user varchar(64) not null comment '接收者',
   content text comment '内容',
-  send_time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  send_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   accept_mobile varchar(64) not null comment '接收手机',
   foreign key (accept_user) references users(username)
+);
+
+create table system_log(
+  id int not null primary key auto_increment,
+  username varchar(64) not null comment '操作人',
+  operation_behavior varchar(200) comment '操作行为',
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  tie_id int not null,
+  foreign key (username) references users(username),
+  foreign key (tie_id) references tie(id)
 );
 
 insert into user_type(name) values('学生');

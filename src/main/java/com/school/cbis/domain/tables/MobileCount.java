@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MobileCount extends TableImpl<MobileCountRecord> {
 
-	private static final long serialVersionUID = -1465153575;
+	private static final long serialVersionUID = 690067960;
 
 	/**
 	 * The reference instance of <code>cbis.mobile_count</code>
@@ -69,7 +69,7 @@ public class MobileCount extends TableImpl<MobileCountRecord> {
 	/**
 	 * The column <code>cbis.mobile_count.send_time</code>.
 	 */
-	public final TableField<MobileCountRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<MobileCountRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.mobile_count.accept_mobile</code>. 接收手机

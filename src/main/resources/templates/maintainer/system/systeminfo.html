@@ -27,7 +27,6 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
-    <script src="js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
 
@@ -88,7 +87,7 @@
                         <p>
                         <h3>数据库情况:</h3>
                         <ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-2">
-                            <li>状态:<span id="sysDbStatus" ></span></li>
+                            <li>状态:<span class="uk-badge" id="sysDbStatus" ></span></li>
                             <li>数据库:<span id="sysDb"></span></li>
                         </ul>
                         </p>

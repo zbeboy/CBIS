@@ -32,7 +32,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailboxCountRecord extends UpdatableRecordImpl<MailboxCountRecord> implements Record6<Integer, String, String, String, Timestamp, String> {
 
-	private static final long serialVersionUID = 1475660587;
+	private static final long serialVersionUID = -320804860;
 
 	/**
 	 * Setter for <code>cbis.mailbox_count.id</code>.
@@ -105,6 +105,7 @@ public class MailboxCountRecord extends UpdatableRecordImpl<MailboxCountRecord> 
 	/**
 	 * Getter for <code>cbis.mailbox_count.send_time</code>.
 	 */
+	@NotNull
 	public Timestamp getSendTime() {
 		return (Timestamp) getValue(4);
 	}

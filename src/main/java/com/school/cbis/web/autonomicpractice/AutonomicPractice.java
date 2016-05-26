@@ -79,6 +79,9 @@ public class AutonomicPractice {
     @Resource
     private Wordbook wordbook;
 
+    @Resource
+    private SystemLogService systemLogService;
+
     /**
      * 自主实习填报设置
      *
@@ -116,10 +119,10 @@ public class AutonomicPractice {
                 paginationData.setTotalDatas(autonomousPracticeInfoService.findByTieIdAndCount(reportSettingVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                ajaxData.success().listData(list);
+                ajaxData.fail().listData(list);
             }
         } else {
-            ajaxData.success().listData(list);
+            ajaxData.fail().listData(list);
         }
 
         return ajaxData;
@@ -204,6 +207,13 @@ public class AutonomicPractice {
         autonomousPracticeInfo.setUsersId(usersService.getUserName());
         autonomousPracticeInfo.setTieId(tieId);
         autonomousPracticeInfoService.save(autonomousPracticeInfo);
+
+        SystemLog systemLog = new SystemLog();
+        systemLog.setTieId(tieId);
+        systemLog.setUsername(usersService.getUserName());
+        systemLog.setOperationBehavior("添加自主实习填报设置 : "+autonomousPracticeInfo.getAutonomousPracticeTitle()+"!");
+        systemLogService.save(systemLog);
+
         return "redirect:/administrator/autonomicpractice/reportsettingList";
     }
 
@@ -332,10 +342,10 @@ public class AutonomicPractice {
                 paginationData.setTotalDatas(autonomousPracticeTemplateService.findAllAndCount(templateVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
-                ajaxData.success().listData(list);
+                ajaxData.fail().listData(list);
             }
         } else {
-            ajaxData.success().listData(list);
+            ajaxData.fail().listData(list);
         }
 
         return ajaxData;
@@ -487,6 +497,14 @@ public class AutonomicPractice {
             autonomousPracticeTemplate.setUsersId(usersService.getUserName());
             autonomousPracticeTemplate.setTieId(tieId);
             int id = autonomousPracticeTemplateService.save(autonomousPracticeTemplate);
+
+
+            SystemLog systemLog = new SystemLog();
+            systemLog.setTieId(tieId);
+            systemLog.setUsername(usersService.getUserName());
+            systemLog.setOperationBehavior("添加自主实习模板"+templateName+"成功!");
+            systemLogService.save(systemLog);
+
             return new AjaxData().success().obj(id);
         } else {
             return new AjaxData().fail().msg("请填写模板名!");
@@ -505,9 +523,19 @@ public class AutonomicPractice {
     public AjaxData<AutonomousPracticeHead> updateAutonomicPracticeTemplate(@RequestParam("id") int templateId, @RequestParam("templateName") String templateName) {
         if (StringUtils.hasLength(templateName)) {
             AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateService.findById(templateId);
+
+            SystemLog systemLog = new SystemLog();
+            systemLog.setTieId(autonomousPracticeTemplate.getTieId());
+            systemLog.setUsername(usersService.getUserName());
+            systemLog.setOperationBehavior("更新自主实习模板标题"+autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle()+"为"+templateName+"!");
+            systemLogService.save(systemLog);
+
             autonomousPracticeTemplate.setAutonomousPracticeTemplateTitle(templateName);
             autonomousPracticeTemplateService.update(autonomousPracticeTemplate);
             List<AutonomousPracticeHead> autonomousPracticeHeads = autonomousPracticeHeadService.findByAutonomousPracticeTemplateId(templateId);
+
+
+
             return new AjaxData<AutonomousPracticeHead>().success().obj(templateId).listData(autonomousPracticeHeads);
         } else {
             return new AjaxData<AutonomousPracticeHead>().fail().msg("请填写模板名!");

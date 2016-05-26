@@ -77,6 +77,9 @@ public class MainController {
     @Resource
     private MailboxCountService mailboxCountService;
 
+    @Resource
+    private SystemLogService systemLogService;
+
     /**
      * 主页
      *
@@ -172,6 +175,12 @@ public class MainController {
         if (StringUtils.isEmpty(usersService.getUserName())) {
             return "/login";
         }
+        Record record = usersService.findAll(usersService.getUserName());
+        SystemLog systemLog = new SystemLog();
+        systemLog.setUsername(usersService.getUserName());
+        systemLog.setTieId(record.getValue(Tables.TIE.ID));
+        systemLog.setOperationBehavior("登录后台管理!");
+        systemLogService.save(systemLog);
         return "/student/backstage";
     }
 

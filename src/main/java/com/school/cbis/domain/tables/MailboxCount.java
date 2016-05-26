@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailboxCount extends TableImpl<MailboxCountRecord> {
 
-	private static final long serialVersionUID = -1903647375;
+	private static final long serialVersionUID = 1101241296;
 
 	/**
 	 * The reference instance of <code>cbis.mailbox_count</code>
@@ -74,7 +74,7 @@ public class MailboxCount extends TableImpl<MailboxCountRecord> {
 	/**
 	 * The column <code>cbis.mailbox_count.send_time</code>.
 	 */
-	public final TableField<MailboxCountRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final TableField<MailboxCountRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.mailbox_count.accept_user</code>. 接收者
