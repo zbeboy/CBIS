@@ -7,12 +7,15 @@ import org.jooq.Record;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Result;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-05.
  */
+@CacheConfig(cacheNames = "users")
 public interface UsersService {
     /**
      * 从 spring security 获取用户名
@@ -76,6 +79,7 @@ public interface UsersService {
      * @param username
      * @return 用户完整有效信息
      */
+    @Cacheable(cacheNames = "userAllInfo")
     Record findAll(String username);
 
     /**

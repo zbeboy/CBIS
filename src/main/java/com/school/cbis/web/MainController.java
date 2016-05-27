@@ -90,15 +90,23 @@ public class MainController {
     private RecruitService recruitService;
 
     /**
-     * 主页
+     *  主页
      * ## 本项目只针对一个系,不再提供多个系扩展
      * ## 本方法利用 thymeleaf 缓存
+     * @param modelMap
+     * @param tieId 提供系接入
+     * @param session
      * @return
      */
     @RequestMapping("/")
-    public String root(ModelMap modelMap, HttpSession session) {
-        TieRecord tieRecord = wordbook.getTieInfo();
-        Tie tie = tieRecord.into(Tie.class);
+    public String root(ModelMap modelMap,@RequestParam(value = "tieId",defaultValue = "0",required = false) int tieId, HttpSession session) {
+        Tie tie = null;
+        if(tieId == 0){
+            TieRecord tieRecord = wordbook.getTieInfo();
+            tie = tieRecord.into(Tie.class);
+        } else {
+            tie = tieService.findById(tieId);
+        }
         /*
         就目前情况使用session是最为保险的做法，但不知道该session与spring security session是否是同一个，否则若提前失效...
          */
@@ -161,9 +169,9 @@ public class MainController {
         recruitListVo1.setPageNum(0);
         recruitListVo1.setPageSize(4);
         List<RecruitListVo> recruitListVoList = new ArrayList<>();
-        if(!ObjectUtils.isEmpty(tieRecord)){
+        if(!ObjectUtils.isEmpty(tie)){
             Result<Record11<Integer, Integer, Timestamp, String, String, String, String, String, String, Timestamp, String>>
-                    recruitRecords = recruitService.findByTieIdAndPage(recruitListVo1,tieRecord.getId());
+                    recruitRecords = recruitService.findByTieIdAndPage(recruitListVo1,tie.getId());
             if(recruitRecords.isNotEmpty()){
                 recruitListVoList = recruitRecords.into(RecruitListVo.class);
             }
@@ -178,7 +186,7 @@ public class MainController {
      * @return
      */
     @RequestMapping("/backstage")
-    public String backstage() {
+    public String backstage(HttpSession session) {
         if (StringUtils.isEmpty(usersService.getUserName())) {
             return "/login";
         }
@@ -188,6 +196,9 @@ public class MainController {
         systemLog.setTieId(record.getValue(Tables.TIE.ID));
         systemLog.setOperationBehavior("登录后台管理!");
         systemLogService.save(systemLog);
+
+        Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+        session.setAttribute("tieInfo",tie);
         return "/student/backstage";
     }
 

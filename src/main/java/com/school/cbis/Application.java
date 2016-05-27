@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
@@ -38,6 +39,7 @@ import javax.sql.DataSource;
 
 @EnableAuthorizationServer
 @EnableAutoConfiguration
+@EnableCaching
 @ComponentScan
 public class Application extends SpringBootServletInitializer {
 

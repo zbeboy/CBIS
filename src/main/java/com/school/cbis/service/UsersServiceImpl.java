@@ -129,7 +129,7 @@ public class UsersServiceImpl implements UsersService {
     public Record findAll(String username) {
         //获取用户类型
         Integer userTypeId = getUserTypeId();
-
+        log.debug(" catch =========================================== catch ");
         if (wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER) == userTypeId) {//教师类型
             Record record = create.select()
                     .from(Tables.TEACHER)
