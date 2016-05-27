@@ -116,10 +116,6 @@ public class Wordbook {
     @Value("${cbis.server.address}")
     public String serverAddress;
 
-    //默认系
-    @Value("${cbis.default.tie.name}")
-    public String defaultTie;
-
     //默认系信息
     private TieRecord tieInfo;
 
@@ -211,7 +207,7 @@ public class Wordbook {
     }
 
     public TieRecord getTieInfo() {
-        this.tieInfo = wordbookService.findByTieName(defaultTie);
+        this.tieInfo = wordbookService.findTieInfo();
         return tieInfo;
     }
 }

@@ -45,9 +45,8 @@ public class WordbookServiceImpl implements WordbookService {
     }
 
     @Override
-    public TieRecord findByTieName(String tieName) {
+    public TieRecord findTieInfo() {
         TieRecord tieRecord = create.selectFrom(Tables.TIE)
-                .where(Tables.TIE.TIE_NAME.eq(tieName))
                 .fetchOne();
         return tieRecord;
     }

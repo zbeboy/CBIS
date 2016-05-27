@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="keywords" content="" th:content="#{web_keywords}" />
-    <meta http-equiv="description" content="" th:content="#{web_description}" />
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
     <!-- csrf -->
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
 
     <!-- nice validator css -->
-    <link rel="stylesheet" href="js/validator/jquery.validator.css" th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -40,7 +41,8 @@
     <!-- nice validator js -->
     <script type="text/javascript" src="js/validator/jquery.validator.js"
             th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
-    <script type="text/javascript" src="js/validator/local/zh_CN.js" th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh_CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
 
     <script>
         $(function () {
@@ -62,15 +64,15 @@
     <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-2">
             <div class="uk-slidenav-position" data-uk-slideshow="{autoplay:true,kenburns:true}">
-                <ul class="uk-slideshow uk-overlay-active"  th:unless="${#lists.isEmpty(tieElegantData)}">
+                <ul class="uk-slideshow uk-overlay-active" th:unless="${#lists.isEmpty(tieElegantData)}">
                     <li th:each="te:${tieElegantData}">
                         <img th:src="${te.articlePhotoUrl}" src="images/placeholder_800x400_3.jpg" width="800"
                              height="400" alt=""/>
                         <div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-overlay-slide-bottom">
-                            <h3 th:text="${te.bigTitle}">信息工程系统</h3>
+                            <h3 th:text="${te.bigTitle}"></h3>
                             <p class="uk-text-truncate">
                                 <a href="#" th:href=" @{/user/tie/tieElegantShow}+'?id='+${te.id} "
-                                   th:text="${te.articleContent}">迎新活动1</a>
+                                   th:text="${te.articleContent}"></a>
                             </p>
                         </div>
                     </li>
@@ -82,8 +84,8 @@
                    style="color: rgba(255,255,255,0.4)"></a></div>
         </div>
         <div class="uk-width-medium-1-2">
-            <article class="uk-article">
-                <h1 class="uk-article-title" th:text="${tieIntroduce.bigTitle}">信息工程系</h1>
+            <article class="uk-article" th:if="${tieIntroduce != null}">
+                <h1 class="uk-article-title" th:text="${tieIntroduce.bigTitle}"></h1>
                 <p class="uk-article-meta">由 <span th:text="${tieIntroduce.articleWriter}"></span> 撰写于 <span
                         th:text="${tieIntroduce.date}"></span></p>
                 <p th:text="${tieIntroduce.articleContent}"></p>
@@ -95,19 +97,21 @@
     <div class="uk-grid" data-uk-grid-margin="">
         <div class="uk-width-medium-1-3">
             <h1>专业</h1>
-            <ul class="uk-list uk-list-line" th:unless="${#lists.isEmpty(majorInfo)}">
-                <li th:each="mi:${majorInfo}">
-                    <p style="display:none;" th:text="${mi.majorId}"></p>
-                    <p style="display:none;" th:text="${mi.articleInfoId}"></p>
-                    <dl class="uk-description-list-line">
-                        <dt>
-                            <a href="#" th:text="${mi.majorName}" onclick="toMajor(this);"></a>
-                        </dt>
-                        <dd th:text="${mi.articleContent}" class="uk-text-truncate"></dd>
-                    </dl>
-                </li>
-            </ul>
-            <a class="uk-button uk-button-primary" href="#" onclick="moreMajor(this);" style="float:right">更多</a>
+            <div th:unless="${#lists.isEmpty(majorInfo)}">
+                <ul class="uk-list uk-list-line">
+                    <li th:each="mi:${majorInfo}">
+                        <p style="display:none;" th:text="${mi.majorId}"></p>
+                        <p style="display:none;" th:text="${mi.articleInfoId}"></p>
+                        <dl class="uk-description-list-line">
+                            <dt>
+                                <a href="#" th:text="${mi.majorName}" onclick="toMajor(this);"></a>
+                            </dt>
+                            <dd th:text="${mi.articleContent}" class="uk-text-truncate"></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <a class="uk-button uk-button-primary" href="#" onclick="moreMajor(this);" style="float:right">更多</a>
+            </div>
         </div>
         <div class="uk-width-medium-2-3">
             <div class="uk-grid">
@@ -160,7 +164,8 @@
                                     <a href="#" th:text="${tnd.bigTitle}"
                                        th:href="@{/user/tie/tieNoticeShow}+'?id='+${tnd.id}"></a>
                                 </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right formatdate" th:text="${tnd.date}"></div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right formatdate"
+                                     th:text="${tnd.date}"></div>
                             </div>
                         </li>
                         <li>
@@ -174,41 +179,17 @@
                 <div class="uk-width-medium-1-2">
                     <hr class="uk-grid-divider"/>
                     <h1>招生就业</h1>
-                    <ul class="uk-list uk-list-space">
-                        <li>
+                    <ul class="uk-list uk-list-space" th:unless="${#lists.isEmpty(recruitListVoList)}">
+                        <li th:each="rv:${recruitListVoList}" >
                             <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于招生就业....</a>
+                                <div class="uk-width-1-2 uk-text-truncate">
+                                    <a href="#" th:href="@{/user/recruit/recruitShowDetailed}+'?id='+${rv.id}" th:text="${rv.recruitTitle}"></a>
                                 </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right formatdate" th:text="${rv.recruitTime}"></div>
                             </div>
                         </li>
                         <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于招生就业....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于招生就业....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于招生就业....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
+                            <a class="uk-button uk-button-primary" href="#" th:href="@{/user/recruit/recruitShow}" style="float:right">更多</a>
                         </li>
                     </ul>
                 </div>
@@ -235,7 +216,7 @@
     </footer>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+        var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
         /*]]>*/
     </script>
     <script src="/js/cbis/js/index/index.js" th:src="@{/js/user/index/index.js}"></script>

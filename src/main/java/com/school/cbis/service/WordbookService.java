@@ -37,8 +37,7 @@ public interface WordbookService {
 
     /**
      * 用于默认系使用
-     * @param tieName
      * @return
      */
-    TieRecord findByTieName(String tieName);
+    TieRecord findTieInfo();
 }
