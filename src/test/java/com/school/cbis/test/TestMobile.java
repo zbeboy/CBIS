@@ -43,9 +43,4 @@ public class TestMobile {
         }
         return result;
     }
-
-    @Test
-    public void test(){
-
-    }
 }

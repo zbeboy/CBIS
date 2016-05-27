@@ -76,24 +76,46 @@
         </div>
         <div class="uk-width-medium-3-4">
             <a href="#" th:text="${autonomicPracticeTeacherListVo.autonomousPracticeTitle}"  th:href="@{/student/autonomicpractice/autonomicPractice}" ></a>
-            <form class="uk-form uk-margin" th:action="@{/teacher/autonomicpractice/autonomicPracticeTeacherList}" method="get" id="searchForm">
-                <div class="uk-grid">
-                    <div class="uk-width-1-4 uk-text-left">
-                    </div>
-                    <div class="uk-width-3-4 uk-text-right">
-                        <select class="uk-margin-small-top" id="searchHead" name="autonomousPracticeHeadId" onchange="changeSearchTitle();"  >
-                        </select>
+
+            <div class="uk-grid uk-margin">
+                <div class="uk-width-1-2">
+                    <form id="exportForm" class="uk-form uk-margin" th:action="@{/teacher/autonomicpractice/exportAutonomicPracticeData}" method="post">
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1 uk-text-right">
+                                <input type="text" placeholder="文件名(选填)"
+                                       name="fileName" class="uk-margin-small-top"/>
+                                <select class="uk-margin-small-top" name="ext" >
+                                    <option>xlsx</option>
+                                    <option>xls</option>
+                                </select>
+                                <input type="hidden" id="exportAutonomousPracticeHeadId" name="autonomousPracticeHeadId" />
+                                <input type="hidden" id="exportContent" name="content" />
+                                <input type="hidden"  name="autonomousPracticeInfoId" th:value="${autonomicPracticeTeacherListVo.autonomousPracticeInfoId}" />
+                                <button class="uk-button uk-margin-small-top" type="button" onclick="exportData();">导出数据</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="uk-width-1-2">
+                    <form class="uk-form uk-margin" th:action="@{/teacher/autonomicpractice/autonomicPracticeTeacherList}" method="get" id="searchForm">
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1 uk-text-right">
+                                <select class="uk-margin-small-top" id="searchHead" name="autonomousPracticeHeadId" onchange="changeSearchTitle();"  >
+                                </select>
                         <span id="initSearchTitle" >
-                            <input type="text" placeholder="内容" id="searchContent"
+                            <input type="text" placeholder="内容" id="content"
                                    name="content" class="uk-margin-small-top"/>
                         </span>
 
-                        <input type="hidden" id="searchAutonomousPracticeInfoId" name="autonomousPracticeInfoId" />
-                        <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
-                        <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" >重置</button>
-                    </div>
+                                <input type="hidden" id="searchAutonomousPracticeInfoId" name="autonomousPracticeInfoId" />
+                                <button class="uk-button uk-margin-small-top" type="submit">搜索</button>
+                                <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();" >重置</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+
             <div id="tableData">
 
             </div>

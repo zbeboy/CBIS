@@ -11,6 +11,7 @@ import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +32,17 @@ public class MailController {
 
     @Resource
     private Wordbook wordbook;
+
+    /**
+     * 邮件管理界面
+     *
+     * @return
+     */
+    @RequestMapping("/maintainer/mail/mailManager")
+    public String mailManager(MailListVo mailListVo, ModelMap modelMap) {
+        modelMap.addAttribute("mailListVo", mailListVo);
+        return "/maintainer/mail/mailmanager";
+    }
 
     /**
      * 邮箱管理列表数据

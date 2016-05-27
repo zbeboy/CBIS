@@ -64,6 +64,16 @@ public class UsersController {
     private ArticleSubService articleSubService;
 
     /**
+     * 用户管理界面
+     *
+     * @return
+     */
+    @RequestMapping("/maintainer/users/usersManager")
+    public String usersManager() {
+        return "redirect:/maintainer/users/studentManager";
+    }
+
+    /**
      * 学生管理界面
      *
      * @param modelMap

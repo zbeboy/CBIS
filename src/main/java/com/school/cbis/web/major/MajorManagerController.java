@@ -62,6 +62,17 @@ public class MajorManagerController {
     private GradeService gradeService;
 
     /**
+     * 专业管理界面
+     *
+     * @return
+     */
+    @RequestMapping("/maintainer/major/majorManager")
+    public String majorManager(MajorVo majorVo, ModelMap modelMap) {
+        modelMap.addAttribute("majorVo", majorVo);
+        return "/maintainer/major/majorlist";
+    }
+
+    /**
      * 专业数据
      *
      * @param majorVo

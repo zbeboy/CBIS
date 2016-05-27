@@ -77,42 +77,100 @@
             <div class="uk-width-medium-1-1">
 
                 <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
-                    <li class="uk-active" id="havePayBar" ><a href="#">已提交</a></li>
+                    <li class="uk-active" id="havePayBar"><a href="#">已提交</a></li>
                     <li id="haveNoPayBar"><a href="#">未提交</a></li>
                 </ul>
 
                 <ul id="tab-content" class="uk-switcher uk-margin">
-                    <li class="uk-active" id="havePay" >
-                        <form class="uk-form uk-margin">
-                            <div class="uk-grid">
-                                <div class="uk-width-1-4 uk-text-left">
-                                </div>
-                                <div class="uk-width-3-4 uk-text-right">
-                                    <input type="text" placeholder="学号" id="searchHavePayStudentNumber"
-                                           name="studentNumber" class="uk-margin-small-top"/>
-                                    <button class="uk-button uk-margin-small-top" type="button" onclick="havePaySearch();" >搜索</button>
-                                    <button class="uk-button uk-margin-small-top" type="button" onclick="refreshHavePaySearch();" >重置</button>
-                                </div>
+                    <li class="uk-active" id="havePay">
+                        <div class="uk-grid uk-margin">
+                            <div class="uk-width-1-2">
+                                <form class="uk-form"
+                                      th:action="@{/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInMajorData}"
+                                      method="post">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1 uk-text-right">
+                                            <input type="text" placeholder="文件名(选填)"
+                                                   name="fileName" class="uk-margin-small-top"/>
+                                            <select class="uk-margin-small-top" name="ext">
+                                                <option>xlsx</option>
+                                                <option>xls</option>
+                                            </select>
+                                            <input type="hidden" name="jsonData"/>
+                                            <input type="hidden" name="exportType" value="0"/>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="exportData(this);">导出数据
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                            <div class="uk-width-1-2">
+                                <form class="uk-form">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-4 uk-text-left">
+                                        </div>
+                                        <div class="uk-width-3-4 uk-text-right">
+                                            <input type="text" placeholder="学号" id="searchHavePayStudentNumber"
+                                                   name="studentNumber" class="uk-margin-small-top"/>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="havePaySearch();">搜索
+                                            </button>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="refreshHavePaySearch();">重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <div id="tableHavePayData">
 
                         </div>
                         <ul id="havePayPagination" class="uk-pagination"></ul>
                     </li>
-                    <li id="haveNoPay" >
-                        <form class="uk-form uk-margin" >
-                            <div class="uk-grid">
-                                <div class="uk-width-1-4 uk-text-left">
-                                </div>
-                                <div class="uk-width-3-4 uk-text-right">
-                                    <input type="text" placeholder="学号" id="searchHaveNoPayContent"
-                                           name="studentNumber" class="uk-margin-small-top"/>
-                                    <button class="uk-button uk-margin-small-top" type="button" onclick="haveNoPaySearch();">搜索</button>
-                                    <button class="uk-button uk-margin-small-top" type="button" onclick="refreshHaveNoPaySearch();" >重置</button>
-                                </div>
+                    <li id="haveNoPay">
+                        <div class="uk-grid uk-margin">
+                            <div class="uk-width-1-2">
+                                <form class="uk-form"
+                                      th:action="@{/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInMajorData}"
+                                      method="post">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1 uk-text-right">
+                                            <input type="text" placeholder="文件名(选填)"
+                                                   name="fileName" class="uk-margin-small-top"/>
+                                            <select class="uk-margin-small-top" name="ext">
+                                                <option>xlsx</option>
+                                                <option>xls</option>
+                                            </select>
+                                            <input type="hidden" name="jsonData"/>
+                                            <input type="hidden" name="exportType" value="1"/>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="exportData(this);">导出数据
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                            <div class="uk-width-1-2">
+                                <form class="uk-form uk-margin">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-4 uk-text-left">
+                                        </div>
+                                        <div class="uk-width-3-4 uk-text-right">
+                                            <input type="text" placeholder="学号" id="searchHaveNoPayContent"
+                                                   name="studentNumber" class="uk-margin-small-top"/>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="haveNoPaySearch();">搜索
+                                            </button>
+                                            <button class="uk-button uk-margin-small-top" type="button"
+                                                    onclick="refreshHaveNoPaySearch();">重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <div id="tableHaveNoPayData">
 
                         </div>

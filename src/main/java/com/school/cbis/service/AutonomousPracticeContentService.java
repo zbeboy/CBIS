@@ -27,7 +27,7 @@ public interface AutonomousPracticeContentService {
      * @param studentId
      * @return
      */
-    Result<Record5<Integer, String, Integer, Integer, Integer>> findByAutonomousPracticeInfoIdAndStudentId(int autonomousPracticeInfoId, int studentId);
+    Result<Record> findByAutonomousPracticeInfoIdAndStudentId(int autonomousPracticeInfoId, int studentId);
 
     /**
      * 保存内容
@@ -50,6 +50,13 @@ public interface AutonomousPracticeContentService {
      * @return
      */
     Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndPage(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo);
+
+    /**
+     *  distinct studentid查询 用于导出数据使用
+     * @param autonomicPracticeTeacherListVo
+     * @return
+     */
+    Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentId(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo);
 
     /**
      * distinct studentid查询并分页所有数据总数

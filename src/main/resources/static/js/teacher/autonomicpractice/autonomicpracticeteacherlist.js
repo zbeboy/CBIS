@@ -111,7 +111,7 @@ function changeSearchTitle(){
 
     if(Number($('#searchHead').val()) == 0){
         $('#initSearchTitle').empty();
-        $('#initSearchTitle').append($('<input type="text" placeholder="内容" id="searchContent" name="content" class="uk-margin-small-top">'));
+        $('#initSearchTitle').append($('<input type="text" placeholder="内容" id="content" name="content" class="uk-margin-small-top">'));
     }
 
     //处理被选中
@@ -314,6 +314,15 @@ function saveStudent(obj){
         }
     },'json');
     console.log(p.serialize());
+}
+
+/**
+ * 导出数据
+ */
+function exportData(){
+    $('#exportAutonomousPracticeHeadId').val($('#searchHead').val().trim());
+    $('#exportContent').val($('#content').val().trim());
+    $('#exportForm').submit();
 }
 
 

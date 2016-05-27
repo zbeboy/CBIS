@@ -49,6 +49,7 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
                 .set(Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT, autonomousPracticeHead.getContent())
                 .set(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE, autonomousPracticeHead.getIsDatabase())
                 .set(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT, autonomousPracticeHead.getSort())
+                .set(Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED,autonomousPracticeHead.getIsRequired())
                 .returning(Tables.AUTONOMOUS_PRACTICE_HEAD.ID)
                 .fetchOne();
         return autonomousPracticeHeadRecord.getId();
@@ -77,20 +78,20 @@ public class AutonomousPracticeHeadServiceImpl implements AutonomousPracticeHead
     }
 
     @Override
-    public Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
-        Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> record13s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID, Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
+    public Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte,Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId) {
+        Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte,Integer>> record14s = create.select(Tables.AUTONOMOUS_PRACTICE_HEAD.ID, Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.TITLE_VARIABLE, Tables.HEAD_TYPE.TYPE_VALUE, Tables.HEAD_TYPE.TYPE_NAME,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE, Tables.AUTONOMOUS_PRACTICE_HEAD.DATABASE_TABLE_FIELD,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY, Tables.AUTONOMOUS_PRACTICE_HEAD.IS_SHOW_HIGHLY_ACTIVE,
                 Tables.AUTONOMOUS_PRACTICE_HEAD.CONTENT, Tables.AUTONOMOUS_PRACTICE_HEAD.IS_DATABASE, Tables.AUTONOMOUS_PRACTICE_HEAD.SORT,
-                Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED)
+                Tables.AUTONOMOUS_PRACTICE_HEAD.IS_REQUIRED,Tables.HEAD_TYPE.ID.as("headTypeId"))
                 .from(Tables.AUTONOMOUS_PRACTICE_HEAD)
                 .join(Tables.HEAD_TYPE)
                 .on(Tables.AUTONOMOUS_PRACTICE_HEAD.HEAD_TYPE_ID.eq(Tables.HEAD_TYPE.ID))
                 .where(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTONOMOUS_PRACTICE_TEMPLATE_ID.eq(autonomousPracticeTemplateId))
                 .orderBy(Tables.AUTONOMOUS_PRACTICE_HEAD.SORT.asc())
                 .fetch();
-        return record13s;
+        return record14s;
     }
 
     @Override

@@ -48,7 +48,7 @@ public interface AutonomousPracticeHeadService {
      * @param autonomousPracticeTemplateId
      * @return
      */
-    Result<Record13<Integer, String, String, String,String, String, String, String, Byte, String, Byte, Integer,Byte>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId);
+    Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte,Integer>> findByAutonomousPracticeTemplateIdWithHeadTypeId(int autonomousPracticeTemplateId);
 
     /**
      * 通过模板id和变量名查询

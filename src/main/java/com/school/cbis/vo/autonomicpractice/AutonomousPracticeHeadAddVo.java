@@ -7,6 +7,7 @@ public class AutonomousPracticeHeadAddVo {
     private int id;
     private String title;
     private String titleVariable;
+    private int headTypeId;
     private String typeValue;
     private String typeName;
     private String databaseTable;
@@ -40,6 +41,14 @@ public class AutonomousPracticeHeadAddVo {
 
     public void setTitleVariable(String titleVariable) {
         this.titleVariable = titleVariable;
+    }
+
+    public int getHeadTypeId() {
+        return headTypeId;
+    }
+
+    public void setHeadTypeId(int headTypeId) {
+        this.headTypeId = headTypeId;
     }
 
     public String getTypeValue() {
@@ -128,6 +137,7 @@ public class AutonomousPracticeHeadAddVo {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", titleVariable='" + titleVariable + '\'' +
+                ", headTypeId=" + headTypeId +
                 ", typeValue='" + typeValue + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", databaseTable='" + databaseTable + '\'' +

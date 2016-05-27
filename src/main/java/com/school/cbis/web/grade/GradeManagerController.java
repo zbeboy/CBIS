@@ -5,19 +5,18 @@ import com.school.cbis.data.AutoCompleteData;
 import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.Grade;
+import com.school.cbis.domain.tables.pojos.Major;
 import com.school.cbis.domain.tables.pojos.Student;
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.plugin.jsgrid.JsGrid;
-import com.school.cbis.service.GradeService;
-import com.school.cbis.service.StudentService;
-import com.school.cbis.service.TeacherService;
-import com.school.cbis.service.UsersService;
+import com.school.cbis.service.*;
 import com.school.cbis.vo.grade.GradeVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +49,29 @@ public class GradeManagerController {
 
     @Resource
     private StudentService studentService;
+
+    @Resource
+    private MajorService majorService;
+
+    /**
+     * 班级管理界面
+     *
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/grade/gradeManager")
+    public String gradeManager(ModelMap modelMap, GradeVo gradeVo) {
+        //通过用户类型获取系表ID
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        List<Major> majors = majorService.findByTieId(tieId);
+        modelMap.addAttribute("majorNames", majors);
+        modelMap.addAttribute("gradeVo", gradeVo);
+        return "/maintainer/grade/gradelist";
+    }
 
     /**
      * 班级数据

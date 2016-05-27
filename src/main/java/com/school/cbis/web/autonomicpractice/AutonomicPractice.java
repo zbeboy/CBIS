@@ -14,6 +14,10 @@ import com.school.cbis.service.*;
 import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.autonomicpractice.*;
 import com.school.cbis.vo.grade.GradeVo;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +32,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lenovo on 2016-04-04.
@@ -82,14 +88,31 @@ public class AutonomicPractice {
     @Resource
     private SystemLogService systemLogService;
 
+    @Resource
+    private UploadService uploadService;
+
+    /**
+     * 自主实习管理界面
+     *
+     * @return
+     */
+    @RequestMapping("/student/autonomicpractice/autonomicPracticeManager")
+    public String autonomicPracticeManager() {
+        if (usersService.isCurrentUserInRole(Wordbook.CBIS_ADMIN)) {//管理员可进入
+            return "redirect:/administrator/autonomicpractice/reportsettingList";
+        } else {
+            return "redirect:/student/autonomicpractice/autonomicPractice";
+        }
+    }
+
     /**
      * 自主实习填报设置
      *
      * @return
      */
     @RequestMapping("/administrator/autonomicpractice/reportsettingList")
-    public String reportSetting(ReportSettingVo reportSettingVo,ModelMap modelMap) {
-        modelMap.addAttribute("reportSettingVo",reportSettingVo);
+    public String reportSetting(ReportSettingVo reportSettingVo, ModelMap modelMap) {
+        modelMap.addAttribute("reportSettingVo", reportSettingVo);
         return "/student/autonomicpractice/reportsettinglist";
     }
 
@@ -138,7 +161,7 @@ public class AutonomicPractice {
     @ResponseBody
     public AjaxData deleteReportSetting(ReportSettingVo reportSettingVo) {
         List<AutonomousPracticeContent> autonomousPracticeContents = autonomousPracticeContentService.findByAutonomousPracticeInfoId(reportSettingVo.getId());
-        if(autonomousPracticeContents.isEmpty()){
+        if (autonomousPracticeContents.isEmpty()) {
             autonomousPracticeInfoService.deleteById(reportSettingVo.getId());
             return new AjaxData().success().msg("删除成功!");
         } else {
@@ -211,7 +234,7 @@ public class AutonomicPractice {
         SystemLog systemLog = new SystemLog();
         systemLog.setTieId(tieId);
         systemLog.setUsername(usersService.getUserName());
-        systemLog.setOperationBehavior("添加自主实习填报设置 : "+autonomousPracticeInfo.getAutonomousPracticeTitle()+"!");
+        systemLog.setOperationBehavior("添加自主实习填报设置 : " + autonomousPracticeInfo.getAutonomousPracticeTitle() + "!");
         systemLogService.save(systemLog);
 
         return "redirect:/administrator/autonomicpractice/reportsettingList";
@@ -311,8 +334,8 @@ public class AutonomicPractice {
      * @return
      */
     @RequestMapping("/administrator/autonomicpractice/templateList")
-    public String templateList(TemplateVo templateVo,ModelMap modelMap) {
-        modelMap.addAttribute("templateVo",templateVo);
+    public String templateList(TemplateVo templateVo, ModelMap modelMap) {
+        modelMap.addAttribute("templateVo", templateVo);
         return "/student/autonomicpractice/templatelist";
     }
 
@@ -502,7 +525,7 @@ public class AutonomicPractice {
             SystemLog systemLog = new SystemLog();
             systemLog.setTieId(tieId);
             systemLog.setUsername(usersService.getUserName());
-            systemLog.setOperationBehavior("添加自主实习模板"+templateName+"成功!");
+            systemLog.setOperationBehavior("添加自主实习模板" + templateName + "成功!");
             systemLogService.save(systemLog);
 
             return new AjaxData().success().obj(id);
@@ -520,25 +543,29 @@ public class AutonomicPractice {
      */
     @RequestMapping("/administrator/autonomicpractice/updateAutonomicPracticeTemplate")
     @ResponseBody
-    public AjaxData<AutonomousPracticeHead> updateAutonomicPracticeTemplate(@RequestParam("id") int templateId, @RequestParam("templateName") String templateName) {
+    public AjaxData<AutonomousPracticeHeadAddVo> updateAutonomicPracticeTemplate(@RequestParam("id") int templateId, @RequestParam("templateName") String templateName) {
         if (StringUtils.hasLength(templateName)) {
             AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateService.findById(templateId);
 
             SystemLog systemLog = new SystemLog();
             systemLog.setTieId(autonomousPracticeTemplate.getTieId());
             systemLog.setUsername(usersService.getUserName());
-            systemLog.setOperationBehavior("更新自主实习模板标题"+autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle()+"为"+templateName+"!");
+            systemLog.setOperationBehavior("更新自主实习模板标题" + autonomousPracticeTemplate.getAutonomousPracticeTemplateTitle() + "为" + templateName + "!");
             systemLogService.save(systemLog);
 
             autonomousPracticeTemplate.setAutonomousPracticeTemplateTitle(templateName);
             autonomousPracticeTemplateService.update(autonomousPracticeTemplate);
-            List<AutonomousPracticeHead> autonomousPracticeHeads = autonomousPracticeHeadService.findByAutonomousPracticeTemplateId(templateId);
+            Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte, Integer>> record14s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(templateId);
+            List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
+
+            if (record14s.isNotEmpty()) {
+                autonomousPracticeHeadAddVos = record14s.into(AutonomousPracticeHeadAddVo.class);
+            }
 
 
-
-            return new AjaxData<AutonomousPracticeHead>().success().obj(templateId).listData(autonomousPracticeHeads);
+            return new AjaxData<AutonomousPracticeHeadAddVo>().success().obj(templateId).listData(autonomousPracticeHeadAddVos);
         } else {
-            return new AjaxData<AutonomousPracticeHead>().fail().msg("请填写模板名!");
+            return new AjaxData<AutonomousPracticeHeadAddVo>().fail().msg("请填写模板名!");
         }
     }
 
@@ -703,7 +730,7 @@ public class AutonomicPractice {
         }
 
         //处理数据
-        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer,String>> record11s
+        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer, String>> record11s
                 = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
         if (record11s.isNotEmpty()) {
             List<AutonomicPracticeListVo> autonomicPracticeListVos = record11s.into(AutonomicPracticeListVo.class);
@@ -798,7 +825,7 @@ public class AutonomicPractice {
                 if (isRight) {
 
                     //当前填报学生是否已经填报过，若已填报过，则这次视为更新操作
-                    Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), studentId);
+                    Result<Record> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), studentId);
                     if (record5s.isNotEmpty()) {
                         List<AutonomousPracticeContent> autonomousPracticeContents = record5s.into(AutonomousPracticeContent.class);
                         modelMap.addAttribute("isUpdate", true);
@@ -807,11 +834,11 @@ public class AutonomicPractice {
                         modelMap.addAttribute("isUpdate", false);
                     }
                     //标题信息以及当前用户权限信息
-                    Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> record13s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
+                    Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte, Integer>> record14s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
                     List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
 
-                    if (record13s.isNotEmpty()) {
-                        autonomousPracticeHeadAddVos = record13s.into(AutonomousPracticeHeadAddVo.class);
+                    if (record14s.isNotEmpty()) {
+                        autonomousPracticeHeadAddVos = record14s.into(AutonomousPracticeHeadAddVo.class);
                     }
 
                     List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
@@ -978,6 +1005,125 @@ public class AutonomicPractice {
     }
 
     /**
+     * 导出自主实习列表数据
+     *
+     * @param fileName 文件名
+     * @param ext      文件后缀 默认 xlsx
+     */
+    @RequestMapping("/teacher/autonomicpractice/exportAutonomicPracticeData")
+    public void exportAutonomicPracticeData(int autonomousPracticeHeadId, String content, int autonomousPracticeInfoId, @RequestParam(value = "fileName", required = false) String fileName,
+                                            @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo = new AutonomicPracticeTeacherListVo();
+            autonomicPracticeTeacherListVo.setAutonomousPracticeHeadId(autonomousPracticeHeadId);
+            autonomicPracticeTeacherListVo.setContent(content);
+            autonomicPracticeTeacherListVo.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
+            Workbook wb = null;
+            if (ext.equals("xlsx")) {
+                wb = new XSSFWorkbook();
+            } else if (ext.equals("xls")) {
+                wb = new HSSFWorkbook();
+            } else {
+                wb = new XSSFWorkbook();//保证不为空
+            }
+
+            //查询该自主实习下学生填报总数
+            AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomicPracticeTeacherListVo.getAutonomousPracticeInfoId());
+
+            if (ObjectUtils.isEmpty(autonomousPracticeInfo)) {//防止空数据
+                return;
+            }
+
+            //导出时的文件名
+            String exportFileName = "";
+            //处理文件名
+            if (StringUtils.hasLength(fileName)) {
+                fileName = fileName.replaceAll("\\.", "_");//处理文件名
+                exportFileName = fileName + "." + ext;
+            } else {
+                fileName = autonomousPracticeInfo.getAutonomousPracticeTitle().replaceAll("\\.", "_");//处理标题
+                exportFileName = fileName + "." + ext;
+            }
+
+            Sheet sheet = wb.createSheet(fileName);
+
+            int x = 1;//行 0写入标题
+            int y = 0;//列
+
+            //当前用户所有权限
+            List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
+
+            //查询出此次自主实习的所有标题
+            List<AutonomousPracticeHead> autonomousPracticeHeadRecords = autonomousPracticeHeadService.findByAutonomousPracticeTemplateId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
+
+            //输出标题
+            int hy = 0;//标题列
+            Row row = sheet.createRow(0);
+            for (AutonomousPracticeHead ah : autonomousPracticeHeadRecords) {
+                if (useTitle(ah.getAuthority(), authoritiesRecords)) {//当前用户有权限使用
+                    Cell cell = row.createCell(hy);
+                    cell.setCellValue(ah.getTitle());
+                    hy++;
+                }
+            }
+
+            Result<Record1<Integer>> record1s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdDistinctStudentId(autonomicPracticeTeacherListVo);
+            for (Record r : record1s) {//要查询的学生
+
+                row = sheet.createRow(x);
+
+                //该学生对应的所有标题
+                Result<Record> records = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), r.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID));
+
+                for (AutonomousPracticeHead ah : autonomousPracticeHeadRecords) {
+                    if (useTitle(ah.getAuthority(), authoritiesRecords)) {//当前用户有权限使用
+
+                        Cell cell = row.createCell(y);
+
+                        boolean hasContent = false;
+                        for (Record h : records) {
+                            if (ah.getId() == h.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID)) {
+
+                                cell.setCellValue(h.getValue(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT));
+
+                                hasContent = true;
+                                break;
+                            }
+                        }
+
+                        if (!hasContent) {//未被填写过
+                            cell.setCellValue("");
+                        }
+                        y++;//列加
+                    }
+                }
+                y = 0;//从头开始
+                x++;//一个学生完
+
+            }
+
+            //输出文件
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(realPath + "/files/autonomicpractice/", exportFileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            FileOutputStream fileOut = new
+                    FileOutputStream(file);
+            wb.write(fileOut);
+            fileOut.close();
+
+            //提供下载
+            uploadService.download(fileName, "/files/autonomicpractice/" + exportFileName, response, request);
+
+        } catch (FileNotFoundException e) {
+            log.error(" file is not found exception is {}", e.getMessage());
+        } catch (IOException e) {
+            log.error(" exportAutonomicPracticeData is error. exception is {} ", e.getMessage());
+        }
+    }
+
+    /**
      * 在教师自主实习列表保存数据
      *
      * @param request
@@ -1025,7 +1171,7 @@ public class AutonomicPractice {
         modelMap.addAttribute("studentInfo", autonomicPracticeStudentInfoVo);
 
         //当前填报学生是否已经填报过，若已填报过，则这次视为更新操作
-        Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), studentId);
+        Result<Record> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfo.getId(), studentId);
         if (record5s.isNotEmpty()) {
             List<AutonomousPracticeContent> autonomousPracticeContents = record5s.into(AutonomousPracticeContent.class);
             modelMap.addAttribute("isUpdate", true);
@@ -1034,11 +1180,11 @@ public class AutonomicPractice {
             modelMap.addAttribute("isUpdate", false);
         }
         //标题信息以及当前用户权限信息
-        Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> record13s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
+        Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte, Integer>> record14s = autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
         List<AutonomousPracticeHeadAddVo> autonomousPracticeHeadAddVos = new ArrayList<>();
 
-        if (record13s.isNotEmpty()) {
-            autonomousPracticeHeadAddVos = record13s.into(AutonomousPracticeHeadAddVo.class);
+        if (record14s.isNotEmpty()) {
+            autonomousPracticeHeadAddVos = record14s.into(AutonomousPracticeHeadAddVo.class);
         }
 
         List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
@@ -1083,7 +1229,7 @@ public class AutonomicPractice {
         }
 
         //处理数据
-        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer,String>> record11s
+        Result<Record11<Integer, String, Timestamp, String, String, Timestamp, Timestamp, String, Integer, Integer, String>> record11s
                 = autonomousPracticeInfoService.findByTieIdAndPage(tieId, pageNum, pageSize);
         if (record11s.isNotEmpty()) {
             List<AutonomicPracticeListVo> autonomicPracticeListVos = record11s.into(AutonomicPracticeListVo.class);
@@ -1183,6 +1329,102 @@ public class AutonomicPractice {
     }
 
     /**
+     * 导出以年级统计人员名单
+     *
+     * @param fileName   文件名
+     * @param ext        后缀
+     * @param jsonData   列表数据
+     * @param exportType 列表数据类型 0 已提交 1 未提交
+     */
+    @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInYearData")
+    public void exportAutonomicPracticeStudentInfoInYearData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+                                                             String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response) {
+        try{
+
+            String exportFileName = "";
+            if (StringUtils.hasLength(fileName)) {
+                fileName = fileName.replaceAll("\\.", "_");
+                exportFileName = fileName + "." + ext;
+            } else {
+                if(exportType == 0){
+                    fileName = "年级已提交学生名单";
+                } else {
+                    fileName = "年级未提交学生名单";
+                }
+
+                exportFileName = fileName + "." + ext;
+            }
+
+            Workbook wb = null;
+            if (ext.equals("xlsx")) {
+                wb = new HSSFWorkbook();
+            } else if (ext.equals("xls")) {
+                wb = new XSSFWorkbook();
+            } else {
+                wb = new HSSFWorkbook();
+            }
+
+            Sheet sheet = wb.createSheet("学生名单");
+            int x = 1;//行
+
+            Row row = sheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue("学号");
+            cell = row.createCell(1);
+            cell.setCellValue("姓名");
+            cell = row.createCell(2);
+            cell.setCellValue("班级");
+
+            if (exportType == 0) {
+                List<AutonomicPracticeStudentInfoInYearDataVo> havePayStudent = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInYearDataVo.class);
+                for(AutonomicPracticeStudentInfoInYearDataVo as:havePayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+
+            } else if (exportType == 1) {
+                List<AutonomicPracticeStudentInfoInYearDataVo> haveNoPayStudent  = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInYearDataVo.class);
+                for(AutonomicPracticeStudentInfoInYearDataVo as:haveNoPayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+            }
+
+
+            //输出文件
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(realPath + "/files/autonomicpracticecount/", exportFileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            FileOutputStream fileOut = new
+                    FileOutputStream(file);
+            wb.write(fileOut);
+            fileOut.close();
+
+            //提供下载
+            uploadService.download(fileName, "/files/autonomicpracticecount/" + exportFileName, response, request);
+        } catch (FileNotFoundException e) {
+            log.error(" file is not found exception is {}", e.getMessage());
+        } catch (IOException e) {
+            log.error(" exportAutonomicPracticeStudentInfoInYearData is error. exception is {} ", e.getMessage());
+        }
+
+    }
+
+    /**
      * 自主实习专业统计页
      *
      * @param autonomousPracticeParam
@@ -1259,6 +1501,101 @@ public class AutonomicPractice {
         map.put("haveNoPayStudent", haveNoPayStudent);
         map.put("autonomousPracticeParam", autonomousPracticeParamVo);
         return new AjaxData().success().mapData(map);
+    }
+
+    /**
+     * 导出以专业统计人员名单
+     *
+     * @param fileName   文件名
+     * @param ext        后缀
+     * @param jsonData   列表数据
+     * @param exportType 列表数据类型 0 已提交 1 未提交
+     */
+    @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInMajorData")
+    public void exportAutonomicPracticeStudentInfoInMajorData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+                                                              String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response){
+        try{
+
+            String exportFileName = "";
+            if (StringUtils.hasLength(fileName)) {
+                fileName = fileName.replaceAll("\\.", "_");
+                exportFileName = fileName + "." + ext;
+            } else {
+                if(exportType == 0){
+                    fileName = "专业已提交学生名单";
+                } else {
+                    fileName = "专业未提交学生名单";
+                }
+
+                exportFileName = fileName + "." + ext;
+            }
+
+            Workbook wb = null;
+            if (ext.equals("xlsx")) {
+                wb = new HSSFWorkbook();
+            } else if (ext.equals("xls")) {
+                wb = new XSSFWorkbook();
+            } else {
+                wb = new HSSFWorkbook();
+            }
+
+            Sheet sheet = wb.createSheet("学生名单");
+            int x = 1;//行
+
+            Row row = sheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue("学号");
+            cell = row.createCell(1);
+            cell.setCellValue("姓名");
+            cell = row.createCell(2);
+            cell.setCellValue("班级");
+
+            if (exportType == 0) {
+                List<AutonomicPracticeStudentInfoInMajorDataVo> havePayStudent = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInMajorDataVo.class);
+                for(AutonomicPracticeStudentInfoInMajorDataVo as:havePayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+
+            } else if (exportType == 1) {
+                List<AutonomicPracticeStudentInfoInMajorDataVo> haveNoPayStudent  = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInMajorDataVo.class);
+                for(AutonomicPracticeStudentInfoInMajorDataVo as:haveNoPayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+            }
+
+
+            //输出文件
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(realPath + "/files/autonomicpracticecount/", exportFileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            FileOutputStream fileOut = new
+                    FileOutputStream(file);
+            wb.write(fileOut);
+            fileOut.close();
+
+            //提供下载
+            uploadService.download(fileName, "/files/autonomicpracticecount/" + exportFileName, response, request);
+        } catch (FileNotFoundException e) {
+            log.error(" file is not found exception is {}", e.getMessage());
+        } catch (IOException e) {
+            log.error(" exportAutonomicPracticeStudentInfoInYearData is error. exception is {} ", e.getMessage());
+        }
     }
 
     /**
@@ -1340,6 +1677,101 @@ public class AutonomicPractice {
     }
 
     /**
+     * 导出以专业统计人员名单
+     *
+     * @param fileName   文件名
+     * @param ext        后缀
+     * @param jsonData   列表数据
+     * @param exportType 列表数据类型 0 已提交 1 未提交
+     */
+    @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInGradeData")
+    public void exportAutonomicPracticeStudentInfoInGradeData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+                                                              String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response){
+        try{
+
+            String exportFileName = "";
+            if (StringUtils.hasLength(fileName)) {
+                fileName = fileName.replaceAll("\\.", "_");
+                exportFileName = fileName + "." + ext;
+            } else {
+                if(exportType == 0){
+                    fileName = "班级已提交学生名单";
+                } else {
+                    fileName = "班级未提交学生名单";
+                }
+
+                exportFileName = fileName + "." + ext;
+            }
+
+            Workbook wb = null;
+            if (ext.equals("xlsx")) {
+                wb = new HSSFWorkbook();
+            } else if (ext.equals("xls")) {
+                wb = new XSSFWorkbook();
+            } else {
+                wb = new HSSFWorkbook();
+            }
+
+            Sheet sheet = wb.createSheet("学生名单");
+            int x = 1;//行
+
+            Row row = sheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue("学号");
+            cell = row.createCell(1);
+            cell.setCellValue("姓名");
+            cell = row.createCell(2);
+            cell.setCellValue("班级");
+
+            if (exportType == 0) {
+                List<AutonomicPracticeStudentInfoInGradeDataVo> havePayStudent = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInGradeDataVo.class);
+                for(AutonomicPracticeStudentInfoInGradeDataVo as:havePayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+
+            } else if (exportType == 1) {
+                List<AutonomicPracticeStudentInfoInGradeDataVo> haveNoPayStudent  = JSON.parseArray(jsonData, AutonomicPracticeStudentInfoInGradeDataVo.class);
+                for(AutonomicPracticeStudentInfoInGradeDataVo as:haveNoPayStudent){
+                    row = sheet.createRow(x);
+                    cell = row.createCell(0);
+                    cell.setCellValue(as.getStudentNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(as.getStudentName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(as.getGradeName());
+                    x++;
+                }
+            }
+
+
+            //输出文件
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(realPath + "/files/autonomicpracticecount/", exportFileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            FileOutputStream fileOut = new
+                    FileOutputStream(file);
+            wb.write(fileOut);
+            fileOut.close();
+
+            //提供下载
+            uploadService.download(fileName, "/files/autonomicpracticecount/" + exportFileName, response, request);
+        } catch (FileNotFoundException e) {
+            log.error(" file is not found exception is {}", e.getMessage());
+        } catch (IOException e) {
+            log.error(" exportAutonomicPracticeStudentInfoInYearData is error. exception is {} ", e.getMessage());
+        }
+    }
+
+    /**
      * 是否有权限使用title
      *
      * @param headsAuthority
@@ -1403,15 +1835,15 @@ public class AutonomicPractice {
 
     private void saveOrUpdateAutonomousPracticeContent(int autonomousPracticeInfoId, int studentId, HttpServletRequest request) {
         AutonomousPracticeInfo autonomousPracticeInfo = autonomousPracticeInfoService.findById(autonomousPracticeInfoId);
-        Result<Record13<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte>> record13s =
+        Result<Record14<Integer, String, String, String, String, String, String, String, Byte, String, Byte, Integer, Byte, Integer>> record14s =
                 autonomousPracticeHeadService.findByAutonomousPracticeTemplateIdWithHeadTypeId(autonomousPracticeInfo.getAutonomousPracticeTemplateId());
-        if (record13s.isNotEmpty()) {
+        if (record14s.isNotEmpty()) {
             List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(usersService.getUserName());
             //自主实习可能对应多个相同的templateId 应该按照自主实习信息表id查询
-            Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfoId, studentId);
-            if (record5s.isNotEmpty() && record5s.size() == record13s.size()) {//更新操作 标题数据与数据数一样
+            Result<Record> record5s = autonomousPracticeContentService.findByAutonomousPracticeInfoIdAndStudentId(autonomousPracticeInfoId, studentId);
+            if (record5s.isNotEmpty() && record5s.size() == record14s.size()) {//更新操作 标题数据与数据数一样
                 List<AutonomousPracticeContent> autonomousPracticeContents = record5s.into(AutonomousPracticeContent.class);
-                for (Record ap : record13s) {
+                for (Record ap : record14s) {
                     if (useTitle(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.AUTHORITY), authoritiesRecords)) {
                         for (AutonomousPracticeContent ac : autonomousPracticeContents) {
                             if (ac.getAutonomousPracticeHeadId() == ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID)) {
@@ -1428,11 +1860,11 @@ public class AutonomicPractice {
                 }
             } else {//保存操作
                 //要先删除以前的数据  删除后分页就不对了，只能在学生插入或更新信息时全部插入标题到content表中了
-                for (Record ap : record13s) {
+                for (Record ap : record14s) {
                     autonomousPracticeContentService.deleteByAutonomousPracticeHeadIdAndStudentId(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID), studentId);
                 }
                 //进行保存
-                for (Record ap : record13s) {
+                for (Record ap : record14s) {
                     //不检查是否必填了，由前端检验了
                     AutonomousPracticeContent autonomousPracticeContent = new AutonomousPracticeContent();
                     autonomousPracticeContent.setAutonomousPracticeHeadId(ap.getValue(Tables.AUTONOMOUS_PRACTICE_HEAD.ID));

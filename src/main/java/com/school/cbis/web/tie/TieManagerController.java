@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -74,6 +76,43 @@ public class TieManagerController {
 
     @Resource
     private TieNoticeAffixService tieNoticeAffixService;
+
+    @Resource
+    private YardService yardService;
+
+    @Resource
+    private UploadService upload;
+
+    /**
+     * 系管理界面
+     *
+     * @param map
+     * @return
+     */
+    @RequestMapping("/maintainer/tie/tieManager")
+    public String tieManager(ModelMap map) {
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        Tie tie = tieService.findById(tieId);
+        List<Yard> yardList = yardService.findAll();
+        Yard yard = new Yard();
+        if (!yardList.isEmpty()) {
+            for (int i = 0; i < yardList.size(); i++) {
+                if (yardList.get(i).getId() == tie.getYardId()) {
+                    yard = yardList.get(i);
+                    yardList.remove(i);
+                    break;
+                }
+            }
+        }
+        map.addAttribute("tie", tie);
+        map.addAttribute("yardInfo", yard);
+        map.addAttribute("yardList", yardList);
+        return "/maintainer/tie/tiemanager";
+    }
 
     /**
      * 检验系名
@@ -514,6 +553,20 @@ public class TieManagerController {
     public String tieNotice(TieNoticeVo tieNoticeVo,ModelMap modelMap) {
         modelMap.addAttribute("tieNoticeVo",tieNoticeVo);
         return "/maintainer/tie/tienoticelist";
+    }
+
+    /**
+     * 下载公告附件
+     *
+     * @param id
+     * @param response
+     */
+    @RequestMapping("/user/tie/downloadTieNoticeAffix")
+    public void downloadTieNoticeAffix(@RequestParam("id") int id, HttpServletResponse response, HttpServletRequest request) {
+        TieNoticeAffix tieNoticeAffix = tieNoticeAffixService.findById(id);
+        if (!StringUtils.isEmpty(tieNoticeAffix)) {
+            upload.download(tieNoticeAffix.getTieNoticeFileName(), tieNoticeAffix.getTieNoticeFileUrl(), response, request);
+        }
     }
 
     /**

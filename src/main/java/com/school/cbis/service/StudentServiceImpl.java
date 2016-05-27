@@ -150,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -169,7 +169,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -237,7 +237,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -256,7 +256,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -324,7 +324,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 0&&StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))
@@ -343,7 +343,7 @@ public class StudentServiceImpl implements StudentService {
         if(autonomousPracticeParamVo.getType() == 1 && StringUtils.hasLength(autonomousPracticeParamVo.getStudentNumber())){
             a = a.and(Tables.STUDENT.STUDENT_NUMBER.like("%"+autonomousPracticeParamVo.getStudentNumber()+"%"));
         }
-        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME,Tables.GRADE.GRADE_NAME)
+        Result<Record4<Integer,String,String,String>> records = create.select(Tables.STUDENT.ID,Tables.STUDENT.STUDENT_NUMBER,Tables.USERS.REAL_NAME.as("studentName"),Tables.GRADE.GRADE_NAME)
                 .from(Tables.STUDENT)
                 .join(Tables.GRADE)
                 .on(Tables.STUDENT.GRADE_ID.equal(Tables.GRADE.ID))

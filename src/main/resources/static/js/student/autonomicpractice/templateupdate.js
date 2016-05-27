@@ -23,7 +23,7 @@ function outputToTable(data) {
                     .append($('<li>').text('标题类型:' + headTypes))
                     .append($('<li>').text('数据库表:' + data.databaseTable))
                     .append($('<li>').text('数据库表字段:' + data.databaseTableField))
-                    .append($('<li>').text('是否必填:' + (data.isRequired == 1?'是':'否')))
+                    .append($('<li>').text('是否必填:' + (data.isRequired == 1 ? '是' : '否')))
             )
             .append(
                 $('<p class="uk-text-break">').text('所需权限:' + data.authority)
@@ -46,6 +46,18 @@ function outputToPanel(data) {
     $('#panelData').append(
         $('<li onclick="highTitleSelect(this,' + data.id + ');" data="' + data.id + '" >').append(
             $('<div class="uk-panel uk-panel-box uk-panel-box-primary ">').text(data.title)
+        )
+    );
+}
+
+/**
+ * 输出到高效工作区 不显示的标题
+ * @param data
+ */
+function outputToPanelNoShow(data) {
+    $('#panelData').append(
+        $('<li onclick="highTitleSelect(this,' + data.id + ');" data="' + data.id + '" >').append(
+            $('<div class="uk-panel uk-panel-box">').text(data.title)
         )
     );
 }
@@ -99,7 +111,7 @@ function outputToEditTable(data) {
     $(p[3]).text('选择内容:' + data.content);
     $(u[2]).text('数据库表:' + data.databaseTable);
     $(u[3]).text('数据库表字段:' + data.databaseTableField);
-    $(u[4]).text('是否必填:' + (data.isRequired == 1?'是':'否'));
+    $(u[4]).text('是否必填:' + (data.isRequired == 1 ? '是' : '否'));
 }
 
 var databaseTables = null;//数据库表下拉菜单数据
@@ -128,7 +140,7 @@ function initTemplateData() {
 /**
  * 初始化全局参数
  */
-function initParam(){
+function initParam() {
     initAuthority();//输出权限到下拉菜单
     initHeadTypeSelect();//输出标题类型
     initDatabaseTableSelect();//输出数据库表
@@ -191,16 +203,16 @@ $(document).ready(function () {
  * @param id
  * @param templateName
  */
-function validateUpdateAutonomicPracticeTemplateTitle(id,templateName){
+function validateUpdateAutonomicPracticeTemplateTitle(id, templateName) {
     if (templateName.length <= 0) {
         layer.msg('请填写模板名!');
     } else {
-        $.post(web_path + "/administrator/autonomicpractice/validateUpdateAutonomicPracticeTemplateTitle",{
-            'id':id,
-            'templateName':templateName
-        },function(data){
-            if(data.state){
-                sendTemplateInfo(id,templateName);
+        $.post(web_path + "/administrator/autonomicpractice/validateUpdateAutonomicPracticeTemplateTitle", {
+            'id': id,
+            'templateName': templateName
+        }, function (data) {
+            if (data.state) {
+                sendTemplateInfo(id, templateName);
             } else {
                 layer.msg(data.msg);
             }
@@ -212,7 +224,7 @@ function validateUpdateAutonomicPracticeTemplateTitle(id,templateName){
  * 发送模板名
  * @param templateName
  */
-function sendTemplateInfo(id,templateName){
+function sendTemplateInfo(id, templateName) {
     $.post(web_path + "/administrator/autonomicpractice/updateAutonomicPracticeTemplate", {
         'id': id,
         'templateName': templateName
@@ -223,11 +235,17 @@ function sendTemplateInfo(id,templateName){
             templateId = data.obj;
             for (var i = 0; i < data.result.length; i++) {
                 outputToTable(data.result[i]);
-                if (data.result[i].isShowHighlyActive == 1) {
-                    outputToPanel(data.result[i]);
+
+                if (data.result[i].typeValue != 'checkbox' && data.result[i].typeValue != 'textarea' && data.result[i].typeValue != 'password') {
+                    if (data.result[i].isShowHighlyActive == 1) {
+                        outputToPanel(data.result[i]);
+                    } else {
+                        outputToPanelNoShow(data.result[i]);
+                    }
                 } else {
                     outputToPanelForCheckbox(data.result[i]);
                 }
+
             }
         } else {
             layer.msg(data.msg);
@@ -239,7 +257,7 @@ function sendTemplateInfo(id,templateName){
  * 保存模板名
  */
 function saveTemplateInfo() {
-    validateUpdateAutonomicPracticeTemplateTitle($('#templateId').val(),$('#autonomousPracticeTemplateTitle').val().trim());
+    validateUpdateAutonomicPracticeTemplateTitle($('#templateId').val(), $('#autonomousPracticeTemplateTitle').val().trim());
 }
 
 /**
@@ -454,7 +472,7 @@ function saveAddTitle() {
         }
     }
 
-    if($("input[name='isRequired']:checked").val() === 'on' ){//是否必填
+    if ($("input[name='isRequired']:checked").val() === 'on') {//是否必填
         isRequired = 1;
     } else {
         isRequired = 0;
@@ -466,7 +484,7 @@ function saveAddTitle() {
             return;
         } else {
             if (currentHeadTypeIsRadioOrCheckbox) {
-                if ($('.selectContentInput').length <=0 ||  $($('.selectContentInput')[0]).val().trim().length <= 0) {
+                if ($('.selectContentInput').length <= 0 || $($('.selectContentInput')[0]).val().trim().length <= 0) {
                     layer.msg('请为单选或多选添加选项!');
                     return;
                 } else {
@@ -480,7 +498,7 @@ function saveAddTitle() {
                     }
                 }
             } else if (currentHeadTypeIsSwitch) {
-                if ($('.selectContentInput').length <=0 || $($('.selectContentInput')[0]).val().trim().length <= 0 || $($('.selectContentInput')[1]).val().trim().length <= 0) {
+                if ($('.selectContentInput').length <= 0 || $($('.selectContentInput')[0]).val().trim().length <= 0 || $($('.selectContentInput')[1]).val().trim().length <= 0) {
                     layer.msg('请为开关添加选项!');
                     return;
                 } else {
@@ -529,7 +547,7 @@ function saveAddTitle() {
         'databaseTableSelect': databaseTableSelect,
         'databaseFieldSelect': databaseFieldSelect,
         'isShowHighlyActive': isShowHighlyActive,
-        'isRequired':isRequired,
+        'isRequired': isRequired,
         'sort': sort
 
     }, function (data) {
@@ -616,14 +634,14 @@ function cancelAll() {
  * @param authorities
  */
 function editTitleInitAuthorities(authorities) {
-        for (var i = 0; i < authorities.length; i++) {
-            for (var j = 0; j < $('.authority').length; j++) {
-                if (authorities[i] == $($('.authority')[j]).val()) {
-                    $($('.authority')[j]).attr('checked', true);
-                    break;
-                }
+    for (var i = 0; i < authorities.length; i++) {
+        for (var j = 0; j < $('.authority').length; j++) {
+            if (authorities[i] == $($('.authority')[j]).val()) {
+                $($('.authority')[j]).attr('checked', true);
+                break;
             }
         }
+    }
 }
 
 /**
@@ -672,7 +690,7 @@ function editTitle(obj) {
     var selectContentInput = $(p[3]).text();
     var databaseTableSelect = $(u[2]).text();
     var databaseFieldSelect = $(u[3]).text();
-    var isRequired =  $(u[4]).text();
+    var isRequired = $(u[4]).text();
 
     $('#title').val(title);// 标题
 
@@ -740,10 +758,10 @@ function editTitle(obj) {
     editDatabaseSelect(dtsId, dfs);
 
     var ir = isRequired.split(":")[1];
-    if(ir === '是'){//是否必填
-        $('#isRequired').attr('checked',true);
+    if (ir === '是') {//是否必填
+        $('#isRequired').attr('checked', true);
     } else {
-        $('#isRequired').attr('checked',false);
+        $('#isRequired').attr('checked', false);
     }
 }
 

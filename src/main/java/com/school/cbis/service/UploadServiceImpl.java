@@ -10,9 +10,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -95,5 +95,24 @@ public class UploadServiceImpl implements UploadService {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * 文件下载
+     * @param fileName 文件名 不带后缀
+     * @param filePath 完整文件路径 如: files/c.doc
+     * @param response
+     * @param request
+     */
+    public void download(String fileName, String filePath, HttpServletResponse response, HttpServletRequest request) {
+        try {
+            response.setContentType("application/x-msdownload");
+            response.setHeader("Content-disposition", "attachment; filename=\"" + new String((fileName + filePath.substring(filePath.lastIndexOf("."))).getBytes("gb2312"), "ISO8859-1") + "\"");
+            String realPath = request.getSession().getServletContext().getRealPath("/");
+            InputStream inputStream = new FileInputStream(realPath + filePath);
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        } catch (Exception e) {
+            log.error(" file is not found exception is {} ", e.getMessage());
+        }
     }
 }

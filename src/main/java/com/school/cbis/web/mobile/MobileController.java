@@ -13,6 +13,7 @@ import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +33,19 @@ public class MobileController {
 
     @Resource
     private Wordbook wordbook;
+
+    /**
+     * 手机管理界面
+     *
+     * @param mobileListVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/maintainer/mobile/mobileManager")
+    public String mobileManager(MobileListVo mobileListVo, ModelMap modelMap) {
+        modelMap.addAttribute("mobileListVo", mobileListVo);
+        return "/maintainer/mobile/mobilemanager";
+    }
 
     /**
      * 手机管理列表数据

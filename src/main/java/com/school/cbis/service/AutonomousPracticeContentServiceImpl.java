@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.AutonomousPracticeContentDao;
 import com.school.cbis.domain.tables.pojos.AutonomousPracticeContent;
 import com.school.cbis.vo.autonomicpractice.*;
+import org.apache.poi.ss.formula.functions.T;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +42,12 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
-    public Result<Record5<Integer, String, Integer, Integer, Integer>> findByAutonomousPracticeInfoIdAndStudentId(int autonomousPracticeInfoId, int studentId) {
-        Result<Record5<Integer, String, Integer, Integer, Integer>> record5s = create.select(Tables.AUTONOMOUS_PRACTICE_CONTENT.ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT,
-                Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID, Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID)
+    public Result<Record> findByAutonomousPracticeInfoIdAndStudentId(int autonomousPracticeInfoId, int studentId) {
+        Result<Record> records = create.select()
                 .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
                 .where(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomousPracticeInfoId).and(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID.eq(studentId)))
                 .fetch();
-        return record5s;
+        return records;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -182,6 +182,27 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
                 .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID.eq(Tables.AUTONOMOUS_PRACTICE_HEAD.ID))
                 .where(a)
                 .limit((pageNum - 1) * pageSize, pageSize)
+                .fetch();
+        return record1s;
+    }
+
+    @Override
+    public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentId(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo) {
+        Condition a = Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_INFO_ID.eq(autonomicPracticeTeacherListVo.getAutonomousPracticeInfoId());
+
+        if(autonomicPracticeTeacherListVo.getAutonomousPracticeHeadId() > 0){
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID.eq(autonomicPracticeTeacherListVo.getAutonomousPracticeHeadId()));
+        }
+
+        if(StringUtils.hasLength(autonomicPracticeTeacherListVo.getContent())){
+            a = a.and(Tables.AUTONOMOUS_PRACTICE_CONTENT.CONTENT.like("%"+autonomicPracticeTeacherListVo.getContent()+"%"));
+        }
+
+        Result<Record1<Integer>> record1s = create.selectDistinct(Tables.AUTONOMOUS_PRACTICE_CONTENT.STUDENT_ID)
+                .from(Tables.AUTONOMOUS_PRACTICE_CONTENT)
+                .join(Tables.AUTONOMOUS_PRACTICE_HEAD)
+                .on(Tables.AUTONOMOUS_PRACTICE_CONTENT.AUTONOMOUS_PRACTICE_HEAD_ID.eq(Tables.AUTONOMOUS_PRACTICE_HEAD.ID))
+                .where(a)
                 .fetch();
         return record1s;
     }

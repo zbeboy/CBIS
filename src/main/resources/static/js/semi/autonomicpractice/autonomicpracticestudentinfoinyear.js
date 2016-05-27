@@ -30,11 +30,11 @@ function outputHavePayHtml(){
         $('#tableHavePayData').append($('<div class="uk-panel uk-panel-divider">').append(
             $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-6">')
                 .append($('<li>').text('学号:'))
-                .append($('<li>').text(pagingParam.havePayStudent[i].studentNumber))
+                .append($('<li>').text(dealNull(pagingParam.havePayStudent[i].studentNumber)))
                 .append($('<li>').text('姓名:'))
-                .append($('<li>').text(pagingParam.havePayStudent[i].studentName))
+                .append($('<li>').text(dealNull(pagingParam.havePayStudent[i].studentName)))
                 .append($('<li>').text('班级:'))
-                .append($('<li>').text(pagingParam.havePayStudent[i].gradeName))
+                .append($('<li>').text(dealNull(pagingParam.havePayStudent[i].gradeName)))
         ));
     }
 }
@@ -54,14 +54,26 @@ function outputHaveNoPayHtml() {
         $('#tableHaveNoPayData').append($('<div class="uk-panel uk-panel-divider">').append(
             $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-6">')
                 .append($('<li>').text('学号:'))
-                .append($('<li>').text(pagingParam.haveNoPayStudent[i].studentNumber))
+                .append($('<li>').text(dealNull(pagingParam.haveNoPayStudent[i].studentNumber)))
                 .append($('<li>').text('姓名:'))
-                .append($('<li>').text(pagingParam.haveNoPayStudent[i].studentName))
+                .append($('<li>').text(dealNull(pagingParam.haveNoPayStudent[i].studentName)))
                 .append($('<li>').text('班级:'))
-                .append($('<li>').text(pagingParam.haveNoPayStudent[i].gradeName))
+                .append($('<li>').text(dealNull(pagingParam.haveNoPayStudent[i].gradeName)))
         ));
     }
 
+}
+
+/**
+ * 处理空值
+ * @param obj
+ */
+function dealNull(obj){
+    if(obj == null){
+        return '';
+    } else {
+        return obj;
+    }
 }
 
 /**
@@ -133,6 +145,21 @@ function action() {
             createPage(data);
             initSearch();
         }, 'json');
+}
+
+/**
+ * 导出数据
+ */
+function exportData(obj){
+    var exportType = $(obj).prev().val();
+    var jsonData = $(obj).prev().prev();
+    var exportForm = $(obj).parent().parent().parent();
+    if(Number(exportType) == 0){
+        jsonData.val(JSON.stringify(pagingParam.havePayStudent));
+    } else if(Number(exportType) == 1) {
+        jsonData.val(JSON.stringify(pagingParam.haveNoPayStudent));
+    }
+    exportForm.submit();
 }
 
 /**
