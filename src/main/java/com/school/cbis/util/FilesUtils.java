@@ -1,10 +1,13 @@
 package com.school.cbis.util;
 
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -36,5 +39,22 @@ public class FilesUtils {
         }
 
         return str;
+    }
+
+    public static boolean isExists(String filePath){
+        File file = new File(filePath);
+        if(file.exists()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static HSSFWorkbook readHSSFFile(String filename) throws IOException {
+        return new HSSFWorkbook(new FileInputStream(filename));
+    }
+
+    public static XSSFWorkbook readXSSFFile(String filename) throws IOException {
+        return new XSSFWorkbook(new FileInputStream(filename));
     }
 }

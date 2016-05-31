@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="keywords" content="" th:content="#{web_keywords}"/>
+    <meta http-equiv="description" content="" th:content="#{web_description}"/>
+    <!-- csrf -->
+    <meta name="_csrf" content="" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
+    <title>教务管理</title>
+    <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
+    <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
+    <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <!-- nice validator css -->
+    <link rel="stylesheet" href="js/validator/jquery.validator.css"
+          th:href="@{/js/plugin/validator/jquery.validator.css}"/>
+
+    <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js" th:src="@{/js/plugin/html5/respond.min.js}"></script>
+    <script src="js/html5.min.js" th:src="@{/js/plugin/html5/html5.min.js}"></script>
+    <![endif]-->
+    <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
+    <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
+    <script src="../src/js/components/datepicker.js" th:src="@{/js/plugin/components/datepicker.js}"></script>
+    <script src="../src/js/components/form-select.js" th:src="@{/js/plugin/components/form-select.js}"></script>
+    <script src="../src/js/core/modal.js" th:src="@{/js/plugin/core/modal.js}"></script>
+    <script src="../src/js/components/lightbox.js" th:src="@{/js/plugin/components/lightbox.js}"></script>
+    <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
+    <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
+    <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
+    <!-- file upload -->
+    <script src="js/vendor/jquery.ui.widget.js" th:src="@{/js/plugin/fileupload/jquery.ui.widget.js}"></script>
+    <script src="js/jquery.iframe-transport.js" th:src="@{/js/plugin/fileupload/jquery.iframe-transport.js}"></script>
+    <script src="js/jquery.fileupload.js" th:src="@{/js/plugin/fileupload/jquery.fileupload.js}"></script>
+    <!-- layer js -->
+    <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
+    <!-- nice validator js -->
+    <script type="text/javascript" src="js/validator/jquery.validator.js"
+            th:src="@{/js/plugin/validator/jquery.validator.js}"></script>
+    <script type="text/javascript" src="js/validator/local/zh_CN.js"
+            th:src="@{/js/plugin/validator/local/zh-CN.js}"></script>
+    <script>
+        $(function () {
+            scrolltotop.offset(100, 120);
+            scrolltotop.init();
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#theorynavassignmentbookmanager').addClass('uk-active');
+            $('#theoryoffcanvasassignmentbookmanager').addClass('uk-active');
+        });
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="myheader" th:include="commons::logo">
+
+    </div>
+    <nav th:include="commons::nav" class="uk-navbar uk-margin-large-bottom"
+         data-uk-sticky="{media: &#39;(min-width: 640px) and (orientation: landscape)&#39;,top:-200, animation: &#39;uk-animation-slide-top&#39;}">
+
+    </nav>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-1-1">
+            <ul class="uk-breadcrumb">
+                <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
+                <li class="uk-active"><span>教学工作</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin="">
+        <div class="uk-width-medium-1-4" th:include="backstage::eadminnav">
+
+        </div>
+        <div class="uk-width-medium-3-4">
+            <form id="assignmentBookAddForm" class="uk-form uk-form-horizontal">
+                <input type="hidden" name="teachType" id="teachType" value="理论"/>
+
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="teachTaskTitle">标题</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="teachTaskTitle" name="teachTaskTitle" placeholder="标题"/>
+                    </div>
+                </div><br/>
+
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="teachTaskTerm">学期</label>
+                    <div class="uk-form-controls">
+                        <select id="teachTaskTerm" name="teachTaskTerm">
+                            <option>上学期</option>
+                            <option>下学期</option>
+                        </select>
+                    </div>
+                </div><br/>
+
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="termStartTime">学年开始时间</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="termStartTime" name="termStartTime" readonly="readonly"
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}" placeholder="学年开始时间" />
+                    </div>
+                </div><br/>
+
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="termEndTime">学年结束时间</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="termEndTime" name="termEndTime" readonly="readonly"
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}" placeholder="学年结束时间" />
+                    </div>
+                </div><br/>
+
+                <small class="uk-text-warning">引导:为了节约您宝贵的工作时间,我们对excel文件做了以下规约,请您一定要遵守并修改excel文件,这将会加快excel导入速度.
+                </small>
+                <br/>
+                <small>引导一:请先按照示例,调整您的文件格式,删除多余行,调整为大标题为第一行,子标题为第二行启始,仅有一个工作薄,excel勿跨行跨列(无合并单元格情况)。</small>
+                <div class="uk-thumbnail uk-thumbnail-mini uk-margin-small-top">
+                    <a class="uk-button" href="images/placeholder_800x400_1.jpg"
+                       th:href="@{/images/teach_task_info_example.png}" data-uk-lightbox="" title="教学任务书示例">
+                        <img src="images/placeholder_800x280.svg" th:src="@{/images/teach_task_info_example.png}"
+                             width="600" height="400" alt=""/>
+                        <div class="uk-thumbnail-caption"><code>教学任务书示例</code></div>
+                    </a>
+                </div>
+                <br/><br/>
+                <small>引导二:请填写您excel中有<mark class="uk-text-danger">年级信息</mark>的标题的列号和行号(标题名随意),如示例中 [年级] 行:2 列:2 计数从1开始,不支持A,B 年级为数字!</small>
+                <br/>
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="yearX">年级所在行和列</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="yearX" name="yearX" placeholder="行"  />
+                        <input type="text" id="yearY" name="yearY" placeholder="列" />
+                    </div>
+                </div>
+
+                <small>引导三:请填写您excel中有<mark class="uk-text-danger">班级信息</mark>的标题的列号和行号(标题名随意),如示例中 [班级信息] 行:2 列:15 计数从1开始,不支持A,B。</small>
+                <br/>
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="gradeX">班级信息所在行和列</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="gradeX" name="gradeX" placeholder="行"  />
+                        <input type="text" id="gradeY" name="gradeY" placeholder="列" />
+                    </div>
+                </div>
+
+                <small>引导四:请填写您excel中有<mark class="uk-text-danger">班级人数</mark>的标题的列号和行号(标题名随意),如示例中 [班级信息] 行:2 列:15 计数从1开始,不支持A,B。</small>
+                <br/><br/>
+                <small class="uk-text-primary">
+                    提示:若班级信息与班级人数在同一列中,系统将会解析最后一个括号中的人数(注:一定要用括号括起人数),多个班级在同一个单元中,将会按照逗号解析出所有班级,再解析人数,括号、逗号中英都可。
+                    <br/>
+                    若不在同一列,请注意在一个单元格有多个班级时,人数的排列顺序,例: 班级列:A班,B班 人数列:20,50 &nbsp;&nbsp;人数列只有数字加逗号,并且对应班级顺序。
+                    <br/>
+                    如示例中:  测控1111(59) 解析为:&nbsp;&nbsp;班级:测控1111&nbsp;&nbsp;人数:59
+                </small>
+                <br/>
+                <div class="uk-form-row uk-margin">
+                    <label class="uk-form-label" for="gradeNumX">班级人数所在行和列</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="gradeNumX" name="gradeNumX" placeholder="行"  />
+                        <input type="text" id="gradeNumY" name="gradeNumY" placeholder="列" />
+                    </div>
+                </div>
+
+                <small>引导五:现在您可以上传教学任务书了,支持的格式有xls,xlsx,大小写都可,上传文件中勿刷新页面,根据网速不同,上传有快有慢,请耐心等待。</small>
+                <br/>
+                <div class="uk-form-row">
+                    <label class="uk-form-label uk-form-file" for="uploadFile">
+                        <button class="uk-button">上传教学任务书</button>
+                        <input id="fileupload" type="file" name="files[]" multiple="multiple"/>
+                    </label>
+                    <div class="uk-form-controls">
+                        <input type="text" readonly="readonly" id="uploadFile" name="uploadFile"/>
+                        <input type="hidden" name="filePath" id="filePath"/>
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                        <button type="submit" class="uk-button uk-button-primary uk-button-large" id="submitData" >确定</button>
+                    </div>
+                </div>
+                <small class="uk-text-warning" >提醒:请您再次确认任务书格式与内容,上传后不可删除,也不可修改。</small>
+            </form>
+        </div>
+    </div>
+    <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
+         title="返回顶部"></div>
+    <hr class="uk-grid-divider"/>
+    <footer th:include="commons::footer">
+
+    </footer>
+</div>
+
+<!-- 示例图片 -->
+<div class="uk-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-lightbox uk-slidenav-position">
+        <a href="#" class="uk-modal-close uk-close uk-close-alt"></a>
+        <div class="uk-lightbox-content" style="opacity: 1;">
+            <img class="uk-responsive-width" width="800" height="400"
+                 src="images/placeholder_800x400_1.jpg" th:src="@{/images/teach_task_info_example.png}" />
+        </div>
+        <div class="uk-modal-spinner uk-hidden">
+        </div>
+        <div class="uk-modal-caption">教学任务书示例</div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    /*]]>*/
+</script>
+<script th:src="@{/js/administrator/eadmin/assignmentbookadd.js}"
+        src="js/administrator/eadmin/assignmentbookadd.js"></script>
+</body>
+</html>

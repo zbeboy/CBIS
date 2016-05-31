@@ -74,6 +74,13 @@ public class TeachTaskInfoDao extends DAOImpl<TeachTaskInfoRecord, com.school.cb
 	}
 
 	/**
+	 * Fetch records that have <code>teach_task_title IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByTeachTaskTitle(String... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.TEACH_TASK_TITLE, values);
+	}
+
+	/**
 	 * Fetch records that have <code>teach_task_file_url IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByTeachTaskFileUrl(String... values) {
@@ -85,13 +92,6 @@ public class TeachTaskInfoDao extends DAOImpl<TeachTaskInfoRecord, com.school.cb
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByTeachTaskFileSize(String... values) {
 		return fetch(TeachTaskInfo.TEACH_TASK_INFO.TEACH_TASK_FILE_SIZE, values);
-	}
-
-	/**
-	 * Fetch records that have <code>teach_task_file_name IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByTeachTaskFileName(String... values) {
-		return fetch(TeachTaskInfo.TEACH_TASK_INFO.TEACH_TASK_FILE_NAME, values);
 	}
 
 	/**
@@ -148,5 +148,54 @@ public class TeachTaskInfoDao extends DAOImpl<TeachTaskInfoRecord, com.school.cb
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByFileType(String... values) {
 		return fetch(TeachTaskInfo.TEACH_TASK_INFO.FILE_TYPE, values);
+	}
+
+	/**
+	 * Fetch records that have <code>year_x IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByYearX(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.YEAR_X, values);
+	}
+
+	/**
+	 * Fetch records that have <code>year_y IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByYearY(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.YEAR_Y, values);
+	}
+
+	/**
+	 * Fetch records that have <code>grade_x IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByGradeX(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.GRADE_X, values);
+	}
+
+	/**
+	 * Fetch records that have <code>grade_y IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByGradeY(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.GRADE_Y, values);
+	}
+
+	/**
+	 * Fetch records that have <code>grade_num_x IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByGradeNumX(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.GRADE_NUM_X, values);
+	}
+
+	/**
+	 * Fetch records that have <code>grade_num_y IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByGradeNumY(Integer... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.GRADE_NUM_Y, values);
+	}
+
+	/**
+	 * Fetch records that have <code>is_use IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByIsUse(Byte... values) {
+		return fetch(TeachTaskInfo.TEACH_TASK_INFO.IS_USE, values);
 	}
 }

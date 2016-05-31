@@ -202,4 +202,26 @@ public class MailServiceImpl implements MailService {
             log.warn("E-mail could not be sent to user '{}', exception is: {}", users.getEmail(), e.getMessage());
         }
     }
+
+    @Override
+    public void sendTeachTaskMsg(Users users, String baseUrl,String msg) {
+        log.debug("Sending Teach task msg e-mail to '{}'", users.getUsername());
+        Locale locale = Locale.forLanguageTag(users.getLangKey());
+        Context data = new Context();
+        data.setLocale(locale);
+        data.setVariable("user",users);
+        data.setVariable("msg",msg);
+        data.setVariable("link",baseUrl + "/login");
+        String subject = messageSource.getMessage("email.teach.task.title", null, locale);
+        String content = springTemplateEngine.process("/mails/teachtaskmsg",data);
+        sendEmail(users.getEmail(), subject,content, false, true);
+
+        MailboxCount mailboxCount = new MailboxCount();
+        mailboxCount.setAcceptEmail(users.getEmail());
+        mailboxCount.setContent(content);
+        mailboxCount.setSubject(subject);
+        mailboxCount.setSendTime(new Timestamp(System.currentTimeMillis()));
+        mailboxCount.setAcceptUser(users.getUsername());
+        mailboxCountService.save(mailboxCount);
+    }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.teach.task.title}" ></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="#{email.teach.task.greeting(${user.realName})}">
+
+</p>
+<p th:text="${msg}">
+
+</p>
+<a href="#" th:href="${link}">点击登录</a>
+<p>
+    <span th:text="#{email.teach.task.text2}"> </span>
+    <br/>
+    <em th:text="#{email.signature}"></em>
+</p>
+</body>
+</html>

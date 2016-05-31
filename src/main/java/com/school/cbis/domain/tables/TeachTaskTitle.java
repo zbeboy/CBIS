@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskTitle extends TableImpl<TeachTaskTitleRecord> {
 
-	private static final long serialVersionUID = -1652397775;
+	private static final long serialVersionUID = -214798134;
 
 	/**
 	 * The reference instance of <code>cbis.teach_task_title</code>
@@ -69,51 +69,6 @@ public class TeachTaskTitle extends TableImpl<TeachTaskTitleRecord> {
 	 * The column <code>cbis.teach_task_title.title_y</code>.
 	 */
 	public final TableField<TeachTaskTitleRecord, Integer> TITLE_Y = createField("title_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_lx</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, Integer> TITLE_LX = createField("title_lx", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_ly</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, Integer> TITLE_LY = createField("title_ly", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_font</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, String> TITLE_FONT = createField("title_font", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_font_size</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, String> TITLE_FONT_SIZE = createField("title_font_size", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_font_color</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, String> TITLE_FONT_COLOR = createField("title_font_color", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_background</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, String> TITLE_BACKGROUND = createField("title_background", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_is_big</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, Byte> TITLE_IS_BIG = createField("title_is_big", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.title_is_italic</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, Byte> TITLE_IS_ITALIC = createField("title_is_italic", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_title.is_edit</code>.
-	 */
-	public final TableField<TeachTaskTitleRecord, Byte> IS_EDIT = createField("is_edit", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
 	/**
 	 * The column <code>cbis.teach_task_title.teach_task_info_id</code>.

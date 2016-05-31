@@ -249,4 +249,12 @@ public class GradeServiceImpl implements GradeService {
         List<Grade> grades = gradeDao.fetchByMajorId(majorId);
         return grades;
     }
+
+    @Override
+    public Result<GradeRecord> findAllInYearWithCache(List<String> years) {
+        Result<GradeRecord> gradeRecords = create.selectFrom(Tables.GRADE)
+                .where(Tables.GRADE.YEAR.in(years))
+                .fetch();
+        return gradeRecords;
+    }
 }

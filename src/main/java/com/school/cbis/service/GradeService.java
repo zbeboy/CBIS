@@ -4,12 +4,15 @@ import com.school.cbis.domain.tables.pojos.Grade;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.vo.grade.GradeVo;
 import org.jooq.*;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
 /**
  * Created by lenovo on 2016-01-17.
  */
+@CacheConfig(cacheNames = "grade")
 public interface GradeService {
     /**
      * 通过班级ID获取班级信息
@@ -125,4 +128,12 @@ public interface GradeService {
      * @return
      */
     List<Grade> findByMajorId(int majorId);
+
+    /**
+     * 缓存查询这些年级下的班级
+     * @param years
+     * @return
+     */
+    @Cacheable(cacheNames = "findAllInYearWithCache")
+    Result<GradeRecord> findAllInYearWithCache(List<String> years);
 }

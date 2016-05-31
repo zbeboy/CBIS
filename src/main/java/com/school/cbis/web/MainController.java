@@ -95,11 +95,10 @@ public class MainController {
      * ## 本方法利用 thymeleaf 缓存
      * @param modelMap
      * @param tieId 提供系接入
-     * @param session
      * @return
      */
     @RequestMapping("/")
-    public String root(ModelMap modelMap,@RequestParam(value = "tieId",defaultValue = "0",required = false) int tieId, HttpSession session) {
+    public String root(ModelMap modelMap,@RequestParam(value = "tieId",defaultValue = "0",required = false) int tieId) {
         Tie tie = null;
         if(tieId == 0){
             TieRecord tieRecord = wordbook.getTieInfo();
@@ -107,10 +106,7 @@ public class MainController {
         } else {
             tie = tieService.findById(tieId);
         }
-        /*
-        就目前情况使用session是最为保险的做法，但不知道该session与spring security session是否是同一个，否则若提前失效...
-         */
-        session.setAttribute("tieInfo",tie);
+
         int tieIntroduceArticleInfoId = 0;//系简介
         //系简介
         if (!StringUtils.isEmpty(tie) && !StringUtils.isEmpty(tie.getTieIntroduceArticleInfoId())) {
@@ -196,9 +192,6 @@ public class MainController {
         systemLog.setTieId(record.getValue(Tables.TIE.ID));
         systemLog.setOperationBehavior("登录后台管理!");
         systemLogService.save(systemLog);
-
-        Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
-        session.setAttribute("tieInfo",tie);
         return "/student/backstage";
     }
 
@@ -209,14 +202,6 @@ public class MainController {
      */
     @RequestMapping("/login")
     public String login(HttpSession session) {
-        /*
-        处理session 失效
-         */
-        if(ObjectUtils.isEmpty(session.getAttribute("tieInfo"))){
-            TieRecord tieRecord = wordbook.getTieInfo();
-            Tie tie = tieRecord.into(Tie.class);
-            session.setAttribute("tieInfo",tie);
-        }
         return "login";
     }
 

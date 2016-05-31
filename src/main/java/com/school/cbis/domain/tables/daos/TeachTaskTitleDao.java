@@ -86,69 +86,6 @@ public class TeachTaskTitleDao extends DAOImpl<TeachTaskTitleRecord, com.school.
 	}
 
 	/**
-	 * Fetch records that have <code>title_lx IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleLx(Integer... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_LX, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_ly IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleLy(Integer... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_LY, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_font IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleFont(String... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_FONT, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_font_size IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleFontSize(String... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_FONT_SIZE, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_font_color IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleFontColor(String... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_FONT_COLOR, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_background IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleBackground(String... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_BACKGROUND, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_is_big IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleIsBig(Byte... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_IS_BIG, values);
-	}
-
-	/**
-	 * Fetch records that have <code>title_is_italic IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTitleIsItalic(Byte... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.TITLE_IS_ITALIC, values);
-	}
-
-	/**
-	 * Fetch records that have <code>is_edit IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByIsEdit(Byte... values) {
-		return fetch(TeachTaskTitle.TEACH_TASK_TITLE.IS_EDIT, values);
-	}
-
-	/**
 	 * Fetch records that have <code>teach_task_info_id IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeachTaskTitle> fetchByTeachTaskInfoId(Integer... values) {

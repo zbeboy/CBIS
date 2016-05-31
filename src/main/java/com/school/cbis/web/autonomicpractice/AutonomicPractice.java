@@ -1012,16 +1012,16 @@ public class AutonomicPractice {
      */
     @RequestMapping("/teacher/autonomicpractice/exportAutonomicPracticeData")
     public void exportAutonomicPracticeData(int autonomousPracticeHeadId, String content, int autonomousPracticeInfoId, @RequestParam(value = "fileName", required = false) String fileName,
-                                            @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext, HttpServletRequest request, HttpServletResponse response) {
+                                            @RequestParam(value = "ext", defaultValue = Wordbook.EXCEL_XLSX, required = false) String ext, HttpServletRequest request, HttpServletResponse response) {
         try {
             AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo = new AutonomicPracticeTeacherListVo();
             autonomicPracticeTeacherListVo.setAutonomousPracticeHeadId(autonomousPracticeHeadId);
             autonomicPracticeTeacherListVo.setContent(content);
             autonomicPracticeTeacherListVo.setAutonomousPracticeInfoId(autonomousPracticeInfoId);
             Workbook wb = null;
-            if (ext.equals("xlsx")) {
+            if (ext.equals(Wordbook.EXCEL_XLSX)) {
                 wb = new XSSFWorkbook();
-            } else if (ext.equals("xls")) {
+            } else if (ext.equals(Wordbook.EXCEL_XLS)) {
                 wb = new HSSFWorkbook();
             } else {
                 wb = new XSSFWorkbook();//保证不为空
@@ -1337,7 +1337,7 @@ public class AutonomicPractice {
      * @param exportType 列表数据类型 0 已提交 1 未提交
      */
     @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInYearData")
-    public void exportAutonomicPracticeStudentInfoInYearData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+    public void exportAutonomicPracticeStudentInfoInYearData(String fileName, @RequestParam(value = "ext", defaultValue = Wordbook.EXCEL_XLSX, required = false) String ext,
                                                              String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response) {
         try{
 
@@ -1356,9 +1356,9 @@ public class AutonomicPractice {
             }
 
             Workbook wb = null;
-            if (ext.equals("xlsx")) {
+            if (ext.equals(Wordbook.EXCEL_XLSX)) {
                 wb = new HSSFWorkbook();
-            } else if (ext.equals("xls")) {
+            } else if (ext.equals(Wordbook.EXCEL_XLS)) {
                 wb = new XSSFWorkbook();
             } else {
                 wb = new HSSFWorkbook();
@@ -1512,7 +1512,7 @@ public class AutonomicPractice {
      * @param exportType 列表数据类型 0 已提交 1 未提交
      */
     @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInMajorData")
-    public void exportAutonomicPracticeStudentInfoInMajorData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+    public void exportAutonomicPracticeStudentInfoInMajorData(String fileName, @RequestParam(value = "ext", defaultValue = Wordbook.EXCEL_XLSX, required = false) String ext,
                                                               String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response){
         try{
 
@@ -1531,9 +1531,9 @@ public class AutonomicPractice {
             }
 
             Workbook wb = null;
-            if (ext.equals("xlsx")) {
+            if (ext.equals(Wordbook.EXCEL_XLSX)) {
                 wb = new HSSFWorkbook();
-            } else if (ext.equals("xls")) {
+            } else if (ext.equals(Wordbook.EXCEL_XLS)) {
                 wb = new XSSFWorkbook();
             } else {
                 wb = new HSSFWorkbook();
@@ -1685,7 +1685,7 @@ public class AutonomicPractice {
      * @param exportType 列表数据类型 0 已提交 1 未提交
      */
     @RequestMapping("/semi/autonomicpractice/exportAutonomicPracticeStudentInfoInGradeData")
-    public void exportAutonomicPracticeStudentInfoInGradeData(String fileName, @RequestParam(value = "ext", defaultValue = "xlsx", required = false) String ext,
+    public void exportAutonomicPracticeStudentInfoInGradeData(String fileName, @RequestParam(value = "ext", defaultValue = Wordbook.EXCEL_XLSX, required = false) String ext,
                                                               String jsonData, int exportType,HttpServletRequest request,HttpServletResponse response){
         try{
 
@@ -1704,9 +1704,9 @@ public class AutonomicPractice {
             }
 
             Workbook wb = null;
-            if (ext.equals("xlsx")) {
+            if (ext.equals(Wordbook.EXCEL_XLSX)) {
                 wb = new HSSFWorkbook();
-            } else if (ext.equals("xls")) {
+            } else if (ext.equals(Wordbook.EXCEL_XLS)) {
                 wb = new XSSFWorkbook();
             } else {
                 wb = new HSSFWorkbook();

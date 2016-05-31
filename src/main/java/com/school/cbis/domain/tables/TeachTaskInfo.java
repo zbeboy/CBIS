@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 
-	private static final long serialVersionUID = -1842567705;
+	private static final long serialVersionUID = -1938859435;
 
 	/**
 	 * The reference instance of <code>cbis.teach_task_info</code>
@@ -63,6 +63,11 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	public final TableField<TeachTaskInfoRecord, Integer> TIE_ID = createField("tie_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
+	 * The column <code>cbis.teach_task_info.teach_task_title</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, String> TEACH_TASK_TITLE = createField("teach_task_title", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
+
+	/**
 	 * The column <code>cbis.teach_task_info.teach_task_file_url</code>.
 	 */
 	public final TableField<TeachTaskInfoRecord, String> TEACH_TASK_FILE_URL = createField("teach_task_file_url", org.jooq.impl.SQLDataType.VARCHAR.length(500).nullable(false), this, "");
@@ -71,11 +76,6 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	 * The column <code>cbis.teach_task_info.teach_task_file_size</code>.
 	 */
 	public final TableField<TeachTaskInfoRecord, String> TEACH_TASK_FILE_SIZE = createField("teach_task_file_size", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_info.teach_task_file_name</code>.
-	 */
-	public final TableField<TeachTaskInfoRecord, String> TEACH_TASK_FILE_NAME = createField("teach_task_file_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.teach_task_info.teach_task_file_date</code>.
@@ -90,7 +90,7 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	/**
 	 * The column <code>cbis.teach_task_info.teach_task_down_times</code>.
 	 */
-	public final TableField<TeachTaskInfoRecord, Integer> TEACH_TASK_DOWN_TIMES = createField("teach_task_down_times", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<TeachTaskInfoRecord, Integer> TEACH_TASK_DOWN_TIMES = createField("teach_task_down_times", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * The column <code>cbis.teach_task_info.teach_type_id</code>.
@@ -116,6 +116,41 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	 * The column <code>cbis.teach_task_info.file_type</code>.
 	 */
 	public final TableField<TeachTaskInfoRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+
+	/**
+	 * The column <code>cbis.teach_task_info.year_x</code>. excel 年级所在行
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> YEAR_X = createField("year_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "excel 年级所在行");
+
+	/**
+	 * The column <code>cbis.teach_task_info.year_y</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> YEAR_Y = createField("year_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.teach_task_info.grade_x</code>. excel 班级所在行
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> GRADE_X = createField("grade_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "excel 班级所在行");
+
+	/**
+	 * The column <code>cbis.teach_task_info.grade_y</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> GRADE_Y = createField("grade_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.teach_task_info.grade_num_x</code>. excel 班级人数所在行
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> GRADE_NUM_X = createField("grade_num_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "excel 班级人数所在行");
+
+	/**
+	 * The column <code>cbis.teach_task_info.grade_num_y</code>.
+	 */
+	public final TableField<TeachTaskInfoRecord, Integer> GRADE_NUM_Y = createField("grade_num_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.teach_task_info.is_use</code>. 是否可以使用
+	 */
+	public final TableField<TeachTaskInfoRecord, Byte> IS_USE = createField("is_use", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "是否可以使用");
 
 	/**
 	 * Create a <code>cbis.teach_task_info</code> table reference

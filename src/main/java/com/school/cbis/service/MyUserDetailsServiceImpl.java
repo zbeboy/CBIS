@@ -36,7 +36,7 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        log.debug("username is : {}"+s);
+        log.debug("username is : {}",s);
         String username = StringUtils.trimWhitespace(s);
         Users users = usersService.findByUsername(username);
         List<AuthoritiesRecord> authoritiesRecords = authoritiesService.findByUsername(username);

@@ -209,20 +209,38 @@ create table teach_type(
 create table teach_task_info(
   id int not null primary key auto_increment,
   tie_id int not null,
+  teach_task_title varchar(100) not null,
   teach_task_file_url varchar(500) not null,
   teach_task_file_size varchar(50) ,
-  teach_task_file_name varchar(30) not null,
   teach_task_file_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   teach_task_term varchar(20) not null,
-  teach_task_down_times int ,
+  teach_task_down_times int default 0,
   teach_type_id int not null,
   term_start_time date not null,
   term_end_time date not null,
   file_user varchar(64) not null,
   file_type varchar(15),
+  year_x int not null comment 'excel 年级所在行',
+  year_y int not null,
+  grade_x int not null comment 'excel 班级所在行',
+  grade_y int not null,
+  grade_num_x int not null comment 'excel 班级人数所在行',
+  grade_num_y int not null,
+  is_use boolean not null default 0 comment '是否可以使用',
   foreign key(tie_id) references tie(id),
   foreign key(teach_type_id) references teach_type(id),
   foreign key(file_user) references users(username)
+);
+
+create table teach_task_grade_check(
+  id int not null primary key auto_increment,
+  row_x int not null,
+  teach_task_info_id int not null,
+  grade varchar(500),
+  grade_num int,
+  check_is_right boolean not null comment '是否存在于数据库中',
+  database_grade_id int comment '数据库中该班级id',
+  foreign key(teach_task_info_id) references teach_task_info(id)
 );
 
 create table teach_task_title(
@@ -230,15 +248,6 @@ create table teach_task_title(
   title varchar(150),
   title_x int not null,
   title_y int not null,
-  title_lx int,
-  title_ly int,
-  title_font varchar(25),
-  title_font_size varchar(25),
-  title_font_color varchar(25),
-  title_background varchar(25),
-  title_is_big boolean,
-  title_is_italic boolean,
-  is_edit boolean,
   teach_task_info_id int not null,
   foreign key(teach_task_info_id) references teach_task_info(id)
 );
@@ -249,15 +258,6 @@ create table teach_task_content(
   content varchar(600),
   content_x int not null,
   content_y int not null,
-  content_lx int,
-  content_ly int,
-  content_font varchar(25),
-  content_font_size varchar(25),
-  content_font_color varchar(25),
-  content_font_background varchar(25),
-  content_is_big boolean,
-  content_is_italic boolean,
-  is_edit boolean,
   foreign key(teach_task_title_id) references teach_task_title(id)
 );
 

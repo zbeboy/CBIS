@@ -26,13 +26,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfo implements Serializable {
 
-	private static final long serialVersionUID = -493314744;
+	private static final long serialVersionUID = 34455151;
 
 	private Integer   id;
 	private Integer   tieId;
+	private String    teachTaskTitle;
 	private String    teachTaskFileUrl;
 	private String    teachTaskFileSize;
-	private String    teachTaskFileName;
 	private Timestamp teachTaskFileDate;
 	private String    teachTaskTerm;
 	private Integer   teachTaskDownTimes;
@@ -41,15 +41,22 @@ public class TeachTaskInfo implements Serializable {
 	private Date      termEndTime;
 	private String    fileUser;
 	private String    fileType;
+	private Integer   yearX;
+	private Integer   yearY;
+	private Integer   gradeX;
+	private Integer   gradeY;
+	private Integer   gradeNumX;
+	private Integer   gradeNumY;
+	private Byte      isUse;
 
 	public TeachTaskInfo() {}
 
 	public TeachTaskInfo(TeachTaskInfo value) {
 		this.id = value.id;
 		this.tieId = value.tieId;
+		this.teachTaskTitle = value.teachTaskTitle;
 		this.teachTaskFileUrl = value.teachTaskFileUrl;
 		this.teachTaskFileSize = value.teachTaskFileSize;
-		this.teachTaskFileName = value.teachTaskFileName;
 		this.teachTaskFileDate = value.teachTaskFileDate;
 		this.teachTaskTerm = value.teachTaskTerm;
 		this.teachTaskDownTimes = value.teachTaskDownTimes;
@@ -58,14 +65,21 @@ public class TeachTaskInfo implements Serializable {
 		this.termEndTime = value.termEndTime;
 		this.fileUser = value.fileUser;
 		this.fileType = value.fileType;
+		this.yearX = value.yearX;
+		this.yearY = value.yearY;
+		this.gradeX = value.gradeX;
+		this.gradeY = value.gradeY;
+		this.gradeNumX = value.gradeNumX;
+		this.gradeNumY = value.gradeNumY;
+		this.isUse = value.isUse;
 	}
 
 	public TeachTaskInfo(
 		Integer   id,
 		Integer   tieId,
+		String    teachTaskTitle,
 		String    teachTaskFileUrl,
 		String    teachTaskFileSize,
-		String    teachTaskFileName,
 		Timestamp teachTaskFileDate,
 		String    teachTaskTerm,
 		Integer   teachTaskDownTimes,
@@ -73,13 +87,20 @@ public class TeachTaskInfo implements Serializable {
 		Date      termStartTime,
 		Date      termEndTime,
 		String    fileUser,
-		String    fileType
+		String    fileType,
+		Integer   yearX,
+		Integer   yearY,
+		Integer   gradeX,
+		Integer   gradeY,
+		Integer   gradeNumX,
+		Integer   gradeNumY,
+		Byte      isUse
 	) {
 		this.id = id;
 		this.tieId = tieId;
+		this.teachTaskTitle = teachTaskTitle;
 		this.teachTaskFileUrl = teachTaskFileUrl;
 		this.teachTaskFileSize = teachTaskFileSize;
-		this.teachTaskFileName = teachTaskFileName;
 		this.teachTaskFileDate = teachTaskFileDate;
 		this.teachTaskTerm = teachTaskTerm;
 		this.teachTaskDownTimes = teachTaskDownTimes;
@@ -88,6 +109,13 @@ public class TeachTaskInfo implements Serializable {
 		this.termEndTime = termEndTime;
 		this.fileUser = fileUser;
 		this.fileType = fileType;
+		this.yearX = yearX;
+		this.yearY = yearY;
+		this.gradeX = gradeX;
+		this.gradeY = gradeY;
+		this.gradeNumX = gradeNumX;
+		this.gradeNumY = gradeNumY;
+		this.isUse = isUse;
 	}
 
 	@NotNull
@@ -109,6 +137,16 @@ public class TeachTaskInfo implements Serializable {
 	}
 
 	@NotNull
+	@Size(max = 100)
+	public String getTeachTaskTitle() {
+		return this.teachTaskTitle;
+	}
+
+	public void setTeachTaskTitle(String teachTaskTitle) {
+		this.teachTaskTitle = teachTaskTitle;
+	}
+
+	@NotNull
 	@Size(max = 500)
 	public String getTeachTaskFileUrl() {
 		return this.teachTaskFileUrl;
@@ -125,16 +163,6 @@ public class TeachTaskInfo implements Serializable {
 
 	public void setTeachTaskFileSize(String teachTaskFileSize) {
 		this.teachTaskFileSize = teachTaskFileSize;
-	}
-
-	@NotNull
-	@Size(max = 30)
-	public String getTeachTaskFileName() {
-		return this.teachTaskFileName;
-	}
-
-	public void setTeachTaskFileName(String teachTaskFileName) {
-		this.teachTaskFileName = teachTaskFileName;
 	}
 
 	@NotNull
@@ -210,15 +238,78 @@ public class TeachTaskInfo implements Serializable {
 		this.fileType = fileType;
 	}
 
+	@NotNull
+	public Integer getYearX() {
+		return this.yearX;
+	}
+
+	public void setYearX(Integer yearX) {
+		this.yearX = yearX;
+	}
+
+	@NotNull
+	public Integer getYearY() {
+		return this.yearY;
+	}
+
+	public void setYearY(Integer yearY) {
+		this.yearY = yearY;
+	}
+
+	@NotNull
+	public Integer getGradeX() {
+		return this.gradeX;
+	}
+
+	public void setGradeX(Integer gradeX) {
+		this.gradeX = gradeX;
+	}
+
+	@NotNull
+	public Integer getGradeY() {
+		return this.gradeY;
+	}
+
+	public void setGradeY(Integer gradeY) {
+		this.gradeY = gradeY;
+	}
+
+	@NotNull
+	public Integer getGradeNumX() {
+		return this.gradeNumX;
+	}
+
+	public void setGradeNumX(Integer gradeNumX) {
+		this.gradeNumX = gradeNumX;
+	}
+
+	@NotNull
+	public Integer getGradeNumY() {
+		return this.gradeNumY;
+	}
+
+	public void setGradeNumY(Integer gradeNumY) {
+		this.gradeNumY = gradeNumY;
+	}
+
+	@NotNull
+	public Byte getIsUse() {
+		return this.isUse;
+	}
+
+	public void setIsUse(Byte isUse) {
+		this.isUse = isUse;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TeachTaskInfo (");
 
 		sb.append(id);
 		sb.append(", ").append(tieId);
+		sb.append(", ").append(teachTaskTitle);
 		sb.append(", ").append(teachTaskFileUrl);
 		sb.append(", ").append(teachTaskFileSize);
-		sb.append(", ").append(teachTaskFileName);
 		sb.append(", ").append(teachTaskFileDate);
 		sb.append(", ").append(teachTaskTerm);
 		sb.append(", ").append(teachTaskDownTimes);
@@ -227,6 +318,13 @@ public class TeachTaskInfo implements Serializable {
 		sb.append(", ").append(termEndTime);
 		sb.append(", ").append(fileUser);
 		sb.append(", ").append(fileType);
+		sb.append(", ").append(yearX);
+		sb.append(", ").append(yearY);
+		sb.append(", ").append(gradeX);
+		sb.append(", ").append(gradeY);
+		sb.append(", ").append(gradeNumX);
+		sb.append(", ").append(gradeNumY);
+		sb.append(", ").append(isUse);
 
 		sb.append(")");
 		return sb.toString();

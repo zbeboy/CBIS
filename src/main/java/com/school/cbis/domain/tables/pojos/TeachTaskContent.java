@@ -24,22 +24,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskContent implements Serializable {
 
-	private static final long serialVersionUID = -1045806720;
+	private static final long serialVersionUID = 1101170894;
 
 	private Integer id;
 	private Integer teachTaskTitleId;
 	private String  content;
 	private Integer contentX;
 	private Integer contentY;
-	private Integer contentLx;
-	private Integer contentLy;
-	private String  contentFont;
-	private String  contentFontSize;
-	private String  contentFontColor;
-	private String  contentFontBackground;
-	private Byte    contentIsBig;
-	private Byte    contentIsItalic;
-	private Byte    isEdit;
 
 	public TeachTaskContent() {}
 
@@ -49,15 +40,6 @@ public class TeachTaskContent implements Serializable {
 		this.content = value.content;
 		this.contentX = value.contentX;
 		this.contentY = value.contentY;
-		this.contentLx = value.contentLx;
-		this.contentLy = value.contentLy;
-		this.contentFont = value.contentFont;
-		this.contentFontSize = value.contentFontSize;
-		this.contentFontColor = value.contentFontColor;
-		this.contentFontBackground = value.contentFontBackground;
-		this.contentIsBig = value.contentIsBig;
-		this.contentIsItalic = value.contentIsItalic;
-		this.isEdit = value.isEdit;
 	}
 
 	public TeachTaskContent(
@@ -65,31 +47,13 @@ public class TeachTaskContent implements Serializable {
 		Integer teachTaskTitleId,
 		String  content,
 		Integer contentX,
-		Integer contentY,
-		Integer contentLx,
-		Integer contentLy,
-		String  contentFont,
-		String  contentFontSize,
-		String  contentFontColor,
-		String  contentFontBackground,
-		Byte    contentIsBig,
-		Byte    contentIsItalic,
-		Byte    isEdit
+		Integer contentY
 	) {
 		this.id = id;
 		this.teachTaskTitleId = teachTaskTitleId;
 		this.content = content;
 		this.contentX = contentX;
 		this.contentY = contentY;
-		this.contentLx = contentLx;
-		this.contentLy = contentLy;
-		this.contentFont = contentFont;
-		this.contentFontSize = contentFontSize;
-		this.contentFontColor = contentFontColor;
-		this.contentFontBackground = contentFontBackground;
-		this.contentIsBig = contentIsBig;
-		this.contentIsItalic = contentIsItalic;
-		this.isEdit = isEdit;
 	}
 
 	@NotNull
@@ -137,82 +101,6 @@ public class TeachTaskContent implements Serializable {
 		this.contentY = contentY;
 	}
 
-	public Integer getContentLx() {
-		return this.contentLx;
-	}
-
-	public void setContentLx(Integer contentLx) {
-		this.contentLx = contentLx;
-	}
-
-	public Integer getContentLy() {
-		return this.contentLy;
-	}
-
-	public void setContentLy(Integer contentLy) {
-		this.contentLy = contentLy;
-	}
-
-	@Size(max = 25)
-	public String getContentFont() {
-		return this.contentFont;
-	}
-
-	public void setContentFont(String contentFont) {
-		this.contentFont = contentFont;
-	}
-
-	@Size(max = 25)
-	public String getContentFontSize() {
-		return this.contentFontSize;
-	}
-
-	public void setContentFontSize(String contentFontSize) {
-		this.contentFontSize = contentFontSize;
-	}
-
-	@Size(max = 25)
-	public String getContentFontColor() {
-		return this.contentFontColor;
-	}
-
-	public void setContentFontColor(String contentFontColor) {
-		this.contentFontColor = contentFontColor;
-	}
-
-	@Size(max = 25)
-	public String getContentFontBackground() {
-		return this.contentFontBackground;
-	}
-
-	public void setContentFontBackground(String contentFontBackground) {
-		this.contentFontBackground = contentFontBackground;
-	}
-
-	public Byte getContentIsBig() {
-		return this.contentIsBig;
-	}
-
-	public void setContentIsBig(Byte contentIsBig) {
-		this.contentIsBig = contentIsBig;
-	}
-
-	public Byte getContentIsItalic() {
-		return this.contentIsItalic;
-	}
-
-	public void setContentIsItalic(Byte contentIsItalic) {
-		this.contentIsItalic = contentIsItalic;
-	}
-
-	public Byte getIsEdit() {
-		return this.isEdit;
-	}
-
-	public void setIsEdit(Byte isEdit) {
-		this.isEdit = isEdit;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TeachTaskContent (");
@@ -222,15 +110,6 @@ public class TeachTaskContent implements Serializable {
 		sb.append(", ").append(content);
 		sb.append(", ").append(contentX);
 		sb.append(", ").append(contentY);
-		sb.append(", ").append(contentLx);
-		sb.append(", ").append(contentLy);
-		sb.append(", ").append(contentFont);
-		sb.append(", ").append(contentFontSize);
-		sb.append(", ").append(contentFontColor);
-		sb.append(", ").append(contentFontBackground);
-		sb.append(", ").append(contentIsBig);
-		sb.append(", ").append(contentIsItalic);
-		sb.append(", ").append(isEdit);
 
 		sb.append(")");
 		return sb.toString();

@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskContent extends TableImpl<TeachTaskContentRecord> {
 
-	private static final long serialVersionUID = 640755997;
+	private static final long serialVersionUID = -1437923464;
 
 	/**
 	 * The reference instance of <code>cbis.teach_task_content</code>
@@ -74,51 +74,6 @@ public class TeachTaskContent extends TableImpl<TeachTaskContentRecord> {
 	 * The column <code>cbis.teach_task_content.content_y</code>.
 	 */
 	public final TableField<TeachTaskContentRecord, Integer> CONTENT_Y = createField("content_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_lx</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, Integer> CONTENT_LX = createField("content_lx", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_ly</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, Integer> CONTENT_LY = createField("content_ly", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_font</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, String> CONTENT_FONT = createField("content_font", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_font_size</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, String> CONTENT_FONT_SIZE = createField("content_font_size", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_font_color</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, String> CONTENT_FONT_COLOR = createField("content_font_color", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_font_background</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, String> CONTENT_FONT_BACKGROUND = createField("content_font_background", org.jooq.impl.SQLDataType.VARCHAR.length(25), this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_is_big</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, Byte> CONTENT_IS_BIG = createField("content_is_big", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.content_is_italic</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, Byte> CONTENT_IS_ITALIC = createField("content_is_italic", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * The column <code>cbis.teach_task_content.is_edit</code>.
-	 */
-	public final TableField<TeachTaskContentRecord, Byte> IS_EDIT = createField("is_edit", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
 	/**
 	 * Create a <code>cbis.teach_task_content</code> table reference

@@ -33,6 +33,7 @@ import com.school.cbis.domain.tables.SystemInform;
 import com.school.cbis.domain.tables.SystemLog;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
+import com.school.cbis.domain.tables.TeachTaskGradeCheck;
 import com.school.cbis.domain.tables.TeachTaskInfo;
 import com.school.cbis.domain.tables.TeachTaskTitle;
 import com.school.cbis.domain.tables.TeachType;
@@ -76,6 +77,7 @@ import com.school.cbis.domain.tables.records.SystemInformRecord;
 import com.school.cbis.domain.tables.records.SystemLogRecord;
 import com.school.cbis.domain.tables.records.TeachCourseInfoRecord;
 import com.school.cbis.domain.tables.records.TeachTaskContentRecord;
+import com.school.cbis.domain.tables.records.TeachTaskGradeCheckRecord;
 import com.school.cbis.domain.tables.records.TeachTaskInfoRecord;
 import com.school.cbis.domain.tables.records.TeachTaskTitleRecord;
 import com.school.cbis.domain.tables.records.TeachTypeRecord;
@@ -145,6 +147,7 @@ public class Keys {
 	public static final Identity<TeacherCourseTimetableInfoRecord, Integer> IDENTITY_TEACHER_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_TEACHER_COURSE_TIMETABLE_INFO;
 	public static final Identity<TeachCourseInfoRecord, Integer> IDENTITY_TEACH_COURSE_INFO = Identities0.IDENTITY_TEACH_COURSE_INFO;
 	public static final Identity<TeachTaskContentRecord, Integer> IDENTITY_TEACH_TASK_CONTENT = Identities0.IDENTITY_TEACH_TASK_CONTENT;
+	public static final Identity<TeachTaskGradeCheckRecord, Integer> IDENTITY_TEACH_TASK_GRADE_CHECK = Identities0.IDENTITY_TEACH_TASK_GRADE_CHECK;
 	public static final Identity<TeachTaskInfoRecord, Integer> IDENTITY_TEACH_TASK_INFO = Identities0.IDENTITY_TEACH_TASK_INFO;
 	public static final Identity<TeachTaskTitleRecord, Integer> IDENTITY_TEACH_TASK_TITLE = Identities0.IDENTITY_TEACH_TASK_TITLE;
 	public static final Identity<TeachTypeRecord, Integer> IDENTITY_TEACH_TYPE = Identities0.IDENTITY_TEACH_TYPE;
@@ -191,6 +194,7 @@ public class Keys {
 	public static final UniqueKey<TeacherCourseTimetableInfoRecord> KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY;
 	public static final UniqueKey<TeachCourseInfoRecord> KEY_TEACH_COURSE_INFO_PRIMARY = UniqueKeys0.KEY_TEACH_COURSE_INFO_PRIMARY;
 	public static final UniqueKey<TeachTaskContentRecord> KEY_TEACH_TASK_CONTENT_PRIMARY = UniqueKeys0.KEY_TEACH_TASK_CONTENT_PRIMARY;
+	public static final UniqueKey<TeachTaskGradeCheckRecord> KEY_TEACH_TASK_GRADE_CHECK_PRIMARY = UniqueKeys0.KEY_TEACH_TASK_GRADE_CHECK_PRIMARY;
 	public static final UniqueKey<TeachTaskInfoRecord> KEY_TEACH_TASK_INFO_PRIMARY = UniqueKeys0.KEY_TEACH_TASK_INFO_PRIMARY;
 	public static final UniqueKey<TeachTaskTitleRecord> KEY_TEACH_TASK_TITLE_PRIMARY = UniqueKeys0.KEY_TEACH_TASK_TITLE_PRIMARY;
 	public static final UniqueKey<TeachTypeRecord> KEY_TEACH_TYPE_PRIMARY = UniqueKeys0.KEY_TEACH_TYPE_PRIMARY;
@@ -254,6 +258,7 @@ public class Keys {
 	public static final ForeignKey<TeachCourseInfoRecord, TeachTypeRecord> TEACH_COURSE_INFO_IBFK_2 = ForeignKeys0.TEACH_COURSE_INFO_IBFK_2;
 	public static final ForeignKey<TeachCourseInfoRecord, UsersRecord> TEACH_COURSE_INFO_IBFK_3 = ForeignKeys0.TEACH_COURSE_INFO_IBFK_3;
 	public static final ForeignKey<TeachTaskContentRecord, TeachTaskTitleRecord> TEACH_TASK_CONTENT_IBFK_1 = ForeignKeys0.TEACH_TASK_CONTENT_IBFK_1;
+	public static final ForeignKey<TeachTaskGradeCheckRecord, TeachTaskInfoRecord> TEACH_TASK_GRADE_CHECK_IBFK_1 = ForeignKeys0.TEACH_TASK_GRADE_CHECK_IBFK_1;
 	public static final ForeignKey<TeachTaskInfoRecord, TieRecord> TEACH_TASK_INFO_IBFK_1 = ForeignKeys0.TEACH_TASK_INFO_IBFK_1;
 	public static final ForeignKey<TeachTaskInfoRecord, TeachTypeRecord> TEACH_TASK_INFO_IBFK_2 = ForeignKeys0.TEACH_TASK_INFO_IBFK_2;
 	public static final ForeignKey<TeachTaskInfoRecord, UsersRecord> TEACH_TASK_INFO_IBFK_3 = ForeignKeys0.TEACH_TASK_INFO_IBFK_3;
@@ -297,6 +302,7 @@ public class Keys {
 		public static Identity<TeacherCourseTimetableInfoRecord, Integer> IDENTITY_TEACHER_COURSE_TIMETABLE_INFO = createIdentity(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.ID);
 		public static Identity<TeachCourseInfoRecord, Integer> IDENTITY_TEACH_COURSE_INFO = createIdentity(TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.ID);
 		public static Identity<TeachTaskContentRecord, Integer> IDENTITY_TEACH_TASK_CONTENT = createIdentity(TeachTaskContent.TEACH_TASK_CONTENT, TeachTaskContent.TEACH_TASK_CONTENT.ID);
+		public static Identity<TeachTaskGradeCheckRecord, Integer> IDENTITY_TEACH_TASK_GRADE_CHECK = createIdentity(TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK, TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK.ID);
 		public static Identity<TeachTaskInfoRecord, Integer> IDENTITY_TEACH_TASK_INFO = createIdentity(TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.ID);
 		public static Identity<TeachTaskTitleRecord, Integer> IDENTITY_TEACH_TASK_TITLE = createIdentity(TeachTaskTitle.TEACH_TASK_TITLE, TeachTaskTitle.TEACH_TASK_TITLE.ID);
 		public static Identity<TeachTypeRecord, Integer> IDENTITY_TEACH_TYPE = createIdentity(TeachType.TEACH_TYPE, TeachType.TEACH_TYPE.ID);
@@ -341,6 +347,7 @@ public class Keys {
 		public static final UniqueKey<TeacherCourseTimetableInfoRecord> KEY_TEACHER_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO, TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.ID);
 		public static final UniqueKey<TeachCourseInfoRecord> KEY_TEACH_COURSE_INFO_PRIMARY = createUniqueKey(TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.ID);
 		public static final UniqueKey<TeachTaskContentRecord> KEY_TEACH_TASK_CONTENT_PRIMARY = createUniqueKey(TeachTaskContent.TEACH_TASK_CONTENT, TeachTaskContent.TEACH_TASK_CONTENT.ID);
+		public static final UniqueKey<TeachTaskGradeCheckRecord> KEY_TEACH_TASK_GRADE_CHECK_PRIMARY = createUniqueKey(TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK, TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK.ID);
 		public static final UniqueKey<TeachTaskInfoRecord> KEY_TEACH_TASK_INFO_PRIMARY = createUniqueKey(TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.ID);
 		public static final UniqueKey<TeachTaskTitleRecord> KEY_TEACH_TASK_TITLE_PRIMARY = createUniqueKey(TeachTaskTitle.TEACH_TASK_TITLE, TeachTaskTitle.TEACH_TASK_TITLE.ID);
 		public static final UniqueKey<TeachTypeRecord> KEY_TEACH_TYPE_PRIMARY = createUniqueKey(TeachType.TEACH_TYPE, TeachType.TEACH_TYPE.ID);
@@ -402,6 +409,7 @@ public class Keys {
 		public static final ForeignKey<TeachCourseInfoRecord, TeachTypeRecord> TEACH_COURSE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.TEACH_TYPE_ID);
 		public static final ForeignKey<TeachCourseInfoRecord, UsersRecord> TEACH_COURSE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TeachCourseInfo.TEACH_COURSE_INFO, TeachCourseInfo.TEACH_COURSE_INFO.FILE_USER);
 		public static final ForeignKey<TeachTaskContentRecord, TeachTaskTitleRecord> TEACH_TASK_CONTENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_TITLE_PRIMARY, TeachTaskContent.TEACH_TASK_CONTENT, TeachTaskContent.TEACH_TASK_CONTENT.TEACH_TASK_TITLE_ID);
+		public static final ForeignKey<TeachTaskGradeCheckRecord, TeachTaskInfoRecord> TEACH_TASK_GRADE_CHECK_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK, TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK.TEACH_TASK_INFO_ID);
 		public static final ForeignKey<TeachTaskInfoRecord, TieRecord> TEACH_TASK_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.TIE_ID);
 		public static final ForeignKey<TeachTaskInfoRecord, TeachTypeRecord> TEACH_TASK_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.TEACH_TYPE_ID);
 		public static final ForeignKey<TeachTaskInfoRecord, UsersRecord> TEACH_TASK_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, TeachTaskInfo.TEACH_TASK_INFO, TeachTaskInfo.TEACH_TASK_INFO.FILE_USER);

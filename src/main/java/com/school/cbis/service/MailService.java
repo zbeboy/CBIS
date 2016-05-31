@@ -52,4 +52,12 @@ public interface MailService {
      * @param content
      */
     void sendAliDMMail(Users users, String subject, String content);
+
+    /**
+     * 发送教学任务书 上传成功与不消息
+     * @param users
+     * @param baseUrl
+     * @param msg
+     */
+    void sendTeachTaskMsg(Users users,String baseUrl,String msg);
 }

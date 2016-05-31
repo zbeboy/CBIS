@@ -41,7 +41,7 @@ public class UploadServiceImpl implements UploadService {
             IPTimeStamp ipTimeStamp = new IPTimeStamp(address);
             String[] words = multipartFile.getOriginalFilename().split("\\.");
             if (words.length > 1) {
-                String ext = words[words.length - 1];
+                String ext = words[words.length - 1].toLowerCase();
                 String filename = ipTimeStamp.getIPTimeRand() + "." + ext;
                 if (filename.contains(":")) {
                     filename = filename.substring(filename.lastIndexOf(":") + 1, filename.length());

@@ -33,6 +33,7 @@ import com.school.cbis.domain.tables.SystemInform;
 import com.school.cbis.domain.tables.SystemLog;
 import com.school.cbis.domain.tables.TeachCourseInfo;
 import com.school.cbis.domain.tables.TeachTaskContent;
+import com.school.cbis.domain.tables.TeachTaskGradeCheck;
 import com.school.cbis.domain.tables.TeachTaskInfo;
 import com.school.cbis.domain.tables.TeachTaskTitle;
 import com.school.cbis.domain.tables.TeachType;
@@ -218,6 +219,11 @@ public class Tables {
 	 * The table cbis.teach_task_content
 	 */
 	public static final TeachTaskContent TEACH_TASK_CONTENT = com.school.cbis.domain.tables.TeachTaskContent.TEACH_TASK_CONTENT;
+
+	/**
+	 * The table cbis.teach_task_grade_check
+	 */
+	public static final TeachTaskGradeCheck TEACH_TASK_GRADE_CHECK = com.school.cbis.domain.tables.TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK;
 
 	/**
 	 * The table cbis.teach_task_info

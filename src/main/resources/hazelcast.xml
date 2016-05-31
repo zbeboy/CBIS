@@ -12,6 +12,11 @@
 		<max-size>200</max-size>
 	</map>
 
+	<map name="grade">
+		<time-to-live-seconds>600</time-to-live-seconds>
+		<max-size>200</max-size>
+	</map>
+
 	<cache name="articleType">
 		<eviction size="200"/>
 
@@ -48,6 +53,13 @@
 	</cache>
 
 	<cache name="userAllInfo">
+		<eviction size="200"/>
+
+		<statistics-enabled>true</statistics-enabled>
+		<management-enabled>true</management-enabled>
+	</cache>
+
+	<cache name="findAllInYearWithCache">
 		<eviction size="200"/>
 
 		<statistics-enabled>true</statistics-enabled>

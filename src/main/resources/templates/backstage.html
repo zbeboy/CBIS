@@ -329,5 +329,74 @@
         </div>
     </div>
 </div>
+
+<!-- 教务管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="eadminnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">教务管理</h3>
+                <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="">
+                    <li class="uk-nav-header">教学</li>
+                    <li class="uk-parent">
+                        <a href="#">理论</a>
+                        <ul class="uk-nav-sub">
+                            <li id="theorynavassignmentbookmanager"><a href="#" th:href="@{/administrator/eadmin/assignmentBookList}" >教学任务书管理</a></li>
+                            <li id="theorynavteacherfilltemplateadd"><a href="#" th:href="@{/administrator/eadmin/teacherFillTemplateAdd}" >教师填报模板</a></li>
+                            <li><a href="#">教学进程表管理</a></li>
+                            <li><a href="#">课表管理</a></li>
+                            <li><a href="#">四大件管理</a></li>
+                            <li><a href="#">考试管理</a></li>
+                            <li><a href="#">教学相关下载管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="uk-parent">
+                        <a href="#">实践</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="#">教学任务书管理</a></li>
+                            <li><a href="#">教学进程表管理</a></li>
+                            <li><a href="#">课表管理</a></li>
+                            <li><a href="#">四大件管理</a></li>
+                            <li><a href="#">实践相关下载管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="uk-nav-divider"></li>
+                    <li class="uk-nav-header">评教</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-reorder"></i>菜单</button>
+    </div>
+    <div id="my-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="">
+                <li class="uk-nav-header">教务管理</li>
+                <li class="uk-parent">
+                    <a href="#">教学</a>
+                    <ul class="uk-nav-sub">
+                        <li id="theoryoffcanvasassignmentbookmanager"><a href="#" th:href="@{/administrator/eadmin/assignmentBookList}">理论-导入教学任务书</a></li>
+                        <li id="theoryoffcanvasteacherfilltemplateadd"><a href="#" th:href="@{/administrator/eadmin/teacherFillTemplateAdd}" >理论-教师填报模板</a></li>
+                        <li><a href="#">理论-教学进程表管理</a></li>
+                        <li><a href="#">理论-课表管理</a></li>
+                        <li><a href="#">理论-四大件管理</a></li>
+                        <li><a href="#">理论-考试管理</a></li>
+                        <li><a href="#">理论-教学相关下载管理</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">实践-教学任务书管理</a></li>
+                        <li><a href="#">实践-教学进程表管理</a></li>
+                        <li><a href="#">实践-课表管理</a></li>
+                        <li><a href="#">实践-四大件管理</a></li>
+                        <li><a href="#">实践-实践相关下载管理</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">评教</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
