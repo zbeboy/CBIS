@@ -39,6 +39,10 @@ import com.school.cbis.domain.tables.TeachTaskTitle;
 import com.school.cbis.domain.tables.TeachType;
 import com.school.cbis.domain.tables.Teacher;
 import com.school.cbis.domain.tables.TeacherCourseTimetableInfo;
+import com.school.cbis.domain.tables.TeacherFillTaskContent;
+import com.school.cbis.domain.tables.TeacherFillTaskHead;
+import com.school.cbis.domain.tables.TeacherFillTaskInfo;
+import com.school.cbis.domain.tables.TeacherFillTaskTemplate;
 import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieElegantTime;
@@ -209,6 +213,26 @@ public class Tables {
 	 * The table cbis.teacher_course_timetable_info
 	 */
 	public static final TeacherCourseTimetableInfo TEACHER_COURSE_TIMETABLE_INFO = com.school.cbis.domain.tables.TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO;
+
+	/**
+	 * The table cbis.teacher_fill_task_content
+	 */
+	public static final TeacherFillTaskContent TEACHER_FILL_TASK_CONTENT = com.school.cbis.domain.tables.TeacherFillTaskContent.TEACHER_FILL_TASK_CONTENT;
+
+	/**
+	 * The table cbis.teacher_fill_task_head
+	 */
+	public static final TeacherFillTaskHead TEACHER_FILL_TASK_HEAD = com.school.cbis.domain.tables.TeacherFillTaskHead.TEACHER_FILL_TASK_HEAD;
+
+	/**
+	 * The table cbis.teacher_fill_task_info
+	 */
+	public static final TeacherFillTaskInfo TEACHER_FILL_TASK_INFO = com.school.cbis.domain.tables.TeacherFillTaskInfo.TEACHER_FILL_TASK_INFO;
+
+	/**
+	 * The table cbis.teacher_fill_task_template
+	 */
+	public static final TeacherFillTaskTemplate TEACHER_FILL_TASK_TEMPLATE = com.school.cbis.domain.tables.TeacherFillTaskTemplate.TEACHER_FILL_TASK_TEMPLATE;
 
 	/**
 	 * The table cbis.teach_course_info
