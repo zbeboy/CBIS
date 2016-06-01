@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 
-	private static final long serialVersionUID = -1938859435;
+	private static final long serialVersionUID = -579073736;
 
 	/**
 	 * The reference instance of <code>cbis.teach_task_info</code>
@@ -151,6 +151,11 @@ public class TeachTaskInfo extends TableImpl<TeachTaskInfoRecord> {
 	 * The column <code>cbis.teach_task_info.is_use</code>. 是否可以使用
 	 */
 	public final TableField<TeachTaskInfoRecord, Byte> IS_USE = createField("is_use", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "是否可以使用");
+
+	/**
+	 * The column <code>cbis.teach_task_info.is_ok</code>. 是否系上已确认
+	 */
+	public final TableField<TeachTaskInfoRecord, Byte> IS_OK = createField("is_ok", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "是否系上已确认");
 
 	/**
 	 * Create a <code>cbis.teach_task_info</code> table reference

@@ -45,6 +45,7 @@ function outputTable(){
         "<th scope='col'>学期</th>" +
         "<th scope='col'>学年开始时间</th>" +
         "<th scope='col'>学年结束时间</th>" +
+        "<th scope='col'>状态</th>" +
         "<th scope='col'>创建者</th>" +
         "<th scope='col'>操作</th>" +
         "</tr>" +
@@ -62,15 +63,34 @@ function outputHtml(d){
     outputTable();
     var list = d.result;
     for(var i = 0;i< list.length;i++){
+
+        var s = '';
+        var use = 0;
+        var ouse = '';
+        if(list[i].isUse == 0){
+            s = '不可用';
+            use = 1;
+            ouse = '<i class="uk-icon-genderless uk-text-success"></i>';
+        } else {
+            s = '可用';
+            use = 0;
+            ouse = '<i class="uk-icon-ban uk-text-danger"></i>';
+        }
+
         $('#tableData').append(
             $('<tr>')
                 .append($('<td>').text(dealNull(list[i].teachTaskTitle)))
                 .append($('<td>').text(dealNull(list[i].teachTaskTerm)))
                 .append($('<td>').text(dealNull(list[i].termStartTime)))
                 .append($('<td>').text(dealNull(list[i].termEndTime)))
+                .append($('<td>').text(dealNull(s)))
                 .append($('<td>').text(dealNull(list[i].realName)))
                 .append(
                     $('<td>')
+                        .append($('<a href="javascript:;" onclick="toLook('+list[i].id+');" >').html('<i class="uk-icon-eye"></i>'))
+                        .append(' ')
+                        .append($('<a href="javascript:;" onclick="toUse('+list[i].id+','+use+');" >').html(ouse))
+                        .append(' ')
                         .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').html('<i class="uk-icon-pencil"></i>'))
                 )
         );
@@ -90,8 +110,53 @@ function dealNull(obj){
     }
 }
 
+/**
+ * 编辑
+ * @param id
+ */
 function toEdit(id){
-    window.location.href = web_path + '/maintainer/tie/tieElegantUpdate?id=' + id;
+    window.location.href = web_path + '/administrator/eadmin/assignmentBookUpdate?id=' + id;
+}
+
+/**
+ * 是否使用
+ * @param id
+ * @param use
+ */
+function toUse(id,use){
+    var s = '';
+    if(Number(use) == 0){
+        s = "确定停用该教学任务书吗?";
+    } else {
+        s = "确定使用该教学任务书吗?"
+    }
+    layer.confirm(s, {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        $.post(web_path + '/administrator/eadmin/assignmentBookUse',{
+            'id':id,
+            'isUse':use
+        },function(data){
+            layer.close(index);
+            if(data.state){
+                layer.msg(data.msg, {icon: 1});
+                action();
+            } else {
+                layer.msg(data.msg);
+            }
+        },'json');
+    });
+}
+
+/**
+ * 预览
+ * @param id
+ */
+function toLook(id){
+    window.location.href = web_path + '/administrator/eadmin/assignmentBookLook?id='+id;
 }
 
 /**

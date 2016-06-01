@@ -1,9 +1,11 @@
 package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.TeachTaskInfo;
+import com.school.cbis.domain.tables.records.TeachTaskInfoRecord;
 import com.school.cbis.vo.eadmin.AssignmentBookListVo;
 import org.jooq.Record;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.Result;
 
 import java.sql.Date;
@@ -32,7 +34,7 @@ public interface TeachTaskInfoService {
      * @param tieId
      * @return
      */
-    Result<Record6<Integer,String,String,String,Date,Date>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId);
+    Result<Record7<Integer, String, String, String, Date, Date,Byte>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId);
 
     /**
      * 分页查询全部总数
@@ -41,4 +43,25 @@ public interface TeachTaskInfoService {
      * @return
      */
     int findAllByTieIdAndPageCount(AssignmentBookListVo assignmentBookListVo,int tieId);
+
+    /**
+     * 根据主键查询
+     * @param id
+     * @return
+     */
+    TeachTaskInfo findById(int id);
+
+    /**
+     * 更新
+     * @param teachTaskInfo
+     */
+    void update(TeachTaskInfo teachTaskInfo);
+
+    /**
+     * 更新检验标题用 注:是不等于id
+     * @param id
+     * @param teachTaskInfoTitle
+     * @return
+     */
+    Result<TeachTaskInfoRecord> findByIdAndTeachTaskInfoTitle(int id,String teachTaskInfoTitle);
 }

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-05-28.
  */
@@ -45,5 +47,11 @@ public class TeachTaskTitleServiceImpl implements TeachTaskTitleService {
                 .returning(Tables.TEACH_TASK_TITLE.ID)
                 .fetchOne();
         return teachTaskTitleRecord.getId();
+    }
+
+    @Override
+    public List<TeachTaskTitle> findByTeachTaskInfoId(int teachTaskInfoId) {
+        List<TeachTaskTitle> teachTaskTitles = teachTaskTitleDao.fetchByTeachTaskInfoId(teachTaskInfoId);
+        return teachTaskTitles;
     }
 }

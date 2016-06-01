@@ -10,6 +10,7 @@ public class AssignmentBookListVo {
     private String teachTaskTerm;
     private String termStartTime;
     private String termEndTime;
+    private Byte isUse;
     private int pageNum;
     private int pageSize;
 
@@ -61,6 +62,14 @@ public class AssignmentBookListVo {
         this.termEndTime = termEndTime;
     }
 
+    public Byte getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(Byte isUse) {
+        this.isUse = isUse;
+    }
+
     public int getPageNum() {
         return pageNum;
     }
@@ -86,6 +95,7 @@ public class AssignmentBookListVo {
                 ", teachTaskTerm='" + teachTaskTerm + '\'' +
                 ", termStartTime='" + termStartTime + '\'' +
                 ", termEndTime='" + termEndTime + '\'' +
+                ", isUse=" + isUse +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

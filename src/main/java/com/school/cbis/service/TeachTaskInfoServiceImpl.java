@@ -72,7 +72,7 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
     }
 
     @Override
-    public Result<Record6<Integer, String, String, String, Date, Date>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId) {
+    public Result<Record7<Integer, String, String, String, Date, Date,Byte>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId) {
         Condition a = Tables.TEACH_TASK_INFO.TIE_ID.eq(tieId);
         if(StringUtils.hasLength(assignmentBookListVo.getTeachTaskTitle())){
             a = a.and(Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE.like("%"+assignmentBookListVo.getTeachTaskTitle()+"%"));
@@ -98,9 +98,9 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
             pageNum = 1;
         }
 
-        Result<Record6<Integer, String, String, String, Date, Date>> record6s = create.select( Tables.TEACH_TASK_INFO.ID,Tables.USERS.REAL_NAME,Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE,
+        Result<Record7<Integer, String, String, String, Date, Date,Byte>> record7s = create.select( Tables.TEACH_TASK_INFO.ID,Tables.USERS.REAL_NAME,Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE,
                 Tables.TEACH_TASK_INFO.TEACH_TASK_TERM,
-                Tables.TEACH_TASK_INFO.TERM_START_TIME,Tables.TEACH_TASK_INFO.TERM_END_TIME)
+                Tables.TEACH_TASK_INFO.TERM_START_TIME,Tables.TEACH_TASK_INFO.TERM_END_TIME,Tables.TEACH_TASK_INFO.IS_USE)
                 .from(Tables.TEACH_TASK_INFO)
                 .join(Tables.USERS)
                 .on(Tables.TEACH_TASK_INFO.FILE_USER.eq(Tables.USERS.USERNAME))
@@ -109,7 +109,7 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
                 .limit((pageNum-1)*pageSize,pageSize)
                 .fetch();
 
-        return record6s;
+        return record7s;
     }
 
     @Override
@@ -138,5 +138,24 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
                 .where(a)
                 .fetchOne();
         return record1.value1();
+    }
+
+    @Override
+    public TeachTaskInfo findById(int id) {
+        TeachTaskInfo teachTaskInfo = teachTaskInfoDao.findById(id);
+        return teachTaskInfo;
+    }
+
+    @Override
+    public void update(TeachTaskInfo teachTaskInfo) {
+        teachTaskInfoDao.update(teachTaskInfo);
+    }
+
+    @Override
+    public Result<TeachTaskInfoRecord> findByIdAndTeachTaskInfoTitle(int id, String teachTaskInfoTitle) {
+        Result<TeachTaskInfoRecord> records = create.selectFrom(Tables.TEACH_TASK_INFO)
+                .where(Tables.TEACH_TASK_INFO.ID.ne(id).and(Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE.eq(teachTaskInfoTitle)))
+                .fetch();
+        return records;
     }
 }

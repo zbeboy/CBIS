@@ -72,7 +72,7 @@ $(function () {
         invalidClass:'uk-form-danger',
         msgClass: 'n-bottom',
         fields: {
-            'teachTaskTitle':'required;remote[/administrator/eadmin//validAssignmentBookTitle]',
+            'teachTaskTitle':'required;remote[/administrator/eadmin/validAddAssignmentBookTitle]',
             'termStartTime': '学年开始时间:required;date;',
             'termEndTime': '学年结束时间:required;date; match[gt, termStartTime, date]',
             'uploadFile': 'required;',

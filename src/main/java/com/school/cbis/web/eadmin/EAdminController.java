@@ -4,14 +4,19 @@ import com.school.cbis.commons.Wordbook;
 import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
+import com.school.cbis.domain.tables.pojos.TeachTaskContent;
+import com.school.cbis.domain.tables.pojos.TeachTaskGradeCheck;
 import com.school.cbis.domain.tables.pojos.TeachTaskInfo;
-import com.school.cbis.service.FileService;
-import com.school.cbis.service.TeachTaskInfoService;
-import com.school.cbis.service.UsersService;
+import com.school.cbis.domain.tables.pojos.TeachTaskTitle;
+import com.school.cbis.domain.tables.records.TeachTaskContentRecord;
+import com.school.cbis.domain.tables.records.TeachTaskGradeCheckRecord;
+import com.school.cbis.domain.tables.records.TeachTaskInfoRecord;
+import com.school.cbis.service.*;
 import com.school.cbis.vo.eadmin.AssignmentBookAddVo;
 import com.school.cbis.vo.eadmin.AssignmentBookListVo;
 import org.jooq.Record;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +31,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +50,15 @@ public class EAdminController {
 
     @Resource
     private TeachTaskInfoService teachTaskInfoService;
+
+    @Resource
+    private TeachTaskTitleService teachTaskTitleService;
+
+    @Resource
+    private TeachTaskContentService teachTaskContentService;
+
+    @Resource
+    private TeachTaskGradeCheckService teachTaskGradeCheckService;
 
     @Resource
     private UsersService usersService;
@@ -95,9 +111,9 @@ public class EAdminController {
         }
 
         if (tieId > 0) {
-            Result<Record6<Integer, String, String, String, java.sql.Date, java.sql.Date>> record6s = teachTaskInfoService.findAllByTieIdAndPage(assignmentBookListVo, tieId);
-            if (record6s.isNotEmpty()) {
-                List<AssignmentBookListVo> assignmentBookListVos = record6s.into(AssignmentBookListVo.class);
+            Result<Record7<Integer, String, String, String, Date, Date,Byte>> record7s = teachTaskInfoService.findAllByTieIdAndPage(assignmentBookListVo, tieId);
+            if (record7s.isNotEmpty()) {
+                List<AssignmentBookListVo> assignmentBookListVos = record7s.into(AssignmentBookListVo.class);
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(assignmentBookListVo.getPageNum());
                 paginationData.setPageSize(assignmentBookListVo.getPageSize());
@@ -110,6 +126,65 @@ public class EAdminController {
             ajaxData.fail();
         }
         return ajaxData;
+    }
+
+    @RequestMapping("/administrator/eadmin/assignmentBookUse")
+    @ResponseBody
+    public AjaxData assignmentBookUse(@RequestParam("id") int id,@RequestParam("isUse") Byte use){
+        TeachTaskInfo teachTaskInfo = teachTaskInfoService.findById(id);
+        if(!ObjectUtils.isEmpty(teachTaskInfo)){
+            teachTaskInfo.setIsUse(use);
+            teachTaskInfoService.update(teachTaskInfo);
+            return new AjaxData().success().msg("更新状态成功!");
+        } else {
+            return new AjaxData().fail().msg("未找到该教学任务书!");
+        }
+    }
+
+    @RequestMapping("/administrator/eadmin/assignmentBookUpdate")
+    public String assignmentBookUpdate(@RequestParam("id") int id,ModelMap modelMap){
+        TeachTaskInfo teachTaskInfo = teachTaskInfoService.findById(id);
+        if(!ObjectUtils.isEmpty(teachTaskInfo)){
+            modelMap.addAttribute("teachTaskInfo",teachTaskInfo);
+            return "/administrator/eadmin/assignmentbookupdate";
+        } else {
+            return "redirect:/administrator/eadmin/assignmentBookList";
+        }
+    }
+
+    /**
+     * 预览数据
+     * @param id 教学任务书id
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/assignmentBookLook")
+    public String assignmentBookLook(@RequestParam("id") int id,ModelMap modelMap){
+        //该教学任务书下所有标题
+        List<TeachTaskTitle> teachTaskTitles = teachTaskTitleService.findByTeachTaskInfoId(id);
+        List<TeachTaskContent> teachTaskContents = new ArrayList<>();
+        List<TeachTaskGradeCheck> teachTaskGradeChecks = new ArrayList<>();
+        TeachTaskInfo teachTaskInfo = teachTaskInfoService.findById(id);
+        if(!teachTaskTitles.isEmpty()){
+            List<Integer> teachTaskTitleId = new ArrayList<>();
+            for(TeachTaskTitle taskTitle:teachTaskTitles){
+                teachTaskTitleId.add(taskTitle.getId());
+            }
+            Result<TeachTaskContentRecord> teachTaskContentRecords = teachTaskContentService.findInTeachTaskTitleId(teachTaskTitleId);
+            if(teachTaskContentRecords.isNotEmpty()){
+                teachTaskContents = teachTaskContentRecords.into(TeachTaskContent.class);
+            }
+
+            Result<TeachTaskGradeCheckRecord> teachTaskGradeCheckRecords = teachTaskGradeCheckService.findByTeachTaskInfoAndCheckIsRight(id,Byte.parseByte("0"));
+            if(teachTaskContentRecords.isNotEmpty()){
+                teachTaskGradeChecks = teachTaskGradeCheckRecords.into(TeachTaskGradeCheck.class);
+            }
+        }
+        modelMap.addAttribute("teachTaskContents",teachTaskContents);
+        modelMap.addAttribute("teachTaskTitles",teachTaskTitles);
+        modelMap.addAttribute("teachTaskGradeChecks",teachTaskGradeChecks);
+        modelMap.addAttribute("teachTaskInfo",teachTaskInfo);
+        return "/administrator/eadmin/assignmentbooklook";
     }
 
     /**
@@ -127,9 +202,9 @@ public class EAdminController {
      * @param teachTaskTitle
      * @return
      */
-    @RequestMapping("/administrator/eadmin//validAssignmentBookTitle")
+    @RequestMapping("/administrator/eadmin//validAddAssignmentBookTitle")
     @ResponseBody
-    public Map<String, Object> validAssignmentBookTitle(@RequestParam("teachTaskTitle") String teachTaskTitle) {
+    public Map<String, Object> validAddAssignmentBookTitle(@RequestParam("teachTaskTitle") String teachTaskTitle) {
         Map<String, Object> map = new HashMap<>();
         if (StringUtils.hasLength(teachTaskTitle)) {
             List<TeachTaskInfo> teachTaskInfos = teachTaskInfoService.findByTeachTaskInfoTitle(teachTaskTitle);
@@ -142,6 +217,41 @@ public class EAdminController {
             map.put("error", "请输入标题!");
         }
         return map;
+    }
+
+    /**
+     * 检验更新时标题
+     * @param teachTaskTitle
+     * @param id
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/validUpdateAssignmentBookTitle")
+    @ResponseBody
+    public Map<String,Object> validUpdateAssignmentBookTitle(@RequestParam("teachTaskTitle") String teachTaskTitle,@RequestParam("id") int id){
+        Map<String, Object> map = new HashMap<>();
+        if(StringUtils.hasLength(teachTaskTitle)){
+            Result<TeachTaskInfoRecord> records = teachTaskInfoService.findByIdAndTeachTaskInfoTitle(id,teachTaskTitle);
+            if(records.isEmpty()){
+                map.put("ok","");
+            } else {
+                map.put("error", "该标题已存在!");
+            }
+        } else {
+            map.put("error", "请输入标题!");
+        }
+        return map;
+    }
+
+    /**
+     * 更新教学任务书相关信息
+     * @param teachTaskInfo
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/updateAssignmentBook")
+    @ResponseBody
+    public AjaxData updateAssignmentBook(TeachTaskInfo teachTaskInfo){
+        teachTaskInfoService.update(teachTaskInfo);
+        return new AjaxData().success().msg("更新成功!");
     }
 
     /**

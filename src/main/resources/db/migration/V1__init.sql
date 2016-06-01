@@ -227,6 +227,7 @@ create table teach_task_info(
   grade_num_x int not null comment 'excel 班级人数所在行',
   grade_num_y int not null,
   is_use boolean not null default 0 comment '是否可以使用',
+  is_ok boolean not null default 0 comment '是否系上已确认',
   foreign key(tie_id) references tie(id),
   foreign key(teach_type_id) references teach_type(id),
   foreign key(file_user) references users(username)
