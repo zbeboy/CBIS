@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
+    <!-- jrange css -->
+    <link rel="stylesheet" href="jquery.range.css" th:href="@{/css/jrange/jquery.range.css}"/>
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -27,11 +29,12 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
-    <script src="js/components/sortable.js" th:src="@{/js/plugin/components/sortable.js}" ></script>
+    <script src="js/components/sortable.js" th:src="@{/js/plugin/components/sortable.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
-
+    <!-- jrange js -->
+    <script src="jquery.range.js" th:src="@{/js/plugin/jrange/jquery.range-min.js}"></script>
     <!-- layer js -->
     <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
 
@@ -44,8 +47,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#navtemplateedit').addClass('uk-active');
-            $('#offcanvastemplateedit').addClass('uk-active');
+            $('#theorynavteacherfilltemplatelist').addClass('uk-active');
+            $('#theoryoffcanvasteacherfilltemplatelist').addClass('uk-active');
         });
     </script>
 </head>
@@ -71,8 +74,8 @@
 
         </div>
         <div class="uk-width-medium-3-4">
-            <div id="templdateData" >
-                <h3>添加标题</h3>
+            <div id="templdateData">
+                <h3>更新标题</h3>
                 <hr class="uk-grid-divider"/>
                 <div id="tableData">
 
@@ -81,7 +84,7 @@
                     <button class="uk-button" type="button" onclick="addDataTitle();">添加标题</button>
                 </div>
                 <div class="uk-panel uk-panel-box uk-hidden" id="dataTitle">
-                    <form class="uk-form uk-form-horizontal" id="autonomousPracticeHeadForm" >
+                    <form class="uk-form" id="autonomousPracticeHeadForm">
                         <fieldset>
                             <legend>标题信息</legend>
                             <div class="uk-form-row">
@@ -90,7 +93,8 @@
                                            onclick="titleWay('myTitle');"/> <label for="myTitle">自定义标题</label>
                                     <hr class="uk-grid-divider"/>
                                     <div class="uk-margin" id="headType">标题名
-                                        <input type="text" id="title" name="title" class="uk-width-1-1" placeholder="标题名"/>
+                                        <input type="text" id="title" name="title" class="uk-width-1-1"
+                                               placeholder="标题名"/>
                                     </div>
                                     <br/>
                                 </div>
@@ -104,15 +108,30 @@
                                     <div class="uk-grid uk-margin">
                                         <div class="uk-width-1-2 uk-text-muted" id="assignmentBookField">
                                             教学任务书标题
-                                            <select id="assignmentBookFieldSelect" name="assignmentBookFieldSelect" disabled="disabled">
-                                                <option value="" >请选择</option>
+                                            <select id="assignmentBookFieldSelect" th:unless="${#lists.isEmpty(titles)}"
+                                                    name="assignmentBookFieldSelect" disabled="disabled">
+                                                <option value="">请选择</option>
+                                                <option th:each="t:${titles}" th:value="${t.id}"
+                                                        th:text="${t.title}"></option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-1-2"><label class="uk-form-label" for="sort">排序</label></div>
+                                    <div class="uk-width-1-2">
+                                        <div class="uk-form-controls uk-margin">
+                                            <input type="hidden" id="sort" class="slider-input" value="0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="uk-text-center uk-margin">
-                                <button class="uk-button uk-button-large uk-button-primary" type="button" onclick="saveAddTitle();" >保存</button>
+                                <button class="uk-button uk-button-large uk-button-primary" type="button"
+                                        onclick="saveAddTitle();">保存
+                                </button>
                                 &nbsp;&nbsp;
                                 <button class="uk-button uk-button-large" type="button" onclick="cancelAddTitle();">取消
                                 </button>
@@ -120,8 +139,10 @@
                         </fieldset>
                     </form>
                 </div>
-                <div class="uk-text-center uk-margin" >
-                    <button class="uk-button uk-button-large" type="button" onclick="toBack();" >返回
+                <div class="uk-text-center uk-margin">
+                    <a class="uk-button uk-button-large uk-button-primary" th:href="@{/administrator/eadmin/teacherFillTemplateList}" >确定</a>
+                    &nbsp;&nbsp;
+                    <button class="uk-button uk-button-large" type="button" onclick="toBack();">返回
                     </button>
                 </div>
             </div>
@@ -136,11 +157,12 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var assignmentBookId = /*[[${templateId}]]*/ 0;//模板id
     /*]]>*/
 </script>
 
-<script th:src="@{/js/teacher/eadmin/teacherfilltemplateadd.js}"
-        src="js/teacher/eadmin/teacherfilltemplateadd.js"></script>
+<script th:src="@{/js/administrator/eadmin/teacherfilltemplatetitleupdate.js}"
+        src="js/administrator/eadmin/teacherfilltemplatetitleupdate.js"></script>
 </body>
 </html>

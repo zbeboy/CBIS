@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherFillTaskInfo implements Serializable {
 
-	private static final long serialVersionUID = -548862462;
+	private static final long serialVersionUID = 2088993136;
 
 	private Integer   id;
 	private String    title;
@@ -35,6 +35,7 @@ public class TeacherFillTaskInfo implements Serializable {
 	private Timestamp endTime;
 	private String    usersId;
 	private Integer   tieId;
+	private Byte      isOk;
 
 	public TeacherFillTaskInfo() {}
 
@@ -47,6 +48,7 @@ public class TeacherFillTaskInfo implements Serializable {
 		this.endTime = value.endTime;
 		this.usersId = value.usersId;
 		this.tieId = value.tieId;
+		this.isOk = value.isOk;
 	}
 
 	public TeacherFillTaskInfo(
@@ -57,7 +59,8 @@ public class TeacherFillTaskInfo implements Serializable {
 		Timestamp startTime,
 		Timestamp endTime,
 		String    usersId,
-		Integer   tieId
+		Integer   tieId,
+		Byte      isOk
 	) {
 		this.id = id;
 		this.title = title;
@@ -67,6 +70,7 @@ public class TeacherFillTaskInfo implements Serializable {
 		this.endTime = endTime;
 		this.usersId = usersId;
 		this.tieId = tieId;
+		this.isOk = isOk;
 	}
 
 	@NotNull
@@ -143,6 +147,15 @@ public class TeacherFillTaskInfo implements Serializable {
 		this.tieId = tieId;
 	}
 
+	@NotNull
+	public Byte getIsOk() {
+		return this.isOk;
+	}
+
+	public void setIsOk(Byte isOk) {
+		this.isOk = isOk;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TeacherFillTaskInfo (");
@@ -155,6 +168,7 @@ public class TeacherFillTaskInfo implements Serializable {
 		sb.append(", ").append(endTime);
 		sb.append(", ").append(usersId);
 		sb.append(", ").append(tieId);
+		sb.append(", ").append(isOk);
 
 		sb.append(")");
 		return sb.toString();

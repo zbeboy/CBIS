@@ -54,4 +54,10 @@ public class TeachTaskTitleServiceImpl implements TeachTaskTitleService {
         List<TeachTaskTitle> teachTaskTitles = teachTaskTitleDao.fetchByTeachTaskInfoId(teachTaskInfoId);
         return teachTaskTitles;
     }
+
+    @Override
+    public TeachTaskTitle findById(int id) {
+        TeachTaskTitle teachTaskTitle = teachTaskTitleDao.findById(id);
+        return teachTaskTitle;
+    }
 }

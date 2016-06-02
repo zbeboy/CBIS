@@ -1,9 +1,8 @@
 /**
- * Created by lenovo on 2016-05-29.
+ * Created by lenovo on 2016-06-02.
  */
 
 var addTemplate = null//全局保存初始状态下的添加模板
-var assignmentBookId = 0;//模板id
 /**
  * 点击添加标题时 显示添加
  */
@@ -12,6 +11,50 @@ function addDataTitle() {
     $('#dataTitle').empty();
     $('#dataTitle').append(addTemplate);
     isEditTitle = false;
+    initJrange();
+}
+
+/**
+ * 初始化范围插件
+ */
+function initJrange() {
+    $('.slider-input').jRange({
+        from: 0,
+        to: 100,
+        step: 1,
+        scale: [0, 25, 50, 75, 100],
+        format: '%s',
+        width: '70%',
+        showLabels: true,
+        isRange: false
+    });
+}
+
+/**
+ * 输出初始化数据
+ * @param data
+ */
+function outputData(data){
+    var list = data.result;
+    for(var i = 0;i<list.length;i++){
+        if(list[i].isAssignment == 1){
+            list[i].title = list[i].teachTaskTitle;
+        }
+        outputToTable(list[i]);
+    }
+}
+
+/**
+ * 请求数据
+ */
+function action(){
+    $.post(web_path + '/administrator/eadmin/TeacherFillTemplateTitleUpdateData',{
+        'templateId':assignmentBookId
+    },function(data){
+        if(data.state){
+            outputData(data);
+        }
+    },'json');
 }
 
 /**
@@ -19,6 +62,7 @@ function addDataTitle() {
  */
 $(document).ready(function () {
     addTemplate = $('#dataTitle').html();//html数据
+    action();
 });
 
 /**
@@ -48,13 +92,22 @@ function titleWay(type) {
  * @param data
  */
 function outputToTable(data) {
+
+    var s = '';
+    if (data.isAssignment == 0) {
+        s = '自定义标题';
+    } else {
+        s = '教学任务书标题';
+    }
+
     $('#tableData').append(
         $('<div class="uk-panel uk-panel-box uk-width-medium-1-1">').append(
             $('<h3 class="uk-panel-title">').text(data.title)
             )
             .append(
                 $('<ul class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4">').append($('<li class="uk-hidden">').text(data.id))
-                    .append($('<li>').text('标题类型:' + headTypes))/*是教学任务书标题,还是自定义标题*/
+                    .append($('<li>').text('标题类型:' + s))/*是教学任务书标题,还是自定义标题*/
+                    .append($('<li>').text('序号:' + data.sort))
             )
             .append(
                 $('<div class="uk-text-right">').append($('<button class="uk-button" type="button" onclick="editTitle(this);" >').text('编辑'))
@@ -73,7 +126,16 @@ function outputToEditTable(data) {
     $(p[0]).text(data.title);
     $(u[0]).text(data.id);
 
-    $(u[1]).text('标题类型:' + headTypes);/*是教学任务书标题,还是自定义标题*/
+    var s = '';
+    if (data.isAssignment == 0) {
+        s = '自定义标题';
+    } else {
+        s = '教学任务书标题';
+    }
+
+    $(u[1]).text('标题类型:' + s);
+    /*是教学任务书标题,还是自定义标题*/
+    $(u[2]).text('序号:' + data.sort);
 }
 
 /**
@@ -89,7 +151,7 @@ function saveAddTitle() {
     isAssignmentBook = Number(isAssignmentBook);
 
     var title = '';
-    var assignmentBookFieldSelect = '';
+    var assignmentBookFieldSelect = 0;
 
     if (isAssignmentBook == 0) {
         if ($('#title').val().trim().length <= 0) {
@@ -107,18 +169,30 @@ function saveAddTitle() {
         }
     }
 
-    var url = '/teacher/eadmin/addTeacherFillTemplate';
+    var param = {};
+    var url = '/administrator/eadmin/addTeacherFillTemplateTitle';
     var id = assignmentBookId;
     if (isEditTitle) {
-        url = '/teacher/eadmin/updateTeacherFillTemplate';
+        url = '/administrator/eadmin/updateTeacherFillTemplateTitle';
         id = editTitleId;
+        param ={
+            'id': id,
+            'title': title,
+            'teachTaskTitleId': assignmentBookFieldSelect,
+            'isAssignment': isAssignmentBook,
+            'sort': $('#sort').val().trim()
+        };
+    } else {
+        param ={
+            'teacherFillTaskTemplateId': id,
+            'title': title,
+            'teachTaskTitleId': assignmentBookFieldSelect,
+            'isAssignment': isAssignmentBook,
+            'sort': $('#sort').val().trim()
+        };
     }
 
-    $.post(web_path + url, {
-        'id': id,
-        'title': title,
-        'assignmentBookFieldSelect': assignmentBookFieldSelect
-    }, function (data) {
+    $.post(web_path + url, param, function (data) {
         if (data.state) {
             $('#dataTitle').addClass('uk-hidden');
             $('#dataTitle').empty();
@@ -131,7 +205,7 @@ function saveAddTitle() {
         } else {
             layer.msg(data.msg);
         }
-    });
+    },'json');
 }
 
 /**
@@ -152,14 +226,27 @@ function editTitle(obj) {
     var title = $(p[0]).text();
     editTitleId = $(u[0]).text();
 
-    var headType = $(u[1]).text();
-    if(headType === '教学任务书标题'){
+    var headType = $(u[1]).text().split(":")[1];
+    if (headType === '教学任务书标题') {
         $('#myTitle').attr('checked', false);
         $('#assignmentBookTitle').attr('checked', true);
         titleWay('assignmentBookTitle');
-    } else if(headType === '自定义标题'){
+
+        for(var i = 0;i<$("#assignmentBookFieldSelect").children().length;i++){
+            if(title === $($("#assignmentBookFieldSelect").children()[i]).text()){
+                $($("#assignmentBookFieldSelect").children()[i]).attr('selected',true);
+                break;
+            }
+        }
+
+    } else if (headType === '自定义标题') {
         titleWay('myTitle');
+        $('#title').val(title);
     }
+
+    var sort = $(u[2]).text().split(":")[1];
+    $('.slider-input').val(sort);
+    initJrange();
 }
 
 /**
@@ -173,7 +260,7 @@ function deleteTitle(obj) {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
-        $.post(web_path + '/teacher/eadmin/deleteTeacherFillTemplate', {
+        $.post(web_path + '/administrator/eadmin/deleteTeacherFillTemplateTitle', {
             'id': id
         }, function (data) {
             if (data.state) {
@@ -197,6 +284,6 @@ function cancelAddTitle() {
 /**
  * 返回
  */
-function toBack(){
-
+function toBack() {
+    window.location.href = web_path + '/administrator/eadmin/teacherFillTemplateList';
 }

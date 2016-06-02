@@ -21,4 +21,11 @@ public interface TeachTaskTitleService {
      * @return
      */
     List<TeachTaskTitle> findByTeachTaskInfoId(int teachTaskInfoId);
+
+    /**
+     * 根据主键查询
+     * @param id
+     * @return
+     */
+    TeachTaskTitle findById(int id);
 }

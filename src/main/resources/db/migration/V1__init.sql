@@ -227,7 +227,6 @@ create table teach_task_info(
   grade_num_x int not null comment 'excel 班级人数所在行',
   grade_num_y int not null,
   is_use boolean not null default 0 comment '是否可以使用',
-  is_ok boolean not null default 0 comment '是否系上已确认',
   foreign key(tie_id) references tie(id),
   foreign key(teach_type_id) references teach_type(id),
   foreign key(file_user) references users(username)
@@ -521,6 +520,7 @@ create table teacher_fill_task_info(
   end_time datetime not null,
   users_id varchar(64) not null,
   tie_id int not null,
+  is_ok boolean not null default 0 comment '是否系上已确认',
   foreign key(teacher_fill_task_template_id) references teacher_fill_task_template(id),
   foreign key(users_id) references users(username),
   foreign key(tie_id) references tie(id)

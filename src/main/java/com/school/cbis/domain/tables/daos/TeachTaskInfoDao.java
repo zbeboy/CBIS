@@ -198,11 +198,4 @@ public class TeachTaskInfoDao extends DAOImpl<TeachTaskInfoRecord, com.school.cb
 	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByIsUse(Byte... values) {
 		return fetch(TeachTaskInfo.TEACH_TASK_INFO.IS_USE, values);
 	}
-
-	/**
-	 * Fetch records that have <code>is_ok IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeachTaskInfo> fetchByIsOk(Byte... values) {
-		return fetch(TeachTaskInfo.TEACH_TASK_INFO.IS_OK, values);
-	}
 }
