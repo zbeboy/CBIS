@@ -160,6 +160,12 @@ public class AutonomousPracticeContentServiceImpl implements AutonomousPracticeC
     }
 
     @Override
+    public List<AutonomousPracticeContent> findByAutonomousPracticeHeadId(int autonomousPracticeHeadId) {
+        List<AutonomousPracticeContent> autonomousPracticeContents = autonomousPracticeContentDao.fetchByAutonomousPracticeHeadId(autonomousPracticeHeadId);
+        return autonomousPracticeContents;
+    }
+
+    @Override
     public Result<Record1<Integer>> findByAutonomousPracticeInfoIdDistinctStudentIdAndPage(AutonomicPracticeTeacherListVo autonomicPracticeTeacherListVo) {
         int pageNum = autonomicPracticeTeacherListVo.getPageNum();
         int pageSize = autonomicPracticeTeacherListVo.getPageSize();

@@ -24,13 +24,14 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherFillTaskContent implements Serializable {
 
-	private static final long serialVersionUID = 1220107258;
+	private static final long serialVersionUID = -771322927;
 
 	private Integer id;
 	private String  content;
 	private Integer teacherFillTaskHeadId;
 	private Integer teacherId;
-	private Integer teacherFillTaskInfoId;
+	private Integer contentX;
+	private Integer contentY;
 
 	public TeacherFillTaskContent() {}
 
@@ -39,7 +40,8 @@ public class TeacherFillTaskContent implements Serializable {
 		this.content = value.content;
 		this.teacherFillTaskHeadId = value.teacherFillTaskHeadId;
 		this.teacherId = value.teacherId;
-		this.teacherFillTaskInfoId = value.teacherFillTaskInfoId;
+		this.contentX = value.contentX;
+		this.contentY = value.contentY;
 	}
 
 	public TeacherFillTaskContent(
@@ -47,13 +49,15 @@ public class TeacherFillTaskContent implements Serializable {
 		String  content,
 		Integer teacherFillTaskHeadId,
 		Integer teacherId,
-		Integer teacherFillTaskInfoId
+		Integer contentX,
+		Integer contentY
 	) {
 		this.id = id;
 		this.content = content;
 		this.teacherFillTaskHeadId = teacherFillTaskHeadId;
 		this.teacherId = teacherId;
-		this.teacherFillTaskInfoId = teacherFillTaskInfoId;
+		this.contentX = contentX;
+		this.contentY = contentY;
 	}
 
 	@NotNull
@@ -83,7 +87,6 @@ public class TeacherFillTaskContent implements Serializable {
 		this.teacherFillTaskHeadId = teacherFillTaskHeadId;
 	}
 
-	@NotNull
 	public Integer getTeacherId() {
 		return this.teacherId;
 	}
@@ -93,12 +96,21 @@ public class TeacherFillTaskContent implements Serializable {
 	}
 
 	@NotNull
-	public Integer getTeacherFillTaskInfoId() {
-		return this.teacherFillTaskInfoId;
+	public Integer getContentX() {
+		return this.contentX;
 	}
 
-	public void setTeacherFillTaskInfoId(Integer teacherFillTaskInfoId) {
-		this.teacherFillTaskInfoId = teacherFillTaskInfoId;
+	public void setContentX(Integer contentX) {
+		this.contentX = contentX;
+	}
+
+	@NotNull
+	public Integer getContentY() {
+		return this.contentY;
+	}
+
+	public void setContentY(Integer contentY) {
+		this.contentY = contentY;
 	}
 
 	@Override
@@ -109,7 +121,8 @@ public class TeacherFillTaskContent implements Serializable {
 		sb.append(", ").append(content);
 		sb.append(", ").append(teacherFillTaskHeadId);
 		sb.append(", ").append(teacherId);
-		sb.append(", ").append(teacherFillTaskInfoId);
+		sb.append(", ").append(contentX);
+		sb.append(", ").append(contentY);
 
 		sb.append(")");
 		return sb.toString();

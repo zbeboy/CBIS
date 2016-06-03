@@ -48,4 +48,10 @@ public class TeachTaskContentServiceImpl implements TeachTaskContentService {
                 .fetch();
         return records;
     }
+
+    @Override
+    public List<TeachTaskContent> findByTeachTaskTitleId(int teachTaskTitleId) {
+        List<TeachTaskContent> teachTaskContents = teachTaskContentDao.fetchByTeachTaskTitleId(teachTaskTitleId);
+        return teachTaskContents;
+    }
 }

@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherFillTaskContent extends TableImpl<TeacherFillTaskContentRecord> {
 
-	private static final long serialVersionUID = 458435300;
+	private static final long serialVersionUID = -259925215;
 
 	/**
 	 * The reference instance of <code>cbis.teacher_fill_task_content</code>
@@ -68,12 +68,17 @@ public class TeacherFillTaskContent extends TableImpl<TeacherFillTaskContentReco
 	/**
 	 * The column <code>cbis.teacher_fill_task_content.teacher_id</code>.
 	 */
-	public final TableField<TeacherFillTaskContentRecord, Integer> TEACHER_ID = createField("teacher_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<TeacherFillTaskContentRecord, Integer> TEACHER_ID = createField("teacher_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>cbis.teacher_fill_task_content.teacher_fill_task_info_id</code>.
+	 * The column <code>cbis.teacher_fill_task_content.content_x</code>.
 	 */
-	public final TableField<TeacherFillTaskContentRecord, Integer> TEACHER_FILL_TASK_INFO_ID = createField("teacher_fill_task_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<TeacherFillTaskContentRecord, Integer> CONTENT_X = createField("content_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>cbis.teacher_fill_task_content.content_y</code>.
+	 */
+	public final TableField<TeacherFillTaskContentRecord, Integer> CONTENT_Y = createField("content_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.teacher_fill_task_content</code> table reference
@@ -126,7 +131,7 @@ public class TeacherFillTaskContent extends TableImpl<TeacherFillTaskContentReco
 	 */
 	@Override
 	public List<ForeignKey<TeacherFillTaskContentRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TeacherFillTaskContentRecord, ?>>asList(Keys.TEACHER_FILL_TASK_CONTENT_IBFK_1, Keys.TEACHER_FILL_TASK_CONTENT_IBFK_2, Keys.TEACHER_FILL_TASK_CONTENT_IBFK_3);
+		return Arrays.<ForeignKey<TeacherFillTaskContentRecord, ?>>asList(Keys.TEACHER_FILL_TASK_CONTENT_IBFK_1);
 	}
 
 	/**

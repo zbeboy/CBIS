@@ -631,6 +631,13 @@ public class AutonomicPractice {
             autonomousPracticeHead.setIsDatabase(autonomousPracticeHeadUpdateVo.getIsDatabase());
             autonomousPracticeHead.setIsRequired(autonomousPracticeHeadUpdateVo.getIsRequired());
             autonomousPracticeHeadService.update(autonomousPracticeHead);
+            //更新内容为空
+            List<AutonomousPracticeContent> autonomousPracticeContents = autonomousPracticeContentService.findByAutonomousPracticeHeadId(autonomousPracticeHead.getId());
+            for(AutonomousPracticeContent a:autonomousPracticeContents){
+                a.setContent("");
+                autonomousPracticeContentService.update(a);
+            }
+
             return new AjaxData().success().obj(autonomousPracticeHead);
         } else {
             return new AjaxData().fail().msg("参数异常!");

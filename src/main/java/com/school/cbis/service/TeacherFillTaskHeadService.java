@@ -5,6 +5,8 @@ import org.jooq.Record;
 import org.jooq.Record7;
 import org.jooq.Result;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-06-02.
  */
@@ -40,4 +42,11 @@ public interface TeacherFillTaskHeadService {
      * @return
      */
     Result<Record7<Integer,String,String,String,Integer,Byte,Integer>> findByTeacherFillTaskTemplateIdWithTeachTaskInfoTitle(int teacherFillTaskTemplateId);
+
+    /**
+     * 根据模板id查询
+     * @param teacherFillTaskTemplateId
+     * @return
+     */
+    List<TeacherFillTaskHead> findByTeacherFillTaskTemplateId(int teacherFillTaskTemplateId);
 }

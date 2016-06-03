@@ -18,12 +18,14 @@ public interface TeachTaskInfoService {
 
     /**
      * 保存
+     *
      * @param teachTaskInfo
      */
     int saveAndReturnId(TeachTaskInfo teachTaskInfo);
 
     /**
      * 通过标题查找
+     *
      * @param teachTaskInfoTitle
      * @return
      */
@@ -31,21 +33,24 @@ public interface TeachTaskInfoService {
 
     /**
      * 分页查询全部
+     *
      * @param tieId
      * @return
      */
-    Result<Record7<Integer, String, String, String, Date, Date,Byte>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId);
+    Result<Record7<Integer, String, String, String, Date, Date, Byte>> findAllByTieIdAndPageAndTeachTypeId(AssignmentBookListVo assignmentBookListVo, int tieId, int teachTypeId);
 
     /**
      * 分页查询全部总数
+     *
      * @param assignmentBookListVo
      * @param tieId
      * @return
      */
-    int findAllByTieIdAndPageCount(AssignmentBookListVo assignmentBookListVo,int tieId);
+    int findAllByTieIdAndPageAndTeachTypeIdCount(AssignmentBookListVo assignmentBookListVo, int tieId, int teachTypeId);
 
     /**
      * 根据主键查询
+     *
      * @param id
      * @return
      */
@@ -53,15 +58,17 @@ public interface TeachTaskInfoService {
 
     /**
      * 更新
+     *
      * @param teachTaskInfo
      */
     void update(TeachTaskInfo teachTaskInfo);
 
     /**
      * 更新检验标题用 注:是不等于id
+     *
      * @param id
      * @param teachTaskInfoTitle
      * @return
      */
-    Result<TeachTaskInfoRecord> findByIdAndTeachTaskInfoTitle(int id,String teachTaskInfoTitle);
+    Result<TeachTaskInfoRecord> findByIdAndTeachTaskInfoTitle(int id, String teachTaskInfoTitle);
 }

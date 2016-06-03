@@ -166,6 +166,13 @@ function saveAddTitle() {
             return;
         } else {
             assignmentBookFieldSelect = $('#assignmentBookFieldSelect').val().trim();
+            var c = $('#assignmentBookFieldSelect').children();
+            for(var i = 0;i< c.length;i++){
+                if($(c[i]).val() === assignmentBookFieldSelect){
+                    title = $(c[i]).text();
+                    break;
+                }
+            }
         }
     }
 

@@ -23,4 +23,11 @@ public interface TeachTaskContentService {
      * @return
      */
     Result<TeachTaskContentRecord> findInTeachTaskTitleId(List<Integer> teachTaskTitleId);
+
+    /**
+     * 根据标题表id查询
+     * @param teachTaskTitleId
+     * @return
+     */
+    List<TeachTaskContent> findByTeachTaskTitleId(int teachTaskTitleId);
 }

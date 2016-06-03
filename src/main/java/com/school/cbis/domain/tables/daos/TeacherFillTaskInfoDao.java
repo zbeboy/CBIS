@@ -113,11 +113,4 @@ public class TeacherFillTaskInfoDao extends DAOImpl<TeacherFillTaskInfoRecord, c
 	public List<com.school.cbis.domain.tables.pojos.TeacherFillTaskInfo> fetchByTieId(Integer... values) {
 		return fetch(TeacherFillTaskInfo.TEACHER_FILL_TASK_INFO.TIE_ID, values);
 	}
-
-	/**
-	 * Fetch records that have <code>is_ok IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeacherFillTaskInfo> fetchByIsOk(Byte... values) {
-		return fetch(TeacherFillTaskInfo.TEACHER_FILL_TASK_INFO.IS_OK, values);
-	}
 }

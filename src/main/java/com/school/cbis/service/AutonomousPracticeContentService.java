@@ -134,4 +134,11 @@ public interface AutonomousPracticeContentService {
      */
     List<AutonomousPracticeContent> findByAutonomousPracticeInfoId(int autonomousPracticeInfoId);
 
+    /**
+     * 通过标题id查询
+     * @param autonomousPracticeHeadId
+     * @return
+     */
+    List<AutonomousPracticeContent> findByAutonomousPracticeHeadId(int autonomousPracticeHeadId);
+
 }

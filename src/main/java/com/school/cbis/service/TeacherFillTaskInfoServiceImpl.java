@@ -4,6 +4,7 @@ import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.TeacherFillTaskInfoDao;
 import com.school.cbis.domain.tables.pojos.TeacherFillTaskInfo;
 import com.school.cbis.vo.eadmin.TeacherFillTaskInfoListVo;
+import com.school.cbis.vo.eadmin.TeacherReportListVo;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,5 +104,51 @@ public class TeacherFillTaskInfoServiceImpl implements TeacherFillTaskInfoServic
     @Override
     public void update(TeacherFillTaskInfo teacherFillTaskInfo) {
         teacherFillTaskInfoDao.update(teacherFillTaskInfo);
+    }
+
+    @Override
+    public Result<Record9<Integer, Integer, Integer, String, Timestamp, Timestamp, String, String, String>> findAllAndPage(TeacherReportListVo teacherReportListVo,int tieId,int teachTypeId) {
+        Condition a = Tables.TEACHER_FILL_TASK_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId));
+
+        int pageNum = teacherReportListVo.getPageNum();
+        int pageSize = teacherReportListVo.getPageSize();
+        if(pageNum<=0){
+            pageNum = 1;
+        }
+
+        Result<Record9<Integer, Integer, Integer, String, Timestamp, Timestamp, String, String, String>> record9s = create.select(Tables.TEACHER_FILL_TASK_INFO.ID,Tables.TEACHER_FILL_TASK_TEMPLATE.ID.as("templateId"),
+                Tables.TEACH_TASK_INFO.ID.as("taskInfoId"),Tables.TEACHER_FILL_TASK_INFO.TITLE,
+                Tables.TEACHER_FILL_TASK_INFO.START_TIME,Tables.TEACHER_FILL_TASK_INFO.END_TIME,
+                Tables.USERS.REAL_NAME,Tables.TEACHER_FILL_TASK_TEMPLATE.TITLE.as("templateTitle"),
+                Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE.as("teachTaskTitle"))
+                .from(Tables.TEACHER_FILL_TASK_INFO)
+                .leftJoin(Tables.TEACHER_FILL_TASK_TEMPLATE)
+                .on(Tables.TEACHER_FILL_TASK_INFO.TEACHER_FILL_TASK_TEMPLATE_ID.eq(Tables.TEACHER_FILL_TASK_TEMPLATE.ID))
+                .leftJoin(Tables.TEACH_TASK_INFO)
+                .on(Tables.TEACHER_FILL_TASK_TEMPLATE.TEACH_TASK_INFO_ID.eq(Tables.TEACH_TASK_INFO.ID))
+                .leftJoin(Tables.USERS)
+                .on(Tables.TEACHER_FILL_TASK_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a)
+                .orderBy(Tables.TEACHER_FILL_TASK_INFO.CREATE_TIME.desc())
+                .limit((pageNum-1)*pageSize,pageSize)
+                .fetch();
+
+        return record9s;
+    }
+
+    @Override
+    public int findAllAndPageCount(TeacherReportListVo teacherReportListVo,int tieId,int teachTypeId) {
+        Condition a = Tables.TEACHER_FILL_TASK_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId));
+       Record1<Integer> record1 = create.selectCount()
+                .from(Tables.TEACHER_FILL_TASK_INFO)
+                .leftJoin(Tables.TEACHER_FILL_TASK_TEMPLATE)
+                .on(Tables.TEACHER_FILL_TASK_INFO.TEACHER_FILL_TASK_TEMPLATE_ID.eq(Tables.TEACHER_FILL_TASK_TEMPLATE.ID))
+                .leftJoin(Tables.TEACH_TASK_INFO)
+                .on(Tables.TEACHER_FILL_TASK_TEMPLATE.TEACH_TASK_INFO_ID.eq(Tables.TEACH_TASK_INFO.ID))
+                .leftJoin(Tables.USERS)
+                .on(Tables.TEACHER_FILL_TASK_INFO.USERS_ID.eq(Tables.USERS.USERNAME))
+                .where(a)
+                .fetchOne();
+        return record1.value1();
     }
 }

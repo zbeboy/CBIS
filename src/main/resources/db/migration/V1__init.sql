@@ -520,7 +520,6 @@ create table teacher_fill_task_info(
   end_time datetime not null,
   users_id varchar(64) not null,
   tie_id int not null,
-  is_ok boolean not null default 0 comment '是否系上已确认',
   foreign key(teacher_fill_task_template_id) references teacher_fill_task_template(id),
   foreign key(users_id) references users(username),
   foreign key(tie_id) references tie(id)
@@ -541,11 +540,10 @@ create table teacher_fill_task_content(
   id int not null primary key auto_increment,
   content varchar(500),
   teacher_fill_task_head_id int not null,
-  teacher_id int not null,
-  teacher_fill_task_info_id int not null,
-  foreign key(teacher_fill_task_head_id) references teacher_fill_task_head(id),
-  foreign key(teacher_id) references teacher(id),
-  foreign key(teacher_fill_task_info_id) references teacher_fill_task_info(id)
+  teacher_id int,
+  content_x int not null,
+  content_y int not null,
+  foreign key(teacher_fill_task_head_id) references teacher_fill_task_head(id)
 );
 
 insert into user_type(name) values('学生');

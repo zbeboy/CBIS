@@ -72,8 +72,8 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
     }
 
     @Override
-    public Result<Record7<Integer, String, String, String, Date, Date,Byte>> findAllByTieIdAndPage(AssignmentBookListVo assignmentBookListVo, int tieId) {
-        Condition a = Tables.TEACH_TASK_INFO.TIE_ID.eq(tieId);
+    public Result<Record7<Integer, String, String, String, Date, Date,Byte>> findAllByTieIdAndPageAndTeachTypeId(AssignmentBookListVo assignmentBookListVo, int tieId,int teachTypeId) {
+        Condition a = Tables.TEACH_TASK_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId));
         if(StringUtils.hasLength(assignmentBookListVo.getTeachTaskTitle())){
             a = a.and(Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE.like("%"+assignmentBookListVo.getTeachTaskTitle()+"%"));
         }
@@ -113,8 +113,8 @@ public class TeachTaskInfoServiceImpl implements TeachTaskInfoService {
     }
 
     @Override
-    public int findAllByTieIdAndPageCount(AssignmentBookListVo assignmentBookListVo, int tieId) {
-        Condition a = Tables.TEACH_TASK_INFO.TIE_ID.eq(tieId);
+    public int findAllByTieIdAndPageAndTeachTypeIdCount(AssignmentBookListVo assignmentBookListVo, int tieId,int teachTypeId) {
+        Condition a = Tables.TEACH_TASK_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId));
         if(StringUtils.hasLength(assignmentBookListVo.getTeachTaskTitle())){
             a = a.and(Tables.TEACH_TASK_INFO.TEACH_TASK_TITLE.like("%"+assignmentBookListVo.getTeachTaskTitle()+"%"));
         }

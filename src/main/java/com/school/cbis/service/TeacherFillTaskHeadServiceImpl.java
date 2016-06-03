@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-06-02.
  */
@@ -79,5 +81,11 @@ public class TeacherFillTaskHeadServiceImpl implements TeacherFillTaskHeadServic
                 .orderBy(Tables.TEACHER_FILL_TASK_HEAD.SORT.asc())
                 .fetch();
         return record7s;
+    }
+
+    @Override
+    public List<TeacherFillTaskHead> findByTeacherFillTaskTemplateId(int teacherFillTaskTemplateId) {
+        List<TeacherFillTaskHead> teacherFillTaskHeads = teacherFillTaskHeadDao.fetchByTeacherFillTaskTemplateId(teacherFillTaskTemplateId);
+        return teacherFillTaskHeads;
     }
 }
