@@ -66,6 +66,15 @@ public class EAdminController {
     private TeacherFillTaskInfoService teacherFillTaskInfoService;
 
     @Resource
+    private TeachingMaterialTemplateService teachingMaterialTemplateService;
+
+    @Resource
+    private TeachingMaterialHeadService teachingMaterialHeadService;
+
+    @Resource
+    private TeachingMaterialContentService teachingMaterialContentService;
+
+    @Resource
     private UsersService usersService;
 
     @Resource
@@ -518,7 +527,6 @@ public class EAdminController {
                 teacherFillTaskContent.setContent(tc.getContent());
                 teacherFillTaskContent.setTeacherFillTaskHeadId(titleId);
                 teacherFillTaskContent.setContentX(tc.getContentX());
-                teacherFillTaskContent.setContentY(tc.getContentY());
                 teacherFillTaskContentService.save(teacherFillTaskContent);
             }
         }
@@ -546,7 +554,6 @@ public class EAdminController {
                     teacherFillTaskContent.setContent(tc.getContent());
                     teacherFillTaskContent.setTeacherFillTaskHeadId(update.getId());
                     teacherFillTaskContent.setContentX(tc.getContentX());
-                    teacherFillTaskContent.setContentY(tc.getContentY());
                     teacherFillTaskContentService.save(teacherFillTaskContent);
                 }
             } else if (update.getIsAssignment() == 0) {//如果不是教学任务书中标题，则清空
@@ -626,7 +633,7 @@ public class EAdminController {
      * @param templateId
      * @return
      */
-    @RequestMapping("/administrator/eadmin/TeacherFillTemplateTitleUpdateData")
+    @RequestMapping("/administrator/eadmin/teacherFillTemplateTitleUpdateData")
     @ResponseBody
     public AjaxData<TeacherFillTemplateTitleUpdateVo> TeacherFillTemplateTitleUpdateData(@RequestParam("templateId") int templateId) {
         Result<Record7<Integer, String, String, String, Integer, Byte, Integer>> record7s = teacherFillTaskHeadService.findByTeacherFillTaskTemplateIdWithTeachTaskInfoTitle(templateId);
@@ -967,9 +974,8 @@ public class EAdminController {
                             } else {
                                 TeacherFillTaskContent teacherFillTaskContent = new TeacherFillTaskContent();
                                 teacherFillTaskContent.setContent(request.getParameter(th.getTitleVariable()));
-                                teacherFillTaskContent.setTeacherId(1);
+                                teacherFillTaskContent.setTeacherId(record.getValue(Tables.TEACHER.ID));
                                 teacherFillTaskContent.setContentX(contentX);
-                                teacherFillTaskContent.setContentY(1);
                                 teacherFillTaskContent.setTeacherFillTaskHeadId(th.getId());
                                 teacherFillTaskContentService.save(teacherFillTaskContent);
                             }
@@ -982,6 +988,314 @@ public class EAdminController {
         }
         return "redirect:/teacher/eadmin/teacherReportList";
 
+    }
+
+    /**
+     * 教材模板列表
+     *
+     * @param teachingMaterialTemplateListVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/teachingMaterialTemplateList")
+    public String teachingMaterialTemplateList(TeachingMaterialTemplateListVo teachingMaterialTemplateListVo, ModelMap modelMap) {
+        modelMap.addAttribute("teachingMaterialTemplateListVo", teachingMaterialTemplateListVo);
+        return "/administrator/eadmin/teachingmaterialtemplatelist";
+    }
+
+    /**
+     * 教材模板列表数据
+     *
+     * @param teachingMaterialTemplateListVo
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/teachingMaterialTemplateData")
+    @ResponseBody
+    public AjaxData<TeachingMaterialTemplateListVo> teacherFillTemplateData(TeachingMaterialTemplateListVo teachingMaterialTemplateListVo) {
+        AjaxData<TeachingMaterialTemplateListVo> ajaxData = new AjaxData<>();
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        if (tieId > 0) {
+            Result<Record5<Integer, String, Timestamp, String, String>> record5s = teachingMaterialTemplateService.findByTieIdAndPage(teachingMaterialTemplateListVo, tieId);
+            if (record5s.isNotEmpty()) {
+                List<TeachingMaterialTemplateListVo> list = record5s.into(TeachingMaterialTemplateListVo.class);
+                PaginationData paginationData = new PaginationData();
+                paginationData.setPageNum(teachingMaterialTemplateListVo.getPageNum());
+                paginationData.setPageSize(teachingMaterialTemplateListVo.getPageSize());
+                paginationData.setTotalDatas(teachingMaterialTemplateService.findByTieIdAndPageCount(teachingMaterialTemplateListVo, tieId));
+                ajaxData.success().listData(list).paginationData(paginationData);
+            } else {
+                ajaxData.fail();
+            }
+        } else {
+            ajaxData.fail();
+        }
+        return ajaxData;
+    }
+
+    /**
+     * 添加模板后选择教学任务书
+     *
+     * @param assignmentBookListVo
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/teachingMaterialTemplateSelect")
+    public String teachingMaterialTemplateSelect(AssignmentBookListVo assignmentBookListVo, ModelMap modelMap) {
+        if (!StringUtils.hasLength(assignmentBookListVo.getTeachTaskTerm())) {
+            assignmentBookListVo.setTeachTaskTerm("");
+        }
+        modelMap.addAttribute("assignmentBookListVo", assignmentBookListVo);
+        return "/administrator/eadmin/teachingmaterialtemplateselect";
+    }
+
+    /**
+     * 添加教材申报模板
+     *
+     * @param teachingMaterialTemplate
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/addTeachingMaterialTemplate")
+    public String addTeachingMaterialTemplate(TeachingMaterialTemplate teachingMaterialTemplate, ModelMap modelMap) {
+        teachingMaterialTemplate.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if (!ObjectUtils.isEmpty(record)) {
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        int templateId = 0;
+        if (tieId > 0) {
+            teachingMaterialTemplate.setCreateUser(usersService.getUserName());
+            teachingMaterialTemplate.setTieId(tieId);
+            //防止刷新时的误添加
+            Result<TeachingMaterialTemplateRecord> records = teachingMaterialTemplateService.findByTieIdAndTitle(tieId, StringUtils.trimWhitespace(teachingMaterialTemplate.getTitle()));
+            if (records.isEmpty()) {
+                templateId = teachingMaterialTemplateService.saveAndReturnId(teachingMaterialTemplate);
+            } else {
+                return "redirect:/administrator/eadmin/teacherFillTemplateSelect";
+            }
+
+        } else {
+            return "redirect:/administrator/eadmin/teacherFillTemplateSelect";
+        }
+        List<TeachTaskTitle> titles = teachTaskTitleService.findByTeachTaskInfoId(teachingMaterialTemplate.getTeachTaskInfoId());
+        modelMap.addAttribute("titles", titles);
+        modelMap.addAttribute("templateId", templateId);
+        return "/administrator/eadmin/teachingmaterialtemplatetitleadd";
+    }
+
+    /**
+     * 添加教材申报标题
+     *
+     * @param teachingMaterialHead
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/addTeachingMaterialTemplateTitle")
+    @ResponseBody
+    public AjaxData addTeachingMaterialTemplateTitle(TeachingMaterialHead teachingMaterialHead) {
+        teachingMaterialHead.setTitleVariable(RandomUtils.generateTitleVariable());
+        int titleId = teachingMaterialHeadService.saveAndReturnId(teachingMaterialHead);
+        teachingMaterialHead.setId(titleId);
+        if (teachingMaterialHead.getIsAssignment() == 1) {
+            //要查询标题title
+            TeachTaskTitle teachTaskTitle = teachTaskTitleService.findById(teachingMaterialHead.getTeachTaskTitleId());
+            if (!ObjectUtils.isEmpty(teachTaskTitle)) {
+                teachingMaterialHead.setTitle(teachTaskTitle.getTitle());
+            }
+            //将教学任务书内容表中数据导入到教师内容表中
+            List<TeachTaskContent> teachTaskContents = teachTaskContentService.findByTeachTaskTitleId(teachTaskTitle.getId());
+            for (TeachTaskContent tc : teachTaskContents) {
+                TeachingMaterialContent teachingMaterialContent = new TeachingMaterialContent();
+                teachingMaterialContent.setContent(tc.getContent());
+                teachingMaterialContent.setTeachingMaterialHeadId(titleId);
+                teachingMaterialContent.setContentX(tc.getContentX());
+                teachingMaterialContentService.save(teachingMaterialContent);
+            }
+        }
+        return new AjaxData().success().obj(teachingMaterialHead);
+    }
+
+    /**
+     * 更新教材申报标题
+     *
+     * @param teachingMaterialHead
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/updateTeachingMaterialTemplateTitle")
+    @ResponseBody
+    public AjaxData updateTeachingMaterialTemplateTitle(TeachingMaterialHead teachingMaterialHead) {
+        TeachingMaterialHead update = teachingMaterialHeadService.findById(teachingMaterialHead.getId());
+        if (!ObjectUtils.isEmpty(update)) {
+
+            if (update.getIsAssignment() == 1 && update.getTeachTaskTitleId() != teachingMaterialHead.getTeachTaskTitleId()) {//如果是更换了教学任务书中标题
+                teachingMaterialContentService.deleteByTeachingMaterialHeadId(update.getId());
+                //重新将教学任务书内容表中数据导入到教师内容表中
+                List<TeachTaskContent> teachTaskContents = teachTaskContentService.findByTeachTaskTitleId(teachingMaterialHead.getTeachTaskTitleId());
+                for (TeachTaskContent tc : teachTaskContents) {
+                    TeachingMaterialContent teachingMaterialContent = new TeachingMaterialContent();
+                    teachingMaterialContent.setContent(tc.getContent());
+                    teachingMaterialContent.setTeachingMaterialHeadId(update.getId());
+                    teachingMaterialContent.setContentX(tc.getContentX());
+                    teachingMaterialContentService.save(teachingMaterialContent);
+                }
+            } else if (update.getIsAssignment() == 0) {//如果不是教学任务书中标题，则清空
+                List<TeachingMaterialContent> teachingMaterialContents = teachingMaterialContentService.findByTeachingMaterialHeadId(update.getId());
+                for (TeachingMaterialContent tc : teachingMaterialContents) {
+                    tc.setContent("");
+                    teachingMaterialContentService.update(tc);
+                }
+            }
+
+            update.setTitle(teachingMaterialHead.getTitle());
+            update.setIsAssignment(teachingMaterialHead.getIsAssignment());
+            update.setSort(teachingMaterialHead.getSort());
+            update.setTeachTaskTitleId(teachingMaterialHead.getTeachTaskTitleId());
+            teachingMaterialHeadService.update(update);
+
+            if (teachingMaterialHead.getIsAssignment() == 1) {
+                //要查询标题title
+                TeachTaskTitle teachTaskTitle = teachTaskTitleService.findById(teachingMaterialHead.getTeachTaskTitleId());
+                if (!ObjectUtils.isEmpty(teachTaskTitle)) {
+                    update.setTitle(teachTaskTitle.getTitle());
+                }
+            }
+
+            return new AjaxData().success().obj(update);
+        } else {
+            return new AjaxData().fail().msg("更新失败!");
+        }
+
+    }
+
+    /**
+     * 删除教材申报标题
+     *
+     * @param titleId
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/deleteTeachingMaterialTemplateTitle")
+    @ResponseBody
+    public AjaxData deleteTeachingMaterialTemplateTitle(@RequestParam("id") int titleId) {
+        TeachingMaterialHead teachingMaterialHead = teachingMaterialHeadService.findById(titleId);
+        if (!ObjectUtils.isEmpty(teachingMaterialHead)) {
+            teachingMaterialContentService.deleteByTeachingMaterialHeadId(titleId);
+            teachingMaterialHeadService.deleteById(titleId);
+            return new AjaxData().success().msg("删除成功!");
+        } else {
+            return new AjaxData().fail().msg("未找到该标题!");
+        }
+    }
+
+    /**
+     * 更新教师模板信息
+     *
+     * @param templateId
+     * @param title
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/updateTeachingMaterialTemplate")
+    public String updateTeachingMaterialTemplate(@RequestParam("templateId") int templateId, @RequestParam("title") String title, ModelMap modelMap) {
+        TeachingMaterialTemplate teachingMaterialTemplate = teachingMaterialTemplateService.findById(templateId);
+        if (!ObjectUtils.isEmpty(teachingMaterialTemplate)) {
+            teachingMaterialTemplate.setTitle(title);
+            teachingMaterialTemplateService.update(teachingMaterialTemplate);
+            modelMap.addAttribute("templateId", templateId);
+            List<TeachTaskTitle> titles = teachTaskTitleService.findByTeachTaskInfoId(teachingMaterialTemplate.getTeachTaskInfoId());
+            modelMap.addAttribute("titles", titles);
+            return "/administrator/eadmin/teachingmaterialtemplatetitleupdate";
+        } else {
+            return "redirect:/administrator/eadmin/teachingMaterialTemplateList";
+        }
+    }
+
+    /**
+     * 检验添加时的模板名
+     *
+     * @param title
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/validAddTeachingMaterialTemplateTitle")
+    @ResponseBody
+    public Map<String, Object> validAddTeachingMaterialTemplateTitle(@RequestParam("title") String title) {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.hasLength(title)) {
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            if (tieId > 0) {
+                Result<TeachingMaterialTemplateRecord> records = teachingMaterialTemplateService.findByTieIdAndTitle(tieId, StringUtils.trimWhitespace(title));
+                if (records.isEmpty()) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "模板名已存在!");
+                }
+            } else {
+                map.put("error", "获取用户信息错误!");
+            }
+
+        } else {
+            map.put("error", "请填写标题!");
+        }
+        return map;
+    }
+
+    /**
+     * 检验更新时模板名
+     *
+     * @param templateId
+     * @param title
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/validUpdateTeachingMaterialTemplateTitle")
+    @ResponseBody
+    public Map<String, Object> validUpdateTeachingMaterialTemplateTitle(@RequestParam("templateId") int templateId, @RequestParam("title") String title) {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.hasLength(title)) {
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+            if (tieId > 0) {
+                Result<TeachingMaterialTemplateRecord> records = teachingMaterialTemplateService.findByTieIdAndTitleAndNeId(tieId, StringUtils.trimWhitespace(title), templateId);
+                if (records.isEmpty()) {
+                    map.put("ok", "");
+                } else {
+                    map.put("error", "模板名已存在!");
+                }
+            } else {
+                map.put("error", "获取用户信息错误!");
+            }
+
+        } else {
+            map.put("error", "请填写标题!");
+        }
+        return map;
+    }
+
+    /**
+     * 更新时 教师模板标题数据
+     *
+     * @param templateId
+     * @return
+     */
+    @RequestMapping("/administrator/eadmin/teachingMaterialTemplateTitleUpdateData")
+    @ResponseBody
+    public AjaxData<TeachingMaterialTemplateTitleUpdateVo> teachingMaterialTemplateTitleUpdateData(@RequestParam("templateId") int templateId) {
+        Result<Record7<Integer, String, String, String, Integer, Byte, Integer>> record7s = teachingMaterialHeadService.findByTeachingMaterialTemplateIdWithTeachTaskInfoTitle(templateId);
+        if (record7s.isNotEmpty()) {
+            List<TeachingMaterialTemplateTitleUpdateVo> list = record7s.into(TeachingMaterialTemplateTitleUpdateVo.class);
+            return new AjaxData<TeachingMaterialTemplateTitleUpdateVo>().success().listData(list);
+        } else {
+            return new AjaxData<TeachingMaterialTemplateTitleUpdateVo>().fail();
+        }
     }
 
 }

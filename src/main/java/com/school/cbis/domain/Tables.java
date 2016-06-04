@@ -43,6 +43,10 @@ import com.school.cbis.domain.tables.TeacherFillTaskContent;
 import com.school.cbis.domain.tables.TeacherFillTaskHead;
 import com.school.cbis.domain.tables.TeacherFillTaskInfo;
 import com.school.cbis.domain.tables.TeacherFillTaskTemplate;
+import com.school.cbis.domain.tables.TeachingMaterialContent;
+import com.school.cbis.domain.tables.TeachingMaterialHead;
+import com.school.cbis.domain.tables.TeachingMaterialInfo;
+import com.school.cbis.domain.tables.TeachingMaterialTemplate;
 import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieElegantTime;
@@ -233,6 +237,26 @@ public class Tables {
 	 * The table cbis.teacher_fill_task_template
 	 */
 	public static final TeacherFillTaskTemplate TEACHER_FILL_TASK_TEMPLATE = com.school.cbis.domain.tables.TeacherFillTaskTemplate.TEACHER_FILL_TASK_TEMPLATE;
+
+	/**
+	 * The table cbis.teaching_material_content
+	 */
+	public static final TeachingMaterialContent TEACHING_MATERIAL_CONTENT = com.school.cbis.domain.tables.TeachingMaterialContent.TEACHING_MATERIAL_CONTENT;
+
+	/**
+	 * The table cbis.teaching_material_head
+	 */
+	public static final TeachingMaterialHead TEACHING_MATERIAL_HEAD = com.school.cbis.domain.tables.TeachingMaterialHead.TEACHING_MATERIAL_HEAD;
+
+	/**
+	 * The table cbis.teaching_material_info
+	 */
+	public static final TeachingMaterialInfo TEACHING_MATERIAL_INFO = com.school.cbis.domain.tables.TeachingMaterialInfo.TEACHING_MATERIAL_INFO;
+
+	/**
+	 * The table cbis.teaching_material_template
+	 */
+	public static final TeachingMaterialTemplate TEACHING_MATERIAL_TEMPLATE = com.school.cbis.domain.tables.TeachingMaterialTemplate.TEACHING_MATERIAL_TEMPLATE;
 
 	/**
 	 * The table cbis.teach_course_info

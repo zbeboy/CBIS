@@ -91,11 +91,4 @@ public class TeacherFillTaskContentDao extends DAOImpl<TeacherFillTaskContentRec
 	public List<com.school.cbis.domain.tables.pojos.TeacherFillTaskContent> fetchByContentX(Integer... values) {
 		return fetch(TeacherFillTaskContent.TEACHER_FILL_TASK_CONTENT.CONTENT_X, values);
 	}
-
-	/**
-	 * Fetch records that have <code>content_y IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.TeacherFillTaskContent> fetchByContentY(Integer... values) {
-		return fetch(TeacherFillTaskContent.TEACHER_FILL_TASK_CONTENT.CONTENT_Y, values);
-	}
 }

@@ -1,5 +1,5 @@
 /**
- * Created by lenovo on 2016-06-02.
+ * Created by lenovo on 2016-06-04.
  */
 
 var addTemplate = null//全局保存初始状态下的添加模板
@@ -48,7 +48,7 @@ function outputData(data){
  * 请求数据
  */
 function action(){
-    $.post(web_path + '/administrator/eadmin/teacherFillTemplateTitleUpdateData',{
+    $.post(web_path + '/administrator/eadmin/teachingMaterialTemplateTitleUpdateData',{
         'templateId':assignmentBookId
     },function(data){
         if(data.state){
@@ -177,10 +177,10 @@ function saveAddTitle() {
     }
 
     var param = {};
-    var url = '/administrator/eadmin/addTeacherFillTemplateTitle';
+    var url = '/administrator/eadmin/addTeachingMaterialTemplateTitle';
     var id = assignmentBookId;
     if (isEditTitle) {
-        url = '/administrator/eadmin/updateTeacherFillTemplateTitle';
+        url = '/administrator/eadmin/updateTeachingMaterialTemplateTitle';
         id = editTitleId;
         param ={
             'id': id,
@@ -191,7 +191,7 @@ function saveAddTitle() {
         };
     } else {
         param ={
-            'teacherFillTaskTemplateId': id,
+            'teachingMaterialTemplateId': id,
             'title': title,
             'teachTaskTitleId': assignmentBookFieldSelect,
             'isAssignment': isAssignmentBook,
@@ -267,7 +267,7 @@ function deleteTitle(obj) {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
-        $.post(web_path + '/administrator/eadmin/deleteTeacherFillTemplateTitle', {
+        $.post(web_path + '/administrator/eadmin/deleteTeachingMaterialTemplateTitle', {
             'id': id
         }, function (data) {
             if (data.state) {
@@ -292,5 +292,5 @@ function cancelAddTitle() {
  * 返回
  */
 function toBack() {
-    window.location.href = web_path + '/administrator/eadmin/teacherFillTemplateList';
+    window.location.href = web_path + '/administrator/eadmin/teachingMaterialTemplateList';
 }

@@ -43,6 +43,10 @@ import com.school.cbis.domain.tables.TeacherFillTaskContent;
 import com.school.cbis.domain.tables.TeacherFillTaskHead;
 import com.school.cbis.domain.tables.TeacherFillTaskInfo;
 import com.school.cbis.domain.tables.TeacherFillTaskTemplate;
+import com.school.cbis.domain.tables.TeachingMaterialContent;
+import com.school.cbis.domain.tables.TeachingMaterialHead;
+import com.school.cbis.domain.tables.TeachingMaterialInfo;
+import com.school.cbis.domain.tables.TeachingMaterialTemplate;
 import com.school.cbis.domain.tables.Tie;
 import com.school.cbis.domain.tables.TieElegant;
 import com.school.cbis.domain.tables.TieElegantTime;
@@ -76,7 +80,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -963771412;
+	private static final long serialVersionUID = 937295775;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -132,6 +136,10 @@ public class Cbis extends SchemaImpl {
 			TeacherFillTaskHead.TEACHER_FILL_TASK_HEAD,
 			TeacherFillTaskInfo.TEACHER_FILL_TASK_INFO,
 			TeacherFillTaskTemplate.TEACHER_FILL_TASK_TEMPLATE,
+			TeachingMaterialContent.TEACHING_MATERIAL_CONTENT,
+			TeachingMaterialHead.TEACHING_MATERIAL_HEAD,
+			TeachingMaterialInfo.TEACHING_MATERIAL_INFO,
+			TeachingMaterialTemplate.TEACHING_MATERIAL_TEMPLATE,
 			TeachCourseInfo.TEACH_COURSE_INFO,
 			TeachTaskContent.TEACH_TASK_CONTENT,
 			TeachTaskGradeCheck.TEACH_TASK_GRADE_CHECK,

@@ -542,8 +542,53 @@ create table teacher_fill_task_content(
   teacher_fill_task_head_id int not null,
   teacher_id int,
   content_x int not null,
-  content_y int not null,
   foreign key(teacher_fill_task_head_id) references teacher_fill_task_head(id)
+);
+
+create table teaching_material_template(
+  id int not null primary key auto_increment,
+  title varchar(50) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  create_user varchar(64) not null,
+  tie_id int not null,
+  teach_task_info_id int not null,
+  foreign key(create_user) references users(username),
+  foreign key(tie_id) references tie(id),
+  foreign key(teach_task_info_id) references teach_task_info(id)
+);
+
+create table teaching_material_info(
+  id int not null primary key auto_increment,
+  title varchar(100) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  teaching_material_template_id int not null,
+  start_time datetime not null,
+  end_time datetime not null,
+  users_id varchar(64) not null,
+  tie_id int not null,
+  foreign key(teaching_material_template_id) references teaching_material_template(id),
+  foreign key(users_id) references users(username),
+  foreign key(tie_id) references tie(id)
+);
+
+create table teaching_material_head(
+  id int not null primary key auto_increment,
+  title varchar(50) not null,
+  title_variable varchar(50) not null,
+  teach_task_title_id int,
+  teaching_material_template_id int not null,
+  is_assignment boolean not null,
+  sort int,
+  foreign key(teaching_material_template_id) references teaching_material_template(id)
+);
+
+create table teaching_material_content(
+  id int not null primary key auto_increment,
+  content varchar(500),
+  teaching_material_head_id int not null,
+  teacher_id int,
+  content_x int not null,
+  foreign key(teaching_material_head_id) references teaching_material_head(id)
 );
 
 insert into user_type(name) values('学生');

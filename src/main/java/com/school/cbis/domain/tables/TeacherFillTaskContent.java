@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherFillTaskContent extends TableImpl<TeacherFillTaskContentRecord> {
 
-	private static final long serialVersionUID = -259925215;
+	private static final long serialVersionUID = -1506202589;
 
 	/**
 	 * The reference instance of <code>cbis.teacher_fill_task_content</code>
@@ -74,11 +74,6 @@ public class TeacherFillTaskContent extends TableImpl<TeacherFillTaskContentReco
 	 * The column <code>cbis.teacher_fill_task_content.content_x</code>.
 	 */
 	public final TableField<TeacherFillTaskContentRecord, Integer> CONTENT_X = createField("content_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.teacher_fill_task_content.content_y</code>.
-	 */
-	public final TableField<TeacherFillTaskContentRecord, Integer> CONTENT_Y = createField("content_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.teacher_fill_task_content</code> table reference
