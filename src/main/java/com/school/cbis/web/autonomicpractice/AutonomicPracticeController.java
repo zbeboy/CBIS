@@ -6,14 +6,10 @@ import com.school.cbis.data.*;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.AuthoritiesRecord;
-import com.school.cbis.domain.tables.records.AutonomousPracticeContentRecord;
-import com.school.cbis.domain.tables.records.AutonomousPracticeHeadRecord;
 import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
-import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.autonomicpractice.*;
-import com.school.cbis.vo.grade.GradeVo;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -38,16 +34,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Created by lenovo on 2016-04-04.
  */
 @Controller
-public class AutonomicPractice {
+public class AutonomicPracticeController {
 
-    private final Logger log = LoggerFactory.getLogger(AutonomicPractice.class);
+    private final Logger log = LoggerFactory.getLogger(AutonomicPracticeController.class);
 
     @Resource
     private UsersService usersService;
@@ -113,7 +108,7 @@ public class AutonomicPractice {
     @RequestMapping("/administrator/autonomicpractice/reportsettingList")
     public String reportSetting(ReportSettingVo reportSettingVo, ModelMap modelMap) {
         modelMap.addAttribute("reportSettingVo", reportSettingVo);
-        return "/student/autonomicpractice/reportsettinglist";
+        return "/administrator/autonomicpractice/reportsettinglist";
     }
 
     /**
@@ -196,7 +191,7 @@ public class AutonomicPractice {
             }
         }
         modelMap.addAttribute("years", list);
-        return "/student/autonomicpractice/reportsettingadd";
+        return "/autonomicpractice/autonomicpractice/reportsettingadd";
     }
 
     /**
@@ -291,7 +286,7 @@ public class AutonomicPractice {
             modelMap.addAttribute("years", list);
         }
         modelMap.addAttribute("autonomousPracticeInfo", autonomousPracticeInfo);
-        return "/student/autonomicpractice/reportsettingupdate";
+        return "/administrator/autonomicpractice/reportsettingupdate";
     }
 
     /**
@@ -336,7 +331,7 @@ public class AutonomicPractice {
     @RequestMapping("/administrator/autonomicpractice/templateList")
     public String templateList(TemplateVo templateVo, ModelMap modelMap) {
         modelMap.addAttribute("templateVo", templateVo);
-        return "/student/autonomicpractice/templatelist";
+        return "/administrator/autonomicpractice/templatelist";
     }
 
     /**
@@ -400,7 +395,7 @@ public class AutonomicPractice {
      */
     @RequestMapping("/administrator/autonomicpractice/templateAdd")
     public String templateAdd() {
-        return "/student/autonomicpractice/templateadd";
+        return "/administrator/autonomicpractice/templateadd";
     }
 
     /**
@@ -414,7 +409,7 @@ public class AutonomicPractice {
     public String templateUpdate(@RequestParam("id") int id, ModelMap modelMap) {
         AutonomousPracticeTemplate autonomousPracticeTemplate = autonomousPracticeTemplateService.findById(id);
         modelMap.addAttribute("autonomousPracticeTemplate", autonomousPracticeTemplate);
-        return "/student/autonomicpractice/templateupdate";
+        return "/administrator/autonomicpractice/templateupdate";
     }
 
     /**
