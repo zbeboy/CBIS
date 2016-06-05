@@ -19,4 +19,12 @@ public interface FileService {
      * @param baseUrl 邮件需要
      */
     void readFileForTeachTaskInfo(String realPath, String ext, AssignmentBookAddVo assignmentBookAddVo, TeachTaskInfo teachTaskInfo, Users users,String baseUrl);
+
+    /**
+     * office 转换成 pdf
+     * @param inputFile
+     * @param pdfFile
+     * @return
+     */
+    boolean convert2PDF(String inputFile, String pdfFile);
 }

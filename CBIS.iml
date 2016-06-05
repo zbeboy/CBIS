@@ -117,5 +117,6 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: javax.cache:cache-api:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jacob-project:jacob:1.14.3" level="project" />
   </component>
 </module>

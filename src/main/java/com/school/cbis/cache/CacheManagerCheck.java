@@ -21,28 +21,70 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 
 @Component
 public class CacheManagerCheck implements CommandLineRunner {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(Application.class);
 
-	private final CacheManager cacheManager;
+    private final CacheManager cacheManager;
 
-	@Autowired
-	public CacheManagerCheck(CacheManager cacheManager) {
-		this.cacheManager = cacheManager;
-	}
+    @Value("${cbis.jacob.version}")
+    private String jacobDllVersion;
 
-	@Override
-	public void run(String... strings) throws Exception {
-		logger.info("\n\n" + "=========================================================\n"
-				+ "Using cache manager: " + this.cacheManager.getClass().getName() + "\n"
-				+ "=========================================================\n\n");
-	}
+    @Autowired
+    public CacheManagerCheck(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
+
+    @Override
+    public void run(String... strings) throws Exception {
+        logger.info("\n\n" + "=========================================================\n"
+                + "Using cache manager: " + this.cacheManager.getClass().getName() + "\n"
+                + "=========================================================\n\n");
+        jacobDllCheck();
+    }
+
+    /**
+     * 检查用于转换pdf 的 jacob 的dll是否存在
+     */
+    public void jacobDllCheck() {
+        /**
+         * 支持64位
+         */
+        String jacobDllName = "jacob-" + jacobDllVersion + "-x64.dll";
+        try {
+            Properties properties = System.getProperties();
+            logger.info("jacob version : {}", jacobDllVersion);
+            String userDllPath = properties.get("sun.boot.library.path") + File.separator + jacobDllName;
+            File userFile = new File(userDllPath);
+            if (userFile.exists()) {
+                logger.info("success load jacob {}.", jacobDllName);
+            } else {
+                String projectDllPath = properties.get("user.dir") + File.separator + "dll" + File.separator + jacobDllName;
+                logger.debug("not found jacob in java lib path.Reading Copy {} to {}.", projectDllPath, userDllPath);
+                File projectFile = new File(projectDllPath);
+                if (projectFile.exists()) {
+                    FileCopyUtils.copy(projectFile, userFile);
+                    logger.info("success copy {} to {}.", jacobDllName, userDllPath);
+                } else {
+                    logger.error("fail copy ! not found {}.", projectDllPath);
+                }
+            }
+        } catch (IOException e) {
+            logger.error("copy {} is exception : {},check your project dll path or jacob version.", jacobDllName, e.getMessage());
+        }
+
+    }
 
 }

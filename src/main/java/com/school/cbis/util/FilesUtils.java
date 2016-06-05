@@ -41,15 +41,6 @@ public class FilesUtils {
         return str;
     }
 
-    public static boolean isExists(String filePath){
-        File file = new File(filePath);
-        if(file.exists()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static HSSFWorkbook readHSSFFile(String filename) throws IOException {
         return new HSSFWorkbook(new FileInputStream(filename));
     }

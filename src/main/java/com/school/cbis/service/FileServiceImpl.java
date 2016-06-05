@@ -1,5 +1,7 @@
 package com.school.cbis.service;
 
+import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.Dispatch;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.daos.GradeDao;
@@ -33,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -63,6 +66,16 @@ public class FileServiceImpl implements FileService {
     private String baseUrl;
 
     private Users users;
+
+    private  int wdFormatPDF = 17;
+
+    private  int xlTypePDF = 0;
+
+    private  int ppSaveAsPDF = 32;
+
+    private  int msoTrue = -1;
+
+    private  int msofalse = 0;
 
     @Autowired
     public FileServiceImpl(DSLContext dslContext, Configuration configuration) {
@@ -542,6 +555,92 @@ public class FileServiceImpl implements FileService {
             if(users.getIsCheckEmail() == 1){
                 mailService.sendTeachTaskMsg(users,baseUrl,msg);
             }
+        }
+    }
+
+    @Override
+    public boolean convert2PDF(String inputFile, String pdfFile) {
+        String suffix = getFileSufix(inputFile);
+        File file = new File(inputFile);
+        if (!file.exists()) {
+            log.debug("文件 {} 不存在!",inputFile);
+            return false;
+        }
+        if (suffix.equals("pdf")) {
+            log.info("PDF not need to convert!");
+            return false;
+        }
+        if (suffix.equals("doc") || suffix.equals("docx")
+                || suffix.equals("txt")) {
+            return word2PDF(inputFile, pdfFile);
+        } else if (suffix.equals("ppt") || suffix.equals("pptx")) {
+            return ppt2PDF(inputFile, pdfFile);
+        } else if (suffix.equals("xls") || suffix.equals("xlsx")) {
+            return excel2PDF(inputFile, pdfFile);
+        } else {
+            log.debug("文件 {} 格式不支持转换!",inputFile);
+            return false;
+        }
+    }
+
+    private boolean excel2PDF(String inputFile, String pdfFile) {
+        try {
+            ActiveXComponent app = new ActiveXComponent("Excel.Application");
+            app.setProperty("Visible", false);
+            Dispatch excels = app.getProperty("Workbooks").toDispatch();
+            Dispatch excel = Dispatch.call(excels, "Open", inputFile, false,
+                    true).toDispatch();
+            Dispatch.call(excel, "ExportAsFixedFormat", xlTypePDF, pdfFile);
+            Dispatch.call(excel, "Close", false);
+            app.invoke("Quit");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean ppt2PDF(String inputFile, String pdfFile) {
+        try {
+            ActiveXComponent app = new ActiveXComponent(
+                    "PowerPoint.Application");
+            // app.setProperty("Visible", msofalse);
+            Dispatch ppts = app.getProperty("Presentations").toDispatch();
+
+            Dispatch ppt = Dispatch.call(ppts, "Open", inputFile, true,// ReadOnly
+                    true,// Untitled指定文件是否有标题
+                    false// WithWindow指定文件是否可见
+            ).toDispatch();
+
+            Dispatch.call(ppt, "SaveAs", pdfFile, ppSaveAsPDF);
+
+            Dispatch.call(ppt, "Close");
+
+            app.invoke("Quit");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getFileSufix(String fileName) {
+        int splitIndex = fileName.lastIndexOf(".");
+        return fileName.substring(splitIndex + 1);
+    }
+
+    public boolean word2PDF(String inputFile, String pdfFile) {
+        try {
+            ActiveXComponent app = new ActiveXComponent("Word.Application");
+            app.setProperty("Visible", false);
+            Dispatch docs = app.getProperty("Documents").toDispatch();
+            Dispatch doc = Dispatch.call(docs, "Open", inputFile, false, true)
+                    .toDispatch();
+            Dispatch.call(doc, "ExportAsFixedFormat", pdfFile, wdFormatPDF);
+            Dispatch.call(doc, "Close", false);
+
+            app.invoke("Quit", 0);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

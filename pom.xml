@@ -19,6 +19,9 @@
         <xmlbeans.version>2.3.0</xmlbeans.version>
         <jcaptcha.version>1.0</jcaptcha.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
+        <jodconverter.version>2.2.1</jodconverter.version>
+        <!-- 注:更换jacob jar包时注意添加对应版本的 jacob-x.xx.x-x64.dll or jacob-x.xx.x-x86.dll 到项目路径下的dll中-->
+        <jacob.version>1.14.3</jacob.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -214,6 +217,14 @@
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
         </dependency>
+
+        <!-- jacob 用于wps转pdf-->
+        <dependency>
+            <groupId>net.sf.jacob-project</groupId>
+            <artifactId>jacob</artifactId>
+            <version>${jacob.version}</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Package as an executable war -->
