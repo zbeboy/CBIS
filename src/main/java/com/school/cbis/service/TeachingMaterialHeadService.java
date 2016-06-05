@@ -5,6 +5,8 @@ import com.school.cbis.domain.tables.pojos.TeachingMaterialHead;
 import org.jooq.Record7;
 import org.jooq.Result;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-06-04.
  */
@@ -40,4 +42,11 @@ public interface TeachingMaterialHeadService {
      * @return
      */
     Result<Record7<Integer,String,String,String,Integer,Byte,Integer>> findByTeachingMaterialTemplateIdWithTeachTaskInfoTitle(int teacherFillTaskTemplateId);
+
+    /**
+     * 根据模板id查询
+     * @param teachingMaterialTemplateId
+     * @return
+     */
+    List<TeachingMaterialHead> findByTeachingMaterialTemplateId(int teachingMaterialTemplateId);
 }

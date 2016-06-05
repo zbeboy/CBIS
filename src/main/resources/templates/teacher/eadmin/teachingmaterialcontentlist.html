@@ -13,14 +13,12 @@
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
-    <title>模板列表</title>
+    <title>教材申报</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
     <link rel="stylesheet" href="css/style.css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="css/pace-theme-minimal.css" th:href="@{/css/pace/pace-theme-minimal.css}"/>
-    <!-- tableSaw css -->
-    <link rel="stylesheet" href="css/tablesaw/tablesaw.css" th:href="@{/css/tablesaw/tablesaw.css}"/>
 
     <script src="js/jquery-1.11.3.min.js" th:src="@{/js/plugin/jquery/jquery-1.11.3.min.js}"></script>
     <!--[if lte IE 9]>
@@ -29,16 +27,14 @@
     <![endif]-->
     <script src="js/uikit.min.js" th:src="@{/js/plugin/uikit.min.js}"></script>
     <script src="js/components/sticky.js" th:src="@{/js/plugin/components/sticky.js}"></script>
-    <script src="js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
+    <script src="/js/components/pagination.js" th:src="@{/js/plugin/components/pagination.js}"></script>
     <script src="js/pace.min.js" th:src="@{/js/plugin/pace/pace.min.js}"></script>
     <script src="js/totop.js" th:src="@{/js/plugin/totop.js}"></script>
     <script src="js/cbis/plugin/csrf.js" th:src="@{/js/plugin/csrf/csrf.js}"></script>
 
     <!-- layer js -->
     <script src="js/layer.js" th:src="@{/js/plugin/layer/layer.js}"></script>
-    <!-- tableSaw js -->
-    <script src="js/plugin/tablesaw/tablesaw.js" th:src="@{/js/plugin/tablesaw/tablesaw.js}"></script>
-    <script src="js/plugin/tablesaw/tablesaw-init.js" th:src="@{/js/plugin/tablesaw/tablesaw-init.js}"></script>
+
     <script>
         $(function () {
             scrolltotop.offset(100, 120);
@@ -48,8 +44,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#navtemplateedit').addClass('uk-active');
-            $('#offcanvastemplateedit').addClass('uk-active');
+            $('#theorynavteachingmateriallist').addClass('uk-active');
+            $('#theoryoffcanvasteachingmateriallist').addClass('uk-active');
         });
     </script>
 </head>
@@ -66,36 +62,32 @@
         <div class="uk-width-1-1">
             <ul class="uk-breadcrumb">
                 <li><a href="#" th:href="@{/backstage}">后台管理</a></li>
-                <li class="uk-active"><span>毕业实习</span></li>
+                <li class="uk-active"><span>教学工作</span></li>
             </ul>
         </div>
     </div>
     <div class="uk-grid" data-uk-grid-margin="">
-        <div class="uk-width-medium-1-4" th:include="backstage::practicenav">
+        <div class="uk-width-medium-1-4" th:include="backstage::eadminnav">
 
         </div>
         <div class="uk-width-medium-3-4">
-            <form th:action="@{/administrator/autonomicpractice/templateList}" class="uk-form" id="searchForm">
-                <fieldset data-uk-margin="">
-                    <legend>模板编辑</legend>
-                    <div class="uk-grid">
-                        <div class="uk-width-1-4 uk-text-left">
-                            <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/autonomicpractice/templateAdd}"><i class="uk-icon-plus"></i>添加
-                            </a>
-                        </div>
-                        <div class="uk-width-3-4 uk-text-right">
-                            <input type="text" placeholder="模板标题" id="autonomousPracticeTemplateTitle" th:value="${templateVo.autonomousPracticeTemplateTitle}"
-                                   name="autonomousPracticeTemplateTitle" class="uk-margin-small-top"/>
-                            <button class="uk-button uk-margin-small-top" type="submit"><i class="uk-icon-search"></i>搜索</button>
-                            <button class="uk-button uk-margin-small-top" type="button" onclick="refresh();"><i class="uk-icon-refresh"></i>重置</button>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-            <br/>
-            <div id="ajaxed"></div>
-            <ul class="uk-pagination"></ul>
+            <ul class="uk-subnav uk-subnav-line">
+                <li class="uk-active">
+                    <a href="#" th:href="@{/teacher/eadmin/teachingMaterialList}" th:text="${teachingMaterialInfo.title}" ></a>
+                </li>
+            </ul>
+            <div class="uk-overflow-container">
+                <table class="uk-table uk-table-striped uk-table-condensed uk-text-nowrap">
+                    <thead>
+                    <tr id="titleData">
+
+                    </tr>
+                    </thead>
+                    <tbody id="contentData">
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="topcontrol" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer; display:none;"
@@ -107,10 +99,14 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var taskTitle = /*[[${taskTitle}]]*/ null;
+    var taskContent = /*[[${taskContent}]]*/ null;
+    var templateId = /*[[${templateId}]]*/ null;
+    var teachingMaterialInfo = /*[[${teachingMaterialInfo}]]*/ null;
     /*]]>*/
 </script>
-<script th:src="@{/js/administrator/autonomicpractice/templatelist.js}"
-        src="js/administrator/autonomicpractice/templatelist.js"></script>
+<script th:src="@{/js/teacher/eadmin/teachingmaterialcontentlist.js}"
+        src="js/teacher/eadmin/teachingmaterialcontentlist.js"></script>
 </body>
 </html>

@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016-06-04.
  */
@@ -81,5 +83,11 @@ public class TeachingMaterialHeadServiceImpl implements TeachingMaterialHeadServ
                 .orderBy(Tables.TEACHING_MATERIAL_HEAD.SORT.asc())
                 .fetch();
         return record7s;
+    }
+
+    @Override
+    public List<TeachingMaterialHead> findByTeachingMaterialTemplateId(int teachingMaterialTemplateId) {
+        List<TeachingMaterialHead> teachingMaterialHeads = teachingMaterialHeadDao.fetchByTeachingMaterialTemplateId(teachingMaterialTemplateId);
+        return teachingMaterialHeads;
     }
 }

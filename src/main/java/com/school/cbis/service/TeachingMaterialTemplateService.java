@@ -68,4 +68,11 @@ public interface TeachingMaterialTemplateService {
      * @param teachingMaterialTemplate
      */
     void update(TeachingMaterialTemplate teachingMaterialTemplate);
+
+    /**
+     * 通过系主键查询
+     * @param tieId
+     * @return
+     */
+    Result<TeachingMaterialTemplateRecord> findByTieId(int tieId);
 }

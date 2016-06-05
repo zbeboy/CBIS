@@ -134,4 +134,13 @@ public class TeachingMaterialTemplateServiceImpl implements TeachingMaterialTemp
     public void update(TeachingMaterialTemplate teachingMaterialTemplate) {
         teachingMaterialTemplateDao.update(teachingMaterialTemplate);
     }
+
+    @Override
+    public Result<TeachingMaterialTemplateRecord> findByTieId(int tieId) {
+        Result<TeachingMaterialTemplateRecord> records = create.selectFrom(Tables.TEACHING_MATERIAL_TEMPLATE)
+                .where(Tables.TEACHING_MATERIAL_TEMPLATE.TIE_ID.eq(tieId))
+                .orderBy(Tables.TEACHING_MATERIAL_TEMPLATE.CREATE_TIME.desc())
+                .fetch();
+        return records;
+    }
 }

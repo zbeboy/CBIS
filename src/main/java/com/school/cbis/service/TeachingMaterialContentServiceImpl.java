@@ -5,8 +5,11 @@ import com.school.cbis.domain.tables.daos.TeachingMaterialContentDao;
 import com.school.cbis.domain.tables.daos.TeachingMaterialHeadDao;
 import com.school.cbis.domain.tables.pojos.TeacherFillTaskContent;
 import com.school.cbis.domain.tables.pojos.TeachingMaterialContent;
+import com.school.cbis.domain.tables.records.TeacherFillTaskContentRecord;
+import com.school.cbis.domain.tables.records.TeachingMaterialContentRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,7 @@ public class TeachingMaterialContentServiceImpl implements TeachingMaterialConte
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void save(TeachingMaterialContent teachingMaterialContent) {
-        teachingMaterialContentDao.update(teachingMaterialContent);
+        teachingMaterialContentDao.insert(teachingMaterialContent);
     }
 
     @Override
@@ -57,5 +60,29 @@ public class TeachingMaterialContentServiceImpl implements TeachingMaterialConte
     @Override
     public void update(TeachingMaterialContent teachingMaterialContent) {
         teachingMaterialContentDao.update(teachingMaterialContent);
+    }
+
+    @Override
+    public Result<TeachingMaterialContentRecord> findInTeachingMaterialHeadId(List<Integer> id) {
+        Result<TeachingMaterialContentRecord> records =  create.selectFrom(Tables.TEACHING_MATERIAL_CONTENT)
+                .where(Tables.TEACHING_MATERIAL_CONTENT.TEACHING_MATERIAL_HEAD_ID.in(id))
+                .fetch();
+        return records;
+    }
+
+    @Override
+    public Result<TeachingMaterialContentRecord> findInTeachingMaterialHeadIdAndContentX(List<Integer> id, int contentX) {
+        Result<TeachingMaterialContentRecord> records =  create.selectFrom(Tables.TEACHING_MATERIAL_CONTENT)
+                .where(Tables.TEACHING_MATERIAL_CONTENT.TEACHING_MATERIAL_HEAD_ID.in(id).and(Tables.TEACHING_MATERIAL_CONTENT.CONTENT_X.eq(contentX)))
+                .fetch();
+        return records;
+    }
+
+    @Override
+    public TeachingMaterialContentRecord findByTeachingMaterialHeadIdAndContentX(int teachingMaterialHeadId, int contentX) {
+        TeachingMaterialContentRecord record = create.selectFrom(Tables.TEACHING_MATERIAL_CONTENT)
+                .where(Tables.TEACHING_MATERIAL_CONTENT.TEACHING_MATERIAL_HEAD_ID.eq(teachingMaterialHeadId).and(Tables.TEACHING_MATERIAL_CONTENT.CONTENT_X.eq(contentX)))
+                .fetchOne();
+        return record;
     }
 }

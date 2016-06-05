@@ -191,7 +191,7 @@ public class AutonomicPracticeController {
             }
         }
         modelMap.addAttribute("years", list);
-        return "/autonomicpractice/autonomicpractice/reportsettingadd";
+        return "/administrator/autonomicpractice/reportsettingadd";
     }
 
     /**
