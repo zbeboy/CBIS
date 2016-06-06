@@ -25,6 +25,7 @@ import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
 import com.school.cbis.domain.tables.Recruit;
+import com.school.cbis.domain.tables.RelatedDownload;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
@@ -177,6 +178,11 @@ public class Tables {
 	 * The table cbis.recruit
 	 */
 	public static final Recruit RECRUIT = com.school.cbis.domain.tables.Recruit.RECRUIT;
+
+	/**
+	 * The table cbis.related_download
+	 */
+	public static final RelatedDownload RELATED_DOWNLOAD = com.school.cbis.domain.tables.RelatedDownload.RELATED_DOWNLOAD;
 
 	/**
 	 * The table cbis.schema_version

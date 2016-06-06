@@ -25,6 +25,7 @@ import com.school.cbis.domain.tables.PlaceFileContent;
 import com.school.cbis.domain.tables.PlaceFileInfo;
 import com.school.cbis.domain.tables.PlaceFileTitle;
 import com.school.cbis.domain.tables.Recruit;
+import com.school.cbis.domain.tables.RelatedDownload;
 import com.school.cbis.domain.tables.SchemaVersion;
 import com.school.cbis.domain.tables.Student;
 import com.school.cbis.domain.tables.StudentCourseTimetableInfo;
@@ -77,6 +78,7 @@ import com.school.cbis.domain.tables.records.PlaceFileContentRecord;
 import com.school.cbis.domain.tables.records.PlaceFileInfoRecord;
 import com.school.cbis.domain.tables.records.PlaceFileTitleRecord;
 import com.school.cbis.domain.tables.records.RecruitRecord;
+import com.school.cbis.domain.tables.records.RelatedDownloadRecord;
 import com.school.cbis.domain.tables.records.SchemaVersionRecord;
 import com.school.cbis.domain.tables.records.StudentCourseTimetableInfoRecord;
 import com.school.cbis.domain.tables.records.StudentPoorRecord;
@@ -154,6 +156,7 @@ public class Keys {
 	public static final Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = Identities0.IDENTITY_PLACE_FILE_INFO;
 	public static final Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = Identities0.IDENTITY_PLACE_FILE_TITLE;
 	public static final Identity<RecruitRecord, Integer> IDENTITY_RECRUIT = Identities0.IDENTITY_RECRUIT;
+	public static final Identity<RelatedDownloadRecord, Integer> IDENTITY_RELATED_DOWNLOAD = Identities0.IDENTITY_RELATED_DOWNLOAD;
 	public static final Identity<StudentRecord, Integer> IDENTITY_STUDENT = Identities0.IDENTITY_STUDENT;
 	public static final Identity<StudentCourseTimetableInfoRecord, Integer> IDENTITY_STUDENT_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_STUDENT_COURSE_TIMETABLE_INFO;
 	public static final Identity<StudentPoorRecord, Integer> IDENTITY_STUDENT_POOR = Identities0.IDENTITY_STUDENT_POOR;
@@ -208,6 +211,7 @@ public class Keys {
 	public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_INFO_PRIMARY;
 	public static final UniqueKey<PlaceFileTitleRecord> KEY_PLACE_FILE_TITLE_PRIMARY = UniqueKeys0.KEY_PLACE_FILE_TITLE_PRIMARY;
 	public static final UniqueKey<RecruitRecord> KEY_RECRUIT_PRIMARY = UniqueKeys0.KEY_RECRUIT_PRIMARY;
+	public static final UniqueKey<RelatedDownloadRecord> KEY_RELATED_DOWNLOAD_PRIMARY = UniqueKeys0.KEY_RELATED_DOWNLOAD_PRIMARY;
 	public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = UniqueKeys0.KEY_SCHEMA_VERSION_PRIMARY;
 	public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = UniqueKeys0.KEY_STUDENT_PRIMARY;
 	public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY;
@@ -275,6 +279,8 @@ public class Keys {
 	public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = ForeignKeys0.PLACE_FILE_TITLE_IBFK_1;
 	public static final ForeignKey<RecruitRecord, TieRecord> RECRUIT_IBFK_1 = ForeignKeys0.RECRUIT_IBFK_1;
 	public static final ForeignKey<RecruitRecord, UsersRecord> RECRUIT_IBFK_2 = ForeignKeys0.RECRUIT_IBFK_2;
+	public static final ForeignKey<RelatedDownloadRecord, TieRecord> RELATED_DOWNLOAD_IBFK_1 = ForeignKeys0.RELATED_DOWNLOAD_IBFK_1;
+	public static final ForeignKey<RelatedDownloadRecord, UsersRecord> RELATED_DOWNLOAD_IBFK_2 = ForeignKeys0.RELATED_DOWNLOAD_IBFK_2;
 	public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = ForeignKeys0.STUDENT_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_1;
 	public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.STUDENT_COURSE_TIMETABLE_INFO_IBFK_2;
@@ -342,6 +348,7 @@ public class Keys {
 		public static Identity<PlaceFileInfoRecord, Integer> IDENTITY_PLACE_FILE_INFO = createIdentity(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
 		public static Identity<PlaceFileTitleRecord, Integer> IDENTITY_PLACE_FILE_TITLE = createIdentity(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
 		public static Identity<RecruitRecord, Integer> IDENTITY_RECRUIT = createIdentity(Recruit.RECRUIT, Recruit.RECRUIT.ID);
+		public static Identity<RelatedDownloadRecord, Integer> IDENTITY_RELATED_DOWNLOAD = createIdentity(RelatedDownload.RELATED_DOWNLOAD, RelatedDownload.RELATED_DOWNLOAD.ID);
 		public static Identity<StudentRecord, Integer> IDENTITY_STUDENT = createIdentity(Student.STUDENT, Student.STUDENT.ID);
 		public static Identity<StudentCourseTimetableInfoRecord, Integer> IDENTITY_STUDENT_COURSE_TIMETABLE_INFO = createIdentity(StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.ID);
 		public static Identity<StudentPoorRecord, Integer> IDENTITY_STUDENT_POOR = createIdentity(StudentPoor.STUDENT_POOR, StudentPoor.STUDENT_POOR.ID);
@@ -394,6 +401,7 @@ public class Keys {
 		public static final UniqueKey<PlaceFileInfoRecord> KEY_PLACE_FILE_INFO_PRIMARY = createUniqueKey(PlaceFileInfo.PLACE_FILE_INFO, PlaceFileInfo.PLACE_FILE_INFO.ID);
 		public static final UniqueKey<PlaceFileTitleRecord> KEY_PLACE_FILE_TITLE_PRIMARY = createUniqueKey(PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.ID);
 		public static final UniqueKey<RecruitRecord> KEY_RECRUIT_PRIMARY = createUniqueKey(Recruit.RECRUIT, Recruit.RECRUIT.ID);
+		public static final UniqueKey<RelatedDownloadRecord> KEY_RELATED_DOWNLOAD_PRIMARY = createUniqueKey(RelatedDownload.RELATED_DOWNLOAD, RelatedDownload.RELATED_DOWNLOAD.ID);
 		public static final UniqueKey<SchemaVersionRecord> KEY_SCHEMA_VERSION_PRIMARY = createUniqueKey(SchemaVersion.SCHEMA_VERSION, SchemaVersion.SCHEMA_VERSION.VERSION);
 		public static final UniqueKey<StudentRecord> KEY_STUDENT_PRIMARY = createUniqueKey(Student.STUDENT, Student.STUDENT.ID);
 		public static final UniqueKey<StudentCourseTimetableInfoRecord> KEY_STUDENT_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.ID);
@@ -459,6 +467,8 @@ public class Keys {
 		public static final ForeignKey<PlaceFileTitleRecord, PlaceFileInfoRecord> PLACE_FILE_TITLE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_PLACE_FILE_INFO_PRIMARY, PlaceFileTitle.PLACE_FILE_TITLE, PlaceFileTitle.PLACE_FILE_TITLE.PLACE_FILE_INFO_ID);
 		public static final ForeignKey<RecruitRecord, TieRecord> RECRUIT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, Recruit.RECRUIT, Recruit.RECRUIT.TIE_ID);
 		public static final ForeignKey<RecruitRecord, UsersRecord> RECRUIT_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Recruit.RECRUIT, Recruit.RECRUIT.USERNAME);
+		public static final ForeignKey<RelatedDownloadRecord, TieRecord> RELATED_DOWNLOAD_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TIE_PRIMARY, RelatedDownload.RELATED_DOWNLOAD, RelatedDownload.RELATED_DOWNLOAD.TIE_ID);
+		public static final ForeignKey<RelatedDownloadRecord, UsersRecord> RELATED_DOWNLOAD_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, RelatedDownload.RELATED_DOWNLOAD, RelatedDownload.RELATED_DOWNLOAD.FILE_USER);
 		public static final ForeignKey<StudentRecord, GradeRecord> STUDENT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, Student.STUDENT, Student.STUDENT.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, GradeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_GRADE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.GRADE_ID);
 		public static final ForeignKey<StudentCourseTimetableInfoRecord, TeachTypeRecord> STUDENT_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO, StudentCourseTimetableInfo.STUDENT_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);

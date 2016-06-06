@@ -9,18 +9,18 @@ import java.sql.Timestamp;
 public class StudentTimetableListVo {
     private int id;
     private String gradeName;
-    private String    timetableInfoTerm;
-    private String    timetableInfoFileUrl;
-    private String    timetableInfoFilePdf;
-    private String    timetableInfoFileSize;
-    private String    timetableInfoFileName;
+    private String timetableInfoTerm;
+    private String timetableInfoFileUrl;
+    private String timetableInfoFilePdf;
+    private String timetableInfoFileSize;
+    private String timetableInfoFileName;
     private String timetableInfoFileDate;
-    private Integer   timetableInfoFileDownTimes;
-    private Integer   teachTypeId;
+    private Integer timetableInfoFileDownTimes;
+    private Integer teachTypeId;
     private String termStartTime;
-    private String      termEndTime;
-    private String    realName;
-    private String    fileType;
+    private String termEndTime;
+    private String realName;
+    private String fileType;
     private int pageNum;
     private int pageSize;
 

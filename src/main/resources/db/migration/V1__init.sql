@@ -414,6 +414,22 @@ create table classroom_course_timetable_info(
   foreign key(file_user) references users(username)
 );
 
+create table related_download(
+  id int not null primary key auto_increment,
+  tie_id int not null,
+  file_url varchar(500) not null,
+  file_size varchar(50),
+  file_name varchar(30) not null,
+  file_date datetime,
+  file_down_times int default 0,
+  teach_type_id int not null,
+  file_user varchar(64) not null,
+  file_type varchar(15),
+  remark varchar(100),
+  foreign key(tie_id) references tie(id),
+  foreign key(file_user) references users(username)
+);
+
 create table autonomous_practice_template(
   id int not null primary key auto_increment,
   autonomous_practice_template_title varchar(50) not null,
