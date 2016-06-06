@@ -117,4 +117,21 @@ public class TeacherServiceImpl implements TeacherService {
     public void update(Teacher teacher) {
         teacherDao.update(teacher);
     }
+
+    @Override
+    public Result<Record2<Integer,String>> findByTieIdWithTeacherName(String teacherName,int tieId) {
+        Condition a = Tables.TIE.ID.eq(tieId);
+        if(StringUtils.hasLength(teacherName)){
+            a = a.and(Tables.USERS.REAL_NAME.like("%"+teacherName+"%"));
+        }
+        Result<Record2<Integer,String>> record2s = create.select(Tables.TEACHER.ID,Tables.USERS.REAL_NAME)
+                .from(Tables.TEACHER)
+                .join(Tables.TIE)
+                .on(Tables.TEACHER.TIE_ID.eq(Tables.TIE.ID))
+                .join(Tables.USERS)
+                .on(Tables.TEACHER.TEACHER_JOB_NUMBER.eq(Tables.USERS.USERNAME))
+                .where(a)
+                .fetch();
+        return record2s;
+    }
 }

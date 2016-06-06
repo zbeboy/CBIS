@@ -118,6 +118,11 @@ public class RecruitController {
      */
     @RequestMapping("/maintainer/recruit/recruitUpdate")
     public String  recruitUpdate(RecruitListVo recruitListVo,ModelMap modelMap){
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
         Recruit recruit = recruitService.findById(recruitListVo.getId());
         if(!ObjectUtils.isEmpty(recruit)){
             recruitListVo.setId(recruit.getId());
@@ -135,7 +140,7 @@ public class RecruitController {
         } else {
             modelMap.addAttribute("recruit",new Recruit());
         }
-        modelMap.addAttribute("majors",majorService.findAll());
+        modelMap.addAttribute("majors",majorService.findAllByTieId(tieId));
         return "/maintainer/recruit/recruitupdate";
     }
 
@@ -146,7 +151,12 @@ public class RecruitController {
      */
     @RequestMapping("/maintainer/recruit/recruitAdd")
     public String recruitAdd(ModelMap modelMap){
-        modelMap.addAttribute("majors",majorService.findAll());
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        modelMap.addAttribute("majors",majorService.findAllByTieId(tieId));
         return "/maintainer/recruit/recruitadd";
     }
 

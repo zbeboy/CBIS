@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ClassroomCourseTimetableInfo implements Serializable {
 
-	private static final long serialVersionUID = 920410221;
+	private static final long serialVersionUID = -631255488;
 
 	private Integer   id;
 	private Integer   tieId;
@@ -42,6 +42,7 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 	private Date      termEndTime;
 	private String    fileUser;
 	private String    fileType;
+	private String    classroom;
 
 	public ClassroomCourseTimetableInfo() {}
 
@@ -60,6 +61,7 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 		this.termEndTime = value.termEndTime;
 		this.fileUser = value.fileUser;
 		this.fileType = value.fileType;
+		this.classroom = value.classroom;
 	}
 
 	public ClassroomCourseTimetableInfo(
@@ -76,7 +78,8 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 		Date      termStartTime,
 		Date      termEndTime,
 		String    fileUser,
-		String    fileType
+		String    fileType,
+		String    classroom
 	) {
 		this.id = id;
 		this.tieId = tieId;
@@ -92,6 +95,7 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 		this.termEndTime = termEndTime;
 		this.fileUser = fileUser;
 		this.fileType = fileType;
+		this.classroom = classroom;
 	}
 
 	@NotNull
@@ -223,6 +227,15 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 		this.fileType = fileType;
 	}
 
+	@Size(max = 100)
+	public String getClassroom() {
+		return this.classroom;
+	}
+
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("ClassroomCourseTimetableInfo (");
@@ -241,6 +254,7 @@ public class ClassroomCourseTimetableInfo implements Serializable {
 		sb.append(", ").append(termEndTime);
 		sb.append(", ").append(fileUser);
 		sb.append(", ").append(fileType);
+		sb.append(", ").append(classroom);
 
 		sb.append(")");
 		return sb.toString();

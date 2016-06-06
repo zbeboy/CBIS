@@ -95,6 +95,13 @@ public class TeacherCourseTimetableInfoDao extends DAOImpl<TeacherCourseTimetabl
 	}
 
 	/**
+	 * Fetch records that have <code>timetable_info_file_size IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeacherCourseTimetableInfo> fetchByTimetableInfoFileSize(String... values) {
+		return fetch(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TIMETABLE_INFO_FILE_SIZE, values);
+	}
+
+	/**
 	 * Fetch records that have <code>timetable_info_file_name IN (values)</code>
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeacherCourseTimetableInfo> fetchByTimetableInfoFileName(String... values) {
@@ -148,5 +155,12 @@ public class TeacherCourseTimetableInfoDao extends DAOImpl<TeacherCourseTimetabl
 	 */
 	public List<com.school.cbis.domain.tables.pojos.TeacherCourseTimetableInfo> fetchByFileType(String... values) {
 		return fetch(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.FILE_TYPE, values);
+	}
+
+	/**
+	 * Fetch records that have <code>teacher_id IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.TeacherCourseTimetableInfo> fetchByTeacherId(Integer... values) {
+		return fetch(TeacherCourseTimetableInfo.TEACHER_COURSE_TIMETABLE_INFO.TEACHER_ID, values);
 	}
 }

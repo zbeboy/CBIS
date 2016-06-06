@@ -78,10 +78,10 @@ public interface MajorService {
 
     /**
      * 查询所有专业信息
-     *
+     * @param tieId
      * @return
      */
-    List<Major> findAll();
+    List<Major> findAllByTieId(int tieId);
 
     /**
      * 查询专业简介

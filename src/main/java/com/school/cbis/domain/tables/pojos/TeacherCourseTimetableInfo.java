@@ -26,13 +26,14 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherCourseTimetableInfo implements Serializable {
 
-	private static final long serialVersionUID = 1901092511;
+	private static final long serialVersionUID = -1310334508;
 
 	private Integer   id;
 	private Integer   tieId;
 	private String    timetableInfoTerm;
 	private String    timetableInfoFileUrl;
 	private String    timetableInfoFilePdf;
+	private String    timetableInfoFileSize;
 	private String    timetableInfoFileName;
 	private Timestamp timetableInfoFileDate;
 	private Integer   timetableInfoFileDownTimes;
@@ -41,6 +42,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 	private Date      termEndTime;
 	private String    fileUser;
 	private String    fileType;
+	private Integer   teacherId;
 
 	public TeacherCourseTimetableInfo() {}
 
@@ -50,6 +52,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		this.timetableInfoTerm = value.timetableInfoTerm;
 		this.timetableInfoFileUrl = value.timetableInfoFileUrl;
 		this.timetableInfoFilePdf = value.timetableInfoFilePdf;
+		this.timetableInfoFileSize = value.timetableInfoFileSize;
 		this.timetableInfoFileName = value.timetableInfoFileName;
 		this.timetableInfoFileDate = value.timetableInfoFileDate;
 		this.timetableInfoFileDownTimes = value.timetableInfoFileDownTimes;
@@ -58,6 +61,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		this.termEndTime = value.termEndTime;
 		this.fileUser = value.fileUser;
 		this.fileType = value.fileType;
+		this.teacherId = value.teacherId;
 	}
 
 	public TeacherCourseTimetableInfo(
@@ -66,6 +70,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		String    timetableInfoTerm,
 		String    timetableInfoFileUrl,
 		String    timetableInfoFilePdf,
+		String    timetableInfoFileSize,
 		String    timetableInfoFileName,
 		Timestamp timetableInfoFileDate,
 		Integer   timetableInfoFileDownTimes,
@@ -73,13 +78,15 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		Date      termStartTime,
 		Date      termEndTime,
 		String    fileUser,
-		String    fileType
+		String    fileType,
+		Integer   teacherId
 	) {
 		this.id = id;
 		this.tieId = tieId;
 		this.timetableInfoTerm = timetableInfoTerm;
 		this.timetableInfoFileUrl = timetableInfoFileUrl;
 		this.timetableInfoFilePdf = timetableInfoFilePdf;
+		this.timetableInfoFileSize = timetableInfoFileSize;
 		this.timetableInfoFileName = timetableInfoFileName;
 		this.timetableInfoFileDate = timetableInfoFileDate;
 		this.timetableInfoFileDownTimes = timetableInfoFileDownTimes;
@@ -88,6 +95,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		this.termEndTime = termEndTime;
 		this.fileUser = fileUser;
 		this.fileType = fileType;
+		this.teacherId = teacherId;
 	}
 
 	@NotNull
@@ -135,6 +143,15 @@ public class TeacherCourseTimetableInfo implements Serializable {
 
 	public void setTimetableInfoFilePdf(String timetableInfoFilePdf) {
 		this.timetableInfoFilePdf = timetableInfoFilePdf;
+	}
+
+	@Size(max = 50)
+	public String getTimetableInfoFileSize() {
+		return this.timetableInfoFileSize;
+	}
+
+	public void setTimetableInfoFileSize(String timetableInfoFileSize) {
+		this.timetableInfoFileSize = timetableInfoFileSize;
 	}
 
 	@NotNull
@@ -210,6 +227,15 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		this.fileType = fileType;
 	}
 
+	@NotNull
+	public Integer getTeacherId() {
+		return this.teacherId;
+	}
+
+	public void setTeacherId(Integer teacherId) {
+		this.teacherId = teacherId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("TeacherCourseTimetableInfo (");
@@ -219,6 +245,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		sb.append(", ").append(timetableInfoTerm);
 		sb.append(", ").append(timetableInfoFileUrl);
 		sb.append(", ").append(timetableInfoFilePdf);
+		sb.append(", ").append(timetableInfoFileSize);
 		sb.append(", ").append(timetableInfoFileName);
 		sb.append(", ").append(timetableInfoFileDate);
 		sb.append(", ").append(timetableInfoFileDownTimes);
@@ -227,6 +254,7 @@ public class TeacherCourseTimetableInfo implements Serializable {
 		sb.append(", ").append(termEndTime);
 		sb.append(", ").append(fileUser);
 		sb.append(", ").append(fileType);
+		sb.append(", ").append(teacherId);
 
 		sb.append(")");
 		return sb.toString();

@@ -124,8 +124,8 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public List<Major> findAll() {
-        List<Major> list = majorDao.findAll();
+    public List<Major> findAllByTieId(int tieId) {
+        List<Major> list = majorDao.fetchByTieId(tieId);
         return list;
     }
 

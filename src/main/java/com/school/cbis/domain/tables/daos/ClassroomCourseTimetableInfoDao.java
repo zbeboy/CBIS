@@ -156,4 +156,11 @@ public class ClassroomCourseTimetableInfoDao extends DAOImpl<ClassroomCourseTime
 	public List<com.school.cbis.domain.tables.pojos.ClassroomCourseTimetableInfo> fetchByFileType(String... values) {
 		return fetch(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.FILE_TYPE, values);
 	}
+
+	/**
+	 * Fetch records that have <code>classroom IN (values)</code>
+	 */
+	public List<com.school.cbis.domain.tables.pojos.ClassroomCourseTimetableInfo> fetchByClassroom(String... values) {
+		return fetch(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.CLASSROOM, values);
+	}
 }

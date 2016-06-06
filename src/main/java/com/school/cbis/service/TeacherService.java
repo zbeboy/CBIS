@@ -2,9 +2,7 @@ package com.school.cbis.service;
 
 import com.school.cbis.domain.tables.pojos.Teacher;
 import com.school.cbis.domain.tables.records.TeacherRecord;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Result;
+import org.jooq.*;
 
 import java.util.List;
 
@@ -65,4 +63,12 @@ public interface TeacherService {
      * @param teacher
      */
     void update(Teacher teacher);
+
+    /**
+     * 查询系下所有老师
+     * @param tieId
+     * @return
+     */
+    Result<Record2<Integer,String>> findByTieIdWithTeacherName(String teacherName,int tieId);
+
 }

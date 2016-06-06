@@ -120,6 +120,34 @@ public class UsersController {
     }
 
     /**
+     * 获取该系下教师
+     * @return
+     */
+    @RequestMapping("/maintainer/users/teacherAllData")
+    @ResponseBody
+    public AjaxData<TeacherVo> teacherAllData(String teacherName){
+        AjaxData<TeacherVo> ajaxData = new AjaxData<>();
+        Record record = usersService.findAll(usersService.getUserName());
+        int tieId = 0;
+        if(!ObjectUtils.isEmpty(record)){
+            tieId = record.getValue(Tables.TIE.ID);
+        }
+        if(tieId>0){
+            Result<Record2<Integer,String>> record2s = teacherService.findByTieIdWithTeacherName(teacherName,tieId);
+            if(record2s.isNotEmpty()){
+                List<TeacherVo> list = record2s.into(TeacherVo.class);
+                ajaxData.success().listData(list);
+            } else {
+                ajaxData.fail().msg("无数据!");
+            }
+        } else {
+            ajaxData.fail().msg("获取用户信息异常!");
+        }
+
+        return ajaxData;
+    }
+
+    /**
      * 学生数据
      *
      * @param param

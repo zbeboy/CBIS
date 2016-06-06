@@ -96,6 +96,7 @@ public class StudentServiceImpl implements StudentService {
         return count.value1();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void save(Student student) {
         studentDao.insert(student);

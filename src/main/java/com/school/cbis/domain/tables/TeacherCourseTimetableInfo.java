@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetableInfoRecord> {
 
-	private static final long serialVersionUID = -2111342358;
+	private static final long serialVersionUID = -290444035;
 
 	/**
 	 * The reference instance of <code>cbis.teacher_course_timetable_info</code>
@@ -78,6 +78,11 @@ public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetable
 	public final TableField<TeacherCourseTimetableInfoRecord, String> TIMETABLE_INFO_FILE_PDF = createField("timetable_info_file_pdf", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
 
 	/**
+	 * The column <code>cbis.teacher_course_timetable_info.timetable_info_file_size</code>.
+	 */
+	public final TableField<TeacherCourseTimetableInfoRecord, String> TIMETABLE_INFO_FILE_SIZE = createField("timetable_info_file_size", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+
+	/**
 	 * The column <code>cbis.teacher_course_timetable_info.timetable_info_file_name</code>.
 	 */
 	public final TableField<TeacherCourseTimetableInfoRecord, String> TIMETABLE_INFO_FILE_NAME = createField("timetable_info_file_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
@@ -116,6 +121,11 @@ public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetable
 	 * The column <code>cbis.teacher_course_timetable_info.file_type</code>.
 	 */
 	public final TableField<TeacherCourseTimetableInfoRecord, String> FILE_TYPE = createField("file_type", org.jooq.impl.SQLDataType.VARCHAR.length(15), this, "");
+
+	/**
+	 * The column <code>cbis.teacher_course_timetable_info.teacher_id</code>.
+	 */
+	public final TableField<TeacherCourseTimetableInfoRecord, Integer> TEACHER_ID = createField("teacher_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>cbis.teacher_course_timetable_info</code> table reference
@@ -168,7 +178,7 @@ public class TeacherCourseTimetableInfo extends TableImpl<TeacherCourseTimetable
 	 */
 	@Override
 	public List<ForeignKey<TeacherCourseTimetableInfoRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<TeacherCourseTimetableInfoRecord, ?>>asList(Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_1, Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_2, Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_3);
+		return Arrays.<ForeignKey<TeacherCourseTimetableInfoRecord, ?>>asList(Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_1, Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_2, Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_3, Keys.TEACHER_COURSE_TIMETABLE_INFO_IBFK_4);
 	}
 
 	/**

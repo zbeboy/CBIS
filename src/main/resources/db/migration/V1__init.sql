@@ -377,6 +377,7 @@ create table teacher_course_timetable_info(
   timetable_info_term varchar(20) not null,
   timetable_info_file_url varchar(500) not null,
   timetable_info_file_pdf varchar(500),
+  timetable_info_file_size varchar(50),
   timetable_info_file_name varchar(30) not null,
   timetable_info_file_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   timetable_info_file_down_times int,
@@ -385,9 +386,11 @@ create table teacher_course_timetable_info(
   term_end_time date not  null,
   file_user varchar(64) not null,
   file_type varchar(15),
+  teacher_id int not null,
   foreign key(tie_id) references tie(id),
   foreign key(teach_type_id) references teach_type(id),
-  foreign key(file_user) references users(username)
+  foreign key(file_user) references users(username),
+  foreign key(teacher_id) references teacher(id)
 );
 
 create table classroom_course_timetable_info(
@@ -405,6 +408,7 @@ create table classroom_course_timetable_info(
   term_end_time date not null,
   file_user varchar(64) not null,
   file_type varchar(15),
+  classroom varchar(100),
   foreign key(tie_id) references tie(id),
   foreign key(teach_type_id) references teach_type(id),
   foreign key(file_user) references users(username)

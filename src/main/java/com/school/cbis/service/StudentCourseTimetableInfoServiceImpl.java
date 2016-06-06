@@ -113,6 +113,7 @@ public class StudentCourseTimetableInfoServiceImpl implements StudentCourseTimet
         return record1.value1();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void save(StudentCourseTimetableInfo studentCourseTimetableInfo) {
         studentCourseTimetableInfoDao.insert(studentCourseTimetableInfo);
