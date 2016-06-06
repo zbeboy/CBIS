@@ -1,13 +1,9 @@
 package com.school.cbis.vo.eadmin;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 /**
  * Created by lenovo on 2016-06-06.
  */
-public class TeacherTimetableListVo {
-
+public class ClassroomTimetableListVo {
     private int id;
     private String timetableInfoTerm;
     private String timetableInfoFileUrl;
@@ -16,7 +12,7 @@ public class TeacherTimetableListVo {
     private String timetableInfoFileName;
     private String timetableInfoFileDate;
     private Integer timetableInfoFileDownTimes;
-    private Integer teachTypeId;
+    private String classroom;
     private String termStartTime;
     private String termEndTime;
     private String fileUser;
@@ -89,12 +85,12 @@ public class TeacherTimetableListVo {
         this.timetableInfoFileDownTimes = timetableInfoFileDownTimes;
     }
 
-    public Integer getTeachTypeId() {
-        return teachTypeId;
+    public String getClassroom() {
+        return classroom;
     }
 
-    public void setTeachTypeId(Integer teachTypeId) {
-        this.teachTypeId = teachTypeId;
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
     }
 
     public String getTermStartTime() {
@@ -155,7 +151,7 @@ public class TeacherTimetableListVo {
 
     @Override
     public String toString() {
-        return "TeacherTimetableListVo{" +
+        return "ClassroomTimetableListVo{" +
                 "id=" + id +
                 ", timetableInfoTerm='" + timetableInfoTerm + '\'' +
                 ", timetableInfoFileUrl='" + timetableInfoFileUrl + '\'' +
@@ -164,7 +160,7 @@ public class TeacherTimetableListVo {
                 ", timetableInfoFileName='" + timetableInfoFileName + '\'' +
                 ", timetableInfoFileDate='" + timetableInfoFileDate + '\'' +
                 ", timetableInfoFileDownTimes=" + timetableInfoFileDownTimes +
-                ", teachTypeId=" + teachTypeId +
+                ", classroom='" + classroom + '\'' +
                 ", termStartTime='" + termStartTime + '\'' +
                 ", termEndTime='" + termEndTime + '\'' +
                 ", fileUser='" + fileUser + '\'' +
