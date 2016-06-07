@@ -435,7 +435,8 @@ public class TeacherFillTaskController {
         }
         List<TeacherFillTaskTemplate> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<TeacherFillTaskTemplateRecord> records = teacherFillTaskTemplateService.findByTieId(tieId);
+            int teachTypeId = wordbook.getTeachTypeMap().get(Wordbook.TEACH_TYPE_THEORY);
+            Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> records = teacherFillTaskTemplateService.findByTieIdAndTeachTypeId(tieId,teachTypeId);
             if (records.isNotEmpty()) {
                 list = records.into(TeacherFillTaskTemplate.class);
             }

@@ -90,8 +90,9 @@ public class TeacherTimetableController {
             tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
+            teacherTimetableListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(teacherTimetableListVo.getTeachType())));
             Result<Record14<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String, String>> record14s =
-                    teacherCourseTimetableInfoService.findByTieIdAndPage(teacherTimetableListVo, tieId);
+                    teacherCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPage(teacherTimetableListVo, tieId);
             if (record14s.isNotEmpty()) {
                 List<TeacherTimetableListVo> list = record14s.into(TeacherTimetableListVo.class);
                 list.forEach(s -> {
@@ -100,7 +101,7 @@ public class TeacherTimetableController {
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(teacherTimetableListVo.getPageNum());
                 paginationData.setPageSize(teacherTimetableListVo.getPageSize());
-                paginationData.setTotalDatas(teacherCourseTimetableInfoService.findByTieIdAndPageCount(teacherTimetableListVo, tieId));
+                paginationData.setTotalDatas(teacherCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPageCount(teacherTimetableListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();
@@ -232,7 +233,6 @@ public class TeacherTimetableController {
             TeacherCourseTimetableInfo teacherCourseTimetableInfo = teacherCourseTimetableInfoService.findById(addTeacherTimetableVo.getId());
             teacherCourseTimetableInfo.setTimetableInfoFileName(addTeacherTimetableVo.getTimetableInfoFileName());
             teacherCourseTimetableInfo.setTimetableInfoTerm(addTeacherTimetableVo.getTimetableInfoTerm());
-            teacherCourseTimetableInfo.setTimetableInfoFileDate(new Timestamp(System.currentTimeMillis()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             teacherCourseTimetableInfo.setTermStartTime(new Date(sdf.parse(addTeacherTimetableVo.getTermStartTime()).getTime()));
             teacherCourseTimetableInfo.setTermEndTime(new Date(sdf.parse(addTeacherTimetableVo.getTermEndTime()).getTime()));

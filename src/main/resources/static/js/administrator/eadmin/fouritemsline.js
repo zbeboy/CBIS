@@ -10,6 +10,7 @@ var param = {
     'taskInfoId': fourItemsLineVo.taskInfoId,
     'taskTitleId':fourItemsLineVo.taskTitleId,
     'content':fourItemsLineVo.content,
+    'teachType':'理论',
     'pageNum': 1,
     'pageSize': 7
 }

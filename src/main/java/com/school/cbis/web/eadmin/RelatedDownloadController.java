@@ -93,7 +93,8 @@ public class RelatedDownloadController {
             tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
-            Result<Record10<Integer, String, String, String, Timestamp, Integer, Integer, String, String, String>> records = relatedDownloadService.findByTieIdAndPage(relatedDownloadListVo, tieId);
+            relatedDownloadListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(relatedDownloadListVo.getTeachType())));
+            Result<Record10<Integer, String, String, String, Timestamp, Integer, Integer, String, String, String>> records = relatedDownloadService.findByTieIdAndTeachTypeIdAndPage(relatedDownloadListVo, tieId);
             if (records.isNotEmpty()) {
                 List<RelatedDownloadListVo> list = records.into(RelatedDownloadListVo.class);
                 list.forEach(s -> {
@@ -102,7 +103,7 @@ public class RelatedDownloadController {
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(relatedDownloadListVo.getPageNum());
                 paginationData.setPageSize(relatedDownloadListVo.getPageSize());
-                paginationData.setTotalDatas(relatedDownloadService.findByTieIdAndPageCount(relatedDownloadListVo, tieId));
+                paginationData.setTotalDatas(relatedDownloadService.findByTieIdAndTeachTypeIdAndPageCount(relatedDownloadListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();

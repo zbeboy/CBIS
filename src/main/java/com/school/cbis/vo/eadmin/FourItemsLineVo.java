@@ -12,6 +12,7 @@ public class FourItemsLineVo {
     private String content;
     private int contentX;
     private int contentY;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -79,6 +80,14 @@ public class FourItemsLineVo {
         this.contentY = contentY;
     }
 
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     public int getPageNum() {
         return pageNum;
     }
@@ -106,6 +115,7 @@ public class FourItemsLineVo {
                 ", content='" + content + '\'' +
                 ", contentX=" + contentX +
                 ", contentY=" + contentY +
+                ", teachType='" + teachType + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

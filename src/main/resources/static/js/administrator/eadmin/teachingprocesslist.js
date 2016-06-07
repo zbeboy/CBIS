@@ -9,6 +9,7 @@
 var param = {
     'teachCourseInfoFileName':$('#teachCourseInfoFileName').val().trim(),
     'teachCourseInfoTerm':$('#teachCourseInfoTerm').val().trim(),
+    'teachType':'理论',
     'pageNum':1,
     'pageSize':20
 }

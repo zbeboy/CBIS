@@ -10,6 +10,7 @@ var param = {
     'timetableInfoFileName':$('#timetableInfoFileName').val().trim(),
     'classroom':$('#classroom').val().trim(),
     'timetableInfoTerm':$('#timetableInfoTerm').val().trim(),
+    'teachType':'理论',
     'pageNum':1,
     'pageSize':20
 }

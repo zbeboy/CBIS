@@ -103,7 +103,7 @@ public class AssignmentBookController {
         }
 
         if (tieId > 0) {
-            int teachTypeId = wordbook.getTeachTypeMap().get(Wordbook.TEACH_TYPE_THEORY);
+            int teachTypeId = wordbook.getTeachTypeMap().get(assignmentBookListVo.getTeachType());
             Result<Record7<Integer, String, String, String, Date, Date, Byte>> record7s =
                     teachTaskInfoService.findAllByTieIdAndPageAndTeachTypeId(assignmentBookListVo, tieId, teachTypeId);
             if (record7s.isNotEmpty()) {

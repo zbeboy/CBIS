@@ -18,7 +18,7 @@ public interface RelatedDownloadService {
      * @param tieId
      * @return
      */
-    Result<Record10<Integer,String,String,String,Timestamp,Integer,Integer,String,String,String>> findByTieIdAndPage(RelatedDownloadListVo relatedDownloadListVo, int tieId);
+    Result<Record10<Integer,String,String,String,Timestamp,Integer,Integer,String,String,String>> findByTieIdAndTeachTypeIdAndPage(RelatedDownloadListVo relatedDownloadListVo, int tieId);
 
     /**
      * 根据系id查询
@@ -26,7 +26,7 @@ public interface RelatedDownloadService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(RelatedDownloadListVo relatedDownloadListVo,int tieId);
+    int findByTieIdAndTeachTypeIdAndPageCount(RelatedDownloadListVo relatedDownloadListVo,int tieId);
 
     /**
      * 保存

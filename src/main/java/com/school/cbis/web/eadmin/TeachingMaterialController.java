@@ -436,7 +436,8 @@ public class TeachingMaterialController {
         }
         List<TeachingMaterialTemplate> list = new ArrayList<>();
         if (tieId > 0) {
-            Result<TeachingMaterialTemplateRecord> records = teachingMaterialTemplateService.findByTieId(tieId);
+            int teachTypeId = wordbook.getTeachTypeMap().get(Wordbook.TEACH_TYPE_THEORY);
+            Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> records = teachingMaterialTemplateService.findByTieIdAndTeachTypeId(tieId,teachTypeId);
             if (records.isNotEmpty()) {
                 list = records.into(TeachingMaterialTemplate.class);
             }

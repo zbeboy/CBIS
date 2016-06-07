@@ -18,6 +18,7 @@ public class TeachingProcessListVo {
     private String termEndTime;
     private String realName;
     private String fileType;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -125,6 +126,14 @@ public class TeachingProcessListVo {
         this.fileType = fileType;
     }
 
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     public int getPageNum() {
         return pageNum;
     }
@@ -157,6 +166,7 @@ public class TeachingProcessListVo {
                 ", termEndTime='" + termEndTime + '\'' +
                 ", realName='" + realName + '\'' +
                 ", fileType='" + fileType + '\'' +
+                ", teachType='" + teachType + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

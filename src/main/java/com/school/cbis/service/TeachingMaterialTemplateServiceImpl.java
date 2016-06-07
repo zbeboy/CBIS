@@ -136,9 +136,18 @@ public class TeachingMaterialTemplateServiceImpl implements TeachingMaterialTemp
     }
 
     @Override
-    public Result<TeachingMaterialTemplateRecord> findByTieId(int tieId) {
-        Result<TeachingMaterialTemplateRecord> records = create.selectFrom(Tables.TEACHING_MATERIAL_TEMPLATE)
-                .where(Tables.TEACHING_MATERIAL_TEMPLATE.TIE_ID.eq(tieId))
+    public Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> findByTieIdAndTeachTypeId(int tieId,int teachTypeId) {
+        Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> records =
+                create.select(Tables.TEACHING_MATERIAL_TEMPLATE.ID,
+                        Tables.TEACHING_MATERIAL_TEMPLATE.TITLE,
+                        Tables.TEACHING_MATERIAL_TEMPLATE.CREATE_TIME,
+                        Tables.TEACHING_MATERIAL_TEMPLATE.CREATE_USER,
+                        Tables.TEACHING_MATERIAL_TEMPLATE.TIE_ID,
+                        Tables.TEACHING_MATERIAL_TEMPLATE.TEACH_TASK_INFO_ID)
+                        .from(Tables.TEACHING_MATERIAL_TEMPLATE)
+                        .join(Tables.TEACH_TASK_INFO)
+                        .on(Tables.TEACHING_MATERIAL_TEMPLATE.TEACH_TASK_INFO_ID.eq(Tables.TEACH_TASK_INFO.ID))
+                .where(Tables.TEACHING_MATERIAL_TEMPLATE.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId)))
                 .orderBy(Tables.TEACHING_MATERIAL_TEMPLATE.CREATE_TIME.desc())
                 .fetch();
         return records;

@@ -10,6 +10,7 @@ var param = {
     'teachTaskTerm':$('#teachTaskTerm').val().trim(),
    /* 'termStartTime':$('#termStartTime').val().trim(),
     'termEndTime':$('#termEndTime').val().trim(),*/
+    'teachType':'理论',
     'pageNum':1,
     'pageSize':20
 }

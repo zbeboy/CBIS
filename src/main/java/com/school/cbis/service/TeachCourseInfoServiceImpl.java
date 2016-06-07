@@ -37,8 +37,8 @@ public class TeachCourseInfoServiceImpl implements TeachCourseInfoService {
     }
 
     @Override
-    public Result<Record13<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String>>  findByTieIdAndPageWithUsers(TeachingProcessListVo teachingProcessListVo, int tieId) {
-        Condition a  = Tables.TEACH_COURSE_INFO.TIE_ID.eq(tieId);
+    public Result<Record13<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String>>  findByTieIdAndTeachTypeIdAndPageWithUsers(TeachingProcessListVo teachingProcessListVo, int tieId) {
+        Condition a  = Tables.TEACH_COURSE_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_COURSE_INFO.TEACH_TYPE_ID.eq(teachingProcessListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(teachingProcessListVo.getTeachCourseInfoFileName())){
             a = a.and(Tables.TEACH_COURSE_INFO.TEACH_COURSE_INFO_FILE_NAME.like("%"+teachingProcessListVo.getTeachCourseInfoFileName()+"%"));
@@ -71,8 +71,8 @@ public class TeachCourseInfoServiceImpl implements TeachCourseInfoService {
     }
 
     @Override
-    public int findByTieIdAndPageWithUsersCount(TeachingProcessListVo teachingProcessListVo, int tieId) {
-        Condition a  = Tables.TEACH_COURSE_INFO.TIE_ID.eq(tieId);
+    public int findByTieIdAndTeachTypeIdAndPageWithUsersCount(TeachingProcessListVo teachingProcessListVo, int tieId) {
+        Condition a  = Tables.TEACH_COURSE_INFO.TIE_ID.eq(tieId).and(Tables.TEACH_COURSE_INFO.TEACH_TYPE_ID.eq(teachingProcessListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(teachingProcessListVo.getTeachCourseInfoFileName())){
             a = a.and(Tables.TEACH_COURSE_INFO.TEACH_COURSE_INFO_FILE_NAME.like("%"+teachingProcessListVo.getTeachCourseInfoFileName()+"%"));

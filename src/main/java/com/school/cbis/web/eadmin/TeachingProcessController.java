@@ -86,8 +86,9 @@ public class TeachingProcessController {
             tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
+            teachingProcessListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(teachingProcessListVo.getTeachType())));
             Result<Record13<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String>> record13 =
-                    teachCourseInfoService.findByTieIdAndPageWithUsers(teachingProcessListVo, tieId);
+                    teachCourseInfoService.findByTieIdAndTeachTypeIdAndPageWithUsers(teachingProcessListVo, tieId);
             if (record13.isNotEmpty()) {
                 List<TeachingProcessListVo> list = record13.into(TeachingProcessListVo.class);
                 list.forEach(r -> {
@@ -96,7 +97,7 @@ public class TeachingProcessController {
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(teachingProcessListVo.getPageNum());
                 paginationData.setPageSize(teachingProcessListVo.getPageSize());
-                paginationData.setTotalDatas(teachCourseInfoService.findByTieIdAndPageWithUsersCount(teachingProcessListVo, tieId));
+                paginationData.setTotalDatas(teachCourseInfoService.findByTieIdAndTeachTypeIdAndPageWithUsersCount(teachingProcessListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();
@@ -219,7 +220,6 @@ public class TeachingProcessController {
         try {
             TeachCourseInfo teachCourseInfo = teachCourseInfoService.findById(addTeachingProcessVo.getId());
             teachCourseInfo.setTeachCourseInfoTerm(addTeachingProcessVo.getTeachCourseInfoTerm());
-            teachCourseInfo.setTeachCourseInfoFileDate(new Timestamp(System.currentTimeMillis()));
             teachCourseInfo.setTeachCourseInfoFileName(addTeachingProcessVo.getTeachCourseInfoFileName());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             teachCourseInfo.setTermStartTime(new Date(sdf.parse(addTeachingProcessVo.getTermStartTime()).getTime()));

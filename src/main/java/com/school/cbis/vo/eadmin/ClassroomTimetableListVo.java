@@ -18,6 +18,8 @@ public class ClassroomTimetableListVo {
     private String fileUser;
     private String fileType;
     private String realName;
+    private int teachTypeId;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -133,6 +135,22 @@ public class ClassroomTimetableListVo {
         this.realName = realName;
     }
 
+    public int getTeachTypeId() {
+        return teachTypeId;
+    }
+
+    public void setTeachTypeId(int teachTypeId) {
+        this.teachTypeId = teachTypeId;
+    }
+
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     public int getPageNum() {
         return pageNum;
     }
@@ -166,6 +184,8 @@ public class ClassroomTimetableListVo {
                 ", fileUser='" + fileUser + '\'' +
                 ", fileType='" + fileType + '\'' +
                 ", realName='" + realName + '\'' +
+                ", teachTypeId=" + teachTypeId +
+                ", teachType='" + teachType + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

@@ -5,6 +5,7 @@ import com.school.cbis.domain.tables.records.TeacherFillTaskTemplateRecord;
 import com.school.cbis.vo.eadmin.TeacherFillTemplateListVo;
 import org.jooq.Record;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
 
 import java.sql.Timestamp;
@@ -79,6 +80,6 @@ public interface TeacherFillTaskTemplateService {
      * @param tieId
      * @return
      */
-    Result<TeacherFillTaskTemplateRecord> findByTieId(int tieId);
+    Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> findByTieIdAndTeachTypeId(int tieId, int teachTypeId);
 
 }

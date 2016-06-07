@@ -16,6 +16,7 @@ public class RelatedDownloadListVo {
     private String realName;
     private String fileType;
     private String remark;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -99,6 +100,14 @@ public class RelatedDownloadListVo {
         this.remark = remark;
     }
 
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     public int getPageNum() {
         return pageNum;
     }
@@ -113,5 +122,24 @@ public class RelatedDownloadListVo {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public String toString() {
+        return "RelatedDownloadListVo{" +
+                "id=" + id +
+                ", fileUrl='" + fileUrl + '\'' +
+                ", fileSize='" + fileSize + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", fileDate='" + fileDate + '\'' +
+                ", fileDownTimes=" + fileDownTimes +
+                ", teachTypeId=" + teachTypeId +
+                ", realName='" + realName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", remark='" + remark + '\'' +
+                ", teachType='" + teachType + '\'' +
+                ", pageNum=" + pageNum +
+                ", pageSize=" + pageSize +
+                '}';
     }
 }

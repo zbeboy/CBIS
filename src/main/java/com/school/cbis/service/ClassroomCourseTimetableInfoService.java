@@ -15,7 +15,7 @@ public interface ClassroomCourseTimetableInfoService {
      * @param tieId
      * @return
      */
-    Result<ClassroomCourseTimetableInfoRecord> findByTieIdAndPage(ClassroomTimetableListVo classroomTimetableListVo, int tieId);
+    Result<ClassroomCourseTimetableInfoRecord> findByTieIdAndTeachTypeIdAndPage(ClassroomTimetableListVo classroomTimetableListVo, int tieId);
 
     /**
      * 根据系id查询总数
@@ -23,7 +23,7 @@ public interface ClassroomCourseTimetableInfoService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(ClassroomTimetableListVo classroomTimetableListVo,int tieId);
+    int findByTieIdAndTeachTypeIdAndPageCount(ClassroomTimetableListVo classroomTimetableListVo,int tieId);
 
     /**
      * 保存

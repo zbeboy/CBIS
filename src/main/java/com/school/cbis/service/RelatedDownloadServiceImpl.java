@@ -36,8 +36,8 @@ public class RelatedDownloadServiceImpl implements RelatedDownloadService {
     }
 
     @Override
-    public Result<Record10<Integer, String, String, String, Timestamp, Integer, Integer, String, String, String>> findByTieIdAndPage(RelatedDownloadListVo relatedDownloadListVo, int tieId) {
-        Condition a = Tables.RELATED_DOWNLOAD.TIE_ID.eq(tieId);
+    public Result<Record10<Integer, String, String, String, Timestamp, Integer, Integer, String, String, String>> findByTieIdAndTeachTypeIdAndPage(RelatedDownloadListVo relatedDownloadListVo, int tieId) {
+        Condition a = Tables.RELATED_DOWNLOAD.TIE_ID.eq(tieId).and(Tables.RELATED_DOWNLOAD.TEACH_TYPE_ID.eq(relatedDownloadListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(relatedDownloadListVo.getFileName())){
             a = a.and(Tables.RELATED_DOWNLOAD.FILE_NAME.like("%"+relatedDownloadListVo.getFileName()+"%"));
@@ -76,8 +76,8 @@ public class RelatedDownloadServiceImpl implements RelatedDownloadService {
     }
 
     @Override
-    public int findByTieIdAndPageCount(RelatedDownloadListVo relatedDownloadListVo, int tieId) {
-        Condition a = Tables.RELATED_DOWNLOAD.TIE_ID.eq(tieId);
+    public int findByTieIdAndTeachTypeIdAndPageCount(RelatedDownloadListVo relatedDownloadListVo, int tieId) {
+        Condition a = Tables.RELATED_DOWNLOAD.TIE_ID.eq(tieId).and(Tables.RELATED_DOWNLOAD.TEACH_TYPE_ID.eq(relatedDownloadListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(relatedDownloadListVo.getFileName())){
             a = a.and(Tables.RELATED_DOWNLOAD.FILE_NAME.like("%"+relatedDownloadListVo.getFileName()+"%"));

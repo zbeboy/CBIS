@@ -9,6 +9,7 @@
 var param = {
     'fileName': $('#fileName').val().trim(),
     'realName': $('#realName').val().trim(),
+    'teachType':'理论',
     'pageNum': 1,
     'pageSize': 20
 }

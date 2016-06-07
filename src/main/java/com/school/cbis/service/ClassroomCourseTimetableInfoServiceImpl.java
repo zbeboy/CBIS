@@ -34,8 +34,8 @@ public class ClassroomCourseTimetableInfoServiceImpl implements ClassroomCourseT
     }
 
     @Override
-    public Result<ClassroomCourseTimetableInfoRecord> findByTieIdAndPage(ClassroomTimetableListVo classroomTimetableListVo, int tieId) {
-        Condition a = Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIE_ID.eq((tieId));
+    public Result<ClassroomCourseTimetableInfoRecord> findByTieIdAndTeachTypeIdAndPage(ClassroomTimetableListVo classroomTimetableListVo, int tieId) {
+        Condition a = Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIE_ID.eq((tieId)).and(Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID.eq(classroomTimetableListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(classroomTimetableListVo.getTimetableInfoFileName())){
             a = a.and(Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIMETABLE_INFO_FILE_NAME.like("%"+classroomTimetableListVo.getTimetableInfoFileName()+"%"));
@@ -65,8 +65,8 @@ public class ClassroomCourseTimetableInfoServiceImpl implements ClassroomCourseT
     }
 
     @Override
-    public int findByTieIdAndPageCount(ClassroomTimetableListVo classroomTimetableListVo, int tieId) {
-        Condition a = Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIE_ID.eq((tieId));
+    public int findByTieIdAndTeachTypeIdAndPageCount(ClassroomTimetableListVo classroomTimetableListVo, int tieId) {
+        Condition a = Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIE_ID.eq((tieId)).and(Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID.eq(classroomTimetableListVo.getTeachTypeId()));
 
         if(StringUtils.hasLength(classroomTimetableListVo.getTimetableInfoFileName())){
             a = a.and(Tables.CLASSROOM_COURSE_TIMETABLE_INFO.TIMETABLE_INFO_FILE_NAME.like("%"+classroomTimetableListVo.getTimetableInfoFileName()+"%"));

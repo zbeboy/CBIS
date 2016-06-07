@@ -20,7 +20,7 @@ public interface TeachCourseInfoService {
      * @param tieId
      * @return
      */
-    Result<Record13<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String>>  findByTieIdAndPageWithUsers(TeachingProcessListVo teachingProcessListVo, int tieId);
+    Result<Record13<Integer, String, String, String, String, String, Timestamp, Integer, Integer, Date, Date, String, String>>  findByTieIdAndTeachTypeIdAndPageWithUsers(TeachingProcessListVo teachingProcessListVo, int tieId);
 
     /**
      * 根据tieId查询并获取users信息总数
@@ -28,7 +28,7 @@ public interface TeachCourseInfoService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageWithUsersCount(TeachingProcessListVo teachingProcessListVo,int tieId);
+    int findByTieIdAndTeachTypeIdAndPageWithUsersCount(TeachingProcessListVo teachingProcessListVo,int tieId);
 
     /**
      * 保存

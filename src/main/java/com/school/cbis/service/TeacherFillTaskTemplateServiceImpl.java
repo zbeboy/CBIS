@@ -141,9 +141,18 @@ public class TeacherFillTaskTemplateServiceImpl implements TeacherFillTaskTempla
     }
 
     @Override
-    public Result<TeacherFillTaskTemplateRecord> findByTieId(int tieId) {
-        Result<TeacherFillTaskTemplateRecord> records = create.selectFrom(Tables.TEACHER_FILL_TASK_TEMPLATE)
-                .where(Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId))
+    public Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> findByTieIdAndTeachTypeId(int tieId,int teachTypeId) {
+        Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> records =
+                create.select(Tables.TEACHER_FILL_TASK_TEMPLATE.ID,
+                        Tables.TEACHER_FILL_TASK_TEMPLATE.TITLE,
+                        Tables.TEACHER_FILL_TASK_TEMPLATE.CREATE_TIME,
+                        Tables.TEACHER_FILL_TASK_TEMPLATE.CREATE_USER,
+                        Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID,
+                        Tables.TEACHER_FILL_TASK_TEMPLATE.TEACH_TASK_INFO_ID)
+                    .from(Tables.TEACHER_FILL_TASK_TEMPLATE)
+                        .join(Tables.TEACH_TASK_INFO)
+                        .on(Tables.TEACHER_FILL_TASK_TEMPLATE.TEACH_TASK_INFO_ID.eq(Tables.TEACH_TASK_INFO.ID))
+                .where(Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teachTypeId)))
                 .orderBy(Tables.TEACHER_FILL_TASK_TEMPLATE.CREATE_TIME.desc())
                 .fetch();
         return records;

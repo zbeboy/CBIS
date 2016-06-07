@@ -7,6 +7,7 @@ import com.school.cbis.domain.tables.records.TeachingMaterialTemplateRecord;
 import com.school.cbis.vo.eadmin.TeacherFillTemplateListVo;
 import com.school.cbis.vo.eadmin.TeachingMaterialTemplateListVo;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
 
 import java.sql.Timestamp;
@@ -74,5 +75,5 @@ public interface TeachingMaterialTemplateService {
      * @param tieId
      * @return
      */
-    Result<TeachingMaterialTemplateRecord> findByTieId(int tieId);
+    Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> findByTieIdAndTeachTypeId(int tieId, int teachTypeId);
 }

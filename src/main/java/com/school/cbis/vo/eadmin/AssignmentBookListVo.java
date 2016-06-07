@@ -11,6 +11,7 @@ public class AssignmentBookListVo {
     private String termStartTime;
     private String termEndTime;
     private Byte isUse;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -86,6 +87,14 @@ public class AssignmentBookListVo {
         this.pageSize = pageSize;
     }
 
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     @Override
     public String toString() {
         return "AssignmentBookListVo{" +
@@ -96,6 +105,7 @@ public class AssignmentBookListVo {
                 ", termStartTime='" + termStartTime + '\'' +
                 ", termEndTime='" + termEndTime + '\'' +
                 ", isUse=" + isUse +
+                ", teachType='" + teachType + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';
