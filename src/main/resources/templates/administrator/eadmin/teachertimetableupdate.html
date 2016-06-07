@@ -158,7 +158,7 @@
                 <div class="uk-text-center uk-margin-top">
                     <button type="submit" class="uk-button uk-button-primary uk-button-large" >保存</button>
                     &nbsp;&nbsp;
-                    <a class="uk-button uk-button-large" href="#" th:href="@{/administrator/eadmin/teacherTimetableList}" >取消
+                    <a class="uk-button uk-button-large" href="#" th:href="@{/administrator/eadmin/teacherTimetableList}+'?teachType='+${teachType}" >取消
                     </a>
                 </div>
             </form>
@@ -175,6 +175,7 @@
     /*<![CDATA[*/
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
     var teacher = /*[[${teacher}]]*/ '';
+    var teachType = /*[[${teachType}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/administrator/eadmin/teachertimetableupdate.js}"

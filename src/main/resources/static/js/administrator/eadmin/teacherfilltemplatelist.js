@@ -9,6 +9,7 @@
 var param = {
     'title':$('#title').val().trim(),
     'realName':$('#realName').val().trim(),
+    'teachType':$('#teachType').val().trim(),
     'pageNum':1,
     'pageSize':20
 }

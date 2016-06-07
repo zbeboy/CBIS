@@ -149,10 +149,11 @@ public class AssignmentBookController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/assignmentBookUpdate")
-    public String assignmentBookUpdate(@RequestParam("id") int id, ModelMap modelMap) {
+    public String assignmentBookUpdate(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
         TeachTaskInfo teachTaskInfo = teachTaskInfoService.findById(id);
         if (!ObjectUtils.isEmpty(teachTaskInfo)) {
             modelMap.addAttribute("teachTaskInfo", teachTaskInfo);
+            modelMap.addAttribute("teachType",teachType);
             return "/administrator/eadmin/assignmentbookupdate";
         } else {
             return "redirect:/administrator/eadmin/assignmentBookList";
@@ -167,7 +168,7 @@ public class AssignmentBookController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/assignmentBookLook")
-    public String assignmentBookLook(@RequestParam("id") int id, ModelMap modelMap) {
+    public String assignmentBookLook(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
         //该教学任务书下所有标题
         List<TeachTaskTitle> teachTaskTitles = teachTaskTitleService.findByTeachTaskInfoId(id);
         List<TeachTaskContent> teachTaskContents = new ArrayList<>();
@@ -192,6 +193,7 @@ public class AssignmentBookController {
         modelMap.addAttribute("teachTaskTitles", teachTaskTitles);
         modelMap.addAttribute("teachTaskGradeChecks", teachTaskGradeChecks);
         modelMap.addAttribute("teachTaskInfo", teachTaskInfo);
+        modelMap.addAttribute("teachType",teachType);
         return "/administrator/eadmin/assignmentbooklook";
     }
 
@@ -201,7 +203,8 @@ public class AssignmentBookController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/assignmentBookAdd")
-    public String assignmentBookAdd() {
+    public String assignmentBookAdd(String teachType,ModelMap modelMap) {
+        modelMap.addAttribute("teachType",teachType);
         return "/administrator/eadmin/assignmentbookadd";
     }
 
@@ -261,7 +264,12 @@ public class AssignmentBookController {
     @RequestMapping("/administrator/eadmin/updateAssignmentBook")
     @ResponseBody
     public AjaxData updateAssignmentBook(TeachTaskInfo teachTaskInfo) {
-        teachTaskInfoService.update(teachTaskInfo);
+        TeachTaskInfo update = teachTaskInfoService.findById(teachTaskInfo.getId());
+        update.setTeachTaskTitle(teachTaskInfo.getTeachTaskTitle());
+        update.setTeachTaskTerm(teachTaskInfo.getTeachTaskTerm());
+        update.setTermStartTime(teachTaskInfo.getTermStartTime());
+        update.setTermEndTime(teachTaskInfo.getTermEndTime());
+        teachTaskInfoService.update(update);
         return new AjaxData().success().msg("更新成功!");
     }
 

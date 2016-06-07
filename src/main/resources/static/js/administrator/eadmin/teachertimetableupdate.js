@@ -17,7 +17,7 @@ function searchTeachers(){
                     $('#teacherData').append(
                         $('<li>').append(
                             $('<label>').append(
-                                $('<input type="radio" name="teacher" >').val(data.result[i].id)
+                                $('<input type="radio" name="teacher" checked="checked">').val(data.result[i].id)
                             ).append(
                                 $('<span>').text(data.result[i].realName)
                             )
@@ -27,7 +27,7 @@ function searchTeachers(){
                     $('#teacherData').append(
                         $('<li>').append(
                             $('<label>').append(
-                                $('<input type="radio" name="teacher" checked="checked">').val(data.result[i].id)
+                                $('<input type="radio" name="teacher">').val(data.result[i].id)
                             ).append(
                                 $('<span>').text(data.result[i].realName)
                             )
@@ -152,7 +152,7 @@ $(function () {
                         layer.close(index);
                         if (data.state) {
                             layer.msg(data.msg, {icon: 1}, function () {
-                                window.location.href = web_path + '/administrator/eadmin/teacherTimetableList';
+                                window.location.href = web_path + '/administrator/eadmin/teacherTimetableList?teachType='+teachType;
                             });
                         } else {
                             layer.msg(data.msg);

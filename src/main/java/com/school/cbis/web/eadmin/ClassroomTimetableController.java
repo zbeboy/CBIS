@@ -15,6 +15,8 @@ import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.eadmin.AddClassroomTimetableVo;
 import com.school.cbis.vo.eadmin.AddTeacherTimetableVo;
 import com.school.cbis.vo.eadmin.ClassroomTimetableListVo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.commons.lang3.CharEncoding;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -59,12 +63,13 @@ public class ClassroomTimetableController {
 
     /**
      * 教室课表列表
+     *
      * @param classroomTimetableListVo
      * @param modelMap
      * @return
      */
     @RequestMapping("/administrator/eadmin/classroomTimetableList")
-    public String classroomTimetableList(ClassroomTimetableListVo classroomTimetableListVo, ModelMap modelMap){
+    public String classroomTimetableList(ClassroomTimetableListVo classroomTimetableListVo, ModelMap modelMap) {
         if (!StringUtils.hasLength(classroomTimetableListVo.getTimetableInfoTerm())) {
             classroomTimetableListVo.setTimetableInfoTerm("");
         }
@@ -74,30 +79,31 @@ public class ClassroomTimetableController {
 
     /**
      * 教室课表列表数据
+     *
      * @param classroomTimetableListVo
      * @return
      */
     @RequestMapping("/administrator/eadmin/classroomTimetableData")
     @ResponseBody
-    public AjaxData<ClassroomTimetableListVo> classroomTimetableData(ClassroomTimetableListVo classroomTimetableListVo){
+    public AjaxData<ClassroomTimetableListVo> classroomTimetableData(ClassroomTimetableListVo classroomTimetableListVo) {
         AjaxData<ClassroomTimetableListVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if(!ObjectUtils.isEmpty(record)){
+        if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        if(tieId>0){
+        if (tieId > 0) {
             classroomTimetableListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(classroomTimetableListVo.getTeachType())));
-            Result<ClassroomCourseTimetableInfoRecord> records = classroomCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPage(classroomTimetableListVo,tieId);
-            if(records.isNotEmpty()){
+            Result<ClassroomCourseTimetableInfoRecord> records = classroomCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPage(classroomTimetableListVo, tieId);
+            if (records.isNotEmpty()) {
                 List<ClassroomTimetableListVo> list = records.into(ClassroomTimetableListVo.class);
-                list.forEach(s->{
+                list.forEach(s -> {
                     s.setTimetableInfoFileSize(FilesUtils.sizeToString(Long.parseLong(s.getTimetableInfoFileSize())));
                 });
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(classroomTimetableListVo.getPageNum());
                 paginationData.setPageSize(classroomTimetableListVo.getPageSize());
-                paginationData.setTotalDatas(classroomCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPageCount(classroomTimetableListVo,tieId));
+                paginationData.setTotalDatas(classroomCourseTimetableInfoService.findByTieIdAndTeachTypeIdAndPageCount(classroomTimetableListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();
@@ -114,7 +120,8 @@ public class ClassroomTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/classroomTimetableAdd")
-    public String classroomTimetableAdd() {
+    public String classroomTimetableAdd(String teachType, ModelMap modelMap) {
+        modelMap.addAttribute("teachType", teachType);
         return "/administrator/eadmin/classroomtimetableadd";
     }
 
@@ -180,13 +187,18 @@ public class ClassroomTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/classroomTimetableLook")
-    public String classroomTimetableLook(@RequestParam("id") int id, ModelMap modelMap) {
-        ClassroomCourseTimetableInfo classroomCourseTimetableInfo = classroomCourseTimetableInfoService.findById(id);
-        if (!ObjectUtils.isEmpty(classroomCourseTimetableInfo)) {
-            modelMap.addAttribute("file_path", classroomCourseTimetableInfo.getTimetableInfoFilePdf());
-            return "/administrator/eadmin/classroomtimetablelook";
+    public String classroomTimetableLook(@RequestParam("id") int id, String teachType, ModelMap modelMap) {
+        try {
+            ClassroomCourseTimetableInfo classroomCourseTimetableInfo = classroomCourseTimetableInfoService.findById(id);
+            if (!ObjectUtils.isEmpty(classroomCourseTimetableInfo)) {
+                modelMap.addAttribute("file_path", classroomCourseTimetableInfo.getTimetableInfoFilePdf());
+                return "/administrator/eadmin/classroomtimetablelook";
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/classroomTimetableList";
+        return "redirect:/administrator/eadmin/classroomTimetableList?teachType=" + teachType;
     }
 
     /**
@@ -197,24 +209,32 @@ public class ClassroomTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/classroomTimetableUpdate")
-    public String classroomTimetableUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        if (tieId > 0) {
-            ClassroomCourseTimetableInfo classroomCourseTimetableInfo = classroomCourseTimetableInfoService.findById(id);
-            if (!ObjectUtils.isEmpty(classroomCourseTimetableInfo)) {
-                modelMap.addAttribute("classroomCourseTimetableInfo", classroomCourseTimetableInfo);
-                return "/administrator/eadmin/classroomtimetableupdate";
+    public String classroomTimetableUpdate(@RequestParam("id") int id, String teachType, ModelMap modelMap) {
+        try {
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
             }
+            if (tieId > 0) {
+                ClassroomCourseTimetableInfo classroomCourseTimetableInfo = classroomCourseTimetableInfoService.findById(id);
+                if (!ObjectUtils.isEmpty(classroomCourseTimetableInfo)) {
+                    modelMap.addAttribute("classroomCourseTimetableInfo", classroomCourseTimetableInfo);
+                    modelMap.addAttribute("teachType", teachType);
+                    return "/administrator/eadmin/classroomtimetableupdate";
+                }
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/classroomTimetableList";
+
+        return "redirect:/administrator/eadmin/classroomTimetableList?teachType=" + teachType;
     }
 
     /**
      * 更新
+     *
      * @param addClassroomTimetableVo
      * @param request
      * @return
@@ -257,13 +277,14 @@ public class ClassroomTimetableController {
 
     /**
      * 删除
+     *
      * @param id
      * @param request
      * @return
      */
     @RequestMapping("/administrator/eadmin/deleteClassroomTimetable")
     @ResponseBody
-    public AjaxData deleteClassroomTimetable(@RequestParam("id") int id, HttpServletRequest request){
+    public AjaxData deleteClassroomTimetable(@RequestParam("id") int id, HttpServletRequest request) {
         try {
             ClassroomCourseTimetableInfo classroomCourseTimetableInfo = classroomCourseTimetableInfoService.findById(id);
             if (!ObjectUtils.isEmpty(classroomCourseTimetableInfo)) {

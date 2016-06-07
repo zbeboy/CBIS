@@ -9,6 +9,7 @@
 var param = {
     'title':$('#title').val().trim(),
     'realName':$('#realName').val().trim(),
+    'teachType':$('#teachType').val().trim(),
     'pageNum':1,
     'pageSize':20
 }
@@ -93,7 +94,7 @@ function dealNull(obj){
 }
 
 function toEdit(id){
-    window.location.href = web_path + '/administrator/eadmin/teacherFillTaskInfoUpdate?id='+id;
+    window.location.href = web_path + '/administrator/eadmin/teacherFillTaskInfoUpdate?id='+id + '&teachType='+param.teachType;
 }
 
 /**

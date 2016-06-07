@@ -14,6 +14,7 @@ import com.school.cbis.vo.eadmin.AddClassroomTimetableVo;
 import com.school.cbis.vo.eadmin.AddRelatedDownloadVo;
 import com.school.cbis.vo.eadmin.ClassroomTimetableListVo;
 import com.school.cbis.vo.eadmin.RelatedDownloadListVo;
+import org.apache.commons.lang3.CharEncoding;
 import org.jooq.Record;
 import org.jooq.Record10;
 import org.jooq.Result;
@@ -32,6 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -119,7 +122,8 @@ public class RelatedDownloadController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/relatedDownloadAdd")
-    public String relatedDownloadAdd() {
+    public String relatedDownloadAdd(String teachType,ModelMap modelMap) {
+        modelMap.addAttribute("teachType",teachType);
         return "/administrator/eadmin/relateddownloadadd";
     }
 
@@ -169,20 +173,27 @@ public class RelatedDownloadController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/relatedDownloadUpdate")
-    public String relatedDownloadUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        if (tieId > 0) {
-            RelatedDownload relatedDownload = relatedDownloadService.findById(id);
-            if (!ObjectUtils.isEmpty(relatedDownload)) {
-                modelMap.addAttribute("relatedDownload", relatedDownload);
-                return "/administrator/eadmin/relateddownloadupdate";
+    public String relatedDownloadUpdate(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
+        try{
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
             }
+            if (tieId > 0) {
+                RelatedDownload relatedDownload = relatedDownloadService.findById(id);
+                if (!ObjectUtils.isEmpty(relatedDownload)) {
+                    modelMap.addAttribute("relatedDownload", relatedDownload);
+                    modelMap.addAttribute("teachType",teachType);
+                    return "/administrator/eadmin/relateddownloadupdate";
+                }
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/relatedDownloadList";
+
+        return "redirect:/administrator/eadmin/relatedDownloadList?teachType="+teachType;
     }
 
     /**

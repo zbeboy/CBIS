@@ -21,14 +21,14 @@ public interface TeacherFillTaskInfoService {
      * @param tieId
      * @return
      */
-    Result<Record7<Integer,String,Timestamp,String,Timestamp,Timestamp,String>> findByTieIdAndPage(TeacherFillTaskInfoListVo teacherFillTaskInfoListVo,int tieId);
+    Result<Record7<Integer,String,Timestamp,String,Timestamp,Timestamp,String>> findByTieIdAndTeachTypeIdAndPage(TeacherFillTaskInfoListVo teacherFillTaskInfoListVo,int tieId);
 
     /**
      * 根据系主键分页查询总数
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(TeacherFillTaskInfoListVo teacherFillTaskInfoListVo,int tieId);
+    int findByTieIdAndTeachTypeIdAndPageCount(TeacherFillTaskInfoListVo teacherFillTaskInfoListVo,int tieId);
 
     /**
      * 保存

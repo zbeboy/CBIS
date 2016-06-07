@@ -14,6 +14,7 @@ import com.school.cbis.service.UsersService;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.eadmin.AddStudentTimetableVo;
 import com.school.cbis.vo.eadmin.StudentTimetableListVo;
+import org.apache.commons.lang3.CharEncoding;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record14;
@@ -32,6 +33,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -120,25 +123,32 @@ public class StudentTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/studentTimetableAdd")
-    public String studentTimetableAdd(ModelMap modelMap){
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if(!ObjectUtils.isEmpty(record)){
-            tieId = record.getValue(Tables.TIE.ID);
+    public String studentTimetableAdd(String teachType ,ModelMap modelMap){
+        try{
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if(!ObjectUtils.isEmpty(record)){
+                tieId = record.getValue(Tables.TIE.ID);
+            }
+
+            if(tieId>0){
+                List<String> list = new ArrayList<>();
+                Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
+                if (record1s.isNotEmpty()) {
+                    for (Record r : record1s) {
+                        list.add(r.getValue("year").toString());
+                    }
+                }
+                modelMap.addAttribute("years", list);
+                modelMap.addAttribute("teachType",teachType);
+                return "/administrator/eadmin/studenttimetableadd";
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
-        if(tieId>0){
-            List<String> list = new ArrayList<>();
-            Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
-            if (record1s.isNotEmpty()) {
-                for (Record r : record1s) {
-                    list.add(r.getValue("year").toString());
-                }
-            }
-            modelMap.addAttribute("years", list);
-            return "/administrator/eadmin/studenttimetableadd";
-        }
-       return "redirect:/administrator/eadmin/studentTimetableList";
+        return "redirect:/administrator/eadmin/studentTimetableList?teachType="+teachType;
     }
 
     /**
@@ -190,13 +200,18 @@ public class StudentTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/studentTimetableLook")
-    public String studentTimetableLook(@RequestParam("id") int id,ModelMap modelMap){
-        StudentCourseTimetableInfo studentCourseTimetableInfo = studentCourseTimetableInfoService.findById(id);
-        if (!ObjectUtils.isEmpty(studentCourseTimetableInfo)) {
-            modelMap.addAttribute("file_path", studentCourseTimetableInfo.getTimetableInfoFilePdf());
-            return "/administrator/eadmin/studenttimetablelook";
+    public String studentTimetableLook(@RequestParam("id") int id,String teachType,ModelMap modelMap){
+        try{
+            StudentCourseTimetableInfo studentCourseTimetableInfo = studentCourseTimetableInfoService.findById(id);
+            if (!ObjectUtils.isEmpty(studentCourseTimetableInfo)) {
+                modelMap.addAttribute("file_path", studentCourseTimetableInfo.getTimetableInfoFilePdf());
+                return "/administrator/eadmin/studenttimetablelook";
+            }
+            teachType = URLEncoder.encode(teachType,CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/studentTimetableList";
+        return "redirect:/administrator/eadmin/studentTimetableList?teachType="+teachType;
     }
 
     /**
@@ -206,31 +221,37 @@ public class StudentTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/studentTimetableUpdate")
-    public String studentTimetableUpdate(@RequestParam("id") int id,ModelMap modelMap){
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if(!ObjectUtils.isEmpty(record)){
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        if(tieId>0){
-            StudentCourseTimetableInfo studentCourseTimetableInfo = studentCourseTimetableInfoService.findById(id);
-            if (!ObjectUtils.isEmpty(studentCourseTimetableInfo)) {
-                List<String> list = new ArrayList<>();
-                Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
-                if (record1s.isNotEmpty()) {
-                    for (Record r : record1s) {
-                        list.add(r.getValue("year").toString());
-                    }
-                }
-
-                Grade grade = gradeService.findById(studentCourseTimetableInfo.getGradeId());
-                modelMap.addAttribute("years", list);
-                modelMap.addAttribute("grade",grade);
-                modelMap.addAttribute("studentCourseTimetableInfo", studentCourseTimetableInfo);
-                return "/administrator/eadmin/studenttimetableupdate";
+    public String studentTimetableUpdate(@RequestParam("id") int id,String teachType,ModelMap modelMap){
+        try{
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if(!ObjectUtils.isEmpty(record)){
+                tieId = record.getValue(Tables.TIE.ID);
             }
+            if(tieId>0){
+                StudentCourseTimetableInfo studentCourseTimetableInfo = studentCourseTimetableInfoService.findById(id);
+                if (!ObjectUtils.isEmpty(studentCourseTimetableInfo)) {
+                    List<String> list = new ArrayList<>();
+                    Result<Record1<String>> record1s = gradeService.findAllYearDistinct(tieId);
+                    if (record1s.isNotEmpty()) {
+                        for (Record r : record1s) {
+                            list.add(r.getValue("year").toString());
+                        }
+                    }
+
+                    Grade grade = gradeService.findById(studentCourseTimetableInfo.getGradeId());
+                    modelMap.addAttribute("years", list);
+                    modelMap.addAttribute("grade",grade);
+                    modelMap.addAttribute("studentCourseTimetableInfo", studentCourseTimetableInfo);
+                    modelMap.addAttribute("teachType",teachType);
+                    return "/administrator/eadmin/studenttimetableupdate";
+                }
+            }
+            teachType = URLEncoder.encode(teachType,CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/studentTimetableList";
+        return "redirect:/administrator/eadmin/studentTimetableList?teachType="+teachType;
     }
 
     /**

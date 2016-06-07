@@ -292,5 +292,5 @@ function cancelAddTitle() {
  * 返回
  */
 function toBack() {
-    window.location.href = web_path + '/administrator/eadmin/teacherFillTemplateList';
+    window.location.href = web_path + '/administrator/eadmin/teacherFillTemplateList?teachType='+teachType;
 }

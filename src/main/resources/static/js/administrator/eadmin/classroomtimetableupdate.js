@@ -102,7 +102,7 @@ $(function () {
                     layer.close(index);
                     if (data.state) {
                         layer.msg(data.msg, {icon: 1}, function () {
-                            window.location.href = web_path + '/administrator/eadmin/classroomTimetableList';
+                            window.location.href = web_path + '/administrator/eadmin/classroomTimetableList?teachType='+teachType;
                         });
                     } else {
                         layer.msg(data.msg);

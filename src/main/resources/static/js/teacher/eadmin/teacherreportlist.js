@@ -50,7 +50,8 @@ var param = {
 function action() {
     $.post(web_path + '/teacher/eadmin/teacherReportData', {
         'pageNum': param.pageNum,
-        'pageSize': param.pageSize
+        'pageSize': param.pageSize,
+        'teachType':teachType
     }, function (data) {
         if (data.state) {
             createPage(data);
@@ -89,5 +90,5 @@ $(document).ready(function () {
 function startAP(obj) {
     var templateId = $(obj).attr('data-templateid');
     var teacherTaskInfoId = $(obj).attr('data-id');
-    window.location.href = web_path + '/teacher/eadmin/teacherFillTaskContentList?templateId=' + templateId + "&teacherTaskInfoId="+teacherTaskInfoId;
+    window.location.href = web_path + '/teacher/eadmin/teacherFillTaskContentList?templateId=' + templateId + "&teacherTaskInfoId="+teacherTaskInfoId+"&teachType="+teachType;
 }

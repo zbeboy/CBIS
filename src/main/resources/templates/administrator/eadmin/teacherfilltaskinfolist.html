@@ -81,10 +81,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/teacherFillTaskInfoAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/teacherFillTaskInfoAdd} + '?teachType='+${teacherFillTaskInfoListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" id="teachType" name="teachType" th:value="${teacherFillTaskInfoListVo.teachType}" />
                             <input type="text" placeholder="标题" id="title"
                                    name="title" class="uk-margin-small-top" th:value="${teacherFillTaskInfoListVo.title}" />
                             <input type="text" placeholder="作者" id="realName"

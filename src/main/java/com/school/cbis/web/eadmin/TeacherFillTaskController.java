@@ -10,6 +10,7 @@ import com.school.cbis.domain.tables.records.TeacherFillTaskTemplateRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.RandomUtils;
 import com.school.cbis.vo.eadmin.*;
+import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,13 +96,14 @@ public class TeacherFillTaskController {
             tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
-            Result<Record5<Integer, String, Timestamp, String, String>> record5s = teacherFillTaskTemplateService.findByTieIdAndPage(teacherFillTemplateListVo, tieId);
+            teacherFillTemplateListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(teacherFillTemplateListVo.getTeachType())));
+            Result<Record5<Integer, String, Timestamp, String, String>> record5s = teacherFillTaskTemplateService.findByTieIdAndTeachTypeIdAndPage(teacherFillTemplateListVo, tieId);
             if (record5s.isNotEmpty()) {
                 List<TeacherFillTemplateListVo> list = record5s.into(TeacherFillTemplateListVo.class);
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(teacherFillTemplateListVo.getPageNum());
                 paginationData.setPageSize(teacherFillTemplateListVo.getPageSize());
-                paginationData.setTotalDatas(teacherFillTaskTemplateService.findByTieIdAndPageCount(teacherFillTemplateListVo, tieId));
+                paginationData.setTotalDatas(teacherFillTaskTemplateService.findByTieIdAndTeachTypeIdAndPageCount(teacherFillTemplateListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();
@@ -196,12 +200,13 @@ public class TeacherFillTaskController {
     /**
      * 添加教师填写模板
      *
-     * @param teacherFillTaskTemplate
+     * @param addTeacherFillTaskTemplateVo
      * @param modelMap
      * @return
      */
     @RequestMapping("/administrator/eadmin/addTeacherFillTaskTemplate")
-    public String addTeacherFillTaskTemplate(TeacherFillTaskTemplate teacherFillTaskTemplate, ModelMap modelMap) {
+    public String addTeacherFillTaskTemplate(AddTeacherFillTaskTemplateVo addTeacherFillTaskTemplateVo, ModelMap modelMap) {
+        TeacherFillTaskTemplate teacherFillTaskTemplate = new TeacherFillTaskTemplate();
         teacherFillTaskTemplate.setCreateTime(new Timestamp(System.currentTimeMillis()));
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
@@ -212,20 +217,23 @@ public class TeacherFillTaskController {
         if (tieId > 0) {
             teacherFillTaskTemplate.setCreateUser(usersService.getUserName());
             teacherFillTaskTemplate.setTieId(tieId);
+            teacherFillTaskTemplate.setTitle(addTeacherFillTaskTemplateVo.getTitle());
+            teacherFillTaskTemplate.setTeachTaskInfoId(addTeacherFillTaskTemplateVo.getTeachTaskInfoId());
             //防止刷新时的误添加
             Result<TeacherFillTaskTemplateRecord> records = teacherFillTaskTemplateService.findByTieIdAndTitle(tieId, StringUtils.trimWhitespace(teacherFillTaskTemplate.getTitle()));
             if (records.isEmpty()) {
                 templateId = teacherFillTaskTemplateService.saveAndReturnId(teacherFillTaskTemplate);
             } else {
-                return "redirect:/administrator/eadmin/teacherFillTemplateSelect";
+                return "redirect:/administrator/eadmin/teacherFillTemplateSelect?teachType=" + addTeacherFillTaskTemplateVo.getTeachType();
             }
 
         } else {
-            return "redirect:/administrator/eadmin/teacherFillTemplateSelect";
+            return "redirect:/administrator/eadmin/teacherFillTemplateSelect?teachType=" + addTeacherFillTaskTemplateVo.getTeachType();
         }
         List<TeachTaskTitle> titles = teachTaskTitleService.findByTeachTaskInfoId(teacherFillTaskTemplate.getTeachTaskInfoId());
         modelMap.addAttribute("titles", titles);
         modelMap.addAttribute("templateId", templateId);
+        modelMap.addAttribute("teachType", addTeacherFillTaskTemplateVo.getTeachType());
         return "/administrator/eadmin/teacherfilltemplatetitleadd";
     }
 
@@ -342,7 +350,7 @@ public class TeacherFillTaskController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/updateTeacherFillTaskTemplate")
-    public String updateTeacherFillTaskTemplate(@RequestParam("templateId") int templateId, @RequestParam("title") String title, ModelMap modelMap) {
+    public String updateTeacherFillTaskTemplate(@RequestParam("templateId") int templateId, @RequestParam("title") String title, String teachType, ModelMap modelMap) {
         TeacherFillTaskTemplate teacherFillTaskTemplate = teacherFillTaskTemplateService.findById(templateId);
         if (!ObjectUtils.isEmpty(teacherFillTaskTemplate)) {
             teacherFillTaskTemplate.setTitle(title);
@@ -350,9 +358,10 @@ public class TeacherFillTaskController {
             modelMap.addAttribute("templateId", templateId);
             List<TeachTaskTitle> titles = teachTaskTitleService.findByTeachTaskInfoId(teacherFillTaskTemplate.getTeachTaskInfoId());
             modelMap.addAttribute("titles", titles);
+            modelMap.addAttribute("teachType", teachType);
             return "/administrator/eadmin/teacherfilltemplatetitleupdate";
         } else {
-            return "redirect:/administrator/eadmin/teacherFillTemplateList";
+            return "redirect:/administrator/eadmin/teacherFillTemplateList?teachType=" + teachType;
         }
     }
 
@@ -403,13 +412,14 @@ public class TeacherFillTaskController {
             tieId = record.getValue(Tables.TIE.ID);
         }
         if (tieId > 0) {
-            Result<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> record7s = teacherFillTaskInfoService.findByTieIdAndPage(teacherFillTaskInfoListVo, tieId);
+            teacherFillTaskInfoListVo.setTeachTypeId(wordbook.getTeachTypeMap().get(StringUtils.trimWhitespace(teacherFillTaskInfoListVo.getTeachType())));
+            Result<Record7<Integer, String, Timestamp, String, Timestamp, Timestamp, String>> record7s = teacherFillTaskInfoService.findByTieIdAndTeachTypeIdAndPage(teacherFillTaskInfoListVo, tieId);
             if (record7s.isNotEmpty()) {
                 List<TeacherFillTaskInfoListVo> list = record7s.into(TeacherFillTaskInfoListVo.class);
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(teacherFillTaskInfoListVo.getPageNum());
                 paginationData.setPageSize(teacherFillTaskInfoListVo.getPageSize());
-                paginationData.setTotalDatas(teacherFillTaskInfoService.findByTieIdAndPageCount(teacherFillTaskInfoListVo, tieId));
+                paginationData.setTotalDatas(teacherFillTaskInfoService.findByTieIdAndTeachTypeIdAndPageCount(teacherFillTaskInfoListVo, tieId));
                 ajaxData.success().listData(list).paginationData(paginationData);
             } else {
                 ajaxData.fail();
@@ -427,7 +437,7 @@ public class TeacherFillTaskController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teacherFillTaskInfoAdd")
-    public String teacherFillTaskInfoAdd(ModelMap modelMap) {
+    public String teacherFillTaskInfoAdd(String teachType, ModelMap modelMap) {
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -435,13 +445,14 @@ public class TeacherFillTaskController {
         }
         List<TeacherFillTaskTemplate> list = new ArrayList<>();
         if (tieId > 0) {
-            int teachTypeId = wordbook.getTeachTypeMap().get(Wordbook.TEACH_TYPE_THEORY);
-            Result<Record6<Integer,String,Timestamp,String,Integer,Integer>> records = teacherFillTaskTemplateService.findByTieIdAndTeachTypeId(tieId,teachTypeId);
+            int teachTypeId = wordbook.getTeachTypeMap().get(teachType);
+            Result<Record6<Integer, String, Timestamp, String, Integer, Integer>> records = teacherFillTaskTemplateService.findByTieIdAndTeachTypeId(tieId, teachTypeId);
             if (records.isNotEmpty()) {
                 list = records.into(TeacherFillTaskTemplate.class);
             }
         }
         modelMap.addAttribute("template", list);
+        modelMap.addAttribute("teachType", teachType);
         return "/administrator/eadmin/teacherfilltaskinfoadd";
     }
 
@@ -453,6 +464,7 @@ public class TeacherFillTaskController {
      */
     @RequestMapping("/administrator/eadmin/addTeacherFillTaskInfo")
     public String addTeacherFillTaskInfo(AddTeacherFillTaskInfoVo addTeacherFillTaskInfoVo) {
+        String teachType = null;
         try {
             Record record = usersService.findAll(usersService.getUserName());
             int tieId = 0;
@@ -473,10 +485,13 @@ public class TeacherFillTaskController {
                 teacherFillTaskInfo.setTieId(tieId);
                 teacherFillTaskInfoService.save(teacherFillTaskInfo);
             }
+            teachType = URLEncoder.encode(addTeacherFillTaskInfoVo.getTeachType(), CharEncoding.UTF_8);
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teacherFillTaskInfoList";
+        return "redirect:/administrator/eadmin/teacherFillTaskInfoList?teachType=" + teachType;
     }
 
     /**
@@ -487,13 +502,14 @@ public class TeacherFillTaskController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teacherFillTaskInfoUpdate")
-    public String teacherFillTaskInfoUpdate(@RequestParam("id") int id, ModelMap modelMap) {
+    public String teacherFillTaskInfoUpdate(@RequestParam("id") int id, String teachType, ModelMap modelMap) {
         TeacherFillTaskInfo teacherFillTaskInfo = teacherFillTaskInfoService.findById(id);
         if (!ObjectUtils.isEmpty(teacherFillTaskInfo)) {
             modelMap.addAttribute("teacherFillTaskInfo", teacherFillTaskInfo);
+            modelMap.addAttribute("teachType", teachType);
             return "/administrator/eadmin/teacherfilltaskinfoupdate";
         } else {
-            return "redirect:/administrator/eadmin/teacherFillTaskInfoList";
+            return "redirect:/administrator/eadmin/teacherFillTaskInfoList?teachType=" + teachType;
         }
     }
 
@@ -505,6 +521,7 @@ public class TeacherFillTaskController {
      */
     @RequestMapping("/administrator/eadmin/updateTeacherFillTaskInfo")
     public String updateTeacherFillTaskInfo(AddTeacherFillTaskInfoVo addTeacherFillTaskInfoVo) {
+        String teachType = null;
         try {
             TeacherFillTaskInfo teacherFillTaskInfo = teacherFillTaskInfoService.findById(addTeacherFillTaskInfoVo.getId());
             teacherFillTaskInfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -515,10 +532,14 @@ public class TeacherFillTaskController {
             teacherFillTaskInfo.setStartTime(new Timestamp(startDate.getTime()));
             teacherFillTaskInfo.setEndTime(new Timestamp(endDate.getTime()));
             teacherFillTaskInfoService.update(teacherFillTaskInfo);
+            teachType = URLEncoder.encode(addTeacherFillTaskInfoVo.getTeachType(), CharEncoding.UTF_8);
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teacherFillTaskInfoList";
+        log.debug(addTeacherFillTaskInfoVo.getTeachType());
+        return "redirect:/administrator/eadmin/teacherFillTaskInfoList?teachType=" + teachType;
     }
 
     /**
@@ -527,7 +548,8 @@ public class TeacherFillTaskController {
      * @return
      */
     @RequestMapping("/teacher/eadmin/teacherReportList")
-    public String teacherReportList() {
+    public String teacherReportList(String teachType,ModelMap modelMap) {
+        modelMap.addAttribute("teachType",teachType);
         return "/teacher/eadmin/teacherreportlist";
     }
 
@@ -549,7 +571,7 @@ public class TeacherFillTaskController {
             tieId = record.getValue(Tables.TIE.ID);
             if (record.getValue(Tables.USERS.USER_TYPE_ID) == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {
                 isTeacher = true;
-                teachTypeId = wordbook.getTeachTypeMap().get(Wordbook.TEACH_TYPE_THEORY);
+                teachTypeId = wordbook.getTeachTypeMap().get(teacherReportListVo.getTeachType());
             }
         }
 
@@ -587,7 +609,7 @@ public class TeacherFillTaskController {
      * @return
      */
     @RequestMapping("/teacher/eadmin/teacherFillTaskContentList")
-    public String teacherFillTaskContentList(@RequestParam("templateId") int templateId, @RequestParam("teacherTaskInfoId") int teacherTaskInfoId, ModelMap modelMap) {
+    public String teacherFillTaskContentList(@RequestParam("templateId") int templateId, @RequestParam("teacherTaskInfoId") int teacherTaskInfoId,String teachType, ModelMap modelMap) {
         Record record = usersService.findAll(usersService.getUserName());
         boolean isTeacher = false;
         if (!ObjectUtils.isEmpty(record)) {
@@ -616,6 +638,7 @@ public class TeacherFillTaskController {
                     modelMap.addAttribute("taskTitle", teacherFillTaskHeads);
                     modelMap.addAttribute("templateId", templateId);
                     modelMap.addAttribute("teacherFillTaskInfo", teacherFillTaskInfo);
+                    modelMap.addAttribute("teachType",teachType);
                     return "/teacher/eadmin/teacherfilltaskcontentlist";
                 }
             }
@@ -712,7 +735,7 @@ public class TeacherFillTaskController {
 
                         }
                     }
-                    return "redirect:/teacher/eadmin/teacherFillTaskContentList?templateId=" + templateId + "&teacherTaskInfoId="+teacherTaskInfoId;
+                    return "redirect:/teacher/eadmin/teacherFillTaskContentList?templateId=" + templateId + "&teacherTaskInfoId=" + teacherTaskInfoId;
                 }
             }
         }

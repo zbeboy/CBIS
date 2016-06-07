@@ -11,7 +11,7 @@ var param = {
     'teachTaskTerm': $('#teachTaskTerm').val().trim(),
     /* 'termStartTime':$('#termStartTime').val().trim(),
      'termEndTime':$('#termEndTime').val().trim(),*/
-    'teachType':'理论',
+    'teachType':$('#teachType').val().trim(),
     'pageNum': 1,
     'pageSize': 20
 }
@@ -117,7 +117,7 @@ function toUse(id, use) {
     if (Number(use) == 0) {
         layer.msg("该教学任务书状态不可用!");
     } else {
-        window.location.href = web_path + '/administrator/eadmin/fourItemsLine?taskInfoId='+id;
+        window.location.href = web_path + '/administrator/eadmin/fourItemsLine?taskInfoId='+id+'&teachType='+param.teachType;
     }
 }
 

@@ -90,6 +90,7 @@
                     <legend>请选择教学任务书</legend>
                     <div class="uk-grid">
                         <div class="uk-width-1-1 uk-text-right">
+                            <input type="hidden" id="teachType" name="teachType" th:value="${assignmentBookListVo.teachType}" />
                             <input type="text" placeholder="标题" id="teachTaskTitle"
                                    name="teachTaskTitle" class="uk-margin-small-top"
                                    th:value="${assignmentBookListVo.teachTaskTitle}"/>
@@ -145,6 +146,7 @@
         <form class="uk-form uk-form-horizontal" id="useForm" method="post"
               th:action="@{/administrator/eadmin/addTeacherFillTaskTemplate}"
               data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
+            <input type="hidden" name="teachType" th:value="${assignmentBookListVo.teachType}" />
             <div class="uk-form-row">
                 <label class="uk-form-label" for="title">设置模板名</label>
                 <div class="uk-form-controls">

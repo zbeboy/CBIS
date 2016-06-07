@@ -83,10 +83,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/studentTimetableAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/studentTimetableAdd}+'?teachType='+${studentTimetableListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" name="teachType" id="teachType" th:value="${studentTimetableListVo.teachType}" />
                             <input type="text" placeholder="文件名" id="timetableInfoFileName"
                                    name="timetableInfoFileName" class="uk-margin-small-top" th:value="${studentTimetableListVo.timetableInfoFileName}" />
                             <input type="text" placeholder="班级" id="gradeName"

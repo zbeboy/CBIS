@@ -11,6 +11,8 @@ import com.school.cbis.service.UsersService;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.eadmin.AddTeachingProcessVo;
 import com.school.cbis.vo.eadmin.TeachingProcessListVo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.commons.lang3.CharEncoding;
 import org.jooq.Record;
 import org.jooq.Record13;
 import org.jooq.Result;
@@ -28,6 +30,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -115,7 +119,8 @@ public class TeachingProcessController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teachingProcessAdd")
-    public String teachingProcessAdd() {
+    public String teachingProcessAdd(String teachType, ModelMap modelMap) {
+        modelMap.addAttribute("teachType",teachType);
         return "/administrator/eadmin/teachingprocessadd";
     }
 
@@ -180,13 +185,18 @@ public class TeachingProcessController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teachingProcessLook")
-    public String teachingProcessLook(@RequestParam("id") int id, ModelMap modelMap) {
-        TeachCourseInfo teachCourseInfo = teachCourseInfoService.findById(id);
-        if (!ObjectUtils.isEmpty(teachCourseInfo)) {
-            modelMap.addAttribute("file_path", teachCourseInfo.getTeachCourseInfoFilePdf());
-            return "/administrator/eadmin/teachingprocesslook";
+    public String teachingProcessLook(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
+        try{
+            TeachCourseInfo teachCourseInfo = teachCourseInfoService.findById(id);
+            if (!ObjectUtils.isEmpty(teachCourseInfo)) {
+                modelMap.addAttribute("file_path", teachCourseInfo.getTeachCourseInfoFilePdf());
+                return "/administrator/eadmin/teachingprocesslook";
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teachingProcessList";
+        return "redirect:/administrator/eadmin/teachingProcessList?teachType="+teachType;
     }
 
     /**
@@ -197,13 +207,20 @@ public class TeachingProcessController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teachingProcessUpdate")
-    public String teachingProcessUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        TeachCourseInfo teachCourseInfo = teachCourseInfoService.findById(id);
-        if (!ObjectUtils.isEmpty(teachCourseInfo)) {
-            modelMap.addAttribute("teachCourseInfo", teachCourseInfo);
-            return "/administrator/eadmin/teachingprocessupdate";
+    public String teachingProcessUpdate(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
+        try{
+            TeachCourseInfo teachCourseInfo = teachCourseInfoService.findById(id);
+            if (!ObjectUtils.isEmpty(teachCourseInfo)) {
+                modelMap.addAttribute("teachCourseInfo", teachCourseInfo);
+                modelMap.addAttribute("teachType",teachType);
+                return "/administrator/eadmin/teachingprocessupdate";
+            }
+            teachType = URLEncoder.encode(teachType,CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teachingProcessList";
+
+        return "redirect:/administrator/eadmin/teachingProcessList?teachType="+teachType;
     }
 
     /**

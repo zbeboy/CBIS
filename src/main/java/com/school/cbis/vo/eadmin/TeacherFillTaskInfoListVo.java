@@ -11,6 +11,8 @@ public class TeacherFillTaskInfoListVo {
     private String startTime;
     private String endTime;
     private String realName;
+    private String teachType;
+    private int teachTypeId;
     private int pageNum;
     private int pageSize;
 
@@ -86,6 +88,22 @@ public class TeacherFillTaskInfoListVo {
         this.pageSize = pageSize;
     }
 
+    public int getTeachTypeId() {
+        return teachTypeId;
+    }
+
+    public void setTeachTypeId(int teachTypeId) {
+        this.teachTypeId = teachTypeId;
+    }
+
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     @Override
     public String toString() {
         return "TeacherFillTaskInfoListVo{" +
@@ -96,6 +114,8 @@ public class TeacherFillTaskInfoListVo {
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", realName='" + realName + '\'' +
+                ", teachType='" + teachType + '\'' +
+                ", teachTypeId=" + teachTypeId +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

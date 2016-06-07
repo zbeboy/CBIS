@@ -152,7 +152,7 @@
                     <button type="submit" class="uk-button uk-button-primary uk-button-large">保存</button>
                     &nbsp;&nbsp;
                     <a class="uk-button uk-button-large" href="#"
-                       th:href="@{/administrator/eadmin/teachingProcessList}">取消
+                       th:href="@{/administrator/eadmin/teachingProcessList}+'?teachType='+${teachType}">取消
                     </a>
                 </div>
             </form>
@@ -168,6 +168,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var teachType = /*[[${teachType}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/administrator/eadmin/teachingprocessupdate.js}"

@@ -115,7 +115,7 @@ $(function () {
                     layer.close(index);
                     if (data.state) {
                         layer.msg(data.msg, {icon: 1}, function () {
-                            window.location.href = web_path + '/administrator/eadmin/assignmentBookList';
+                            window.location.href = web_path + '/administrator/eadmin/assignmentBookList?teachType='+param.teachType;
                         });
                     } else {
                         layer.msg(data.msg);

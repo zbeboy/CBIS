@@ -13,7 +13,7 @@
     <meta name="_csrf" content="" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="" th:content="${_csrf.headerName}"/>
-    <title>自主实习</title>
+    <title>教师填报</title>
     <!--<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png" />-->
     <link rel="stylesheet" href="css/uikit.css" th:href="@{/css/uikit.css}"/>
@@ -73,7 +73,7 @@
         <div class="uk-width-medium-3-4">
             <ul class="uk-subnav uk-subnav-line">
                 <li class="uk-active">
-                    <a href="#" th:href="@{/teacher/eadmin/teacherReportList}" th:text="${teacherFillTaskInfo.title}" ></a>
+                    <a href="#" th:href="@{/teacher/eadmin/teacherReportList}+'?teachType='+${teachType}" th:text="${teacherFillTaskInfo.title}" ></a>
                 </li>
             </ul>
             <div class="uk-overflow-container">
@@ -104,6 +104,7 @@
     var taskContent = /*[[${taskContent}]]*/ null;
     var templateId = /*[[${templateId}]]*/ null;
     var teacherFillTaskInfo = /*[[${teacherFillTaskInfo}]]*/ null;
+    var teachType = /*[[${teachType}]]*/ null;
     /*]]>*/
 </script>
 <script th:src="@{/js/teacher/eadmin/teacherfilltaskcontentlist.js}"

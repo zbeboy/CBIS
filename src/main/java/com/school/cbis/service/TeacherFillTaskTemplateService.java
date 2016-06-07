@@ -22,7 +22,7 @@ public interface TeacherFillTaskTemplateService {
      * @param tieId
      * @return
      */
-    Result<Record5<Integer,String,Timestamp,String,String>> findByTieIdAndPage(TeacherFillTemplateListVo teacherFillTemplateListVo,int tieId);
+    Result<Record5<Integer,String,Timestamp,String,String>> findByTieIdAndTeachTypeIdAndPage(TeacherFillTemplateListVo teacherFillTemplateListVo,int tieId);
 
     /**
      * 根据系id分页查询全部总数
@@ -30,7 +30,7 @@ public interface TeacherFillTaskTemplateService {
      * @param tieId
      * @return
      */
-    int findByTieIdAndPageCount(TeacherFillTemplateListVo teacherFillTemplateListVo,int tieId);
+    int findByTieIdAndTeachTypeIdAndPageCount(TeacherFillTemplateListVo teacherFillTemplateListVo,int tieId);
 
     /**
      * 根据系表主键和模板名查询

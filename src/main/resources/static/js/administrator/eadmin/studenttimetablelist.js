@@ -10,7 +10,7 @@ var param = {
     'timetableInfoFileName':$('#timetableInfoFileName').val().trim(),
     'gradeName':$('#gradeName').val().trim(),
     'timetableInfoTerm':$('#timetableInfoTerm').val().trim(),
-    'teachType':'理论',
+    'teachType':$('#teachType').val().trim(),
     'pageNum':1,
     'pageSize':20
 }
@@ -107,7 +107,7 @@ function dealNull(obj){
  * @param id
  */
 function toEdit(id){
-    window.location.href = web_path + '/administrator/eadmin/studentTimetableUpdate?id=' + id;
+    window.location.href = web_path + '/administrator/eadmin/studentTimetableUpdate?id=' + id+'&teachType='+param.teachType;
 }
 
 /**
@@ -115,7 +115,7 @@ function toEdit(id){
  * @param id
  */
 function toLook(id){
-    window.location.href = web_path + '/administrator/eadmin/studentTimetableLook?id='+id;
+    window.location.href = web_path + '/administrator/eadmin/studentTimetableLook?id='+id+'&teachType='+param.teachType;
 }
 
 /**

@@ -89,10 +89,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/teacherFillTemplateSelect}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/teacherFillTemplateSelect} + '?teachType=' + ${teacherFillTemplateListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" id="teachType" name="teachType" th:value="${teacherFillTemplateListVo.teachType}" />
                             <input type="text" placeholder="标题" id="title"
                                    name="title" class="uk-margin-small-top" th:value="${teacherFillTemplateListVo.title}" />
                             <input type="text" placeholder="作者" id="realName"
@@ -125,6 +126,7 @@
         <form class="uk-form uk-form-horizontal" id="useForm" method="post"
               th:action="@{/administrator/eadmin/updateTeacherFillTaskTemplate}"
               data-validator-option="{stopOnError:false, timely:'yellow_right_effect',validClass:'uk-form-success',invalidClass:'uk-form-danger'}">
+            <input type="hidden" name="teachType" th:value="${teacherFillTemplateListVo.teachType}" />
             <div class="uk-form-row">
                 <label class="uk-form-label" for="title">更新模板名</label>
                 <div class="uk-form-controls">

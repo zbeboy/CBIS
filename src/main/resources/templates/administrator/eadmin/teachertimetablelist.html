@@ -83,10 +83,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/teacherTimetableAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/teacherTimetableAdd}+'?teachType='+${teacherTimetableListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" id="teachType" name="teachType" th:value="${teacherTimetableListVo.teachType}"/>
                             <input type="text" placeholder="文件名" id="timetableInfoFileName"
                                    name="timetableInfoFileName" class="uk-margin-small-top" th:value="${teacherTimetableListVo.timetableInfoFileName}" />
                             <input type="text" placeholder="教师" id="realName"
@@ -129,6 +130,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var teachType = /*[[${teachType}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/administrator/eadmin/teachertimetablelist.js}"

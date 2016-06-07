@@ -10,6 +10,7 @@ import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.eadmin.AddTeacherTimetableVo;
 import com.school.cbis.vo.eadmin.TeacherInfoVo;
 import com.school.cbis.vo.eadmin.TeacherTimetableListVo;
+import org.apache.commons.lang3.CharEncoding;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -118,7 +121,8 @@ public class TeacherTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teacherTimetableAdd")
-    public String teacherTimetableAdd() {
+    public String teacherTimetableAdd(String teachType,ModelMap modelMap) {
+        modelMap.addAttribute("teachType",teachType);
         return "/administrator/eadmin/teachertimetableadd";
     }
 
@@ -184,13 +188,20 @@ public class TeacherTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teacherTimetableLook")
-    public String teacherTimetableLook(@RequestParam("id") int id, ModelMap modelMap) {
-        TeacherCourseTimetableInfo teacherCourseTimetableInfo = teacherCourseTimetableInfoService.findById(id);
-        if (!ObjectUtils.isEmpty(teacherCourseTimetableInfo)) {
-            modelMap.addAttribute("file_path", teacherCourseTimetableInfo.getTimetableInfoFilePdf());
-            return "/administrator/eadmin/teachertimetablelook";
+    public String teacherTimetableLook(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
+        try{
+            TeacherCourseTimetableInfo teacherCourseTimetableInfo = teacherCourseTimetableInfoService.findById(id);
+            if (!ObjectUtils.isEmpty(teacherCourseTimetableInfo)) {
+                modelMap.addAttribute("file_path", teacherCourseTimetableInfo.getTimetableInfoFilePdf());
+                modelMap.addAttribute("teachType",teachType);
+                return "/administrator/eadmin/teachertimetablelook";
+            }
+            teachType = URLEncoder.encode(teachType, CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teacherTimetableList";
+
+        return "redirect:/administrator/eadmin/teacherTimetableList?teachType="+teachType;
     }
 
     /**
@@ -201,22 +212,29 @@ public class TeacherTimetableController {
      * @return
      */
     @RequestMapping("/administrator/eadmin/teacherTimetableUpdate")
-    public String teacherTimetableUpdate(@RequestParam("id") int id, ModelMap modelMap) {
-        Record record = usersService.findAll(usersService.getUserName());
-        int tieId = 0;
-        if (!ObjectUtils.isEmpty(record)) {
-            tieId = record.getValue(Tables.TIE.ID);
-        }
-        if (tieId > 0) {
-            TeacherCourseTimetableInfo teacherCourseTimetableInfo = teacherCourseTimetableInfoService.findById(id);
-            if (!ObjectUtils.isEmpty(teacherCourseTimetableInfo)) {
-                Teacher teacher = teacherService.findById(teacherCourseTimetableInfo.getTeacherId());
-                modelMap.addAttribute("teacher", teacher);
-                modelMap.addAttribute("teacherCourseTimetableInfo", teacherCourseTimetableInfo);
-                return "/administrator/eadmin/teachertimetableupdate";
+    public String teacherTimetableUpdate(@RequestParam("id") int id,String teachType, ModelMap modelMap) {
+        try{
+            Record record = usersService.findAll(usersService.getUserName());
+            int tieId = 0;
+            if (!ObjectUtils.isEmpty(record)) {
+                tieId = record.getValue(Tables.TIE.ID);
             }
+            if (tieId > 0) {
+                TeacherCourseTimetableInfo teacherCourseTimetableInfo = teacherCourseTimetableInfoService.findById(id);
+                if (!ObjectUtils.isEmpty(teacherCourseTimetableInfo)) {
+                    Teacher teacher = teacherService.findById(teacherCourseTimetableInfo.getTeacherId());
+                    modelMap.addAttribute("teacher", teacher);
+                    modelMap.addAttribute("teacherCourseTimetableInfo", teacherCourseTimetableInfo);
+                    modelMap.addAttribute("teachType",teachType);
+                    return "/administrator/eadmin/teachertimetableupdate";
+                }
+            }
+            teachType = URLEncoder.encode(teachType,CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return "redirect:/administrator/eadmin/teacherTimetableList";
+
+        return "redirect:/administrator/eadmin/teacherTimetableList?teachType="+teachType;
     }
 
     /**

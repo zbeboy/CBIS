@@ -9,7 +9,7 @@
 var param = {
     'teachCourseInfoFileName':$('#teachCourseInfoFileName').val().trim(),
     'teachCourseInfoTerm':$('#teachCourseInfoTerm').val().trim(),
-    'teachType':'理论',
+    'teachType':$('#teachType').val().trim(),
     'pageNum':1,
     'pageSize':20
 }
@@ -104,7 +104,7 @@ function dealNull(obj){
  * @param id
  */
 function toEdit(id){
-    window.location.href = web_path + '/administrator/eadmin/teachingProcessUpdate?id=' + id;
+    window.location.href = web_path + '/administrator/eadmin/teachingProcessUpdate?id=' + id+"&teachType="+param.teachType;
 }
 
 /**
@@ -112,7 +112,7 @@ function toEdit(id){
  * @param id
  */
 function toLook(id){
-    window.location.href = web_path + '/administrator/eadmin/teachingProcessLook?id='+id;
+    window.location.href = web_path + '/administrator/eadmin/teachingProcessLook?id='+id+"&teachType="+param.teachType;
 }
 
 /**

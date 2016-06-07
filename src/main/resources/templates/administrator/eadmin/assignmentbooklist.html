@@ -83,10 +83,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/assignmentBookAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/assignmentBookAdd}+'?teachType='+${assignmentBookListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" name="teachType" th:value="${assignmentBookListVo.teachType}"/>
                             <input type="text" placeholder="标题" id="teachTaskTitle"
                                    name="teachTaskTitle" class="uk-margin-small-top" th:value="${assignmentBookListVo.teachTaskTitle}" />
                             <select class="uk-margin-small-top" id="teachTaskTerm" name="teachTaskTerm" th:if="${assignmentBookListVo.teachTaskTerm == '上学期'}" >
@@ -127,6 +128,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var web_path = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
+    var teachType = /*[[${assignmentBookListVo.teachType}]]*/ '';
     /*]]>*/
 </script>
 <script th:src="@{/js/administrator/eadmin/assignmentbooklist.js}"

@@ -38,8 +38,8 @@ public class TeacherFillTaskTemplateServiceImpl implements TeacherFillTaskTempla
     }
 
     @Override
-    public Result<Record5<Integer, String, Timestamp, String, String>> findByTieIdAndPage(TeacherFillTemplateListVo teacherFillTemplateListVo, int tieId) {
-        Condition a = Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId);
+    public Result<Record5<Integer, String, Timestamp, String, String>> findByTieIdAndTeachTypeIdAndPage(TeacherFillTemplateListVo teacherFillTemplateListVo, int tieId) {
+        Condition a = Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teacherFillTemplateListVo.getTeachTypeId()));
         if (StringUtils.hasLength(teacherFillTemplateListVo.getTitle())) {
             a = a.and(Tables.TEACHER_FILL_TASK_TEMPLATE.TITLE.like("%" + teacherFillTemplateListVo.getTitle() + "%"));
         }
@@ -72,8 +72,8 @@ public class TeacherFillTaskTemplateServiceImpl implements TeacherFillTaskTempla
     }
 
     @Override
-    public int findByTieIdAndPageCount(TeacherFillTemplateListVo teacherFillTemplateListVo, int tieId) {
-        Condition a = Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId);
+    public int findByTieIdAndTeachTypeIdAndPageCount(TeacherFillTemplateListVo teacherFillTemplateListVo, int tieId) {
+        Condition a = Tables.TEACHER_FILL_TASK_TEMPLATE.TIE_ID.eq(tieId).and(Tables.TEACH_TASK_INFO.TEACH_TYPE_ID.eq(teacherFillTemplateListVo.getTeachTypeId()));
         if (StringUtils.hasLength(teacherFillTemplateListVo.getTitle())) {
             a = a.and(Tables.TEACHER_FILL_TASK_TEMPLATE.TITLE.like("%" + teacherFillTemplateListVo.getTitle() + "%"));
         }

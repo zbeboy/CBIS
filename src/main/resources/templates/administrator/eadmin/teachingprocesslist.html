@@ -83,10 +83,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/teachingProcessAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/teachingProcessAdd}+'?teachType='+${teachingProcessListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" name="teachType" id="teachType" th:value="${teachingProcessListVo.teachType}" />
                             <input type="text" placeholder="文件名" id="teachCourseInfoFileName"
                                    name="teachCourseInfoFileName" class="uk-margin-small-top" th:value="${teachingProcessListVo.teachCourseInfoFileName}" />
                             <select class="uk-margin-small-top" id="teachCourseInfoTerm" name="teachCourseInfoTerm" th:if="${teachingProcessListVo.teachCourseInfoTerm == '上学期'}" >

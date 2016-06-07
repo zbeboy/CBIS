@@ -135,7 +135,7 @@
                     </form>
                 </div>
                 <div class="uk-text-center uk-margin" >
-                    <a class="uk-button uk-button-large uk-button-primary" th:href="@{/administrator/eadmin/teacherFillTemplateList}" >确定</a>
+                    <a class="uk-button uk-button-large uk-button-primary" th:href="@{/administrator/eadmin/teacherFillTemplateList}+'?teachType='+${teachType}" >确定</a>
                     &nbsp;&nbsp;
                     <button class="uk-button uk-button-large" type="button" onclick="toBack();" >返回
                     </button>
@@ -154,6 +154,7 @@
     /*<![CDATA[*/
     var web_path  = /*[[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()}]]*/ '';
     var assignmentBookId = /*[[${templateId}]]*/ 0;//模板id
+    var teachType = /*[[${teachType}]]*/ '';//
     /*]]>*/
 </script>
 

@@ -90,6 +90,8 @@
                             <select class="uk-margin-small-top" id="taskTitleId" name="taskTitleId">
                                 <option value="0">请选择标题</option>
                             </select>
+                            <input type="hidden" id="teachType"
+                                   name="teachType" th:value="${fourItemsLineVo.teachType}" class="uk-margin-small-top"/>
                             <input type="hidden" id="taskInfoId"
                                    name="taskInfoId" class="uk-margin-small-top"/>
                             <input type="text" placeholder="内容" id="content"
@@ -124,8 +126,7 @@
         <div class="uk-modal-header">
             <h2>上传文件</h2>
         </div>
-        <form class="uk-form uk-form-horizontal" id="uploadForm" method="post"
-              th:action="@{/administrator/eadmin/addOrUpdateFourItemsLine}">
+        <form class="uk-form uk-form-horizontal" id="uploadForm" method="post">
             <input type="hidden" id="fourItemId" name="fourItemId" />
             <input type="hidden" id="fourItemContentX" name="fourItemContentX" />
             <div class="uk-form-row">

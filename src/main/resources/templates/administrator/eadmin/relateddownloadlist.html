@@ -83,10 +83,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-4 uk-text-left">
                             <a class="uk-button uk-button-success uk-margin-small-top" href="#"
-                               th:href="@{/administrator/eadmin/relatedDownloadAdd}"><i class="uk-icon-plus"></i>添加
+                               th:href="@{/administrator/eadmin/relatedDownloadAdd}+'?teachType='+${relatedDownloadListVo.teachType}"><i class="uk-icon-plus"></i>添加
                             </a>
                         </div>
                         <div class="uk-width-3-4 uk-text-right">
+                            <input type="hidden" name="teachType" id="teachType" th:value="${relatedDownloadListVo.teachType}" />
                             <input type="text" placeholder="文件名" id="fileName"
                                    name="fileName" class="uk-margin-small-top" th:value="${relatedDownloadListVo.fileName}" />
                             <input type="text" placeholder="上传者" id="realName"

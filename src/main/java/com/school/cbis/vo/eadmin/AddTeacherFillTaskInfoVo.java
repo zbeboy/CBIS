@@ -12,6 +12,7 @@ public class AddTeacherFillTaskInfoVo {
     private Integer   teacherFillTaskTemplateId;
     private String  startTime;
     private String  endTime;
+    private String teachType;
 
     public Integer getId() {
         return id;
@@ -51,6 +52,14 @@ public class AddTeacherFillTaskInfoVo {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
     }
 
     @Override

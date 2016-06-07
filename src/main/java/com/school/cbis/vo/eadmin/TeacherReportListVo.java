@@ -20,6 +20,8 @@ public class TeacherReportListVo {
     private int pageNum;
     private int pageSize;
     private boolean isOk;
+    private int teachTypeId;
+    private String teachType;
 
     public int getId() {
         return id;
@@ -133,6 +135,22 @@ public class TeacherReportListVo {
         isOk = ok;
     }
 
+    public int getTeachTypeId() {
+        return teachTypeId;
+    }
+
+    public void setTeachTypeId(int teachTypeId) {
+        this.teachTypeId = teachTypeId;
+    }
+
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     @Override
     public String toString() {
         return "TeacherReportListVo{" +
@@ -150,6 +168,8 @@ public class TeacherReportListVo {
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", isOk=" + isOk +
+                ", teachTypeId=" + teachTypeId +
+                ", teachType='" + teachType + '\'' +
                 '}';
     }
 }

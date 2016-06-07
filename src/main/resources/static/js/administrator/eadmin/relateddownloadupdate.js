@@ -87,7 +87,7 @@ $(function () {
                     layer.close(index);
                     if (data.state) {
                         layer.msg(data.msg, {icon: 1}, function () {
-                            window.location.href = web_path + '/administrator/eadmin/relatedDownloadList';
+                            window.location.href = web_path + '/administrator/eadmin/relatedDownloadList?teachType='+teachType;
                         });
                     } else {
                         layer.msg(data.msg);

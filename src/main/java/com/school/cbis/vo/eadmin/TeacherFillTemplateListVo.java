@@ -9,6 +9,8 @@ public class TeacherFillTemplateListVo {
     private String title;
     private String teachTaskTitle;
     private String createTime;
+    private int teachTypeId;
+    private String teachType;
     private int pageNum;
     private int pageSize;
 
@@ -68,6 +70,22 @@ public class TeacherFillTemplateListVo {
         this.createTime = createTime;
     }
 
+    public int getTeachTypeId() {
+        return teachTypeId;
+    }
+
+    public void setTeachTypeId(int teachTypeId) {
+        this.teachTypeId = teachTypeId;
+    }
+
+    public String getTeachType() {
+        return teachType;
+    }
+
+    public void setTeachType(String teachType) {
+        this.teachType = teachType;
+    }
+
     @Override
     public String toString() {
         return "TeacherFillTemplateListVo{" +
@@ -76,6 +94,8 @@ public class TeacherFillTemplateListVo {
                 ", title='" + title + '\'' +
                 ", teachTaskTitle='" + teachTaskTitle + '\'' +
                 ", createTime='" + createTime + '\'' +
+                ", teachTypeId=" + teachTypeId +
+                ", teachType='" + teachType + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

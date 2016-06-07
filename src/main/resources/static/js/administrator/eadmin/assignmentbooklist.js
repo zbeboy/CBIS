@@ -10,7 +10,7 @@ var param = {
     'teachTaskTerm':$('#teachTaskTerm').val().trim(),
    /* 'termStartTime':$('#termStartTime').val().trim(),
     'termEndTime':$('#termEndTime').val().trim(),*/
-    'teachType':'理论',
+    'teachType':teachType,
     'pageNum':1,
     'pageSize':20
 }
@@ -88,11 +88,11 @@ function outputHtml(d){
                 .append($('<td>').text(dealNull(list[i].realName)))
                 .append(
                     $('<td>')
-                        .append($('<a href="javascript:;" onclick="toLook('+list[i].id+');" >').html('<i class="uk-icon-eye"></i>'))
+                        .append($('<a href="javascript:;" onclick="toLook('+list[i].id+',\''+teachType+'\');" >').html('<i class="uk-icon-eye"></i>'))
                         .append(' ')
                         .append($('<a href="javascript:;" onclick="toUse('+list[i].id+','+use+');" >').html(ouse))
                         .append(' ')
-                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+');" >').html('<i class="uk-icon-pencil"></i>'))
+                        .append($('<a href="javascript:;" onclick="toEdit('+list[i].id+',\''+teachType+'\');" >').html('<i class="uk-icon-pencil"></i>'))
                 )
         );
     }
@@ -115,8 +115,8 @@ function dealNull(obj){
  * 编辑
  * @param id
  */
-function toEdit(id){
-    window.location.href = web_path + '/administrator/eadmin/assignmentBookUpdate?id=' + id;
+function toEdit(id,teachType){
+    window.location.href = web_path + '/administrator/eadmin/assignmentBookUpdate?id=' + id+"&teachType="+teachType;
 }
 
 /**
@@ -156,8 +156,8 @@ function toUse(id,use){
  * 预览
  * @param id
  */
-function toLook(id){
-    window.location.href = web_path + '/administrator/eadmin/assignmentBookLook?id='+id;
+function toLook(id,teachType){
+    window.location.href = web_path + '/administrator/eadmin/assignmentBookLook?id='+id+"&teachType="+teachType;
 }
 
 /**
