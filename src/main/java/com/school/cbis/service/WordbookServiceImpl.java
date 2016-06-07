@@ -40,11 +40,6 @@ public class WordbookServiceImpl implements WordbookService {
     }
 
     @Override
-    public Result<FourItemsTypeRecord> fourItemsType() {
-        return create.selectFrom(Tables.FOUR_ITEMS_TYPE).fetch();
-    }
-
-    @Override
     public TieRecord findTieInfo() {
         TieRecord tieRecord = create.selectFrom(Tables.TIE)
                 .fetchOne();

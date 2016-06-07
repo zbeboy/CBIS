@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItems extends TableImpl<FourItemsRecord> {
 
-	private static final long serialVersionUID = -1252925220;
+	private static final long serialVersionUID = 924948390;
 
 	/**
 	 * The reference instance of <code>cbis.four_items</code>
@@ -62,14 +62,9 @@ public class FourItems extends TableImpl<FourItemsRecord> {
 	public final TableField<FourItemsRecord, Integer> TEACH_TASK_INFO_ID = createField("teach_task_info_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>cbis.four_items.content_y</code>.
+	 * The column <code>cbis.four_items.content_x</code>.
 	 */
-	public final TableField<FourItemsRecord, Integer> CONTENT_Y = createField("content_y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>cbis.four_items.four_items_type_id</code>.
-	 */
-	public final TableField<FourItemsRecord, Integer> FOUR_ITEMS_TYPE_ID = createField("four_items_type_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<FourItemsRecord, Integer> CONTENT_X = createField("content_x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>cbis.four_items.four_items_file_url</code>.
@@ -152,7 +147,7 @@ public class FourItems extends TableImpl<FourItemsRecord> {
 	 */
 	@Override
 	public List<ForeignKey<FourItemsRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<FourItemsRecord, ?>>asList(Keys.FOUR_ITEMS_IBFK_1, Keys.FOUR_ITEMS_IBFK_2, Keys.FOUR_ITEMS_IBFK_3);
+		return Arrays.<ForeignKey<FourItemsRecord, ?>>asList(Keys.FOUR_ITEMS_IBFK_1, Keys.FOUR_ITEMS_IBFK_2);
 	}
 
 	/**

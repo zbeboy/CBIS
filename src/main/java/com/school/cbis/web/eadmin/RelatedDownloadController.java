@@ -5,6 +5,7 @@ import com.school.cbis.data.AjaxData;
 import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.ClassroomCourseTimetableInfo;
+import com.school.cbis.domain.tables.pojos.FourItems;
 import com.school.cbis.domain.tables.pojos.RelatedDownload;
 import com.school.cbis.domain.tables.records.ClassroomCourseTimetableInfoRecord;
 import com.school.cbis.service.*;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -55,6 +57,9 @@ public class RelatedDownloadController {
 
     @Resource
     private FileService fileService;
+
+    @Resource
+    private UploadService uploadService;
 
     @Resource
     private Wordbook wordbook;
@@ -108,11 +113,21 @@ public class RelatedDownloadController {
         return ajaxData;
     }
 
+    /**
+     * 添加界面
+     * @return
+     */
     @RequestMapping("/administrator/eadmin/relatedDownloadAdd")
     public String relatedDownloadAdd() {
         return "/administrator/eadmin/relateddownloadadd";
     }
 
+    /**
+     * 添加相关下载
+     * @param addRelatedDownloadVo
+     * @param request
+     * @return
+     */
     @RequestMapping("/administrator/eadmin/addRelatedDownload")
     @ResponseBody
     public AjaxData addRelatedDownload(AddRelatedDownloadVo addRelatedDownloadVo, HttpServletRequest request) {
@@ -216,5 +231,21 @@ public class RelatedDownloadController {
             e.printStackTrace();
         }
         return new AjaxData().success().msg("删除成功!");
+    }
+
+    /**
+     * 下载相关下载
+     * @param id
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/administrator/eadmin/downloadRelatedDownload")
+    public void downloadFourItemsLine(@RequestParam("id") int id, HttpServletResponse response, HttpServletRequest request) {
+        RelatedDownload relatedDownload = relatedDownloadService.findById(id);
+        if (!ObjectUtils.isEmpty(relatedDownload)) {
+            relatedDownload.setFileDownTimes(relatedDownload.getFileDownTimes()+1);
+            relatedDownloadService.update(relatedDownload);
+            uploadService.download(relatedDownload.getFileName(), relatedDownload.getFileUrl(), response, request);
+        }
     }
 }

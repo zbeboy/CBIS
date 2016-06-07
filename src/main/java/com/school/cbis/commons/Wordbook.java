@@ -53,14 +53,6 @@ public class Wordbook {
 
     private Map<String, Integer> teachTypeMap;
 
-    //四大件类型
-    public static final String FOUR_ITEMS_TYPE_OUTLINE = "大纲";
-    public static final String FOUR_ITEMS_TYPE_PLAN = "计划";
-    public static final String FOUR_ITEMS_TYPE_SCHEDULE = "日程";
-    public static final String FOUR_ITEMS_TYPE_PPT = "ppt";
-
-    private Map<String, Integer> fourItemsTypeMap;
-
     //权限
     public static final String CBIS_ADMIN = "ROLE_ADMIN";
     public static final String CBIS_MAI = "ROLE_MAI";
@@ -199,15 +191,6 @@ public class Wordbook {
             teachTypeMap.put(r.getName(), r.getId());
         });
         return teachTypeMap;
-    }
-
-    public Map<String, Integer> getFourItemsTypeMap() {
-        fourItemsTypeMap = new HashMap<>();
-        Result<FourItemsTypeRecord> fourItemsTypeRecordResult = wordbookService.fourItemsType();
-        fourItemsTypeRecordResult.forEach(r -> {
-            fourItemsTypeMap.put(r.getName(), r.getId());
-        });
-        return fourItemsTypeMap;
     }
 
     public TieRecord getTieInfo() {

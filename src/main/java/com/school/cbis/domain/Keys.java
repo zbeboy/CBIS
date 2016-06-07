@@ -14,7 +14,6 @@ import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
-import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
@@ -67,7 +66,6 @@ import com.school.cbis.domain.tables.records.AutonomousPracticeInfoRecord;
 import com.school.cbis.domain.tables.records.AutonomousPracticeTemplateRecord;
 import com.school.cbis.domain.tables.records.ClassroomCourseTimetableInfoRecord;
 import com.school.cbis.domain.tables.records.FourItemsRecord;
-import com.school.cbis.domain.tables.records.FourItemsTypeRecord;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.domain.tables.records.HeadTypeRecord;
 import com.school.cbis.domain.tables.records.MailboxCountRecord;
@@ -146,7 +144,6 @@ public class Keys {
 	public static final Identity<AutonomousPracticeTemplateRecord, Integer> IDENTITY_AUTONOMOUS_PRACTICE_TEMPLATE = Identities0.IDENTITY_AUTONOMOUS_PRACTICE_TEMPLATE;
 	public static final Identity<ClassroomCourseTimetableInfoRecord, Integer> IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO = Identities0.IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO;
 	public static final Identity<FourItemsRecord, Integer> IDENTITY_FOUR_ITEMS = Identities0.IDENTITY_FOUR_ITEMS;
-	public static final Identity<FourItemsTypeRecord, Integer> IDENTITY_FOUR_ITEMS_TYPE = Identities0.IDENTITY_FOUR_ITEMS_TYPE;
 	public static final Identity<GradeRecord, Integer> IDENTITY_GRADE = Identities0.IDENTITY_GRADE;
 	public static final Identity<HeadTypeRecord, Integer> IDENTITY_HEAD_TYPE = Identities0.IDENTITY_HEAD_TYPE;
 	public static final Identity<MailboxCountRecord, Integer> IDENTITY_MAILBOX_COUNT = Identities0.IDENTITY_MAILBOX_COUNT;
@@ -200,7 +197,6 @@ public class Keys {
 	public static final UniqueKey<AutonomousPracticeTemplateRecord> KEY_AUTONOMOUS_PRACTICE_TEMPLATE_PRIMARY = UniqueKeys0.KEY_AUTONOMOUS_PRACTICE_TEMPLATE_PRIMARY;
 	public static final UniqueKey<ClassroomCourseTimetableInfoRecord> KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY = UniqueKeys0.KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY;
 	public static final UniqueKey<FourItemsRecord> KEY_FOUR_ITEMS_PRIMARY = UniqueKeys0.KEY_FOUR_ITEMS_PRIMARY;
-	public static final UniqueKey<FourItemsTypeRecord> KEY_FOUR_ITEMS_TYPE_PRIMARY = UniqueKeys0.KEY_FOUR_ITEMS_TYPE_PRIMARY;
 	public static final UniqueKey<GradeRecord> KEY_GRADE_PRIMARY = UniqueKeys0.KEY_GRADE_PRIMARY;
 	public static final UniqueKey<HeadTypeRecord> KEY_HEAD_TYPE_PRIMARY = UniqueKeys0.KEY_HEAD_TYPE_PRIMARY;
 	public static final UniqueKey<MailboxCountRecord> KEY_MAILBOX_COUNT_PRIMARY = UniqueKeys0.KEY_MAILBOX_COUNT_PRIMARY;
@@ -266,8 +262,7 @@ public class Keys {
 	public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TeachTypeRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2 = ForeignKeys0.CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2;
 	public static final ForeignKey<ClassroomCourseTimetableInfoRecord, UsersRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3 = ForeignKeys0.CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3;
 	public static final ForeignKey<FourItemsRecord, TeachTaskInfoRecord> FOUR_ITEMS_IBFK_1 = ForeignKeys0.FOUR_ITEMS_IBFK_1;
-	public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = ForeignKeys0.FOUR_ITEMS_IBFK_2;
-	public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = ForeignKeys0.FOUR_ITEMS_IBFK_3;
+	public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_2 = ForeignKeys0.FOUR_ITEMS_IBFK_2;
 	public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = ForeignKeys0.GRADE_IBFK_1;
 	public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = ForeignKeys0.GRADE_IBFK_2;
 	public static final ForeignKey<MailboxCountRecord, UsersRecord> MAILBOX_COUNT_IBFK_1 = ForeignKeys0.MAILBOX_COUNT_IBFK_1;
@@ -338,7 +333,6 @@ public class Keys {
 		public static Identity<AutonomousPracticeTemplateRecord, Integer> IDENTITY_AUTONOMOUS_PRACTICE_TEMPLATE = createIdentity(AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE, AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE.ID);
 		public static Identity<ClassroomCourseTimetableInfoRecord, Integer> IDENTITY_CLASSROOM_COURSE_TIMETABLE_INFO = createIdentity(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.ID);
 		public static Identity<FourItemsRecord, Integer> IDENTITY_FOUR_ITEMS = createIdentity(FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.ID);
-		public static Identity<FourItemsTypeRecord, Integer> IDENTITY_FOUR_ITEMS_TYPE = createIdentity(FourItemsType.FOUR_ITEMS_TYPE, FourItemsType.FOUR_ITEMS_TYPE.ID);
 		public static Identity<GradeRecord, Integer> IDENTITY_GRADE = createIdentity(Grade.GRADE, Grade.GRADE.ID);
 		public static Identity<HeadTypeRecord, Integer> IDENTITY_HEAD_TYPE = createIdentity(HeadType.HEAD_TYPE, HeadType.HEAD_TYPE.ID);
 		public static Identity<MailboxCountRecord, Integer> IDENTITY_MAILBOX_COUNT = createIdentity(MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ID);
@@ -390,7 +384,6 @@ public class Keys {
 		public static final UniqueKey<AutonomousPracticeTemplateRecord> KEY_AUTONOMOUS_PRACTICE_TEMPLATE_PRIMARY = createUniqueKey(AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE, AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE.ID);
 		public static final UniqueKey<ClassroomCourseTimetableInfoRecord> KEY_CLASSROOM_COURSE_TIMETABLE_INFO_PRIMARY = createUniqueKey(ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.ID);
 		public static final UniqueKey<FourItemsRecord> KEY_FOUR_ITEMS_PRIMARY = createUniqueKey(FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.ID);
-		public static final UniqueKey<FourItemsTypeRecord> KEY_FOUR_ITEMS_TYPE_PRIMARY = createUniqueKey(FourItemsType.FOUR_ITEMS_TYPE, FourItemsType.FOUR_ITEMS_TYPE.ID);
 		public static final UniqueKey<GradeRecord> KEY_GRADE_PRIMARY = createUniqueKey(Grade.GRADE, Grade.GRADE.ID);
 		public static final UniqueKey<HeadTypeRecord> KEY_HEAD_TYPE_PRIMARY = createUniqueKey(HeadType.HEAD_TYPE, HeadType.HEAD_TYPE.ID);
 		public static final UniqueKey<MailboxCountRecord> KEY_MAILBOX_COUNT_PRIMARY = createUniqueKey(MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ID);
@@ -454,8 +447,7 @@ public class Keys {
 		public static final ForeignKey<ClassroomCourseTimetableInfoRecord, TeachTypeRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TYPE_PRIMARY, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.TEACH_TYPE_ID);
 		public static final ForeignKey<ClassroomCourseTimetableInfoRecord, UsersRecord> CLASSROOM_COURSE_TIMETABLE_INFO_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO, ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO.FILE_USER);
 		public static final ForeignKey<FourItemsRecord, TeachTaskInfoRecord> FOUR_ITEMS_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_TEACH_TASK_INFO_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.TEACH_TASK_INFO_ID);
-		public static final ForeignKey<FourItemsRecord, FourItemsTypeRecord> FOUR_ITEMS_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_FOUR_ITEMS_TYPE_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FOUR_ITEMS_TYPE_ID);
-		public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_3 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FILE_USER);
+		public static final ForeignKey<FourItemsRecord, UsersRecord> FOUR_ITEMS_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, FourItems.FOUR_ITEMS, FourItems.FOUR_ITEMS.FILE_USER);
 		public static final ForeignKey<GradeRecord, MajorRecord> GRADE_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_MAJOR_PRIMARY, Grade.GRADE, Grade.GRADE.MAJOR_ID);
 		public static final ForeignKey<GradeRecord, UsersRecord> GRADE_IBFK_2 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, Grade.GRADE, Grade.GRADE.GRADE_HEAD);
 		public static final ForeignKey<MailboxCountRecord, UsersRecord> MAILBOX_COUNT_IBFK_1 = createForeignKey(com.school.cbis.domain.Keys.KEY_USERS_PRIMARY, MailboxCount.MAILBOX_COUNT, MailboxCount.MAILBOX_COUNT.ACCEPT_USER);

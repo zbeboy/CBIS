@@ -14,7 +14,6 @@ import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
-import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
@@ -123,11 +122,6 @@ public class Tables {
 	 * The table cbis.four_items
 	 */
 	public static final FourItems FOUR_ITEMS = com.school.cbis.domain.tables.FourItems.FOUR_ITEMS;
-
-	/**
-	 * The table cbis.four_items_type
-	 */
-	public static final FourItemsType FOUR_ITEMS_TYPE = com.school.cbis.domain.tables.FourItemsType.FOUR_ITEMS_TYPE;
 
 	/**
 	 * The table cbis.grade

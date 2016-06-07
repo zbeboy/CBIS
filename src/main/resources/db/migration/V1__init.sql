@@ -261,16 +261,11 @@ create table teach_task_content(
   foreign key(teach_task_title_id) references teach_task_title(id)
 );
 
-create table four_items_type(
-  id int not null primary key auto_increment,
-  name varchar(25) not null
-);
 
 create table four_items(
   id int not null primary key auto_increment,
   teach_task_info_id int not null,
-  content_y int not null,
-  four_items_type_id int not null,
+  content_x int not null,
   four_items_file_url varchar(500) not null,
   four_items_file_size varchar(50),
   four_items_file_name varchar(30) not null,
@@ -278,7 +273,6 @@ create table four_items(
   file_user varchar(64) not null,
   file_type varchar(15),
   foreign key(teach_task_info_id) references teach_task_info(id),
-  foreign key(four_items_type_id) references four_items_type(id),
   foreign key(file_user) references users(username)
 );
 
@@ -642,11 +636,6 @@ insert into grade(major_id,year,grade_name,grade_head) values(1,'2012','计科12
 
 insert into teach_type(name) values('理论');
 insert into teach_type(name) values('实践');
-
-insert into four_items_type(name) values('大纲');
-insert into four_items_type(name) values('计划');
-insert into four_items_type(name) values('日程');
-insert into four_items_type(name) values('ppt');
 
 insert into head_type(type_value, type_name) values('text','文本');
 insert into head_type(type_value, type_name) values('textarea','多文本');

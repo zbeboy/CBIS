@@ -35,14 +35,6 @@ public interface WordbookService {
     Result<TeachTypeRecord> teachType();
 
     /**
-     * 四大件类型
-     *
-     * @return 四大件类型
-     */
-    @Cacheable(cacheNames = "fourItemsType")
-    Result<FourItemsTypeRecord> fourItemsType();
-
-    /**
      * 用于默认系使用
      * @return
      */

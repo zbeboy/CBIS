@@ -14,7 +14,6 @@ import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.FourItems;
-import com.school.cbis.domain.tables.FourItemsType;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
 import com.school.cbis.domain.tables.MailboxCount;
@@ -81,7 +80,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cbis extends SchemaImpl {
 
-	private static final long serialVersionUID = -1707472079;
+	private static final long serialVersionUID = -1925949901;
 
 	/**
 	 * The reference instance of <code>cbis</code>
@@ -114,7 +113,6 @@ public class Cbis extends SchemaImpl {
 			AutonomousPracticeTemplate.AUTONOMOUS_PRACTICE_TEMPLATE,
 			ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO,
 			FourItems.FOUR_ITEMS,
-			FourItemsType.FOUR_ITEMS_TYPE,
 			Grade.GRADE,
 			HeadType.HEAD_TYPE,
 			MailboxCount.MAILBOX_COUNT,

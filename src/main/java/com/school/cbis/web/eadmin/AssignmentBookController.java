@@ -122,6 +122,12 @@ public class AssignmentBookController {
         return ajaxData;
     }
 
+    /**
+     * 变更使用状态
+     * @param id
+     * @param use
+     * @return
+     */
     @RequestMapping("/administrator/eadmin/assignmentBookUse")
     @ResponseBody
     public AjaxData assignmentBookUse(@RequestParam("id") int id, @RequestParam("isUse") Byte use) {

@@ -73,17 +73,10 @@ public class FourItemsDao extends DAOImpl<FourItemsRecord, com.school.cbis.domai
 	}
 
 	/**
-	 * Fetch records that have <code>content_y IN (values)</code>
+	 * Fetch records that have <code>content_x IN (values)</code>
 	 */
-	public List<com.school.cbis.domain.tables.pojos.FourItems> fetchByContentY(Integer... values) {
-		return fetch(FourItems.FOUR_ITEMS.CONTENT_Y, values);
-	}
-
-	/**
-	 * Fetch records that have <code>four_items_type_id IN (values)</code>
-	 */
-	public List<com.school.cbis.domain.tables.pojos.FourItems> fetchByFourItemsTypeId(Integer... values) {
-		return fetch(FourItems.FOUR_ITEMS.FOUR_ITEMS_TYPE_ID, values);
+	public List<com.school.cbis.domain.tables.pojos.FourItems> fetchByContentX(Integer... values) {
+		return fetch(FourItems.FOUR_ITEMS.CONTENT_X, values);
 	}
 
 	/**

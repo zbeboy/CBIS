@@ -25,12 +25,11 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FourItems implements Serializable {
 
-	private static final long serialVersionUID = -1743073709;
+	private static final long serialVersionUID = -410855681;
 
 	private Integer   id;
 	private Integer   teachTaskInfoId;
-	private Integer   contentY;
-	private Integer   fourItemsTypeId;
+	private Integer   contentX;
 	private String    fourItemsFileUrl;
 	private String    fourItemsFileSize;
 	private String    fourItemsFileName;
@@ -43,8 +42,7 @@ public class FourItems implements Serializable {
 	public FourItems(FourItems value) {
 		this.id = value.id;
 		this.teachTaskInfoId = value.teachTaskInfoId;
-		this.contentY = value.contentY;
-		this.fourItemsTypeId = value.fourItemsTypeId;
+		this.contentX = value.contentX;
 		this.fourItemsFileUrl = value.fourItemsFileUrl;
 		this.fourItemsFileSize = value.fourItemsFileSize;
 		this.fourItemsFileName = value.fourItemsFileName;
@@ -56,8 +54,7 @@ public class FourItems implements Serializable {
 	public FourItems(
 		Integer   id,
 		Integer   teachTaskInfoId,
-		Integer   contentY,
-		Integer   fourItemsTypeId,
+		Integer   contentX,
 		String    fourItemsFileUrl,
 		String    fourItemsFileSize,
 		String    fourItemsFileName,
@@ -67,8 +64,7 @@ public class FourItems implements Serializable {
 	) {
 		this.id = id;
 		this.teachTaskInfoId = teachTaskInfoId;
-		this.contentY = contentY;
-		this.fourItemsTypeId = fourItemsTypeId;
+		this.contentX = contentX;
 		this.fourItemsFileUrl = fourItemsFileUrl;
 		this.fourItemsFileSize = fourItemsFileSize;
 		this.fourItemsFileName = fourItemsFileName;
@@ -96,21 +92,12 @@ public class FourItems implements Serializable {
 	}
 
 	@NotNull
-	public Integer getContentY() {
-		return this.contentY;
+	public Integer getContentX() {
+		return this.contentX;
 	}
 
-	public void setContentY(Integer contentY) {
-		this.contentY = contentY;
-	}
-
-	@NotNull
-	public Integer getFourItemsTypeId() {
-		return this.fourItemsTypeId;
-	}
-
-	public void setFourItemsTypeId(Integer fourItemsTypeId) {
-		this.fourItemsTypeId = fourItemsTypeId;
+	public void setContentX(Integer contentX) {
+		this.contentX = contentX;
 	}
 
 	@NotNull
@@ -176,8 +163,7 @@ public class FourItems implements Serializable {
 
 		sb.append(id);
 		sb.append(", ").append(teachTaskInfoId);
-		sb.append(", ").append(contentY);
-		sb.append(", ").append(fourItemsTypeId);
+		sb.append(", ").append(contentX);
 		sb.append(", ").append(fourItemsFileUrl);
 		sb.append(", ").append(fourItemsFileSize);
 		sb.append(", ").append(fourItemsFileName);
