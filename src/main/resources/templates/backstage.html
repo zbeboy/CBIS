@@ -421,5 +421,34 @@
         </div>
     </div>
 </div>
+
+
+<!-- 考试管理nav-->
+<div class="uk-width-medium-1-4" th:fragment="examnav">
+    <div class="uk-grid uk-hidden-small">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <h3 class="uk-panel-title">考试管理</h3>
+                <ul class="uk-nav uk-nav-side" data-uk-nav="">
+                    <li id="navexammanager"><a href="#" th:href="@{/maintainer/exam/examManager}">考试管理</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uk-panel uk-visible-small" data-uk-sticky="{top:70}">
+        <button class="uk-button" data-uk-offcanvas="{target:'#exam-id'}"><i class="uk-icon-reorder"></i>考试管理</button>
+    </div>
+    <div id="exam-id" class="uk-offcanvas uk-visible-small">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
+                <li class="uk-nav-header">考试管理</li>
+                <li id="offcanvasexammanager"><a href="#" th:href="@{/maintainer/exam/examManager}">考试管理</a> </li>
+                <li>
+                    <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
