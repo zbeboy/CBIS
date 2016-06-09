@@ -3,7 +3,7 @@
  */
 /**
  * 前端分页参数
- * @type {{bigTitle: string, realName: string, pageNum: number, pageSize: number}}
+ * @type {{examTitle: string, majorName: string, pageNum: number, pageSize: number}}
  */
 var param = {
     'examTitle':$('#examTitle').val().trim(),
