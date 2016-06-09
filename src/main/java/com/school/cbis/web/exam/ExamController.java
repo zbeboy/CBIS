@@ -273,7 +273,7 @@ public class ExamController {
     }
 
     /**
-     * 招聘展示详细
+     * 考试展示详细
      * @param id
      * @param modelMap
      * @return
