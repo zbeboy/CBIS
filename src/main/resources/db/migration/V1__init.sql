@@ -605,6 +605,21 @@ create table teaching_material_content(
   foreign key(teaching_material_head_id) references teaching_material_head(id)
 );
 
+create table exam(
+  id int not null primary key auto_increment,
+  exam_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '考试时间',
+  exam_address varchar(500) comment '考试地点',
+  exam_content text comment '考试内容',
+  exam_title varchar(100) comment '考试标题',
+  major_id int not null,
+  tie_id int not null,
+  username varchar(64) not null,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  foreign key(major_id) references major(id),
+  foreign key(tie_id) references tie(id),
+  foreign key(username) references users(username)
+);
+
 insert into user_type(name) values('学生');
 insert into user_type(name) values('教师');
 

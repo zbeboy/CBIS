@@ -9,6 +9,7 @@ import com.school.cbis.domain.tables.records.TieRecord;
 import com.school.cbis.service.*;
 import com.school.cbis.util.CaptchaServiceSingleton;
 import com.school.cbis.util.RandomUtils;
+import com.school.cbis.vo.exam.ExamListVo;
 import com.school.cbis.vo.major.MajorIndexVo;
 import com.school.cbis.vo.recruit.RecruitListVo;
 import org.joda.time.DateTime;
@@ -89,6 +90,8 @@ public class MainController {
     @Resource
     private RecruitService recruitService;
 
+    @Resource
+    private ExamService examService;
     /**
      *  主页
      * ## 本项目只针对一个系,不再提供多个系扩展
@@ -173,6 +176,21 @@ public class MainController {
             }
         }
         modelMap.addAttribute("recruitListVoList",recruitListVoList);
+
+        //考试信息
+        ExamListVo examListVo1 = new ExamListVo();
+        examListVo1.setPageNum(0);
+        examListVo1.setPageSize(4);
+        List<ExamListVo> examListVoList = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(tie)){
+            Result<Record11<Integer, Integer, Timestamp, String, String, String, Integer, String, String, Timestamp, String>>
+                    examRecords = examService.findByTieIdAndPage(examListVo1, tie.getId());
+            if(examRecords.isNotEmpty()){
+                examListVoList = examRecords.into(ExamListVo.class);
+            }
+        }
+        modelMap.addAttribute("examListVoList",examListVoList);
+
         return "/user/index";
     }
 

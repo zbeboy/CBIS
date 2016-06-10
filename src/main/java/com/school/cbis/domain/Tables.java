@@ -13,6 +13,7 @@ import com.school.cbis.domain.tables.AutonomousPracticeHead;
 import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
+import com.school.cbis.domain.tables.Exam;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
@@ -117,6 +118,11 @@ public class Tables {
 	 * The table cbis.classroom_course_timetable_info
 	 */
 	public static final ClassroomCourseTimetableInfo CLASSROOM_COURSE_TIMETABLE_INFO = com.school.cbis.domain.tables.ClassroomCourseTimetableInfo.CLASSROOM_COURSE_TIMETABLE_INFO;
+
+	/**
+	 * The table cbis.exam
+	 */
+	public static final Exam EXAM = com.school.cbis.domain.tables.Exam.EXAM;
 
 	/**
 	 * The table cbis.four_items

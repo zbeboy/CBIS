@@ -117,41 +117,17 @@
             <div class="uk-grid">
                 <div class="uk-width-medium-1-2">
                     <h1>考试动态</h1>
-                    <ul class="uk-list uk-list-space">
-                        <li>
+                    <ul class="uk-list uk-list-space" th:unless="${#lists.isEmpty(examListVoList)}">
+                        <li th:each="ev:${examListVoList}" >
                             <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于学期考试....</a>
+                                <div class="uk-width-1-2 uk-text-truncate">
+                                    <a href="#" th:href="@{/user/exam/examShowDetailed}+'?id='+${ev.id}" th:text="${ev.examTitle}"></a>
                                 </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
+                                <div class="uk-width-1-2 uk-text-muted uk-text-right formatdate" th:text="${ev.examTime}"></div>
                             </div>
                         </li>
                         <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于学期考试....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于学期考试....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <a href="notice.html">关于学期考试....</a>
-                                </div>
-                                <div class="uk-width-1-2 uk-text-muted uk-text-right">2015/10/18</div>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="uk-button uk-button-primary" href="noticeboard.html" style="float:right">更多</a>
+                            <a class="uk-button uk-button-primary" href="#" th:href="@{/user/exam/examShow}" style="float:right">更多</a>
                         </li>
                     </ul>
                 </div>
