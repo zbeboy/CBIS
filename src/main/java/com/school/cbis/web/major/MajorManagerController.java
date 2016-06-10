@@ -243,7 +243,7 @@ public class MajorManagerController {
     }
 
     /**
-     * 系简介数据
+     * 简介数据
      *
      * @param majorIntroduceVo
      * @return

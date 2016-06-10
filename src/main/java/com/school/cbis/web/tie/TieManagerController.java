@@ -396,9 +396,8 @@ public class TieManagerController {
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
-            }
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            articleInfoId = tie.getTieIntroduceArticleInfoId();
         }
         if (articleInfoId > 0) {
             modelMap.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
@@ -423,9 +422,8 @@ public class TieManagerController {
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
-            }
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            articleInfoId = tie.getTiePrincipalArticleInfoId();
         }
         if (articleInfoId > 0) {
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
@@ -450,9 +448,8 @@ public class TieManagerController {
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
-            }
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            articleInfoId = tie.getTieTrainingGoalArticleInfoId();
         }
         if (articleInfoId > 0) {
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
@@ -477,9 +474,8 @@ public class TieManagerController {
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
-            }
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            articleInfoId = tie.getTieTraitArticleInfoId();
         }
         if (articleInfoId > 0) {
             List<ArticleSub> articleSubs = articleSubService.findByArticleInfoId(articleInfoId);
