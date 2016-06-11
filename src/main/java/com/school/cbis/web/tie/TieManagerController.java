@@ -14,6 +14,8 @@ import com.school.cbis.vo.tie.*;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
@@ -393,12 +395,15 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieIntroduceUpdate")
     public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_INTRODUCE_ARTICLE_INFO_ID);
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            if(!ObjectUtils.isEmpty(tie.getTieIntroduceArticleInfoId())){
+                articleInfoId = tie.getTieIntroduceArticleInfoId();
             }
+
         }
         if (articleInfoId > 0) {
             modelMap.addAttribute("articleinfo", articleInfoService.findById(articleInfoId));
@@ -420,11 +425,13 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieHeadUpdate")
     public String tieHeadUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_PRINCIPAL_ARTICLE_INFO_ID);
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            if(!ObjectUtils.isEmpty(tie.getTiePrincipalArticleInfoId())){
+                articleInfoId = tie.getTiePrincipalArticleInfoId();
             }
         }
         if (articleInfoId > 0) {
@@ -447,11 +454,13 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieTrainGoalUpdate")
     public String backstageTieTrainGoal(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_TRAINING_GOAL_ARTICLE_INFO_ID);
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            if(!ObjectUtils.isEmpty(tie.getTieTrainingGoalArticleInfoId())){
+                articleInfoId = tie.getTieTrainingGoalArticleInfoId();
             }
         }
         if (articleInfoId > 0) {
@@ -474,11 +483,13 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieItemUpdate")
     public String tieItemUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
-            if (!StringUtils.isEmpty(record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID))) {
-                articleInfoId = record.getValue(Tables.TIE.TIE_TRAIT_ARTICLE_INFO_ID);
+            Tie tie = tieService.findById(record.getValue(Tables.TIE.ID));
+            if(!ObjectUtils.isEmpty(tie.getTieTraitArticleInfoId())){
+                articleInfoId = tie.getTieTraitArticleInfoId();
             }
         }
         if (articleInfoId > 0) {
