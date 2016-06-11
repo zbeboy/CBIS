@@ -8,6 +8,7 @@ import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -81,6 +82,12 @@ public interface UsersService {
      */
     @Cacheable(cacheNames = "userAllInfo")
     Record findAll(String username);
+
+    /**
+     * 清空 userAllInfo
+     */
+    @CacheEvict(cacheNames="userAllInfo",allEntries=true)// 清空accountCache 缓存
+    void reloadUserAllInfo();
 
     /**
      * 保存用户

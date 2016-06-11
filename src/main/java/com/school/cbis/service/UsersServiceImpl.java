@@ -164,6 +164,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public void reloadUserAllInfo() {
+        /*
+        这里清空缓存使用
+         */
+    }
+
+    @Override
     public void save(Users users) {
         usersDao.insert(users);
     }

@@ -125,7 +125,7 @@
             <div class="uk-panel uk-panel-box">
                 <h3 class="uk-panel-title">班级管理</h3>
                 <ul class="uk-nav uk-nav-side" data-uk-nav="">
-                    <li id="navgrademanager"><a href="#" th:href="@{/maintainer/grade/grademanager}">班级管理</a> </li>
+                    <li id="navgrademanager"><a href="#" th:href="@{/maintainer/grade/gradeManager}">班级管理</a> </li>
                 </ul>
             </div>
         </div>
@@ -137,7 +137,7 @@
         <div class="uk-offcanvas-bar">
             <ul class="uk-nav uk-nav-offcanvas" data-uk-nav="">
                 <li class="uk-nav-header">班级管理</li>
-                <li id="offcanvasgrademanager"><a href="#" th:href="@{/maintainer/grade/majormanager}">班级管理</a> </li>
+                <li id="offcanvasgrademanager"><a href="#" th:href="@{/maintainer/grade/gradeManager}">班级管理</a> </li>
                 <li>
                     <a href="javascript:;" onclick="javascript:$('#logout').submit();" sec:authorize="isAuthenticated()" >退出登录</a>
                 </li>

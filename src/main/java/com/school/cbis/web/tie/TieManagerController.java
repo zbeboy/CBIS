@@ -14,6 +14,8 @@ import com.school.cbis.vo.tie.*;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
@@ -393,6 +395,7 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieIntroduceUpdate")
     public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -422,6 +425,7 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieHeadUpdate")
     public String tieHeadUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -450,6 +454,7 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieTrainGoalUpdate")
     public String backstageTieTrainGoal(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -478,6 +483,7 @@ public class TieManagerController {
     @RequestMapping("/maintainer/tie/tieItemUpdate")
     public String tieItemUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
+        usersService.reloadUserAllInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {

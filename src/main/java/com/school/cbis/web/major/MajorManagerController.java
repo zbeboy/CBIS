@@ -319,7 +319,7 @@ public class MajorManagerController {
             modelMap.addAttribute("articleinfo", articleInfo);
             modelMap.addAttribute("articlesubinfo", articleSubs);
             modelMap.addAttribute("major", major);
-            modelMap.addAttribute("isShow", major.getIsShow() == 0 ? false : true);
+            modelMap.addAttribute("isShow", false);
         }
         return "/maintainer/major/majorintroduceupdate";
     }
