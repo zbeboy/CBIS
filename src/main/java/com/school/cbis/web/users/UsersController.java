@@ -436,7 +436,7 @@ public class UsersController {
         modelMap.addAttribute("users", users);
         if (!ObjectUtils.isEmpty(users) && users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {//类型为老师
             return "/maintainer/users/teacherdata";
-        } else {
+        } else if (!ObjectUtils.isEmpty(users)) {//学生
             List<Student> students = studentService.findByStudentNumber(users.getUsername());
             if (!students.isEmpty()) {
                 modelMap.addAttribute("studentInfo", students.get(0));
@@ -445,6 +445,7 @@ public class UsersController {
             }
             return "/maintainer/users/studentdata";
         }
+        return "redirect:/maintainer/users/studentManager";
     }
 
     /**
