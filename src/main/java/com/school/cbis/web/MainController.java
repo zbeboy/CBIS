@@ -168,7 +168,7 @@ public class MainController {
         //招聘信息
         RecruitListVo recruitListVo1 = new RecruitListVo();
         recruitListVo1.setPageNum(0);
-        recruitListVo1.setPageSize(4);
+        recruitListVo1.setPageSize(7);
         List<RecruitListVo> recruitListVoList = new ArrayList<>();
         if(!ObjectUtils.isEmpty(tie)){
             Result<Record11<Integer, Integer, Timestamp, String, String, String, String, String, String, Timestamp, String>>
@@ -182,7 +182,7 @@ public class MainController {
         //考试信息
         ExamListVo examListVo1 = new ExamListVo();
         examListVo1.setPageNum(0);
-        examListVo1.setPageSize(4);
+        examListVo1.setPageSize(7);
         List<ExamListVo> examListVoList = new ArrayList<>();
         if(!ObjectUtils.isEmpty(tie)){
             Result<Record11<Integer, Integer, Timestamp, String, String, String, Integer, String, String, Timestamp, String>>
