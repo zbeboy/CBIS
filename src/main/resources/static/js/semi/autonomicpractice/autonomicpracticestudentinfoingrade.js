@@ -136,8 +136,12 @@ function refreshHaveNoPaySearch(){
  * 执行入口
  */
 function action() {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/semi/autonomicpractice/autonomicPracticeStudentInfoInGradeData', autonomousPracticeParam,
         function (data) {
+            layer.close(index);
             pagingParam.havePayStudent = data.single.havePayStudent;
             pagingParam.haveNoPayStudent = data.single.haveNoPayStudent;
             outputHavePayHtml();

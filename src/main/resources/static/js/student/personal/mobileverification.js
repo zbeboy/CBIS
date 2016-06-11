@@ -124,9 +124,13 @@ function sendMessage() {
     if(regex.test(mobile)){
         $('#mobile').removeClass('uk-form-danger');
         $('#mobileError').text('');
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/student/personal/sendMobileKey',{
             'mobile':mobile
         },function(data){
+            layer.close(index);
             if(data.state){
                 curCount = count;
                 //设置button效果，开始计时
@@ -168,9 +172,13 @@ function sendUpdateMessage() {
     if(regex.test(mobile)){
         $('#updateMobile').removeClass('uk-form-danger');
         $('#updateMobileError').text('');
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/student/personal/sendMobileKey',{
             'mobile':mobile
         },function(data){
+            layer.close(index);
             if(data.state){
                 updateCurCount = updateCount;
                 //设置button效果，开始计时

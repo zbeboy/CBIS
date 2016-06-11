@@ -171,8 +171,12 @@ function saveAddTitle() {
         };
     }
 
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + url, param, function (data) {
         if (data.state) {
+            layer.close(index);
             $('#dataTitle').addClass('uk-hidden');
             $('#dataTitle').empty();
             $('#dataTitle').append(addTemplate);
@@ -239,9 +243,13 @@ function deleteTitle(obj) {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/administrator/eadmin/deleteTeachingMaterialTemplateTitle', {
             'id': id
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 $(obj).parent().parent().remove();
             }

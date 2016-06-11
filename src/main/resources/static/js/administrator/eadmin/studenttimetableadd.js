@@ -7,9 +7,13 @@
  */
 function selectYear(obj) {
     if ($(obj).val().trim().length > 0) {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + "/maintainer/users/gradeData", {
             'year': $(obj).val().trim()
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 var _ = DOMBuilder;
                 $('#gradeData').empty();

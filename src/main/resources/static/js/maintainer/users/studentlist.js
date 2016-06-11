@@ -48,9 +48,13 @@ function outputHtml(data) {
  * 执行入口
  */
 function action() {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/maintainer/users/studentManagerData', {
         'param': JSON.stringify(param)
     }, function (data) {
+        layer.close(index);
         outputHtml(data);
         if(data.result.length>0){
             initPage(data);
@@ -113,7 +117,11 @@ var authoritiesParam = new Array();
  */
 function initAuthorities() {
 
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.get(web_path + '/maintainer/users/getAuthorities', function (data) {
+        layer.close(index);
         var d = JSON.parse(data.single.roleList);
         for (var i = 0; i < d.length; i++) {
             authoritiesParam.push(new authoritiesObj("form-a-r" + i, d[i].authority, d[i].role));
@@ -153,9 +161,13 @@ function openAddModal() {
  */
 function selectYear(obj) {
     if ($(obj).val().trim().length > 0) {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + "/maintainer/users/gradeData", {
             'year': $(obj).val().trim()
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 var _ = DOMBuilder;
                 $('#gradeData').empty();
@@ -200,9 +212,13 @@ function resetPassword(obj) {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var studentNumber = $(obj).prev().prev().text();
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/maintainer/users/resetPassword', {
             'username': studentNumber
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 layer.msg(data.msg, {icon: 1});
             } else {
@@ -241,10 +257,14 @@ function openStateModal(obj) {
  */
 function state() {
     var n = $("input[name='stateRadio']:checked").val();
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/maintainer/users/resetEnable', {
         'username': $('#stateNum').val(),
         'enable': n
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             window.location.reload(true);
         } else {
@@ -310,10 +330,14 @@ function authorities() {
     for (var i = 0; i < $("input[name='authoritiesCheck']:checked").length; i++) {
         n.push($($("input[name='authoritiesCheck']:checked")[i]).val().trim());
     }
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/maintainer/users/resetAuthority', {
         'username': $('#authoritiesNum').val(),
         'authority': n.join(",")
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             window.location.reload(true);
         } else {

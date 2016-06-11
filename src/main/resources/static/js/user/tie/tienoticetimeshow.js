@@ -16,12 +16,16 @@ $('[data-uk-switcher]').on('show.uk.switcher', function (event, area) {
  * @param data
  */
 function outputHtml(id, elementIndex) {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/user/tie/tieNoticeTimeDropData', {
             'id': id,
             'bigTitle': bigTitle,
             '_csrf': $("meta[name='_csrf']").attr("content")
         },
         function (data) {
+            layer.close(index);
             $($('#time-id').children()[elementIndex]).empty();
             if (data.state) {
                 $($('#time-id').children()[elementIndex]).append($('<ul class="uk-list uk-list-space uk-list-line" >'));

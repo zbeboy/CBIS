@@ -128,7 +128,11 @@ var globalAuthorities = null;//权限对象
  * 初始化模板数据
  */
 function initTemplateData() {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.get(web_path + '/administrator/autonomicpractice/initTemplateData', function (data) {
+        layer.close(index);
         globalAuthorities = JSON.parse(data.single.roleList);
         headType = data.single.headType;
         databaseTables = data.single.databaseTables;
@@ -207,10 +211,14 @@ function validateUpdateAutonomicPracticeTemplateTitle(id, templateName) {
     if (templateName.length <= 0) {
         layer.msg('请填写模板名!');
     } else {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + "/administrator/autonomicpractice/validateUpdateAutonomicPracticeTemplateTitle", {
             'id': id,
             'templateName': templateName
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 sendTemplateInfo(id, templateName);
             } else {
@@ -225,10 +233,14 @@ function validateUpdateAutonomicPracticeTemplateTitle(id, templateName) {
  * @param templateName
  */
 function sendTemplateInfo(id, templateName) {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + "/administrator/autonomicpractice/updateAutonomicPracticeTemplate", {
         'id': id,
         'templateName': templateName
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             $('#templateInfo').addClass('uk-hidden');
             $('#templdateData').removeClass('uk-hidden');
@@ -537,6 +549,9 @@ function saveAddTitle() {
         id = editTitleId;
     }
 
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + url, {
         'id': id,
         'title': title,
@@ -551,6 +566,7 @@ function saveAddTitle() {
         'sort': sort
 
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             $('#dataTitle').addClass('uk-hidden');
             $('#dataTitle').empty();
@@ -590,9 +606,13 @@ function cancelAddTitle() {
  * @param obj
  */
 function highTitleSelect(obj, id) {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlyShow', {
         'id': id
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             for (var i = 0; i < $(obj).children().length; i++) {
                 if ($($(obj).children()[i]).hasClass('uk-panel-box-primary')) {
@@ -615,9 +635,13 @@ function saveHighlyTitleSort() {
         sorts.push($($('#panelData').children()[i]).attr('data'));
     }
 
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/administrator/autonomicpractice/updateAutonomicPracticeHeadHighlySort', {
         'sort': sorts.join(",")
     }, function (data) {
+        layer.close(index);
         window.location.href = web_path + '/administrator/autonomicpractice/templateList';
     });
 }
@@ -776,9 +800,13 @@ function deleteTitle(obj) {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/administrator/autonomicpractice/deleteAutonomicPracticeHead', {
             'id': id
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 var d = $('#panelData').children();
                 for (var i = 0; i < d.length; i++) {
