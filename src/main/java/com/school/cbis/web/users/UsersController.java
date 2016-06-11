@@ -103,6 +103,7 @@ public class UsersController {
 
     /**
      * 班级数据
+     *
      * @param year
      * @return
      */
@@ -121,20 +122,21 @@ public class UsersController {
 
     /**
      * 获取该系下教师
+     *
      * @return
      */
     @RequestMapping("/maintainer/users/teacherAllData")
     @ResponseBody
-    public AjaxData<TeacherVo> teacherAllData(String teacherName){
+    public AjaxData<TeacherVo> teacherAllData(String teacherName) {
         AjaxData<TeacherVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if(!ObjectUtils.isEmpty(record)){
+        if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
-        if(tieId>0){
-            Result<Record2<Integer,String>> record2s = teacherService.findByTieIdWithTeacherName(teacherName,tieId);
-            if(record2s.isNotEmpty()){
+        if (tieId > 0) {
+            Result<Record2<Integer, String>> record2s = teacherService.findByTieIdWithTeacherName(teacherName, tieId);
+            if (record2s.isNotEmpty()) {
                 List<TeacherVo> list = record2s.into(TeacherVo.class);
                 ajaxData.success().listData(list);
             } else {
@@ -359,7 +361,7 @@ public class UsersController {
      * @return
      */
     @RequestMapping(value = "/maintainer/users/addStudent", method = RequestMethod.POST)
-    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade,HttpServletRequest request) {
+    public String addStudent(@RequestParam("username") String username, @RequestParam("realname") String realname, @RequestParam("grade") int grade, HttpServletRequest request) {
         Student student = new Student();
         student.setStudentNumber(username);
         student.setGradeId(grade);
@@ -407,30 +409,32 @@ public class UsersController {
 
     /**
      * 获取权限数据
+     *
      * @return
      */
     @RequestMapping("/maintainer/users/getAuthorities")
     @ResponseBody
-    public AjaxData getAuthorities(){
+    public AjaxData getAuthorities() {
         AjaxData ajaxData = new AjaxData();
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         //权限
-        log.debug("roleList : {}",wordbook.getRoleString());
-        map.put("roleList",wordbook.getRoleString());
+        log.debug("roleList : {}", wordbook.getRoleString());
+        map.put("roleList", wordbook.getRoleString());
         return ajaxData.success().mapData(map);
     }
 
     /**
      * 编辑
+     *
      * @param username
      * @param modelMap
      * @return
      */
     @RequestMapping("/maintainer/users/editUserData")
-    public String editUserData(@RequestParam("username") String username,ModelMap modelMap){
+    public String editUserData(@RequestParam("username") String username, ModelMap modelMap) {
         Users users = usersService.findByUsername(username);
         modelMap.addAttribute("users", users);
-        if (users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {//类型为老师
+        if (!ObjectUtils.isEmpty(users) && users.getUserTypeId() == wordbook.getUserTypeMap().get(Wordbook.USER_TYPE_TEACHER)) {//类型为老师
             return "/maintainer/users/teacherdata";
         } else {
             List<Student> students = studentService.findByStudentNumber(users.getUsername());
@@ -445,14 +449,15 @@ public class UsersController {
 
     /**
      * 管理用户简介
+     *
      * @param usersArticleVo
      * @param modelMap
      * @return
      */
     @RequestMapping("/maintainer/users/userArticle")
-    public String userArticle(UsersArticleVo usersArticleVo,ModelMap modelMap){
-        modelMap.addAttribute("usersArticleVo",usersArticleVo);
-        if(usersArticleVo.getUserType().equals(Wordbook.USER_TYPE_STUDENT)){
+    public String userArticle(UsersArticleVo usersArticleVo, ModelMap modelMap) {
+        modelMap.addAttribute("usersArticleVo", usersArticleVo);
+        if (usersArticleVo.getUserType().equals(Wordbook.USER_TYPE_STUDENT)) {
             return "/maintainer/users/studentarticle";
         } else {
             return "/maintainer/users/teacherarticle";
@@ -462,28 +467,29 @@ public class UsersController {
 
     /**
      * 简介数据
+     *
      * @param usersArticleVo
      * @return
      */
     @RequestMapping("/maintainer/users/userArticleData")
     @ResponseBody
-    public AjaxData<UsersArticleVo> userArticleData(UsersArticleVo usersArticleVo){
+    public AjaxData<UsersArticleVo> userArticleData(UsersArticleVo usersArticleVo) {
         AjaxData<UsersArticleVo> ajaxData = new AjaxData<>();
         Record record = usersService.findAll(usersService.getUserName());
         int tieId = 0;
-        if(!ObjectUtils.isEmpty(record)){
+        if (!ObjectUtils.isEmpty(record)) {
             tieId = record.getValue(Tables.TIE.ID);
         }
         List<UsersArticleVo> usersArticleVos = new ArrayList<>();
-        if(tieId > 0){
+        if (tieId > 0) {
             int userTypeId = wordbook.getUserTypeMap().get(StringUtils.trimWhitespace(usersArticleVo.getUserType()));
-            Result<Record4<String ,String ,String ,Integer>> record4s = usersService.findByUserTypeIdAndTieIdWithArticle(usersArticleVo,userTypeId,tieId);
-            if(record4s.isNotEmpty()){
+            Result<Record4<String, String, String, Integer>> record4s = usersService.findByUserTypeIdAndTieIdWithArticle(usersArticleVo, userTypeId, tieId);
+            if (record4s.isNotEmpty()) {
                 usersArticleVos = record4s.into(UsersArticleVo.class);
                 PaginationData paginationData = new PaginationData();
                 paginationData.setPageNum(usersArticleVo.getPageNum());
                 paginationData.setPageSize(usersArticleVo.getPageSize());
-                paginationData.setTotalDatas(usersService.findByUserTypeIdAndTieIdWithArticleCount(usersArticleVo,userTypeId,tieId));
+                paginationData.setTotalDatas(usersService.findByUserTypeIdAndTieIdWithArticleCount(usersArticleVo, userTypeId, tieId));
                 ajaxData.success().listData(usersArticleVos).paginationData(paginationData);
             } else {
                 ajaxData.fail().listData(usersArticleVos);
@@ -496,15 +502,16 @@ public class UsersController {
 
     /**
      * 编辑个人简介
+     *
      * @param modelMap
      * @param username 账号
      * @return
      */
     @RequestMapping("/maintainer/users/editUserArticle")
-    public String individualResume(ModelMap modelMap,@RequestParam("username") String username,@RequestParam("userType") String userType) {
+    public String individualResume(ModelMap modelMap, @RequestParam("username") String username, @RequestParam("userType") String userType) {
         ArticleInfo articleInfo = new ArticleInfo();
         List<ArticleSub> articleSubs = null;
-        if(StringUtils.hasLength(username)){
+        if (StringUtils.hasLength(username)) {
             Record record = articleInfoService.findByUsername(username);
             if (!ObjectUtils.isEmpty(record)) {
                 articleInfo = record.into(ArticleInfo.class);
@@ -516,7 +523,7 @@ public class UsersController {
         modelMap.addAttribute("articleinfo", articleInfo);
         modelMap.addAttribute("articlesubinfo", articleSubs);
         modelMap.addAttribute("username", username);
-        if(userType.equals(Wordbook.USER_TYPE_STUDENT)){
+        if (userType.equals(Wordbook.USER_TYPE_STUDENT)) {
             return "/maintainer/users/studentarticleupdate";
         } else {
             return "/maintainer/users/teacherarticleupdate";
