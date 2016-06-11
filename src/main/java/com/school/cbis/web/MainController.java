@@ -152,12 +152,14 @@ public class MainController {
         List<MajorIndexVo> majorIndexVos = new ArrayList<>();
         for (Major m : majors) {
             MajorIndexVo majorIndexVo = new MajorIndexVo();
-            ArticleInfo articleInfo1 = articleInfoService.findById(m.getMajorIntroduceArticleInfoId());
             majorIndexVo.setMajorId(m.getId());
             majorIndexVo.setMajorName(m.getMajorName());
-            if (!StringUtils.isEmpty(m.getMajorIntroduceArticleInfoId())) {
-                majorIndexVo.setArticleInfoId(m.getMajorIntroduceArticleInfoId());
-                majorIndexVo.setArticleContent(articleInfo1.getArticleContent());
+            if (!ObjectUtils.isEmpty(m.getMajorIntroduceArticleInfoId())) {
+                ArticleInfo articleInfo1 = articleInfoService.findById(m.getMajorIntroduceArticleInfoId());
+                if (!StringUtils.isEmpty(m.getMajorIntroduceArticleInfoId())) {
+                    majorIndexVo.setArticleInfoId(m.getMajorIntroduceArticleInfoId());
+                    majorIndexVo.setArticleContent(articleInfo1.getArticleContent());
+                }
             }
             majorIndexVos.add(majorIndexVo);
         }

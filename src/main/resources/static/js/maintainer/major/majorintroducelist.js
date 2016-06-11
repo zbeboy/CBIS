@@ -65,14 +65,14 @@ function outputHtml(d){
         var s = '';
         var show = 0;
         var oshow = '';
-        if(list[i].isShow == 0){
-            s = '不显示';
-            show = 1;
-            oshow = '<i class="uk-icon-eye"></i>';
-        } else {
+        if(list[i].isShow == 1){
             s = '显示';
             show = 0;
             oshow = '<i class="uk-icon-eye-slash"></i>';
+        } else {
+            s = '不显示';
+            show = 1;
+            oshow = '<i class="uk-icon-eye"></i>';
         }
 
         $('#tableData').append(
@@ -113,9 +113,9 @@ function dealNull(obj){
 function toShow(id,show){
     var s = '';
     if(Number(show) == 0){
-        s = "确定不在首页显示该文章吗?";
+        s = "确定不在首页显示该专业吗?";
     } else {
-        s = "确定在首页显示该文章吗?"
+        s = "确定在首页显示该专业吗?"
     }
     layer.confirm(s, {
         btn: ['确定','取消'] //按钮
