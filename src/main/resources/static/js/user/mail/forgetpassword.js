@@ -6,20 +6,24 @@ var count = 30; //间隔函数，1秒执行
 var curCount;//当前剩余秒数
 function sendMessage() {
     var username = $('#username').val().trim();
-        $.post(web_path + '/user/mail/sendResetPasswordEmail',{
-            'username':username
-        },function(data){
-            if(data.state){
-                curCount = count;
-                //设置button效果，开始计时
-                $("#btnSendCode").attr("disabled", "true");
-                $("#btnSendCode").val( + curCount + "秒再获取");
-                InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
-                layer.msg(data.msg);
-            } else {
-                $('#msg').text(data.msg);
-            }
-        },'json')
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $.post(web_path + '/user/mail/sendResetPasswordEmail',{
+        'username':username
+    },function(data){
+        layer.close(index);
+        if(data.state){
+            curCount = count;
+            //设置button效果，开始计时
+            $("#btnSendCode").attr("disabled", "true");
+            $("#btnSendCode").val( + curCount + "秒再获取");
+            InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+            layer.msg(data.msg);
+        } else {
+            $('#msg').text(data.msg);
+        }
+    },'json')
 }
 //timer处理函数
 function SetRemainTime() {
@@ -43,9 +47,13 @@ function validUsername(){
     if(username.length>0){
         $('#username').removeClass('uk-form-danger');
         $('#msg').text('');
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/user/mail/validUsername',{
             'username':username
         },function(data){
+            layer.close(index);
             console.log(data.ok == undefined);
             if(data.ok != undefined){
                 sendMessage();

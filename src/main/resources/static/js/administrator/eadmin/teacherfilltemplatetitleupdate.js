@@ -48,9 +48,13 @@ function outputData(data){
  * 请求数据
  */
 function action(){
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/administrator/eadmin/teacherFillTemplateTitleUpdateData',{
         'templateId':assignmentBookId
     },function(data){
+        layer.close(index);
         if(data.state){
             outputData(data);
         }
@@ -199,7 +203,11 @@ function saveAddTitle() {
         };
     }
 
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + url, param, function (data) {
+        layer.close(index);
         if (data.state) {
             $('#dataTitle').addClass('uk-hidden');
             $('#dataTitle').empty();
@@ -267,9 +275,13 @@ function deleteTitle(obj) {
         var p = $(obj).parent().parent().children();
         var u = $(p[1]).children();
         var id = $(u[0]).text();
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/administrator/eadmin/deleteTeacherFillTemplateTitle', {
             'id': id
         }, function (data) {
+            layer.close(index);
             if (data.state) {
                 $(obj).parent().parent().remove();
             }

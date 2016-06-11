@@ -6,9 +6,13 @@
  * 搜索教师
  */
 function searchTeachers(){
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + "/maintainer/users/teacherAllData", {
         'teacherName': $('#searchTeacher').val().trim()
     }, function (data) {
+        layer.close(index);
         if (data.state) {
             var _ = DOMBuilder;
             $('#teacherData').empty();

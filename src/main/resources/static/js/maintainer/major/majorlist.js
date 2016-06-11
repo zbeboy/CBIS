@@ -146,8 +146,12 @@ function cancel(target){
 }
 
 function action(){
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/maintainer/major/majorData',param,
         function(data){
+            layer.close(index);
             if(data.state){
                 if(data.result.length>0){
                     createPage(data);

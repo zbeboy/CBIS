@@ -269,7 +269,11 @@ var param = {
  * 执行入口
  */
 function action(){
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/teacher/autonomicpractice/autonomicPracticeTeacherData',param,function(data){
+        layer.close(index);
        if(data.state){
            autonomicPracticeTeacherVos = data.single.autonomicPracticeTeacherVos;
            studentIds = data.single.studentIds;
@@ -305,8 +309,12 @@ $(document).ready(function () {
  */
 function saveStudent(obj){
     var p = $(obj).parent().parent();
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.post(web_path + '/teacher/autonomicpractice/addAutonomicPracticeTeacherList',p.serialize(),
     function(data){
+        layer.close(index);
         if(data.state){
             window.location.reload(true);
         } else {

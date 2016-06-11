@@ -124,9 +124,13 @@ var target = {
  */
 function action() {
     if (target.id != null && target.id > 0) {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/user/major/majorArticleShowData', {
             'id': target.id
         }, function (data) {
+            layer.close(index);
             outputHtml(data);
         }, 'json');
     }
@@ -137,9 +141,13 @@ function action() {
  */
 function teacherAction(){
     if (target.majorId != null && target.majorId > 0) {
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.post(web_path + '/user/major/majorArticleShowTeacherData', {
             'majorId': target.majorId
         }, function (data) {
+            layer.close(index);
             outputTeacherHtml(data);
         }, 'json');
     }

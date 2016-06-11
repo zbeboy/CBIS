@@ -24,7 +24,11 @@ function initPage(data) {
 }
 
 function action() {
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.get(web_path + '/maintainer/system/systemMetricsData', function (data) {
+        layer.close(index);
         if (data.state) {
             //console.log(JSON.parse(data.single.metrics));
             initPage(data);
