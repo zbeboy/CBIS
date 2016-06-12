@@ -71,7 +71,7 @@ public class CacheManagerCheck implements CommandLineRunner {
             if (userFile.exists()) {
                 logger.info("success load jacob {}.", jacobDllName);
             } else {
-                String projectDllPath = properties.get("user.dir") + File.separator + "dll" + File.separator + jacobDllName;
+                String projectDllPath = properties.get("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "dll" + File.separator + jacobDllName;
                 logger.debug("not found jacob in java lib path.Reading Copy {} to {}.", projectDllPath, userDllPath);
                 File projectFile = new File(projectDllPath);
                 if (projectFile.exists()) {
