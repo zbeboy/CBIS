@@ -396,6 +396,7 @@ public class TieManagerController {
     public String tieIntroduceUpdate(ModelMap modelMap) {
         //通过用户类型获取系表文章ID
         usersService.reloadUserAllInfo();
+        wordbook.reloadTieInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -426,6 +427,7 @@ public class TieManagerController {
     public String tieHeadUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
         usersService.reloadUserAllInfo();
+        wordbook.reloadTieInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -455,6 +457,7 @@ public class TieManagerController {
     public String backstageTieTrainGoal(ModelMap map) {
         //通过用户类型获取系表文章ID
         usersService.reloadUserAllInfo();
+        wordbook.reloadTieInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {
@@ -484,6 +487,7 @@ public class TieManagerController {
     public String tieItemUpdate(ModelMap map) {
         //通过用户类型获取系表文章ID
         usersService.reloadUserAllInfo();
+        wordbook.reloadTieInfo();
         Record record = usersService.findAll(usersService.getUserName());
         int articleInfoId = 0;
         if (!ObjectUtils.isEmpty(record)) {

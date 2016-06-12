@@ -104,7 +104,6 @@ public class MainController {
     public String root(ModelMap modelMap,@RequestParam(value = "tieId",defaultValue = "0",required = false) int tieId) {
         Tie tie = null;
         if(tieId == 0){
-            wordbook.reloadTieInfo();
             TieRecord tieRecord = wordbook.getTieInfo();
             tie = tieRecord.into(Tie.class);
         } else {
