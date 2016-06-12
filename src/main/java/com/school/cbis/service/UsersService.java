@@ -84,9 +84,9 @@ public interface UsersService {
     Record findAll(String username);
 
     /**
-     * 清空 userAllInfo
+     * 清空 userAllInfo 缓存
      */
-    @CacheEvict(cacheNames="userAllInfo",allEntries=true)// 清空accountCache 缓存
+    @CacheEvict(cacheNames="userAllInfo",allEntries=true)
     void reloadUserAllInfo();
 
     /**

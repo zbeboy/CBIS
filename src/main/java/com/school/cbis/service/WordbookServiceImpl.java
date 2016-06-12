@@ -45,4 +45,11 @@ public class WordbookServiceImpl implements WordbookService {
                 .fetchOne();
         return tieRecord;
     }
+
+    @Override
+    public void reloadTieInfo() {
+        /*
+        清空缓存
+         */
+    }
 }

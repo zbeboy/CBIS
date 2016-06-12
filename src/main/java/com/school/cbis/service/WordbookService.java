@@ -3,6 +3,7 @@ package com.school.cbis.service;
 import com.school.cbis.domain.tables.records.*;
 import org.jooq.Result;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 /**
@@ -40,4 +41,7 @@ public interface WordbookService {
      */
     @Cacheable(cacheNames = "findTieInfo")
     TieRecord findTieInfo();
+
+    @CacheEvict(cacheNames = "findTieInfo",allEntries = true)
+    void reloadTieInfo();
 }

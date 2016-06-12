@@ -197,4 +197,8 @@ public class Wordbook {
         this.tieInfo = wordbookService.findTieInfo();
         return tieInfo;
     }
+
+    public void reloadTieInfo(){
+        wordbookService.reloadTieInfo();
+    }
 }
