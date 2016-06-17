@@ -6,7 +6,6 @@ import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.TieRecord;
-import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.article.ArticleVo;
@@ -14,8 +13,6 @@ import com.school.cbis.vo.tie.*;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
@@ -32,8 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2016-02-03.

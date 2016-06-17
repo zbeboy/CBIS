@@ -4,12 +4,11 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.school.cbis.commons.Wordbook;
 import com.school.cbis.domain.Tables;
-import com.school.cbis.domain.tables.daos.GradeDao;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.GradeRecord;
 import com.school.cbis.domain.tables.records.TeachTaskInfoRecord;
 import com.school.cbis.domain.tables.records.TeachTaskTitleRecord;
-import com.school.cbis.exceptionhandle.TeachTaskExceptionHandle;
+import com.school.cbis.exception.TeachTaskExceptionHandle;
 import com.school.cbis.util.FilesUtils;
 import com.school.cbis.vo.eadmin.AssignmentBookAddVo;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -30,16 +29,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

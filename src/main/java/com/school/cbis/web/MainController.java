@@ -202,7 +202,7 @@ public class MainController {
      * @return
      */
     @RequestMapping("/backstage")
-    public String backstage(HttpSession session) {
+    public String backstage() {
         if (StringUtils.isEmpty(usersService.getUserName())) {
             return "/login";
         }
@@ -221,7 +221,7 @@ public class MainController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(HttpSession session) {
+    public String login() {
         return "login";
     }
 
@@ -326,6 +326,13 @@ public class MainController {
         return "/user/mail/forgetpasswordmsg";
     }
 
+    /**
+     * 获取验证码
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping("/user/jcaptcha")
     public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         byte[] captchaChallengeAsJpeg = null;
@@ -363,6 +370,12 @@ public class MainController {
         responseOutputStream.close();
     }
 
+    /**
+     * js 检验验证码
+     * @param captcha
+     * @param request
+     * @return
+     */
     @RequestMapping("/user/validateCaptchaForId")
     @ResponseBody
     public Map<String, Object> validateCaptchaForId(@RequestParam("j_captcha_response") String captcha, HttpServletRequest request) {

@@ -16,6 +16,7 @@ package com.school.cbis;
  */
 
 
+import com.school.cbis.interceptor.LoginInterceptor;
 import com.school.cbis.service.MyUserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 
@@ -69,6 +72,13 @@ public class Application extends SpringBootServletInitializer {
         JdbcTokenRepositoryImpl j = new JdbcTokenRepositoryImpl();
         j.setDataSource(dataSource);
         return j;
+    }
+
+    protected static class WebConfig extends WebMvcConfigurerAdapter {
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/login");
+        }
     }
 
     public static void main(String[] args) throws Exception {

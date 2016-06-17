@@ -6,7 +6,6 @@ import com.school.cbis.data.PaginationData;
 import com.school.cbis.domain.Tables;
 import com.school.cbis.domain.tables.pojos.*;
 import com.school.cbis.domain.tables.records.MajorRecord;
-import com.school.cbis.plugin.jsgrid.JsGrid;
 import com.school.cbis.service.*;
 import com.school.cbis.vo.article.ArticleVo;
 import com.school.cbis.vo.major.*;
