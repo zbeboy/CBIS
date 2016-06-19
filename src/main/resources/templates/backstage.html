@@ -353,7 +353,9 @@
                             <li id="theorynavteachertimetablelist"><a href="#" th:href="@{/administrator/eadmin/teacherTimetableList}+'?teachType=理论'" >教师课表管理</a></li>
                             <li id="theorynavclassroomtimetablelist"><a href="#" th:href="@{/administrator/eadmin/classroomTimetableList}+'?teachType=理论'" >教室课表管理</a></li>
                             <li id="theorynavfouritemslist"><a href="#" th:href="@{/administrator/eadmin/fourItemsList}+'?teachType=理论'">四大件管理</a></li>
-                            <li><a href="#">考试管理</a></li>
+                            <li id="theorynavexaminationarrangementtemplatelist"><a href="#" th:href="@{/administrator/eadmin/examinationArrangementTemplateList}+'?teachType=理论'">考试安排模板</a></li>
+                            <li id="theorynavexaminationarrangementinfolist"><a href="#" th:href="@{/administrator/eadmin/examinationArrangementInfoList}+'?teachType=理论'">考试安排设置</a></li>
+                            <li id="theorynavexaminationarrangementlist"><a href="#" th:href="@{/teacher/eadmin/examinationArrangementList}+'?teachType=理论'">考试安排</a></li>
                             <li id="theorynavrelateddownloadlist"><a href="#" th:href="@{/administrator/eadmin/relatedDownloadList}+'?teachType=理论'">教学相关下载管理</a></li>
                         </ul>
                     </li>
@@ -388,20 +390,22 @@
                 <li class="uk-parent">
                     <a href="#">教学</a>
                     <ul class="uk-nav-sub">
-                        <li id="theoryoffcanvasassignmentbookmanager"><a href="#" th:href="@{/administrator/eadmin/assignmentBookList}">理论-教学任务书管理</a></li>
-                        <li id="theoryoffcanvasteacherfilltemplatelist"><a href="#" th:href="@{/administrator/eadmin/teacherFillTemplateList}" >理论-教师填报模板</a></li>
-                        <li id="theoryoffcanvasteacherfilltaskinfolist"><a href="#" th:href="@{/administrator/eadmin/teacherFillTaskInfoList}" >理论-教师填报设置</a></li>
-                        <li id="theoryoffcanvasteacherreportlist"><a href="#" th:href="@{/teacher/eadmin/teacherReportList}" >理论-教师填报</a></li>
+                        <li id="theoryoffcanvasassignmentbookmanager"><a href="#" th:href="@{/administrator/eadmin/assignmentBookList}+'?teachType=理论'" >理论-教学任务书管理</a></li>
+                        <li id="theoryoffcanvasteacherfilltemplatelist"><a href="#" th:href="@{/administrator/eadmin/teacherFillTemplateList}+'?teachType=理论'" >理论-教师填报模板</a></li>
+                        <li id="theoryoffcanvasteacherfilltaskinfolist"><a href="#" th:href="@{/administrator/eadmin/teacherFillTaskInfoList}+'?teachType=理论'" >理论-教师填报设置</a></li>
+                        <li id="theoryoffcanvasteacherreportlist"><a href="#" th:href="@{/teacher/eadmin/teacherReportList}+'?teachType=理论'" >理论-教师填报</a></li>
                         <li id="theoryoffcanvasteachingmaterialtemplatelist"><a href="#" th:href="@{/administrator/eadmin/teachingMaterialTemplateList}" >理论-教材申报模板</a></li>
                         <li id="theoryoffcanvasteachingmaterialinfolist"><a href="#" th:href="@{/administrator/eadmin/teachingMaterialInfoList}" >理论-教材申报设置</a></li>
                         <li id="theoryoffcanvasteachingmateriallist"><a href="#" th:href="@{/teacher/eadmin/teachingMaterialList}" >理论-教材申报</a></li>
-                        <li id="theoryoffcanvasteachingProcesslist"><a href="#" th:href="@{/administrator/eadmin/teachingProcessList}" >理论-教学进程表管理</a></li>
-                        <li id="theoryoffcanvastudentTimetablelist"><a href="#" th:href="@{/administrator/eadmin/studentTimetableList}" >理论-学生课表管理</a></li>
-                        <li id="theoryoffcanvasteachertimetablelist"><a href="#" th:href="@{/administrator/eadmin/teacherTimetableList}" >理论-教师课表管理</a></li>
-                        <li id="theoryoffcanvasclassroomtimetablelist"><a href="#" th:href="@{/administrator/eadmin/classroomTimetableList}" >理论-教室课表管理</a></li>
-                        <li id="theoryoffcanvasfouritemslist"><a href="#" th:href="@{/administrator/eadmin/fourItemsList}">理论-四大件管理</a></li>
-                        <li><a href="#">理论-考试管理</a></li>
-                        <li id="theoryoffcanvasrelateddownloadlist"><a href="#" th:href="@{/administrator/eadmin/relatedDownloadList}">理论-教学相关下载管理</a></li>
+                        <li id="theoryoffcanvasteachingProcesslist"><a href="#" th:href="@{/administrator/eadmin/teachingProcessList}+'?teachType=理论'" >理论-教学进程表管理</a></li>
+                        <li id="theoryoffcanvastudentTimetablelist"><a href="#" th:href="@{/administrator/eadmin/studentTimetableList}+'?teachType=理论'" >理论-学生课表管理</a></li>
+                        <li id="theoryoffcanvasteachertimetablelist"><a href="#" th:href="@{/administrator/eadmin/teacherTimetableList}+'?teachType=理论'" >理论-教师课表管理</a></li>
+                        <li id="theoryoffcanvasclassroomtimetablelist"><a href="#" th:href="@{/administrator/eadmin/classroomTimetableList}+'?teachType=理论'" >理论-教室课表管理</a></li>
+                        <li id="theoryoffcanvasfouritemslist"><a href="#" th:href="@{/administrator/eadmin/fourItemsList}+'?teachType=理论'">理论-四大件管理</a></li>
+                        <li id="theoryoffcanvasexaminationarrangementtemplatelist"><a href="#" th:href="@{/administrator/eadmin/examinationArrangementTemplateList}+'?teachType=理论'">考试安排模板</a></li>
+                        <li id="theoryoffcanvasexaminationarrangementinfolist"><a href="#" th:href="@{/administrator/eadmin/examinationArrangementInfoList}+'?teachType=理论'">考试安排设置</a></li>
+                        <li id="theoryoffcanvasexaminationarrangementlist"><a href="#" th:href="@{/teacher/eadmin/examinationArrangementList}+'?teachType=理论'">考试安排</a></li>
+                        <li id="theoryoffcanvasrelateddownloadlist"><a href="#" th:href="@{/administrator/eadmin/relatedDownloadList}+'?teachType=理论'">理论-教学相关下载管理</a></li>
                         <li class="uk-nav-divider"></li>
                         <li id="practiceoffcanvasassignmentbookmanager"><a href="#" th:href="@{/administrator/eadmin/assignmentBookList}+'?teachType=实践'" >实践-教学任务书管理</a></li>
                         <li id="practiceoffcanvasteacherfilltemplatelist"><a href="#" th:href="@{/administrator/eadmin/teacherFillTemplateList}+'?teachType=实践'" >实践-教师填报模板</a></li>

@@ -14,6 +14,10 @@ import com.school.cbis.domain.tables.AutonomousPracticeInfo;
 import com.school.cbis.domain.tables.AutonomousPracticeTemplate;
 import com.school.cbis.domain.tables.ClassroomCourseTimetableInfo;
 import com.school.cbis.domain.tables.Exam;
+import com.school.cbis.domain.tables.ExaminationArrangementContent;
+import com.school.cbis.domain.tables.ExaminationArrangementHead;
+import com.school.cbis.domain.tables.ExaminationArrangementInfo;
+import com.school.cbis.domain.tables.ExaminationArrangementTemplate;
 import com.school.cbis.domain.tables.FourItems;
 import com.school.cbis.domain.tables.Grade;
 import com.school.cbis.domain.tables.HeadType;
@@ -123,6 +127,26 @@ public class Tables {
 	 * The table cbis.exam
 	 */
 	public static final Exam EXAM = com.school.cbis.domain.tables.Exam.EXAM;
+
+	/**
+	 * The table cbis.examination_arrangement_content
+	 */
+	public static final ExaminationArrangementContent EXAMINATION_ARRANGEMENT_CONTENT = com.school.cbis.domain.tables.ExaminationArrangementContent.EXAMINATION_ARRANGEMENT_CONTENT;
+
+	/**
+	 * The table cbis.examination_arrangement_head
+	 */
+	public static final ExaminationArrangementHead EXAMINATION_ARRANGEMENT_HEAD = com.school.cbis.domain.tables.ExaminationArrangementHead.EXAMINATION_ARRANGEMENT_HEAD;
+
+	/**
+	 * The table cbis.examination_arrangement_info
+	 */
+	public static final ExaminationArrangementInfo EXAMINATION_ARRANGEMENT_INFO = com.school.cbis.domain.tables.ExaminationArrangementInfo.EXAMINATION_ARRANGEMENT_INFO;
+
+	/**
+	 * The table cbis.examination_arrangement_template
+	 */
+	public static final ExaminationArrangementTemplate EXAMINATION_ARRANGEMENT_TEMPLATE = com.school.cbis.domain.tables.ExaminationArrangementTemplate.EXAMINATION_ARRANGEMENT_TEMPLATE;
 
 	/**
 	 * The table cbis.four_items
